@@ -8,8 +8,13 @@
 html > body {
     font-family: 'Pretendard-Regular';
     background-color: #FFF;
+    position: relative;
 }
 
 .collapse {
     visibility: visibility !important; /* !important 를 붙히면 라이브러리한테 우선순위에서 밀려 났을때 라이브러리를 무시하고 내가 제일 먼저 적용될 꺼야 라는 의미 */
+}
+
+.content-area {
+    padding-top: 70px; /* 네비게이션 바의 높이만큼 여백 추가 */
 }
