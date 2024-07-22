@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+html > body {
+    font-family: 'Pretendard-Regular';
+    background-color: #FFF;
+}
+
+.collapse {
+    visibility: visibility !important; /* !important 를 붙히면 라이브러리한테 우선순위에서 밀려 났을때 라이브러리를 무시하고 내가 제일 먼저 적용될 꺼야 라는 의미 */
+}
