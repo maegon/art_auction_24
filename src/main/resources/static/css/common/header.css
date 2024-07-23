@@ -3,12 +3,14 @@
     top: 0;
     left: 0;
     right: 0;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
     padding: 0px 300px;
     border-bottom: 1px solid black;
+    z-index: 1000;
 }
 
 .nav__logo {
