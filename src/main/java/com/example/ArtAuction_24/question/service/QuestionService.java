@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.question.service;
 
+
 import com.example.ArtAuction_24.question.entity.Question;
 import com.example.ArtAuction_24.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,4 +15,5 @@ public class QuestionService {
     public List<Question> findAll() {
         return questionRepository.findAll();
     }
+
 }

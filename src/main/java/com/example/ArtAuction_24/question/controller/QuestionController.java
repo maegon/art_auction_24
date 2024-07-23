@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.question.controller;
 
+
 import com.example.ArtAuction_24.question.entity.Question;
 import com.example.ArtAuction_24.question.repository.QuestionRepository;
 import com.example.ArtAuction_24.question.service.QuestionService;
@@ -20,5 +21,6 @@ public class QuestionController {
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
         return "question/list";
+
     }
 }
