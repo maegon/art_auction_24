@@ -49,6 +49,9 @@ dependencies {
 	// 토스페이먼츠
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
+	// 메일
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.3.2'
+
 }
 
 tasks.named('test') {
