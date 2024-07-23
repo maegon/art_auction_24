@@ -5,6 +5,7 @@ import com.example.ArtAuction_24.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -32,13 +33,16 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    // 회원의 username 찾기
-    public Member findByUsername(String username) {
-        Optional<Member> member = memberRepository.findByUsername(username);
-        if(member.isPresent()) {
-            return member.get();
-        } else {
-            throw new RuntimeException("회원을 찾을 수 없습니다.");
-        }
+    @Transactional
+    public Member whenSocialLogin(String providerTypeCode, String username, String nickname) {
+        Optional<Member> opMember = findByUsername(username);
+
+        if (opMember.isPresent()) return opMember.get();
+
+        return join(username, "", nickname, "", "", "", null);
+    }
+
+    private Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
     }
 }
