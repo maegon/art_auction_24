@@ -1,0 +1,54 @@
+<<<<<<< HEAD
+<html layout:decorate="~{/layout/layout}">
+<div layout:fragment="content">
+    <div class="container mx-auto px-4 min-h-[1200px] flex">
+        <div class="container w-[600px] border-2 border-rose-600">
+            <div class="container mx-auto w-[350px] h-[400px] mt-[200px] bg-stone-100">
+                <div class="container mx-auto w-[350px] h-[250px]">
+                    <ul>
+                        <li class="text-center"><span>작품 및 작가</span></li>
+                        <li class="text-center"><span>작품구매</span></li>
+                        <li class="text-center"><span>SERVICE</span></li>
+                        <li class="text-center"><span>배송</span></li>
+                        <li class="text-center"><span>반품</span></li>
+                    </ul>
+                </div>
+                <div class="container mx-auto w-[350px] h-[150px]">
+                    <span>답변을 못찾으셨나요?</span><br>
+                    <button>문의하기</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="w-full border-2 border-rose-600 flex flex-col">
+            <div class="h-[150px] border-2 border-rose-600 flex justify-center items-center">
+                <span class="text-center font-bold text-3xl">FAQ</span>
+            </div>
+            <div class="flex-grow border-2 border-blue-600">
+                <table>
+                    <thead>
+
+                    <tbody>
+                    <tr th:each="question : ${questionList}">
+                        <td th:text="${question.subject}"></td>
+                        <td th:text="${question.createDate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+>>>>>>> 6dba7ba3c9daccb720f15df60d97b88410ae2ca6
+</html>
