@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.File;
+
 @Entity
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class Member extends BaseEntity {
     private String nickname;
     private String phoneNumber;
     private String address;
-    private String image;
+    private File image;
     private String isActive;
 
 }

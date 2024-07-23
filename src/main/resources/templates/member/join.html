@@ -3,54 +3,83 @@
     <h1 class="text-[20px] font-bold">회원가입 페이지</h1>
     
     <form th:action="@{/member/join}" th:object="${memberForm}" method="POST">
-        <form th:action="@{/member/join}" th:object="${memberForm}" method="POST">
-            <div class="mb-3">
-                <label for="username" class="component-input">아이디</label>
-                <input type="text" name="username" id="username" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="component-input">비밀번호</label>
-                <input type="password" name="password" id="password" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="component-input">이메일</label>
-                <input type="email" name="email" id="email" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="nickname" class="component-input">닉네임</label>
-                <input type="text" name="nickname" id="nickname" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="phoneNumber" class="component-input">전화번호</label>
-                <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="address" class="component-input">주소</label>
-                <input type="text" name="address" id="address" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="profileImage" class="component-input">프로필 이미지</label>
-                <input type="file" name="profileImage" id="profileImage" class="form-control">
-            </div>
-            <button type="submit" class="join-submit btn btn-primary" disabled>회원가입</button>
-        </form>
+        <div class="mb-3">
+            <label id="component-input-username" for="username" class="component-input">아이디</label>
+            <input type="text" name="username" id="username" class="form-control">
+            <span class="text-red-500">* 최소 4자리 ~ 최대 24자리로 작성해주세요.</span>
+        </div>
+        <div class="mb-3">
+            <label id="component-input-pw" for="password" class="component-input">패스워드</label>
+            <input type="password" name="password" id="password" class="form-control">
+            <span class="text-red-500">* 각각 하나 이상의 소문자, 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요.</span>
+        </div>
+        <div class="mb-3">
+            <label id="component-input-email" for="email" class="component-input">이메일</label>
+            <input type="email" name="email" id="email" class="form-control">
+            <span class="text-red-500">* 유효한 이메일 주소로 입력해주세요.</span>
+        </div>
+        <div class="mb-3">
+            <label id="component-input-nickname" for="nickname" class="component-input">닉네임</label>
+            <input type="text" name="nickname" id="nickname" class="form-control">
+            <span class="text-red-500">* 관리자/어드민/admin 은 사용 불가합니다.</span>
+        </div>
+        <div class="mb-3">
+            <label id="component-input-phoneNum" for="phoneNumber" class="component-input">전화번호</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control">
+            <span class="text-red-500">* 000-0000-0000 형식에 맞게 작성해주세요.</span>
+        </div>
+        <div class="mb-3">
+            <label id="component-input-address" for="address" class="component-input">주소</label>
+            <input type="text" name="address" id="address" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label id="component-input-img" for="profileImage" class="component-input">프로필 이미지</label>
+            <input type="file" name="profileImage" id="profileImage" class="form-control">
+        </div>
+        <button type="submit" class="join-submit btn btn-primary" disabled>회원가입</button>
     </form>
 </div>
 </html>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.querySelector(".join-submit");
-        const componentInput = document.getElementById("component-input");
-        
-        function updateLoginButtonState() {
-            if (componentInput.value.trim() !== "") {
-                loginButton.removeAttribute("disabled");
+        const joinButton = document.querySelector(".join-submit");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const emailInput = document.getElementById("email");
+        const nicknameInput = document.getElementById("nickname");
+        const phoneNumberInput = document.getElementById("phoneNumber");
+        const addressInput = document.getElementById("address");
+        const profileImageInput = document.getElementById("profileImage");
+
+        function updateJoinButtonState() {
+            if (
+                usernameInput.value.trim() !== "" &&
+                passwordInput.value.trim() !== "" &&
+                emailInput.value.trim() !== "" &&
+                nicknameInput.value.trim() !== "" &&
+                phoneNumberInput.value.trim() !== "" &&
+                addressInput.value.trim() !== "" &&
+                profileImageInput.value.trim() !== ""
+            ) {
+                joinButton.removeAttribute("disabled");
             } else {
-                loginButton.setAttribute("disabled", "true");
+                joinButton.setAttribute("disabled", "true");
             }
         }
-        
-        componentInput.addEventListener("input", updateLoginButtonState);
+
+        const inputs = [
+            usernameInput,
+            passwordInput,
+            emailInput,
+            nicknameInput,
+            phoneNumberInput,
+            addressInput,
+            profileImageInput
+        ];
+
+        inputs.forEach(input => {
+            input.addEventListener("input", updateJoinButtonState);
+        });
     });
 </script>

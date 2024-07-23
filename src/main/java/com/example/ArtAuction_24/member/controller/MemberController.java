@@ -4,6 +4,7 @@ import com.example.ArtAuction_24.member.form.MemberForm;
 import com.example.ArtAuction_24.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     private final MemberService memberService;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
     public String login() {
         return "member/login";

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class MemberService {
 
     // 회원가입 
     public Member join(String username, String password, String email, String nickname,
-                       String phoneNumber, String address, String image) {
+                       String phoneNumber, String address, File image) {
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
