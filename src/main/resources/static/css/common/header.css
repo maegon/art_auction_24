@@ -1,118 +1,86 @@
-.header_container{
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     background-color: white;
-     padding: 0 10px;
-     z-index: 1000; /* 콘텐츠 위로 오도록 z-index 추가 */
-     width: 100%;
-     height: 70px;
-     border-bottom: 1px solid black;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
-
 .header_nav {
-    display: flex;
-    gap: 20px;
-}
-
-.header_nav a {
-    text-decoration: none;
-    color: #333;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.header_nav a:hover {
-    background-color: #e2e6ea;
-}
-
-.search_container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.search_container input {
-    width: 0;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: width 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
-}
-
-.search_container input.visible {
-    width: 150px;
-    opacity: 1;
-}
-
-.search_container button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-}
-
-#loginForm {
-    position: fixed;
-    top: -100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    transition: top 0.5s ease;
-    z-index: 10;
-}
-
-#loginForm.visible {
-    top: 100px;
-}
-
-.hidden {
-    display: none;
-}
-
-#loginForm h2 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #333;
-    text-align: center;
-}
-
-#loginForm label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-#loginForm input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-#overlay {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 0px 300px;
+    border-bottom: 1px solid black;
+    z-index: 1000;
+}
+
+.nav__logo {
+    font-size: 25px;
+    color: black;
+    font-family: 'Gasoek One', sans-serif;
+    text-align: center;
+}
+
+.nav__main {
+    display: flex;
+    padding-left: 0;
+}
+
+.nav__main li {
+    font-weight: bold;
+    display: inline-block;
+    margin: 7px;
+    padding: 5px 40px;
+    text-align: center;
+}
+
+.nav__main > ul > li > a {
+    text-decoration: none;
+    color: inherit; /* Keep the color consistent */
+}
+
+.nav__main > ul > li > a > span {
+    position: relative;
+}
+
+.nav__main > ul > li > a > span::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: width .3s;
+}
+
+.nav__main > ul > li:hover > a > span::after {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 5;
+}
+
+.nav__bar {
+    display: none;
+    position: absolute;
+    right: 32px;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 1100px) {
+    .header_nav {
+        flex-direction: column;
+    }
+
+    .nav__main,
+    .nav__login {
+        display: none;
+        flex-direction: column;
+    }
+
+    .nav__bar {
+        display: block;
+    }
+
+    .nav__main.active,
+    .nav__login.active {
+        display: flex;
+    }
 }

@@ -1,17 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('overlay');
-    const searchBtn = document.getElementById('searchBtn');
-    const searchInput = document.getElementById('searchInput');
+    const toggleBtn = document.querySelector('.nav__bar');
+    const navMain = document.querySelector('.nav__main');
+    const navLogin = document.querySelector('.nav__login');
 
-    searchBtn.addEventListener('click', () => {
-        searchInput.classList.toggle('visible');
-    });
-
-    overlay.addEventListener('click', () => {
-        loginForm.classList.remove('visible');
-        setTimeout(() => {
-            loginForm.classList.add('hidden');
-            overlay.classList.add('hidden');
-        }, 500);
+    toggleBtn.addEventListener('click', () => {
+        navMain.classList.toggle('active');
+        navLogin.classList.toggle('active');
     });
 });
