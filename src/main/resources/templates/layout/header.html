@@ -1,16 +1,29 @@
 <nav th:fragment="headerFragment" class="header">
-    <header class="header_container" >
-        <div class="logo">Art Auction</div>
+    <section class="header_container">
         <nav class="header_nav">
-            <a href="#">경매</a>
-            <a href="#">작가</a>
-            <a href="#">캘린더</a>
-        </nav>
-        <div class="search_container">
-            <button id="searchBtn">🔍</button>
-            <input type="text" id="searchInput" placeholder="검색...">
-        </div>
-        <a href="#" id="header_loginBtn">로그인</a>
-    </header>
+            <div class="nav__logo">
+                <a href="#" class="main_logo">
+                    <img th:src="@{/image/logo1.png}" alt="이미지">
+                </a>
+            </div>
+            <nav class="nav__main">
+                <ul class="flex">
+                    <li><a href="#" class="block"><span>경매</span></a></li>
+                    <li><a href="#" class="block"><span>작품</span></a></li>
+                    <li><a href="#" class="block"><span>캘린더</span></a></li>
+                </ul>
+            </nav>
 
+            <ul class="nav__login">
+                <div>
+                    <a sec:authorize="isAnonymous()" href="/member/login">로그인</a>
+                </div>
+            </ul>
+
+            <a href="#" class="nav__bar">
+                <i class="fa-solid fa-bars"></i>
+            </a>
+
+        </nav>
+    </section>
 </nav>
