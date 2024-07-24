@@ -19,6 +19,11 @@ public class MemberForm {
     private String password;
 
     @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$",
+            message = "유효한 이메일 주소를 입력해주세요.")
+    private String email;
+
+    @NotBlank
     @Pattern(regexp = "^(?!.*(admin|관리자|어드민)).*$",
             message = "부적절한 단어가 포함되어 있습니다.")
     private String nickname;

@@ -16,7 +16,9 @@
 
             <ul class="nav__login">
                 <li>
-                    <a sec:authorize="isAnonymous()" href="/member/login">로그인</a>
+                    <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+                    <a id="header_logoutBtn" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+
                 </li>
             </ul>
 

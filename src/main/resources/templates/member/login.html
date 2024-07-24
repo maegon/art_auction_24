@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html layout:decorate="~{/layout/layout}">
+<div layout:fragment="content">
+    <h1 class="text-[20px] font-bold">로그인 페이지</h1>
+    
+    <form th:action="@{/member/login}" method="POST">
+        <p class="login-title">로그인</p>
+        <div class="form-item-wrap">
+            <div class="id-input">
+                <input id="component-input-id" class="component-input" name="username" type="text" placeholder="아이디를 입력해주세요" value>
+                <label for="component-input-id" class="placeholder"></label>
+            </div>
+        </div>
+        <div class="form-item-wrap">
+            <div class="password-input">
+                <input id="component-input-password" class="component-input" name="password" type="password" placeholder="패스워드를 입력해주세요" value>
+                <label for="component-input-password" class="placeholder"></label>
+            </div>
+        </div>
+        <div class="forgot-btn-wrap">
+            <a th:href="@{findId}">아이디 찾기</a>
+            <a th:href="@{findPw}">비밀번호 찾기</a>
+            <a th:href="@{/member/join}">회원가입</a>
+        </div>
+        <button type="submit" class="login-submit btn btn-primary" disabled>로그인</button>
+        <p>소셜 계정으로 로그인하기</p>
+        <div class="social-login-wrap">
+            <img src="/image/고라파덕.jpg" alt="카카오로그인" width="60px">
+            <img src="/image/고라파덕.jpg" alt="구글로그인" width="60px">
+        </div>
+    </form>
+</div>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.querySelector(".login-submit");
+        const usernameInput = document.getElementById("component-input-id");
+        const passwordInput = document.getElementById("component-input-password");
+        
+        function updateLoginButtonState() {
+            if (usernameInput.value.trim() !== "" && passwordInput.value.trim() !== "") {
+                loginButton.removeAttribute("disabled");
+            } else {
+                loginButton.setAttribute("disabled", "true");
+            }
+        }
+        
+        usernameInput.addEventListener("input", updateLoginButtonState);
+        passwordInput.addEventListener("input", updateLoginButtonState);
+    });
+</script>

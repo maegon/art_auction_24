@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html layout:decorate="~{/layout/layout}">
+<div layout:fragment="content">
+    <h1 class="text-[20px] font-bold">회원가입 페이지</h1>
+    
+    <form th:action="@{/member/join}" th:object="${memberForm}" method="POST">
+        <form th:action="@{/member/join}" th:object="${memberForm}" method="POST">
+            <div class="mb-3">
+                <label for="username" class="component-input">아이디</label>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="component-input">비밀번호</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="component-input">이메일</label>
+                <input type="email" name="email" id="email" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="nickname" class="component-input">닉네임</label>
+                <input type="text" name="nickname" id="nickname" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="phoneNumber" class="component-input">전화번호</label>
+                <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="component-input">주소</label>
+                <input type="text" name="address" id="address" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="profileImage" class="component-input">프로필 이미지</label>
+                <input type="file" name="profileImage" id="profileImage" class="form-control">
+            </div>
+            <button type="submit" class="join-submit btn btn-primary" disabled>회원가입</button>
+        </form>
+    </form>
+</div>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.querySelector(".join-submit");
+        const componentInput = document.getElementById("component-input");
+        
+        function updateLoginButtonState() {
+            if (componentInput.value.trim() !== "") {
+                loginButton.removeAttribute("disabled");
+            } else {
+                loginButton.setAttribute("disabled", "true");
+            }
+        }
+        
+        componentInput.addEventListener("input", updateLoginButtonState);
+    });
+</script>
