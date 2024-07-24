@@ -1,7 +1,39 @@
-var swiper = new Swiper(".mySwiper", {
+var swiper1 = new Swiper(".mySwiper", {
       spaceBetween: 30,
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
       },
     });
+
+/*ongoing js start*/
+ var swiper2 = new Swiper(".ongoingAuc", {
+
+    slidesPerView: 1,
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    // 반응형 breakpoints : px 기준
+    breakpoints: {
+      // window 넓이 640px ~ 767px
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      // window 넓이 768px ~ 1023px
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 60,
+      },
+      // window 넓이 1024px ~
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 80,
+      },
+    },
+    });
+
+
+/*ongoing js end*/
