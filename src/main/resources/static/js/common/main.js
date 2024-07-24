@@ -12,7 +12,7 @@ var swiper1 = new Swiper(".mySwiper", {
     slidesPerView: 1,
     spaceBetween: 10,
     pagination: {
-      el: ".swiper-pagination",
+      el: ".ongoing-pagination",
       clickable: true,
     },
     // 반응형 breakpoints : px 기준
@@ -37,3 +37,35 @@ var swiper1 = new Swiper(".mySwiper", {
 
 
 /*ongoing js end*/
+
+/*upcoming js start*/
+ var swiper3 = new Swiper(".upcomingAuc", {
+
+    slidesPerView: 1,
+    spaceBetween: 10,
+    pagination: {
+      el: ".upcoming-pagination",
+      clickable: true,
+    },
+    // 반응형 breakpoints : px 기준
+    breakpoints: {
+      // window 넓이 640px ~ 767px
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 40,
+      },
+      // window 넓이 768px ~ 1023px
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 60,
+      },
+      // window 넓이 1024px ~
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 80,
+      },
+    },
+    });
+
+
+/*upcoming js end*/
