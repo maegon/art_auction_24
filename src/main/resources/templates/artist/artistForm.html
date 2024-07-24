@@ -1,0 +1,53 @@
+<html layout:decorate="~{/layout/layout}">
+<head>
+    <script>
+        function addInputField() {
+            const container = document.getElementById("artistAddsContainer");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = "artistAdds"; // name 배열로 설정
+            input.className = "form-control";
+            input.maxLength = 200; // 각 필드에 따라 적절한 길이 설정
+            container.appendChild(input);
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action method="post" th:object="${artistForm}" enctype="multipart/form-data">
+
+        <div class="thumbnail">
+            <label for="thumbnail" class="form-label">썸네일</label>
+            <input type="file" th:field="*{thumbnail}" class="form-control">
+        </div>
+        <div class="engName">
+            <label for="engName" class="form-label">영문 이름</label>
+            <input type="text" id="engName" class="form-control" th:field="*{engName}">
+        </div>
+        <div class="korName">
+            <label for="korName" class="form-label">한글 이름</label>
+            <input type="text" id="korName" class="form-control" th:field="*{korName}">
+        </div>
+        <div class="birthDate">
+            <label for="birthDate" class="form-label">생년월일</label>
+            <input type="number" id="birthDate" class="form-control" th:field="*{birthDate}">
+        </div>
+        <div class="tel">
+            <label for="tel" class="form-label">전화번호</label>
+            <input type="number" id="tel" class="form-control" th:field="*{tel}">
+        </div>
+        <div class="mail">
+            <label for="mail" class="form-label">E-mail</label>
+            <input type="text" id="mail" class="form-control" th:field="*{mail}">
+        </div>
+        <div class="artistAdds">
+            <label for="artistAdds">추가할 내용</label>
+            <div id="artistAddsContainer">
+                <button type="button" onclick="addInputField()">추가</button>
+            </div>
+        </div>
+        <button type="submit" class="btn-primary">등록</button>
+    </form>
+</div>
+</body>
+</html>

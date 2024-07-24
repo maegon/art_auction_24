@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.member.service;
 import com.example.ArtAuction_24.member.entity.Member;
 import com.example.ArtAuction_24.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,11 @@ public class MemberService {
 
     private Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public Member getCurrentMember() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return memberRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
     }
 }
