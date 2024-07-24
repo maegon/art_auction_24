@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.email;
 
+import com.example.ArtAuction_24.member.service.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
