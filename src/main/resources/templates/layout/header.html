@@ -2,7 +2,7 @@
     <section class="header_container">
         <nav class="header_nav">
             <div class="nav__logo">
-                <a href="#" class="main_logo">
+                <a href="/" class="main_logo">
                     <img th:src="@{/image/logo1.png}" alt="이미지">
                 </a>
             </div>
@@ -16,7 +16,9 @@
 
             <ul class="nav__login">
                 <li>
-                    <a sec:authorize="isAnonymous()" href="/member/login">로그인</a>
+                    <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+                    <a id="header_logoutBtn" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+
                 </li>
             </ul>
 

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 
 import lombok.Data;
 
+import java.io.File;
+
 @Data
 public class MemberForm {
     @Size(min = 4, max = 24)
@@ -14,9 +16,14 @@ public class MemberForm {
 
     @Size(min = 6, max = 24)
     @NotBlank
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#])[A-Za-z\\d!@#]{6,24}$",
-            message = "각각 하나 이상의 소문자, 대문자, 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[!@#])[a-z\\d!@#]{6,24}$",
+            message = "각각 하나 이상의 소문자, 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요.")
     private String password;
+
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$",
+            message = "유효한 이메일 주소를 입력해주세요.")
+    private String email;
 
     @NotBlank
     @Pattern(regexp = "^(?!.*(admin|관리자|어드민)).*$",
@@ -31,7 +38,6 @@ public class MemberForm {
     @NotBlank
     private String address;
 
-    @NotBlank
-    private String image;
+    private File image;
 
 }
