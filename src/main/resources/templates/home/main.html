@@ -3,20 +3,94 @@
     <!-- Swiper -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img th:src="@{/image/작가모집배너.png}" alt="이미지 1"></div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
+            <div class="swiper-slide">
+                <img class="banner-img" th:src="@{/image/작가모집배너.png}" alt="이미지 1">
+            </div>
+            <div class="swiper-slide">
+                <img class="banner-img" th:src="@{/image/협업배너.png}" alt="이미지 2">
+            </div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
+    <div class="main-container">
+        <div class="aucTitle">
+            <div>진행중인 경매</div>
+            <div class="viewAll">전체보기 →</div>
+        </div>
+        <div class="swiper ongoingAuc">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/그리다만여자사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/눈사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/레몬사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/물고기사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/산사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/아이사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/파란물고기사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+                <div class="swiper-slide ongoing-slide">
+                    <img class="ongoing-img" th:src="@{/image/풀사진.jpg}" alt="이미지 1">
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+
 </div>
 </html>
+
 
 
