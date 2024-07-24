@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://172.17.0.1:3306/ArtAuction_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: aaa
-    password: aa24lppk07
+    username: aauclocal
+    password: lkkp123400
   jpa:
     hibernate:
       ddl-auto: update
