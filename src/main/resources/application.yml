@@ -44,4 +44,4 @@ spring:
       max-file-size: 10MB
       max-request-size: 30MB
 custom:
-  fileDirPath: C:\work\ArtAuction_24\src\main\resources\static
+  genFileDirPath: C:\work\ArtAuction_24\src\main\resources\static
