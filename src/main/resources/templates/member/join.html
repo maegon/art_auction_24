@@ -1,4 +1,4 @@
-<html layout:decorate="~{/layout/layout}">
+<html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <h1 class="text-[20px] font-bold">회원가입 페이지</h1>
     
@@ -35,8 +35,10 @@
         <div class="mb-3">
             <label id="component-input-img" for="profileImage" class="component-input">프로필 이미지</label>
             <input type="file" name="profileImage" id="profileImage" class="form-control">
+            <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
         </div>
         <button type="submit" class="join-submit btn btn-primary" disabled>회원가입</button>
+        <button type="button" onclick="if(confirm('회원 가입을 취소하시겠습니까?')) { window.location.href='/'; }">&lt;</button>
     </form>
 </div>
 </html>

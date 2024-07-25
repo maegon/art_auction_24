@@ -5,10 +5,15 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
 @Data
+@Setter
+@Getter
 public class MemberForm {
     @Size(min = 4, max = 24)
     @NotBlank
@@ -38,6 +43,6 @@ public class MemberForm {
     @NotBlank
     private String address;
 
-    private File image;
+    private MultipartFile profileImage;
 
 }

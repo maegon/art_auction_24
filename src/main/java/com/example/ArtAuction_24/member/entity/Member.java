@@ -21,7 +21,10 @@ public class Member extends BaseEntity {
     private String nickname;
     private String phoneNumber;
     private String address;
-    private File image;
+    
+    @Column(unique = false)
+    private String image; //이미지 파일 이름을 저장
+    
     private String isActive;
 
 }

@@ -19,7 +19,7 @@ public class MemberService {
 
     // 회원가입 
     public Member join(String username, String password, String email, String nickname,
-                       String phoneNumber, String address, File image) {
+                       String phoneNumber, String address, String imageFileName) {
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
@@ -27,7 +27,7 @@ public class MemberService {
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .image(image) // 이미지 파일명 저장(프로필 사진)
+                .image(imageFileName) // 이미지 파일명 저장(프로필 사진)
                 .createDate(LocalDateTime.now())
                 .build();
         return memberRepository.save(member);
