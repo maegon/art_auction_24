@@ -16,6 +16,10 @@
                 <label for="component-input-password" class="placeholder"></label>
             </div>
         </div>
+        <div class="form-item-wrap">
+            <input type="checkbox" id="remember-me" name="remember-me">
+            <label for="remember-me">내 아이디 기억하기</label>
+        </div>
         <div class="forgot-btn-wrap">
             <a th:href="@{findId}">아이디 찾기</a>
             <a th:href="@{findPw}">비밀번호 찾기</a>
@@ -37,6 +41,13 @@
         const loginButton = document.querySelector(".login-submit");
         const usernameInput = document.getElementById("component-input-id");
         const passwordInput = document.getElementById("component-input-password");
+        const rememberMeCheckbox = document.getElementById("remember-me");
+        
+        const savedUsername = localStorage.getItem("savedUsername");
+        if (savedUsername) {
+            usernameInput.value = savedUsername;
+            rememberMeCheckbox.checked = true;
+        }
         
         function updateLoginButtonState() {
             if (usernameInput.value.trim() !== "" && passwordInput.value.trim() !== "") {
@@ -46,7 +57,18 @@
             }
         }
         
+        function handleLogin(event) {
+            if (rememberMeCheckbox.checked) {
+                localStorage.setItem("savedUsername", usernameInput.value);
+            } else {
+                localStorage.removeItem("savedUsername");
+            }
+        }
+        
         usernameInput.addEventListener("input", updateLoginButtonState);
         passwordInput.addEventListener("input", updateLoginButtonState);
+        loginButton.addEventListener("click", handleLogin);
+        
+        updateLoginButtonState();
     });
 </script>
