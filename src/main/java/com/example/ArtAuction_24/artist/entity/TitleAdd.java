@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.artist.entity;
 
+import com.example.ArtAuction_24.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

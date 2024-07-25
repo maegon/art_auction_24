@@ -54,6 +54,7 @@ public class ArtistController {
                 artistForm.getBirthDate(),
                 artistForm.getTel(),
                 artistForm.getMail(),
+                artistForm.getMailType(),
                 member
         );
 
@@ -88,6 +89,7 @@ public class ArtistController {
                 artistForm.getBirthDate(),
                 artistForm.getTel(),
                 artistForm.getMail(),
+                artistForm.getMailType(),
                 artistForm.getIntroduce(),
                 artistForm.getMajorWork(),
                 artistForm.getTitle(),
@@ -111,6 +113,7 @@ public class ArtistController {
         artistForm.setBirthDate(artist.getBirthDate());
         artistForm.setTel(artist.getTel());
         artistForm.setMail(artist.getMail());
+        artistForm.setMailType(artist.getMailType());
         artistForm.setIntroduce(artist.getIntroduce());
         artistForm.setMajorWork(artist.getMajorWork());
         artistForm.setTitle(artist.getTitle());
@@ -134,6 +137,7 @@ public class ArtistController {
             contentAdds.add(contentAdd);
         }
 
+        //
         List<TitleAdd> titleAdds = new ArrayList<>();
         for (String title : artistForm.getTitleAdds()) {
             TitleAdd titleAdd = new TitleAdd();

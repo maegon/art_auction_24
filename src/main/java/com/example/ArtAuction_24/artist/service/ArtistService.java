@@ -19,10 +19,10 @@ import java.util.UUID;
 public class ArtistService {
     private final ArtistRepository artistRepository;
 
-    @Value("${custom.fileDirPath}")
+    @Value("${custom.genFileDirPath}")
     private String fileDirPath;
 
-    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, Member member) {
+    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, Member member) {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
@@ -39,6 +39,7 @@ public class ArtistService {
                 .birthDate(birthDate)
                 .tel(tel)
                 .mail(mail)
+                .mailType(mailType)
                 .author(member)
                 .build();
         artistRepository.save(artist);
@@ -52,7 +53,7 @@ public class ArtistService {
         return of.get();
     }
 
-    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String introduce, String majorWork, String title, String content) {
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce, String majorWork, String title, String content) {
         if (thumbnail != null && !thumbnail.isEmpty()) {
             String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
@@ -70,6 +71,7 @@ public class ArtistService {
         artist.setBirthDate(birthDate);
         artist.setTel(tel);
         artist.setMail(mail);
+        artist.setMailType(mailType);
         artist.setIntroduce(introduce);
         artist.setMajorWork(majorWork);
         artist.setTitle(title);

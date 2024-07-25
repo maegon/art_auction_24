@@ -50,6 +50,8 @@ public class ArtistForm {
     @Size(max = 30, message = "이메일을 입력해주세요.")
     private String mail;
 
+    private String mailType;
+
     private String existingThumbnailUrl;
 
     private List<String> artistAdds = new ArrayList<>();

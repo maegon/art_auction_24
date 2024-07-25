@@ -1,8 +1,10 @@
 package com.example.ArtAuction_24.artist.entity;
 
+import com.example.ArtAuction_24.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.member.entity.Member;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @ToString
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Artist {
@@ -27,6 +29,7 @@ public class Artist {
     private String education;
     private String tel;
     private String mail;
+    private String mailType;
     private String thumbnailImg;
 
     private String introduce;
