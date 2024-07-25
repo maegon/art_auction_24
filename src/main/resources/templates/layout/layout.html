@@ -29,6 +29,7 @@
 
     <!-- 각 페이지 css 연결 -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/layout.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/main.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/login.css}">
@@ -39,6 +40,10 @@
 </head>
 
 <body>
+    <!-- 페이지 로딩 화면 -->
+    <div class="loader">
+        <div class="drop"></div>
+    </div>
     <!-- 고정 header -->
     <nav th:replace="~{layout/header :: headerFragment}"></nav>
     
@@ -49,6 +54,7 @@
     <!-- 기본 템플릿 안에 삽입될 내용 끝 -->
 
     <!--자바스크립트 시작-->
+    <script th:src="@{/js/common/layout.js}"></script>
     <script th:src="@{/js/common/header.js}"></script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
