@@ -1,24 +1,41 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const colors = ['#FF38A9', '#67F0E0'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    const drop = document.querySelector('.drop');
-    drop.style.backgroundColor = randomColor;
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      number: 0
+    }
+  }
+  componentDidMount() {
+    
+    let interval = setInterval(() => {
+      const { number } = this.state
+      if (number < 100) {
+        this.setState({ number: number + 1})
+      } else {
+        interval.clearInterval()
+      }
+    }, 50)
+  }
+  render() {
+    return (
+      <div className="App">
+        <Loader number={this.state.number} />
+      </div>
+    )
+  }
+}
 
-    window.onload = function() {
-        const loader = document.querySelector('.loader');
-        const drop = document.querySelector('.drop');
+const Loader = ({ number }) => {
+  let numberString = number
+  if(number < 10) {
+    numberString = '0' + number
+  }
+  return (
+    <div className="Loader" data-size={number}>{numberString}<sup>%</sup></div>
+  )
+}
 
-        drop.addEventListener('animationend', (event) => {
-            if (event.animationName === 'shapeChange') {
-                loader.style.transition = 'opacity 1s ease';
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.querySelector('.content-area').style.display = 'block';
-                    document.body.classList.add('scrolled');
-                }, 500);
-            }
-        });
-        drop.style.opacity = '1';
-    };
-});
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)

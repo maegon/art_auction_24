@@ -26,7 +26,7 @@ public class DevInitData implements BeforeInitData {
         return args -> {
             beforeInit();
 
-            String password = "test1234!T";
+            String password = "test123!";
 
             memberService.join("admin", password, "admin@test.com", "admin",
                     "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
