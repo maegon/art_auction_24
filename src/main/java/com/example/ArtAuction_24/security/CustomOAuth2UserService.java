@@ -24,7 +24,7 @@ import java.util.Map;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final MemberService memberService;
 
-    // 카카오톡 로그인이 성공할 때 마다 이 함수가 실행된다.
+    // 소셜 로그인이 성공할 때 이 함수가 실행된다.
     @Override
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

@@ -5,6 +5,7 @@ import com.example.ArtAuction_24.member.form.MemberForm;
 import com.example.ArtAuction_24.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ import java.util.UUID;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private EmailService emailService;
+    private final EmailService emailService;
 
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
@@ -45,7 +46,9 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) { //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
+    public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
+        //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
+        // 작가로 선택된 회원의 예술활동증명서도 추가해봐야 함
         if (bindingResult.hasErrors()) {
             return "member/join";
         }
@@ -65,6 +68,7 @@ public class MemberController {
                             "감사합니다, Art Auction 드림.",
                     memberForm.getUsername()
             );
+
 
             emailService.send(memberForm.getEmail(), "Art Auction 가입을 환영합니다!", bodyText);
 

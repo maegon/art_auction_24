@@ -1,6 +1,25 @@
 <html layout:decorate="~{layout/layout}">
+<script>
+    function toggleCertificateDiv() {
+        var userType = document.getElementById("userType").value;
+        var certificateDiv = document.getElementById("certificateDiv");
+        if (userType === "artist") {
+            certificateDiv.style.display = "block";
+        } else {
+            certificateDiv.style.display = "none";
+        }
+    }
+</script>
 <div layout:fragment="content">
     <h1 class="text-[20px] font-bold">회원가입 페이지</h1>
+    
+    <div class="mb-3">
+        <label for="userType" class="component-input">회원 유형</label>
+        <select id="userType" name="userType" class="form-control" onchange="toggleCertificateDiv()">
+            <option value="general">일반</option>
+            <option value="artist">작가</option>
+        </select>
+    </div>
     
     <form th:action="@{/member/join}" th:object="${memberForm}" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
@@ -47,14 +66,18 @@
             <input type="file" name="profileImage" id="profileImage" class="form-control">
             <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
         </div>
+        <div class="mb-3" id="certificateDiv" style="display: none;">
+            <label id="component-input-certificateFile" for="certificateFile" class="component-input">예술활동증명서를 첨부하여 주세요</label>
+            <input type="file" name="certificateFile" id="certificateFile" class="form-control">
+        </div>
         <button type="submit" class="join-submit btn btn-primary" disabled>회원가입</button>
         <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
-        <button type="button" onclick="if(confirm('회원 가입을 취소하시겠습니까?')) { window.location.href='/'; }">&lt;</button>
+        <button type="button" onclick="if(confirm('회원 가입을 취소하시겠습니까?')) { window.location.href='/'; }"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
     </form>
 </div>
 </html>
 
-<!-- 카카오 주소 찾기 -->
+<!-- 주소 찾기(다음 카카오 API 사용) -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
