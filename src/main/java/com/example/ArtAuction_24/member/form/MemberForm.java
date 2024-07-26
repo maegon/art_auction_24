@@ -21,8 +21,8 @@ public class MemberForm {
 
     @Size(min = 6, max = 24)
     @NotBlank
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[!@#])[a-z\\d!@#]{6,24}$",
-            message = "각각 하나 이상의 소문자, 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요.")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[!@#])[\\d!@#]{6,24}$",
+            message = "각각 하나 이상의 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요.")
     private String password;
 
     @NotBlank
@@ -36,8 +36,8 @@ public class MemberForm {
     private String nickname;
 
     @NotBlank
-    @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$",
-            message = "000-0000-0000 형식에 맞게 작성해주세요.")
+    @Pattern(regexp = "^\\d{3}\\d{4}\\d{4}$",
+            message = "- 없이 작성해주세요.")
     private String phoneNumber;
 
     @NotBlank

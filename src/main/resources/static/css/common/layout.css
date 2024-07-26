@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.App {
+  background: #131F2F;
+  font-family: 'Teko', serif;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Loader {
+  color: white;
+  font-size: 10vw;
+  letter-spacing: .01;
+  transition: transform .125s ease;
+
+  sup {
+    font-size: 50%;
+    vertical-align: baseline;
+  }
+
+  @for $i from 1 through 100 {
+    &[data-size="#{$i}"] {
+      $int: ($i / 50) + 0.5;
+      $opacityInt: $i / 100;
+      transform: scale($int);
+      opacity: $opacityInt;
+    }
+  }
+}
+body.scrolled {
+    overflow: auto;
+}

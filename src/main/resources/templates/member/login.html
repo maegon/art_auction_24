@@ -1,52 +1,91 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <h1 class="text-[20px] font-bold">로그인 페이지</h1>
-    
     <form th:action="@{/member/login}" method="POST">
-        <p class="login-title">로그인</p>
-        <div class="form-item-wrap">
-            <div class="id-input">
-                <input id="component-input-id" class="component-input" name="username" type="text" placeholder="아이디를 입력해주세요" value>
-                <label for="component-input-id" class="placeholder"></label>
+        <div class="section">
+            <div class="container">
+                <div class="row full-height justify-center">
+                    <div class="col-12 text-center align-self-center py-5">
+                        <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                            <h6 class="mb-0 pb-3">
+                                <span>Log In </span>
+                                <span>Join</span></h6>
+                            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                            <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
+                            <div class="card-3d-wrap mx-auto">
+                                <div class="card-3d-wrapper">
+                                    <div class="card-front">
+                                        <div class="center-wrap">
+                                            <div class="section text-center">
+                                                <h4 class="mb-8 pb-3 text-4xl">로그인</h4>
+                                                <div class="form-group mt-4">
+                                                    <input type="text" name="username" class="form-style component-input" placeholder="아이디를 입력해주세요" id="component-input-id" autocomplete="off" value>
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-4">
+                                                    <input type="password" name="password" class="form-style component-input" placeholder="비밀번호를 입력해주세요" id="component-input-password" autocomplete="off" value>
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <button type="submit" class="login-submit btn mt-4" disabled><a href="/">로그인</a></button>
+                                                <p class="mb-2 mt-4 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
+                                                <div class="social-login-wrap">
+                                                    <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="60px"></a>
+                                                    <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png" alt="네이버로그인" width="60px"></a>
+                                                    <a href="/oauth2/authorization/google"><img src="/image/google_logo.png" alt="구글로그인" width="60px"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-back">
+                                        <div class="center-wrap">
+                                            <div class="section text-center">
+                                                <h4 class="mb-8 pb-3 text-4xl">회원가입</h4>
+                                                <div class="memberCheckForm flex justify-center">
+                                                    <label for="userType" class="component-input">회원 유형</label>
+                                                    <select id="userType" name="userType" class="form-control w-10" onchange="toggleCertificateDiv()">
+                                                        <option value="general" class="">일반</option>
+                                                        <option value="artist" class="">작가</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="username" class="form-style" placeholder="아이디를 입력해주세요" id="username" autocomplete="off">
+                                                    <i class="input-icon uil uil-user"></i>
+                                                    <button type="button" onclick="validateForm()" class="btn m-2">중복확인</button>
+                                                    <div id="joinError" th:text="${joinError}" class="error"></div>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="password" name="password" class="form-style" maxlength="24" placeholder="비밀번호를 입력해주세요" id="password" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="password" name="password_confirm" class="form-style" maxlength="24" placeholder="비밀번호를 재입력해주세요" id="passwordConfirm" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                    <div id="passwordMatchError" class="error"></div>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="email" name="logemail" class="form-style" placeholder="이메일을 입력해주세요" id="logemail" autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div class="form-group mt-2" id="certificateDiv" style="display: none;">
+                                                    <label id="component-input-certificateFile" for="certificateFile" class="component-input">예술활동증명서를 첨부해주세요</label>
+                                                    <input type="file" name="certificateFile" id="certificateFile" class="form-control inputCertificateFile" accept=".pdf">
+                                                </div>
+                                                <button type="submit" class="join-submit btn mt-4" disabled><a href="/">회원가입</a></button>
+                                                <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-item-wrap">
-            <div class="password-input">
-                <input id="component-input-password" class="component-input" name="password" type="password" placeholder="패스워드를 입력해주세요" value>
-                <label for="component-input-password" class="placeholder"></label>
-            </div>
-        </div>
-        <div class="forgot-btn-wrap">
-            <a th:href="@{findId}">아이디 찾기</a>
-            <a th:href="@{findPw}">비밀번호 찾기</a>
-            <a th:href="@{/member/join}">회원가입</a>
-        </div>
-        <button type="submit" class="login-submit btn btn-primary" disabled>로그인</button>
-        <p>소셜 계정으로 로그인하기</p>
-        <div class="social-login-wrap">
-            <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="60px"></a>
-            <a href="#"><img src="/image/naver_logo.png" alt="네이버로그인" width="60px"></a>
-            <a href="#"><img src="/image/google_logo.png" alt="구글로그인" width="60px"></a>
         </div>
     </form>
 </div>
 </html>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.querySelector(".login-submit");
-        const usernameInput = document.getElementById("component-input-id");
-        const passwordInput = document.getElementById("component-input-password");
-        
-        function updateLoginButtonState() {
-            if (usernameInput.value.trim() !== "" && passwordInput.value.trim() !== "") {
-                loginButton.removeAttribute("disabled");
-            } else {
-                loginButton.setAttribute("disabled", "true");
-            }
-        }
-        
-        usernameInput.addEventListener("input", updateLoginButtonState);
-        passwordInput.addEventListener("input", updateLoginButtonState);
-    });
-</script>
+<!-- 주소 찾기(다음 카카오 API 사용) -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/js/common/login.js}"></script>
+<script th:src="@{/js/common/join.js}"></script>
