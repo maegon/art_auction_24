@@ -185,19 +185,22 @@
 
     <div class="bestArtist-container">
         <div class="aucTitle">
-            <div>예정된 경매</div>
-            <div class="viewAll">전체보기 →</div>
+            <div>추천 작가</div>
         </div>
         <div class="best-artist-section">
             <div class="artist-container">
                 <div class="artist-info">
-                    <p>작가 이름<br>작가 소개</p>
+                    <div class="bestArtist-info-artistName">작가 이름<<<div class="bestArtist-info-title">작품 이름</div>>></div>
+                    <div class="bestArtist-info-description">작품 설명</div>
+                    <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
                 </div>
                 <div class="artist-image">
                     <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
                 </div>
                 <div class="artist-info">
-                    <p>작가 이름<br>작가 소개</p>
+                    <div class="bestArtist-info-artistName">작가 이름<<<div class="bestArtist-info-title">작품 이름</div>>></div>
+                    <div class="bestArtist-info-description">작품 설명</div>
+                    <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
                 </div>
                 <div class="artist-image">
                     <img th:src="@{/image/풀사진.jpg}" alt="이미지 1">
@@ -206,6 +209,41 @@
         </div>
     </div>
 
+    <div class="guide-container">
+        <div class="guideTitle">
+            <div>경매 가이드</div>
+        </div>
+        <section class="cards">
+            <div class="owl-wrapper">
+                <div class="loop owl-carousel owl-theme">
+
+                    <article class="card">
+                        <div class="card__content">
+                            <h4 class="card__title"><span>Card One</span></h4>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card__content">
+                            <h4 class="card__title"><span>Card Two</span></h4>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card__content">
+                            <h4 class="card__title"><span>Card Three</span></h4>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card__content">
+                            <h4 class="card__title"><span>Card Four</span></h4>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
 
 </div>
 </html>

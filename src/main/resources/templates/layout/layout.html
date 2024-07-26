@@ -29,15 +29,23 @@
 
     <!-- unicons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    
+
+    <!--guide-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.min.css">
+
     <!-- 각 페이지 css 연결 -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/layout.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/base.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/header.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/login.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/join.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/footer.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/artist.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/introduce.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login/login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login/join.css}">
+
+
     
     
 </head>
@@ -57,9 +65,16 @@
     <!--자바스크립트 시작-->
     <script th:src="@{/js/common/layout.js}"></script>
     <script th:src="@{/js/common/header.js}"></script>
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!--guide JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
     <script th:src="@{/js/common/main.js}"></script>
     <!--자바스크립트 끝-->
+
+    <!-- 고정 footer -->
+    <nav th:replace="~{layout/footer :: footerFragment}"></nav>
 </body>
 </html>
