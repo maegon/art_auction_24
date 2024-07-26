@@ -36,9 +36,6 @@ public class Artist extends BaseEntity {
     @ManyToOne
     private Member author;
 
-    @ManyToMany
-    Set<Member> voters = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArtistAdd> artistAdds;
 
@@ -47,10 +44,6 @@ public class Artist extends BaseEntity {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TitleAdd> titleAdds;
-
-    public void addVoter(Member voter) {
-        voters.add(voter);
-    }
 
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;
