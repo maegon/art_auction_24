@@ -2,20 +2,22 @@
 <div layout:fragment="content">
     <div class="container mx-auto px-4 min-h-[1200px] flex">
         <div class="container w-[600px] border-2 border-rose-600">
-            <div class="container mx-auto w-[350px] h-[400px] mt-[200px] bg-stone-100">
-                <div class="container mx-auto w-[350px] h-[250px]">
+            <div class="container mx-auto w-[300px] h-[400px] mt-[200px] bg-stone-100">
+                <div class="container mx-auto  h-[250px]">
                     <ul>
-                        <li class="text-center"><span>작품 및 작가</span></li>
-                        <li class="text-center"><span>작품구매</span></li>
-                        <li class="text-center"><span>SERVICE</span></li>
-                        <li class="text-center"><span>배송</span></li>
-                        <li class="text-center"><span>반품</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-3"><span>작품 및 작가</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>작품구매</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>SERVICE</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>배송</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>반품</span></li>
                     </ul>
                 </div>
-                <div class="container mx-auto w-[350px] h-[150px]">
-                    <span>답변을 못찾으셨나요?</span><br>
-                    <button>문의하기</button>
+                <hr>
+                <div class="container mx-auto w-[250px] h-[150px]">
+                    <span class="text-xl my-3 block">답변을 못찾으셨나요?</span>
+                    <button class="bg-black text-[#D5A770] text-xl h-10 px-4 my-3 ml-[100px] rounded-xl">문의하기</button>
                 </div>
+
 
             </div>
         </div>
@@ -23,19 +25,21 @@
             <div class="h-[150px] border-2 border-rose-600 flex justify-center items-center">
                 <span class="text-center font-bold text-3xl">FAQ</span>
             </div>
-            <div class="flex-grow border-2 border-blue-600">
-                <table>
-                    <thead>
+            <div class="border-2 border-blue-600 mx-20 my-20">
 
-                    <tbody>
-                    <tr th:each="question : ${questionList}">
-                        <td th:text="${question.subject}"></td>
-                        <td th:text="${question.createDate}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <div class="w-full">
+                        <span class="font-bold text-2xl ml-20"> 작품 및 작가</span>
+                    </div>
+
+
+                    <ul class="ml-40" th:each="question : ${questionList}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
+                        <li th:text="${question.createDate}"></li>
+                    </ul>
             </div>
         </div>
 
     </div>
-</div>
+
+    </div>
+</html>
