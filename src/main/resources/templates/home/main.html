@@ -14,6 +14,7 @@
     </div>
 
     <div class="main-container">
+        <div class="ongoing-container">
         <div class="aucTitle">
             <div>진행중인 경매</div>
             <div class="viewAll">전체보기 →</div>
@@ -24,6 +25,7 @@
                     <img class="ongoing-img" th:src="@{/image/그리다만여자사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -31,6 +33,7 @@
                     <img class="ongoing-img" th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -38,6 +41,7 @@
                     <img class="ongoing-img" th:src="@{/image/눈사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -45,6 +49,7 @@
                     <img class="ongoing-img" th:src="@{/image/레몬사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -52,6 +57,7 @@
                     <img class="ongoing-img" th:src="@{/image/물고기사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -59,6 +65,7 @@
                     <img class="ongoing-img" th:src="@{/image/산사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -66,6 +73,7 @@
                     <img class="ongoing-img" th:src="@{/image/아이사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -73,6 +81,7 @@
                     <img class="ongoing-img" th:src="@{/image/파란물고기사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
@@ -80,11 +89,139 @@
                     <img class="ongoing-img" th:src="@{/image/풀사진.jpg}" alt="이미지 1">
                     <div class="ongoing-info">
                         <div class="ongoing-info-title">작품 제목</div>
+                        <div class="ongoing-info-artistName">작가 이름</div>
                         <div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-pagination ongoing-pagination"></div>
+        </div>
+        </div>
+
+        <div class="upcoming-container">
+            <div class="aucTitle">
+                <div>예정된 경매</div>
+                <div class="viewAll">전체보기 →</div>
+            </div>
+            <div class="swiper upcomingAuc">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/그리다만여자사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/풀사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/파란물고기사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/아이사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/산사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/물고기사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/레몬사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/눈사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide upcoming-slide">
+                        <img class="upcoming-img" th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
+                        <div class="upcoming-info">
+                            <div class="upcoming-info-title">작품 제목</div>
+                            <div class="upcoming-info-artistName">작가 이름</div>
+                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination upcoming-pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bestArtist-container">
+        <div class="bestArtist-title">
+            <div>추천 작가</div>
+        </div>
+        <div class="best-artist-section">
+            <div class="artist-container">
+                <div class="artist-info">
+                    <div class="bestArtist-info-artistName">작가 이름&lt;&lt;<div class="bestArtist-info-title">작품 이름</div>&gt;&gt;</div>
+                    <div class="bestArtist-info-description">작품 설명</div>
+                    <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
+                </div>
+                <div class="artist-image">
+                    <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="guide-container">
+        <div class="guide-Title">
+            <div>경매 가이드</div>
+        </div>
+        <div class="guide-section">
+            <div class="guide-section-left">
+                <div class="text-overlay">
+                    <div class="howToBuyTitle">구매 방법</div>
+                    <div class="howToBuyBody">어렵지 않게 경매에 참여해보세요!!</div>
+                    <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
+                </div>
+                <img src="/image/구매.png" alt="구매 이미지">
+            </div>
+            <div class="guide-section-right">
+                <div class="text-overlay">
+                    <div class="howToSellTitle">판매 방법</div>
+                    <div class="howToSellBody">작가가 되어 그림을 올려보세요</div>
+                    <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
+                </div>
+                <img src="/image/판매.png" alt="판매 이미지">
+            </div>
         </div>
     </div>
 

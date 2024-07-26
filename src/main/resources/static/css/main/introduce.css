@@ -1,0 +1,46 @@
+.introduce-container {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    color: white;
+    line-height: 1.6;
+}
+
+.introduce-sec {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    background-color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.introduce-sec:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.introduce-sec > h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.introduce-sec > p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.introduce-sec > ul {
+    list-style: none;
+    padding: 0;
+}
+
+.introduce-sec > li {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.introduce-sec > li strong {
+    color: white;
+}
