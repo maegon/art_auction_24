@@ -17,11 +17,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Artist {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Artist extends BaseEntity {
 
     private String korName;
     private String engName;
