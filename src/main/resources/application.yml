@@ -73,3 +73,7 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 30MB
+custom:
+  genFileDirPath: C:\work\ArtAuction_24\src\main\resources\static
+  file:
+    path: /ArtAuction이용약관.pdf

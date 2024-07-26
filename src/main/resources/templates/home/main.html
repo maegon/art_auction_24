@@ -184,66 +184,47 @@
     </div>
 
     <div class="bestArtist-container">
-        <div class="aucTitle">
+        <div class="bestArtist-title">
             <div>추천 작가</div>
         </div>
         <div class="best-artist-section">
             <div class="artist-container">
                 <div class="artist-info">
-                    <div class="bestArtist-info-artistName">작가 이름<<<div class="bestArtist-info-title">작품 이름</div>>></div>
+                    <div class="bestArtist-info-artistName">작가 이름&lt;&lt;<div class="bestArtist-info-title">작품 이름</div>&gt;&gt;</div>
                     <div class="bestArtist-info-description">작품 설명</div>
                     <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
                 </div>
                 <div class="artist-image">
                     <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
                 </div>
-                <div class="artist-info">
-                    <div class="bestArtist-info-artistName">작가 이름<<<div class="bestArtist-info-title">작품 이름</div>>></div>
-                    <div class="bestArtist-info-description">작품 설명</div>
-                    <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
-                </div>
-                <div class="artist-image">
-                    <img th:src="@{/image/풀사진.jpg}" alt="이미지 1">
-                </div>
             </div>
         </div>
     </div>
 
     <div class="guide-container">
-        <div class="guideTitle">
+        <div class="guide-Title">
             <div>경매 가이드</div>
         </div>
-        <section class="cards">
-            <div class="owl-wrapper">
-                <div class="loop owl-carousel owl-theme">
-
-                    <article class="card">
-                        <div class="card__content">
-                            <h4 class="card__title"><span>Card One</span></h4>
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <div class="card__content">
-                            <h4 class="card__title"><span>Card Two</span></h4>
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <div class="card__content">
-                            <h4 class="card__title"><span>Card Three</span></h4>
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <div class="card__content">
-                            <h4 class="card__title"><span>Card Four</span></h4>
-                        </div>
-                    </article>
+        <div class="guide-section">
+            <div class="guide-section-left">
+                <div class="text-overlay">
+                    <div class="howToBuyTitle">구매 방법</div>
+                    <div class="howToBuyBody">어렵지 않게 경매에 참여해보세요!!</div>
+                    <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
                 </div>
+                <img src="/image/구매.png" alt="구매 이미지">
             </div>
-        </section>
+            <div class="guide-section-right">
+                <div class="text-overlay">
+                    <div class="howToSellTitle">판매 방법</div>
+                    <div class="howToSellBody">작가가 되어 그림을 올려보세요</div>
+                    <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
+                </div>
+                <img src="/image/판매.png" alt="판매 이미지">
+            </div>
+        </div>
     </div>
+
 
 </div>
 </html>

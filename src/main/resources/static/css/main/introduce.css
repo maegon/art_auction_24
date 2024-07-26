@@ -1,7 +1,7 @@
 .introduce-container {
     padding: 40px 20px;
-    background-color: black;
-    color: #333;
+    background-color: #ffffff;
+    color: white;
     line-height: 1.6;
 }
 
@@ -9,7 +9,7 @@
     max-width: 800px;
     margin: 0 auto 40px;
     padding: 20px;
-    background-color: #fff;
+    background-color: black;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -23,7 +23,7 @@
 .introduce-sec > h2 {
     font-size: 2em;
     margin-bottom: 15px;
-    color: #222;
+    color: white;
 }
 
 .introduce-sec > p {
@@ -42,5 +42,5 @@
 }
 
 .introduce-sec > li strong {
-    color: #555;
+    color: white;
 }
