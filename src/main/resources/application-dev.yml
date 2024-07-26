@@ -7,7 +7,7 @@ spring:
     restart:
       enabled: true
   datasource:
-    url: jdbc:mariadb://127.0.0.1:3306/ArtAuction_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://127.0.0.1:3306/ArtAuction_db?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
     username: root
     password:
   jpa:
