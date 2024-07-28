@@ -183,47 +183,54 @@
         </div>
     </div>
 
-    <div class="bestArtist-container">
-        <div class="bestArtist-title">
+    <div class="bestArtist-container w-full mt-10 md:px-[300px]">
+        <div class="bestArtist-title flex justify-between items-center text-xl font-bold mt-20 border-b border-black">
             <div>추천 작가</div>
         </div>
-        <div class="best-artist-section">
-            <div class="artist-container">
-                <div class="artist-info">
-                    <div class="bestArtist-info-artistName">작가 이름&lt;&lt;<div class="bestArtist-info-title">작품 이름</div>&gt;&gt;</div>
-                    <div class="bestArtist-info-description">작품 설명</div>
-                    <div class="bestArtist-info-endTime">예정 07-24 3:00 PM</div>
+        <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-8">
+            <div class="artist-container flex flex-wrap items-center justify-between mb-5">
+                <div class="artist-info flex-1 text-white p-5 font-bold max-w-xl">
+                    <div class="bestArtist-info-artistName text-lg text-white font-bold mb-2 flex">
+                        작가 이름&lt;&lt;<div class="bestArtist-info-title">작품 이름</div>&gt;&gt;
+                    </div>
+                    <div class="bestArtist-info-description text-base text-white mb-2">작품 설명</div>
+                    <div class="bestArtist-info-endTime text-sm text-red-500">예정 07-24 3:00 PM</div>
                 </div>
                 <div class="artist-image">
-                    <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
+                    <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1" class="w-full max-w-xs rounded-lg mr-5">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="guide-container">
-        <div class="guide-Title">
+
+    <div class="guide-container mb-24 md:px-[300px]">
+        <div class="guide-Title flex justify-between items-center text-xl font-bold mt-20 border-b border-black">
             <div>경매 가이드</div>
         </div>
-        <div class="guide-section">
-            <div class="guide-section-left">
-                <div class="text-overlay">
-                    <div class="howToBuyTitle">구매 방법</div>
-                    <div class="howToBuyBody">어렵지 않게 경매에 참여해보세요!!</div>
+        <div class="guide-section flex flex-col md:flex-row justify-around items-center p-5 mt-8 space-y-5 md:space-y-0">
+            <div class="guide-section-left relative bg-gradient-to-l from-gray-200 to-indigo-200 w-96 rounded-lg">
+                <div class="text-overlay absolute bottom-12 right-2 p-2">
+                    <div class="howToBuyTitle text-lg font-bold">구매 방법</div>
+                    <div class="howToBuyBody text-sm text-gray-600">어렵지 않게 경매에 참여해보세요!!</div>
                     <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
                 </div>
-                <img src="/image/구매.png" alt="구매 이미지">
+                <img src="/image/구매.png" alt="구매 이미지" class="w-48 h-48">
             </div>
-            <div class="guide-section-right">
-                <div class="text-overlay">
-                    <div class="howToSellTitle">판매 방법</div>
-                    <div class="howToSellBody">작가가 되어 그림을 올려보세요</div>
+            <div class="guide-section-right relative bg-gradient-to-l from-gray-300 to-yellow-200 w-96 rounded-lg">
+                <div class="text-overlay absolute bottom-12 right-2 p-2">
+                    <div class="howToSellTitle text-lg font-bold">판매 방법</div>
+                    <div class="howToSellBody text-sm text-gray-600">작가가 되어 그림을 올려보세요</div>
                     <a href="/home/introduce"><div>더 알아보기 &gt;</div></a>
                 </div>
-                <img src="/image/판매.png" alt="판매 이미지">
+                <img src="/image/판매.png" alt="판매 이미지" class="w-48 h-48">
             </div>
         </div>
     </div>
+
+
+
+
 
 
 </div>
