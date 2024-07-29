@@ -51,8 +51,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function validateForm() {
     const joinError = document.getElementById("joinError");
+    const joinError = document.getElementById("nicknameError");
     const submitButton = document.getElementById("join-submit");
     const usernameInput = document.getElementById("username");
+    const usernameInput = document.getElementById("nickname");
     const username = usernameInput.value.trim();
     if (username !== "") {
         fetch("/member/check-username?username=" + username)
@@ -73,8 +75,29 @@ function validateForm() {
             .catch(error => {
                 console.error('Error:', error);
             });
-        }
     }
+
+    if (nickname !== "") {
+            fetch("/member/check-nickname?nickname=" + nickname)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        nicknameError.innerText = "(이미 존재하는 닉네임입니다.)";
+                        nicknameError.classList.remove("success");
+                        nicknameError.classList.add("error");
+                        submitButton.disabled = true;
+                    } else {
+                        nicknameError.innerText = "(입력하신 닉네임은 사용 가능합니다.)";
+                        nicknameError.classList.remove("error");
+                        nicknameError.classList.add("success");
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+}
 
     function checkPasswords() {
         const password = document.getElementById("password").value;
@@ -97,7 +120,7 @@ function validateForm() {
         } else {
             passwordMatchError.innerText = "";
         }
-}
+    }
 
 
 // 주소 검색
