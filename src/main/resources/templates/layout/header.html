@@ -1,31 +1,29 @@
 <nav th:fragment="headerFragment" class="header">
-    <section class="header_container">
+    <section class="header_section">
         <nav class="header_nav">
             <div class="nav__logo">
                 <a href="/" class="main_logo">
                     <img th:src="@{/image/logo1.png}" alt="이미지">
                 </a>
             </div>
-            <nav class="nav__main">
-                <ul class="flex">
-                    <li><a href="#" class="block text-lg"><span>경매</span></a></li>
-                    <li><a href="#" class="block text-lg"><span>작품</span></a></li>
-                    <li><a href="#" class="block text-lg"><span>캘린더</span></a></li>
-                </ul>
-            </nav>
-
-            <ul class="nav__login">
-                <li>
-                    <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
-                    <a id="header_logoutBtn" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
-
-                </li>
-            </ul>
-
-            <a href="#" class="nav__bar">
+            <a href="#" class="nav__bar" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i>
             </a>
-
+            <ul class="nav__main">
+                <li><a href="#" class="nav_Auction"><span>경매</span></a></li>
+                <li><a href="#" class="nav_Product"><span>작품</span></a></li>
+                <li><a href="#" class="nav_Calender"><span>캘린더</span></a></li>
+            </ul>
+            <div class="nav__login">
+                <div id="search_container">
+                    <input type="text" id="search_input" placeholder="작가명 또는 작품명 검색"/>
+                    <button type="button" id="search_button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+                <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+                <a id="header_logoutBtn" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+            </div>
         </nav>
     </section>
 </nav>

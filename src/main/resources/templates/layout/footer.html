@@ -1,23 +1,24 @@
 <nav th:fragment="footerFragment" class="footer">
-    <footer>
-        <div class="footer-container">
-            <div class="footer-links">
-                <div class="footer-icons">
-                <a th:href="@{/home/introduce}">회사소개</a>
-                <a th:href="@{${@environment.getProperty('custom.file.path')}}" download="Art Auction-이용약관.pdf">이용약관</a>
+
+    <footer class="bg-black text-white flex flex-col md:flex-row md:justify-between md:items-center px-6 md:px-[300px] py-4">
+        <div class="footer-container w-full h-full">
+            <div class="footer-links flex justify-between items-center mb-4 md:mb-2">
+                <div class="footer-icons flex gap-5">
+                    <a th:href="@{/home/introduce}" class="text-white no-underline">회사소개</a>
+                    <a th:href="@{${@environment.getProperty('custom.file.path')}}" download="Art Auction-이용약관.pdf" class="text-white no-underline">이용약관</a>
                 </div>
-                <div class="footer-icons">
-                    <a href="#">FAQ</a>
-                    <a href="https://www.youtube.com/channel/UCUkFtFAesN-YZ7cK0ry13Vg">Youtube</a>
+                <div class="footer-icons flex gap-5">
+                    <a href="#" class="text-white no-underline">FAQ</a>
+                    <a href="https://www.youtube.com/channel/UCUkFtFAesN-YZ7cK0ry13Vg" class="text-white no-underline">Youtube</a>
                 </div>
             </div>
-            <hr class="footer-hr">
-            <div class="footer-info">
-                <p>대표이사: 홍길동 | 대표전화: 042-1234-5678</p>
-                <p>주소: 대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층</p>
-                <p>케이옥션 사이트의 이미지 및 영상, 문자 등의 자료 또는 정보(웹사이트 화면 포함)에 대한 무단복제, 전송, 배포, 크롤링/스크래핑 등의
+            <hr class="border-gray-600">
+            <div class="footer-info text-gray-400 text-left mt-4 md:mt-8">
+                <p class="my-2">대표이사: 홍길동 | 대표전화: 042-1234-5678</p>
+                <p class="my-2">주소: 대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층</p>
+                <p class="my-2">케이옥션 사이트의 이미지 및 영상, 문자 등의 자료 또는 정보(웹사이트 화면 포함)에 대한 무단복제, 전송, 배포, 크롤링/스크래핑 등의
                     <br>행위는 저작권법, 부정경쟁방지 및 영업비밀보호에 관한 법률 등 관련 법령에 의하여 엄격히 금지됩니다.</p>
-                <p>Copyright ⓒ Art Auction. All Rights Reserved</p>
+                <p class="my-2">Copyright ⓒ Art Auction. All Rights Reserved</p>
             </div>
         </div>
     </footer>
