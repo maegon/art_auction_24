@@ -40,17 +40,12 @@ public class MemberController {
         return "member/login";
     }
 
-    @GetMapping("/join")
-    public String showJoin () {
-        return "member/join";
-    }
-
     @PostMapping("/join")
     public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
         //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
         // 작가로 선택된 회원의 예술활동증명서도 추가해봐야 함
         if (bindingResult.hasErrors()) {
-            return "member/join";
+            return "redirect:/member/login";
         }
         try {
             String imageFileName = myProfileImage(memberForm.getProfileImage());
@@ -74,7 +69,7 @@ public class MemberController {
 
         } catch(IllegalStateException e) {
             model.addAttribute("joinError", "이미 중복된 이메일 또는 아이디입니다");
-            return "member/join";
+            return "redirect:/member/login";
         }
 
 
