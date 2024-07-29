@@ -54,8 +54,9 @@ function validateForm() {
     const joinError = document.getElementById("nicknameError");
     const submitButton = document.getElementById("join-submit");
     const usernameInput = document.getElementById("username");
-    const usernameInput = document.getElementById("nickname");
+    const nicknameInput = document.getElementById("nickname");
     const username = usernameInput.value.trim();
+    const nickname = nicknameInput.value.trim();
     if (username !== "") {
         fetch("/member/check-username?username=" + username)
             .then(response => response.json())

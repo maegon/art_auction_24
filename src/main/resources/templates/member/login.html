@@ -1,5 +1,4 @@
 <html layout:decorate="~{layout/layout}">
-<script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
 <div layout:fragment="content">
     <form th:action="@{/member/login}" method="POST">
         <div class="section">
@@ -17,27 +16,20 @@
                                     <div class="card-front">
                                         <div class="center-wrap">
                                             <div class="section text-center">
-                                                <h4 class="mb-14 pb-3 text-4xl">로그인</h4>
-                                                <div class="form-group mt-14">
+                                                <h4 class="mb-14 pb-3 text-4xl">로그인!!!!!</h4>
+                                                <div class="form-group mt-18">
                                                     <input type="text" name="username" class="form-style component-input" placeholder="아이디를 입력해주세요" id="component-input-id" autocomplete="off" value>
                                                     <i class="input-icon uil uil-user"></i>
+                                                    <p id="username-error" class="error-message text-red-500">아이디가 존재하지 않습니다.</p>
                                                 </div>
                                                 <div class="form-group mt-14">
                                                     <input type="password" name="password" class="form-style component-input" placeholder="비밀번호를 입력해주세요" id="component-input-password" autocomplete="off" value>
                                                     <i class="input-icon uil uil-lock-alt"></i>
+                                                    <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지 않습니다.</p>
                                                 </div>
-                                                <div class="form-group mt-14">
-                                                    <div class="loginBotCheck">
-                                                        <form action="" method="POST">
-                                                            <div class="g-recaptcha" data-sitekey="6LdejxoqAAAAAPf8rBO1gZwso_EzAianf3vGIdyb" data-action="LOGIN"></div>
-                                                            <br/>
-                                                            <input type="submit" value="Submit">
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="login-submit btn mt-14" disabled><a href="/">로그인</a></button>
+                                                <button type="submit" class="login-submit btn mt-28" disabled><a href="/">로그인</a></button>
                                                 <p class="mb-2 mt-14 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
-                                                <div class="social-login-wrap">
+                                                <div class="social-login-wrap mt-20">
                                                     <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="80px"></a>
                                                     <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png" alt="네이버로그인" width="80px"></a>
                                                     <a href="/oauth2/authorization/google"><img src="/image/google_logo.png" alt="구글로그인" width="80px"></a>

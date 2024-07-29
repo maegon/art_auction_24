@@ -11,11 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
             loginButton.setAttribute("disabled", "true");
         }
     }
-
-
     usernameInput.addEventListener("input", updateLoginButtonState);
     passwordInput.addEventListener("input", updateLoginButtonState);
     loginButton.addEventListener("click", handleLogin);
 
     updateLoginButtonState();
 });
+
