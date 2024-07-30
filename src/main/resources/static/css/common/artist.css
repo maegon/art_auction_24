@@ -8,14 +8,14 @@
     background-color: #f5f5f5;
 }
 
-/*.container {
+.container {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 600px;
-}*/
+}
 
 .thumbnail {
     position: relative;
