@@ -1,15 +1,13 @@
 package com.example.ArtAuction_24.artist.entity;
 
 import com.example.ArtAuction_24.base.entity.BaseEntity;
-import com.example.ArtAuction_24.product.entity.Product;
+import com.example.ArtAuction_24.product.entity.AuctionProduct;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.member.entity.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -52,7 +50,7 @@ public class Artist {
     private List<TitleAdd> titleAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
-    private List<Product> product;
+    private List<AuctionProduct> product;
 
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;

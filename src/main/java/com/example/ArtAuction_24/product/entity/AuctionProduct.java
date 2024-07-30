@@ -26,7 +26,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product extends BaseEntity {
+public class AuctionProduct extends BaseEntity {
 
     private String title;
     private String description;
@@ -34,8 +34,8 @@ public class Product extends BaseEntity {
     private String dimensions; //크기
     private BigDecimal startingPrice; //시작 가격
     private BigDecimal currentBid; // 현재 입찰가
-    private LocalDateTime auctionEndDate; // 종료 일
-    private String imageUrl; // 그림 이미지
+    private LocalDateTime auctionStartDate; // 시작 일
+    private String thumbnailImg; // 그림 이미지
     private String category; // 카테고리
 
     @ManyToOne
@@ -44,6 +44,6 @@ public class Product extends BaseEntity {
     @ManyToOne
     private Auction auction;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "auctionProduct", cascade = CascadeType.REMOVE)
     private List<Review> reviewList;
 }

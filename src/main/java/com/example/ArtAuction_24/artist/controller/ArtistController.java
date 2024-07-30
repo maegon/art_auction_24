@@ -71,7 +71,7 @@ public class ArtistController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String artistModify(@Valid ArtistForm artistForm, BindingResult bindingResult,
-                               Principal principal, @PathVariable("id") Integer id) {
+                               Principal principal, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "profileForm";
         }
@@ -101,7 +101,7 @@ public class ArtistController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String artistModify(ArtistForm artistForm, @PathVariable("id") Integer id, Principal principal) {
+    public String artistModify(ArtistForm artistForm, @PathVariable("id") Long id, Principal principal) {
         Artist artist = artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {
@@ -150,7 +150,7 @@ public class ArtistController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
+    public String artistDelete(Principal principal, @PathVariable("id") Long id) {
         Artist artist = this.artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {

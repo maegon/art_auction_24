@@ -17,4 +17,14 @@ public class HomeController {
     public String introduce() {
         return "home/introduce";
     }
+
+    @GetMapping("/home/howToBuy")
+    public String howToBuy(){
+        return  "home/howToBuy";
+    }
+
+    @GetMapping("/home/howToSell")
+    public String howToSell(){
+        return  "home/howToSell";
+    }
 }

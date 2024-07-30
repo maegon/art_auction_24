@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class ArtistService {
         return artist;
     }
 
-    public Artist getArtist(Integer id) {
+    public Artist getArtist(Long id) {
         Optional<Artist> of = artistRepository.findById(id);
         if (of.isEmpty()) throw new DataNotFoundException("artist not found");
         return of.get();
@@ -83,4 +84,9 @@ public class ArtistService {
     public void delete(Artist artist) {
         artistRepository.delete(artist);
     }
+
+    public List<Artist> findByKeyword(String keyword) {
+        return artistRepository.findByKeyword(keyword);
+    }
+
 }
