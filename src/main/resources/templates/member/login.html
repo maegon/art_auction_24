@@ -41,13 +41,6 @@
                                         <div class="center-wrap">
                                             <div class="section text-center">
                                                 <h4 class="mb-8 pb-3 text-4xl">회원가입</h4>
-                                                <div class="memberCheckForm flex justify-center">
-                                                    <label for="userType" class="component-input">회원 유형</label>
-                                                    <select id="userType" name="userType" class="form-control w-10" onchange="toggleCertificateDiv()">
-                                                        <option value="general" class="">일반</option>
-                                                        <option value="artist" class="">작가</option>
-                                                    </select>
-                                                </div>
                                                 <div class="form-group mt-2 inputUsernameDiv">
                                                     <input type="text" name="username" class="form-style" placeholder="아이디를 입력해주세요" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
@@ -88,10 +81,6 @@
                                                     <label id="component-input-img" for="profileImage" class="component-input">프로필 이미지</label>
                                                     <input type="file" name="profileImage" id="profileImage" class="form-control">
                                                     <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
-                                                </div>
-                                                <div class="form-group mt-2" id="certificateDiv" style="display: none;">
-                                                    <label id="component-input-certificateFile" for="certificateFile" class="component-input">예술활동증명서를 첨부해주세요</label>
-                                                    <input type="file" name="certificateFile" id="certificateFile" class="form-control inputCertificateFile" accept=".pdf">
                                                 </div>
                                                 <button type="submit" class="join-submit btn mt-4" disabled><a href="/">회원가입</a></button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
