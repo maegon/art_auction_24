@@ -2,7 +2,7 @@ package com.example.ArtAuction_24.auction.entity;
 
 import com.example.ArtAuction_24.base.entity.BaseEntity;
 
-import com.example.ArtAuction_24.product.entity.Product;
+import com.example.ArtAuction_24.product.entity.AuctionProduct;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.OneToMany;
@@ -31,7 +31,7 @@ public class Auction extends BaseEntity { // 여러 제품을 경매에 올려 �
     private String status; // 경매 상태 (예: 활성화, 종료, 취소)
 
     @OneToMany(mappedBy = "auction")
-    private List<Product> products;
+    private List<AuctionProduct> products;
 
 
 }

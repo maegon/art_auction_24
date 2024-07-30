@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.File;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
@@ -33,6 +34,9 @@ public class Member extends BaseEntity {
     private String image; // 이미지 파일 이름을 저장
 
     private String isActive;
+
+
+    private Long balance; //충전 잔액
 
     @OneToMany(mappedBy = "member")
     private List<Bid> bidList;
