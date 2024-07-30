@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @Controller
@@ -24,13 +25,16 @@ public class QuestionController {
 
     }
 
+
     @GetMapping(value = "/detail/{id}")
+
     public String detail(Model model, @PathVariable("id") Long id) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
 
         return "question/detail";
     }
+
 
     @GetMapping("/create")
     public String questionCreate() {
@@ -42,4 +46,5 @@ public class QuestionController {
         this.questionService.create(subject, content);
         return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
     }
+
 }
