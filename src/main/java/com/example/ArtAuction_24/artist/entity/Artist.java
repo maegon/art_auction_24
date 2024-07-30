@@ -18,7 +18,11 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Artist extends BaseEntity {
+public class Artist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String korName;
     private String engName;
@@ -36,6 +40,7 @@ public class Artist extends BaseEntity {
 
     @ManyToOne
     private Member author;
+
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArtistAdd> artistAdds;
