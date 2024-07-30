@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
 
-</body>
+
+
+    <div class="container mx-auto px-4 min-h-[1500px]">
+
+
+        <div class="container py-4 ">
+            <div class="container mx-auto h-[150px] py-3 flex items-center justify-center">
+                <h1 class="text-5xl">CONTACT</h1>
+            </div>
+            <div class="container mx-auto min-h-[600px] px-[200px]">
+                <div class="border-2 border-slate-300 min-h-[70px] my-10 flex items-center justify-center">
+                    <h1 th:text="${question.subject}"></h1>
+                </div>
+                <div class="border-2 border-slate-300 min-h-[500px] my-10 px-3 py-3">
+                    <div th:text="${question.content}"></div>
+                </div>
+            </div>
+
+
+
+            <div class="container mx-auto min-h-[200px] px-[200px]">
+                <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+                <div>
+                    <ul>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <div class="container mx-auto h-[200px] px-[200px]">
+                <form th:action="@{|/answer/create/${question.id}|}" method="post">
+                    <textarea class="h-[100px] w-full border-2 border-slate-300" name="content" id="content" rows="10"></textarea>
+                    <input class="bg-black text-[#D5A770] text-xl h-10 px-4 my-3 rounded-xl w-full block" type="submit" value="답변등록">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 </html>
