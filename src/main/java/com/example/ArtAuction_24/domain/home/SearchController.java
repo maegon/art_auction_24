@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/search")
+@RequestMapping("/home")
 public class SearchController {
 
     private final ArtistService artistService;
@@ -37,7 +37,7 @@ public class SearchController {
             model.addAttribute("artistList", artistList);
 
         }
-        return "home/search_results";
+        return "home/search_result";
     }
 
 }
