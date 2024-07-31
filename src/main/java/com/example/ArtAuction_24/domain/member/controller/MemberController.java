@@ -1,8 +1,16 @@
 package com.example.ArtAuction_24.domain.member.controller;
 
+<<<<<<< HEAD:src/main/java/com/example/ArtAuction_24/domain/member/controller/MemberController.java
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.global.email.EmailService;
+=======
+import com.example.ArtAuction_24.email.EmailService;
+import com.example.ArtAuction_24.member.form.MemberForm;
+import com.example.ArtAuction_24.member.service.MemberService;
+import com.example.ArtAuction_24.question.entity.Question;
+import com.example.ArtAuction_24.question.service.QuestionService;
+>>>>>>> 947518b (myPage info modify):src/main/java/com/example/ArtAuction_24/member/controller/MemberController.java
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -28,6 +37,7 @@ import java.util.UUID;
 public class MemberController {
     private final MemberService memberService;
     private final EmailService emailService;
+    private final QuestionService questionService;
 
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
@@ -100,6 +110,14 @@ public class MemberController {
         }
         // 저장된 파일의 상대 경로를 반환합니다.
         return "/images/profileImageUpload/" + imageFileName;
+    }
+
+    @GetMapping("/myPage")
+    public String myPage(Model model){
+        List<Question> questionList = questionService.findAll();
+        model.addAttribute("questionList", questionList);
+
+        return "member/myPage";
     }
 
 }

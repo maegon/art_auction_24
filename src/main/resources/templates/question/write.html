@@ -9,8 +9,12 @@
             </div>
 
 
-            <form th:action="@{/question/create}" method="post">
+            <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+
             <div class="container mx-auto min-h-[600px] px-[200px]">
+                <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+                    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </div>
                 <div class=" min-h-[70px] my-10 flex items-center justify-center">
                     <div class="border-2 border-slate-300 min-h-[70px] px-5 flex items-center justify-center">
                         <select id="boardType" name="boardType" class="flex items-center justify-center">
@@ -21,7 +25,7 @@
                     </div>
 
                     <div class="px-3 w-[800px]">
-                        <input type="text" name="subject" id="subject" class="form-control min-h-[70px] px-3" placeholder="제목을 입력해주세요.">
+                        <input type="text" name="subject" id="subject" th:field="*{subject}" class="form-control min-h-[70px] px-3" placeholder="제목을 입력해주세요.">
                     </div>
 
 
@@ -29,7 +33,7 @@
 
 
                 <div class="border-2 border-slate-300 min-h-[700px]  my-10 px-3 py-3">
-                    <textarea name="content" id="content" class="form-control border-white resize-none" rows="15"
+                    <textarea name="content" id="content" th:field="*{content}" class="form-control border-white resize-none" rows="15"
                               placeholder="내용을 입력해주세요
 
 
