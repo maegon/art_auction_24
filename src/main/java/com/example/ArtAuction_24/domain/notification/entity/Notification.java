@@ -1,18 +1,14 @@
-package com.example.ArtAuction_24.recharge.entity;
+package com.example.ArtAuction_24.domain.notification.entity;
 
-import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
+import com.example.ArtAuction_24.domain.member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -20,14 +16,11 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recharge extends BaseEntity { // 충전
+public class Notification extends BaseEntity {
 
-
-    private Long amount;
-    private LocalDateTime rechargeDate;
+    private String message; // 알림 내용
+    private boolean isRead; // 읽음 여부
 
     @ManyToOne
-    private Member member;
-
-
+    private Member recipient; // 수신자
 }

@@ -1,18 +1,20 @@
-package com.example.ArtAuction_24.recharge.entity;
+package com.example.ArtAuction_24.domain.question.entity;
 
-import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.answer.entity.Answer;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -20,14 +22,15 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recharge extends BaseEntity { // 충전
+public class Question extends BaseEntity {
 
 
-    private Long amount;
-    private LocalDateTime rechargeDate;
+    private String subject;
 
-    @ManyToOne
-    private Member member;
 
+    private String content;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList;
 
 }

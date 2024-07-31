@@ -27,7 +27,7 @@
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                     <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지 않습니다.</p>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-28" disabled><a href="/">로그인</a></button>
+                                                <button type="submit" class="login-submit btn mt-28" disabled>로그인</button>
                                                 <p class="mb-2 mt-14 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
                                                 <div class="social-login-wrap mt-20">
                                                     <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="80px"></a>
@@ -91,7 +91,7 @@
                                                     <input type="file" name="profileImage" id="profileImage" class="form-control">
                                                     <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
                                                 </div>
-                                                <button type="submit" class="join-submit btn mt-4" disabled><a href="/">회원가입</a></button>
+                                                <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>
                                         </div>
