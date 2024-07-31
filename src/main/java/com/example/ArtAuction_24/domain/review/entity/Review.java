@@ -1,7 +1,7 @@
 package com.example.ArtAuction_24.domain.review.entity;
 
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
-import com.example.ArtAuction_24.product.entity.ExhibitionProduct;
+import com.example.ArtAuction_24.domain.product.entity.ExhibitionProduct;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.member.entity.Member;import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

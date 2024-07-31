@@ -2,7 +2,7 @@ package com.example.ArtAuction_24.domain.home;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
-import com.example.ArtAuction_24.product.service.AuctionProductService;
+import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

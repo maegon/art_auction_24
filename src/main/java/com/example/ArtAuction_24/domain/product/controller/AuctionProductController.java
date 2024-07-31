@@ -1,7 +1,7 @@
-package com.example.ArtAuction_24.product.controller;
+package com.example.ArtAuction_24.domain.product.controller;
 
-import com.example.ArtAuction_24.product.entity.AuctionProduct;
-import com.example.ArtAuction_24.product.service.AuctionProductService;
+import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

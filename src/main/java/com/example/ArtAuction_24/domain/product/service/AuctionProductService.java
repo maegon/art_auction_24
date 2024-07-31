@@ -1,7 +1,7 @@
-package com.example.ArtAuction_24.product.service;
+package com.example.ArtAuction_24.domain.product.service;
 
-import com.example.ArtAuction_24.product.entity.AuctionProduct;
-import com.example.ArtAuction_24.product.repository.AuctionProductRepository;
+import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

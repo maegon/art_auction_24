@@ -3,7 +3,7 @@ package com.example.ArtAuction_24.global.base.initData;
 
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
-import com.example.ArtAuction_24.product.service.AuctionProductService;
+import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
-package com.example.ArtAuction_24.product.entity;
+package com.example.ArtAuction_24.domain.product.entity;
 
-import com.example.ArtAuction_24.artist.entity.Artist;
-import com.example.ArtAuction_24.base.entity.BaseEntity;
-import com.example.ArtAuction_24.review.entity.Review;
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.global.base.entity.BaseEntity;
+import com.example.ArtAuction_24.domain.review.entity.Review;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

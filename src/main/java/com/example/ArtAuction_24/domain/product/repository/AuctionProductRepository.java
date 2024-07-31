@@ -1,6 +1,6 @@
-package com.example.ArtAuction_24.product.repository;
+package com.example.ArtAuction_24.domain.product.repository;
 
-import com.example.ArtAuction_24.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
