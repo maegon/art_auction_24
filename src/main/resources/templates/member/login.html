@@ -27,7 +27,7 @@
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                     <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지 않습니다.</p>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-28" disabled><a href="/">로그인</a></button>
+                                                <button type="submit" class="login-submit btn mt-28" disabled>로그인</button>
                                                 <p class="mb-2 mt-14 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
                                                 <div class="social-login-wrap mt-20">
                                                     <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="80px"></a>
@@ -44,7 +44,7 @@
                                                 <div class="form-group mt-2 inputUsernameDiv">
                                                     <input type="text" name="username" class="form-style" placeholder="아이디를 입력해주세요" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="btn m-2">중복확인</button>
+                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2">중복확인</button>
                                                     <div id="joinError" th:text="${joinError}" class="error"></div>
                                                 </div>
                                                 <div class="form-group mt-2">
@@ -57,13 +57,22 @@
                                                     <div id="passwordMatchError" class="error"></div>
                                                 </div>
                                                 <div class="form-group mt-2">
-                                                    <input type="email" name="logemail" class="form-style" placeholder="이메일을 입력해주세요" id="logemail" autocomplete="off">
+                                                    <!-- <input type="email" name="logemail" class="form-style" placeholder="이메일을 입력해주세요" id="logemail" autocomplete="off"> -->
+                                                    <input class="form-style box" id="domain-txt" type="text" placeholder="이메일을 입력해주세요" name="logemail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
+                                                    <select class="box" id="domain-list">
+                                                        <option value="type">직접 입력</option>
+                                                        <option value="naver.com">naver.com</option>
+                                                        <option value="google.com">google.com</option>
+                                                        <option value="hanmail.net">hanmail.net</option>
+                                                        <option value="nate.com">nate.com</option>
+                                                        <option value="kakao.com">kakao.com</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group mt-2 inputNicknameDiv">
                                                     <input type="text" name="nickname" class="form-style" placeholder="닉네임을 입력해주세요" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="btn m-2">중복확인</button>
+                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2">중복확인</button>
                                                     <div id="nicknameError" th:text="${nicknameError}" class="error"></div>
                                                 </div>
                                                 <div class="mb-3">
@@ -82,7 +91,7 @@
                                                     <input type="file" name="profileImage" id="profileImage" class="form-control">
                                                     <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
                                                 </div>
-                                                <button type="submit" class="join-submit btn mt-4" disabled><a href="/">회원가입</a></button>
+                                                <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>
                                         </div>

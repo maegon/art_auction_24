@@ -1,7 +1,7 @@
 package com.example.ArtAuction_24.recharge.service;
 
-import com.example.ArtAuction_24.member.entity.Member;
-import com.example.ArtAuction_24.member.repository.MemberRepository;
+import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.recharge.entity.Recharge;
 import com.example.ArtAuction_24.recharge.repository.RechargeRepository;
 import lombok.RequiredArgsConstructor;

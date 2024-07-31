@@ -1,18 +1,19 @@
-package com.example.ArtAuction_24.recharge.entity;
+package com.example.ArtAuction_24.domain.bid.entity;
+
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -20,14 +21,16 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recharge extends BaseEntity { // 충전
+public class Bid extends BaseEntity { // 특정 제품에 대한 개별 입찰.
 
 
-    private Long amount;
-    private LocalDateTime rechargeDate;
+    private BigDecimal amount;
+    private LocalDateTime bidTime;
 
     @ManyToOne
     private Member member;
 
+    @ManyToOne
+    private AuctionProduct product;
 
 }
