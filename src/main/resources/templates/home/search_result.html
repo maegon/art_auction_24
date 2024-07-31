@@ -2,7 +2,7 @@
 <div layout:fragment="content">
     <div class="py-5 text-center">
         <p class="text-xl font-bold mb-4" th:if="${#lists.isEmpty(artistList)}">
-            <strong th:text="${keyword}" id="keyword" class="context"></strong>에 해당하는 검색 결과가 없습니다.
+            "<strong th:text="${keyword}" id="keyword" class="context"></strong>"에 해당하는 검색 결과가 없습니다.
         </p>
         <p class="text-xl font-bold mb-4" th:if="${not #lists.isEmpty(artistList)}">
             "<strong th:text="${keyword}" class="context"></strong>"에 해당하는 작가를
@@ -13,7 +13,7 @@
     <!-- 작가 검색 결과 -->
     <div class="mb-8">
         <h2 class="text-2xl font-bold mb-4 ml-5">작가 검색 결과</h2>
-        <div class="relative flex items-center">
+        <div class="relative flex items-center" style="min-height: 250px;">
             <div class="card-list flex overflow-x-auto space-x-4 p-4 items-center">
                 <div th:each="artist : ${artistList}">
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-64 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">

@@ -181,18 +181,30 @@ border-radius: 10px;
 
 /*scroll bar start*/
 
+/* 세로 스크롤바의 너비 */
 ::-webkit-scrollbar {
-    width: 10px; /* 스크롤바의 너비 */
+    width: 10px; /* 세로 스크롤바의 너비 */
+    height: 10px; /* 가로 스크롤바의 높이 */
+}
+
+/* 가로 스크롤바의 높이 */
+::-webkit-scrollbar-horizontal {
+    height: 10px; /* 가로 스크롤바의 높이 */
+}
+
+/* 세로 스크롤바의 너비 */
+::-webkit-scrollbar-vertical {
+    width: 10px; /* 세로 스크롤바의 너비 */
 }
 
 ::-webkit-scrollbar-thumb {
   background: #000;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: #ddd;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 /*scroll bar end*/
