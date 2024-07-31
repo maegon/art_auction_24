@@ -9,6 +9,25 @@ function toggleCertificateDiv() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    const phoneNumberInput = document.getElementById("phoneNumber");
+
+    phoneNumberInput.addEventListener("input", function(event) {
+        let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
+        let formattedInput = '';
+
+        if (input.length > 3 && input.length <= 7) {
+            formattedInput = `${input.slice(0, 3)}-${input.slice(3)}`;
+        } else if (input.length > 7) {
+            formattedInput = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
+        } else {
+            formattedInput = input;
+        }
+
+        event.target.value = formattedInput;
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
     const joinButton = document.querySelector(".join-submit");
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");

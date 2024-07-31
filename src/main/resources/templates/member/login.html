@@ -9,27 +9,31 @@
                             <h6 class="mb-0 pb-3">
                                 <span>Log In </span>
                                 <span>Join</span></h6>
-                            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                            <input class="checkbox" type="checkbox" id="reg-log" name="changeForm reg-log"/>
                             <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
                             <div class="card-3d-wrap mx-auto">
                                 <div class="card-3d-wrapper">
                                     <div class="card-front">
                                         <div class="center-wrap">
                                             <div class="section text-center">
-                                                <h4 class="mb-14 pb-3 text-4xl">로그인</h4>
-                                                <div class="form-group mt-18">
-                                                    <input type="text" name="username" class="form-style component-input" placeholder="아이디를 입력해주세요" id="component-input-id" autocomplete="off" value>
+                                                <h4 class="mb-8 pb-3 text-4xl">로그인</h4>
+                                                <div class="form-group mt-8 ml-6 mr-6">
+                                                    <input type="text" name="username" class="form-style component-input" placeholder="아이디 입력" id="component-input-id" autocomplete="off" value>
                                                     <i class="input-icon uil uil-user"></i>
                                                     <p id="username-error" class="error-message text-red-500">아이디가 존재하지 않습니다.</p>
                                                 </div>
-                                                <div class="form-group mt-14">
-                                                    <input type="password" name="password" class="form-style component-input" placeholder="비밀번호를 입력해주세요" id="component-input-password" autocomplete="off" value>
+                                                <div class="form-group mt-14 ml-6 mr-6">
+                                                    <input type="password" name="password" class="form-style component-input" placeholder="비밀번호 입력" id="component-input-password" autocomplete="off" value>
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                     <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지 않습니다.</p>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-28" disabled>로그인</button>
-                                                <p class="mb-2 mt-14 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
-                                                <div class="social-login-wrap mt-20">
+                                                <div class="form-group mt-6 ml-6 mr-6 flex justify-center">
+                                                    <input style='zoom:1.4;' type="checkbox" id="autoLogin" class="text-lg mr-2"><span class="text-sm">자동 로그인</span>
+                                                    <input style='zoom:1.4;' type="checkbox" id="saveId" class="text-lg ml-10 mr-2"><span class="text-sm">아이디 저장</span>
+                                                </div>
+                                                <button type="submit" class="login-submit btn mt-8" onclick="login()" disabled>로그인</button>
+                                                <p class="mb-2 mt-8 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
+                                                <div class="social-login-wrap mt-8">
                                                     <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="80px"></a>
                                                     <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png" alt="네이버로그인" width="80px"></a>
                                                     <a href="/oauth2/authorization/google"><img src="/image/google_logo.png" alt="구글로그인" width="80px"></a>
@@ -40,25 +44,25 @@
                                     <div class="card-back">
                                         <div class="center-wrap">
                                             <div class="section text-center">
-                                                <h4 class="mb-8 pb-3 text-4xl">회원가입</h4>
-                                                <div class="form-group mt-2 inputUsernameDiv">
-                                                    <input type="text" name="username" class="form-style" placeholder="아이디를 입력해주세요" id="username" autocomplete="off">
+                                                <h4 class="mb-2 pb-3 text-4xl">회원가입</h4>
+                                                <div class="form-group mt-2 ml-6 mr-6 inputUsernameDiv">
+                                                    <input type="text" name="username" class="form-style" placeholder="아이디 입력" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2">중복확인</button>
+                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2 p-1 text-xs">중복확인</button>
                                                     <div id="joinError" th:text="${joinError}" class="error"></div>
                                                 </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="password" name="password" class="form-style" maxlength="24" placeholder="비밀번호를 입력해주세요" id="password" autocomplete="off">
+                                                <div class="form-group mt-2 ml-6 mr-6">
+                                                    <input type="password" name="password" class="form-style" maxlength="24" placeholder="비밀번호 입력" id="password" autocomplete="off">
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                 </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="password" name="password_confirm" class="form-style" maxlength="24" placeholder="비밀번호를 재입력해주세요" id="passwordConfirm" autocomplete="off">
+                                                <div class="form-group mt-2 ml-6 mr-6">
+                                                    <input type="password" name="password_confirm" class="form-style" maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm" autocomplete="off">
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                     <div id="passwordMatchError" class="error"></div>
                                                 </div>
-                                                <div class="form-group mt-2">
+                                                <div class="form-group mt-2 ml-6 mr-6">
                                                     <!-- <input type="email" name="logemail" class="form-style" placeholder="이메일을 입력해주세요" id="logemail" autocomplete="off"> -->
-                                                    <input class="form-style box" id="domain-txt" type="text" placeholder="이메일을 입력해주세요" name="logemail" autocomplete="off">
+                                                    <input class="form-style box" id="domain-txt" type="text" placeholder="이메일 입력" name="logemail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                     <select class="box" id="domain-list">
                                                         <option value="type">직접 입력</option>
@@ -69,24 +73,23 @@
                                                         <option value="kakao.com">kakao.com</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group mt-2 inputNicknameDiv">
-                                                    <input type="text" name="nickname" class="form-style" placeholder="닉네임을 입력해주세요" id="nickname" autocomplete="off">
+                                                <div class="form-group mt-2 ml-6 mr-6 inputNicknameDiv">
+                                                    <input type="text" name="nickname" class="form-style" placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2">중복확인</button>
+                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2 p-1 text-xs">중복확인</button>
                                                     <div id="nicknameError" th:text="${nicknameError}" class="error"></div>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label id="component-input-phoneNum" for="phoneNumber" class="component-input">전화번호</label>
-                                                    <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control">
+                                                <div class="form-group mt-2 ml-6 mr-6">
+                                                    <input type="tel" name="phoneNumber" class="form-style" placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class=" mt-2 ml-6 mr-6">
                                                     <input type="text" id="address sample6_postcode" class="form-control" placeholder="우편번호">
                                                     <input type="button" onclick="sample6_execDaumPostcode()" class="btn btn-primary" value="우편번호 찾기"><br>
                                                     <input type="text" id="component-input-address address sample6_address" name="address" class="form-control" placeholder="주소"><br>
                                                     <input type="text" id="sample6_detailAddress address" class="form-control" placeholder="상세주소">
                                                     <input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목">
                                                 </div>
-                                                <div class="mb-3">
+                                                <div class=" mt-2 ml-6 mr-6">
                                                     <label id="component-input-img" for="profileImage" class="component-input">프로필 이미지</label>
                                                     <input type="file" name="profileImage" id="profileImage" class="form-control">
                                                     <img id="profileImagePreview" src="#" alt="프로필 이미지 미리보기" style="display: none; max-width: 260px; max-height: 260px;">
