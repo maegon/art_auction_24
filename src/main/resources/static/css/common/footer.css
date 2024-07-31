@@ -1,0 +1,17 @@
+/*위로가기 버튼 start*/
+
+/* 처음에는 버튼을 숨깁니다 */
+.btn-scroll_top {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* 보일 때의 스타일 */
+.btn-scroll_top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/*위로가기 버튼 end*/

@@ -1,0 +1,38 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="py-5 text-center">
+        <p class="text-xl font-bold mb-4" th:if="${#lists.isEmpty(artistList)}">
+            "<strong th:text="${keyword}" id="keyword" class="context"></strong>"에 해당하는 검색 결과가 없습니다.
+        </p>
+        <p class="text-xl font-bold mb-4" th:if="${not #lists.isEmpty(artistList)}">
+            "<strong th:text="${keyword}" class="context"></strong>"에 해당하는 작가를
+            <span th:text="${artistList.size()}"></span>명 찾았습니다.
+        </p>
+    </div>
+
+    <!-- 작가 검색 결과 -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4 ml-5">작가 검색 결과</h2>
+        <div class="relative flex items-center" style="min-height: 250px;">
+            <div class="card-list flex overflow-x-auto space-x-4 p-4 items-center">
+                <div th:each="artist : ${artistList}">
+                    <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-64 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
+                    <a th:href="@{/home/introduce}" class="no-underline">
+                        <div>
+                            <img th:if="${artist.thumbnailImg != null}" th:src="@{|/image/${artist.thumbnailImg}|}" class="w-full h-full object-cover rounded-t-lg" alt="토론 이미지">
+                            <img th:unless="${artist.thumbnailImg != null}" th:src="@{/image/작가프로필.png}" class="w-full h-full object-cover rounded-t-lg" alt="기본 이미지">
+                        </div>
+                    </a>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <h5 class="text-lg font-bold mb-2 context" th:text="${artist.korName}"></h5>
+                        <h5 class="text-lg font-bold mb-2 context" th:text="${artist.engName}"></h5>
+                        <p class="text-sm leading-relaxed mb-4" th:text="${artist.introduce}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

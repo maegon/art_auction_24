@@ -1,13 +1,15 @@
 <nav th:fragment="footerFragment" class="footer">
-
+    <a href="#" class="btn-scroll_top js-scroll_top fixed bottom-4 right-4 md:bottom-8 md:right-8 p-3 bg-white text-black border border-gray-300 rounded-full shadow-lg hover:bg-gray-200 transition duration-300 ease-in-out">
+        <i class="fas fa-arrow-up"></i>
+    </a>
     <footer class="bg-black text-white flex flex-col md:flex-row md:justify-between md:items-center px-6 md:px-[300px] py-4">
         <div class="footer-container w-full h-full">
             <div class="footer-links flex justify-between items-center mb-4 md:mb-2">
-                <div class="footer-icons flex gap-5">
+                <div class="footer-icons flex gap-3">
                     <a th:href="@{/home/introduce}" class="text-white no-underline">회사소개</a>
                     <a th:href="@{${@environment.getProperty('custom.file.path')}}" download="Art Auction-이용약관.pdf" class="text-white no-underline">이용약관</a>
                 </div>
-                <div class="footer-icons flex gap-5">
+                <div class="footer-icons flex gap-3">
                     <a th:href="@{/recharge/recharge}">충전하기</a>
                     <a href="#" class="text-white no-underline">FAQ</a>
                     <a href="https://www.youtube.com/channel/UCUkFtFAesN-YZ7cK0ry13Vg" class="text-white no-underline">Youtube</a>
