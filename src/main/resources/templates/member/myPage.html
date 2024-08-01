@@ -1,0 +1,207 @@
+<html layout:decorate="~{layout/layout}" xmlns:th="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content">
+    <div class="container mx-auto px-4 min-h-[1500px]">
+        <div class="container py-4">
+            <div class="container mx-auto h-[150px] py-2 px-[200px] flex items-center">
+                <h1 class="text-5xl">MyPage</h1>
+            </div>
+            <div class="container mx-auto h-[100px] py-2 px-[200px] flex items-center">
+                <ul class="flex items-center justify-center">
+                    <li id="info-update" class="px-5 text-4xl cursor-pointer">정보 수정</li>
+                    <li id="wish-list-toggle" class="px-5 text-4xl cursor-pointer">찜</li>
+                    <li id="alarm-list-toggle" class="px-5 text-4xl cursor-pointer">알림</li>
+                    <li id="question-list-toggle" class="px-5 text-4xl cursor-pointer">문의내역</li>
+                </ul>
+            </div>
+            <div class="container mx-auto px-[200px]">
+                <div id="info-form" class="myPage-hidden p-4 mt-2">
+                    <h1 class="text-xl">회원 정보수정</h1>
+                    <div class="bg-stone-100 min-h-[260px]">
+                        <form class="">
+                            <div class="myPage-form grid grid-rows-2 grid-flow-col gap-4 justify-stretch w-full h-[200px]">
+                                <div class="myPage-grid-item">
+                                    <label for="username">아이디:</label>
+                                    <input type="text" id="username" name="username">
+                                </div>
+                                <div class="myPage-grid-item">
+                                    <label for="password">비밀번호:</label>
+                                    <input type="password" name="password" id="password" maxlength="24"
+                                           placeholder="비밀번호를 입력해주세요" autocomplete="off">
+                                </div>
+                                <div class="myPage-grid-item">
+                                    <label for="nickname">닉네임:</label>
+                                    <input type="text" id="nickname" name="nickname">
+                                </div>
+                                <div class="myPage-grid-item">
+                                    <label for="passwordConfirm">비밀번호확인:</label>
+                                    <input type="password" name="password_confirm" maxlength="24"
+                                           placeholder="비밀번호를 재입력해주세요" id="passwordConfirm" autocomplete="off">
+                                </div>
+                                <div class="myPage-grid-item">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email">
+                                </div>
+                            </div>
+                            <div class="myPage-grid-item flex items-center justify-end">
+                                <button class="bg-black text-[#D5A770] text-xl h-10 px-4 w-[150px] rounded-xl mr-3"
+                                        type="submit">업데이트
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="info-form2" class="myPage-hidden p-4 mt-2">
+                    <h1 class="text-xl">배송지 수정</h1>
+                    <div class="bg-stone-100 min-h-[260px]">
+                        <form class="">
+                            <div class="myPage-form grid grid-rows-2 grid-flow-col gap-4 justify-stretch w-full h-[200px]">
+                                <div class="myPage-grid-item">
+                                    <label for="username">아이디:</label>
+                                    <input type="text" id="asdf" name="username">
+                                </div>
+                            </div>
+                            <div class="myPage-grid-item flex items-center justify-end">
+                                <button class="bg-black text-[#D5A770] text-xl h-10 px-4 w-[150px] rounded-xl mr-3"
+                                        type="submit">업데이트
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="wish-list" class="myPage-hidden bg-white  p-4 mt-2">
+                    <div>
+                        <span>※ 찜한 작품이 경매가끝나게되면 자동으로 찜목록에서 삭제됩니다.</span>
+                        <div class="border-t-2 border-slate-600">
+                            <ul class="flex items-center justify-center">
+                                <li class="myPage-list-item px-4 text-3xl flex-none w-[100px] ">번호</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/3 ">작품이름</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/5 ">작가</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/5 " >경매시작일</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/5 " >최소입찰가</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="flex items-center justify-center py-2" th:each="question : ${questionList}">
+                                <li class="myPage-list-item px-4 text-xl flex-none w-[100px]" th:text="${question.id}"></li>
+                                <li class="myPage-list-item px-4 text-xl basis-1/2 " th:text="${question.subject}"></li>
+                                <li class="myPage-list-item px-4 text-xl basis-1/4 " th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
+                                <li class="myPage-list-item px-4 text-2xl basis-1/4 " >
+                                    <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="question-list" class="myPage-hidden bg-white p-4 mt-2">
+                    <div>
+                        <span>※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.</span>
+                        <div class="border-t-2 border-slate-600">
+                            <ul class="flex items-center justify-center">
+                                <li class="myPage-list-item px-4 text-3xl flex-none w-[100px]">번호</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/2">제목</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/4">날짜</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/4">처리상태</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div th:if="${#lists.isEmpty(questionList)}">
+                                <div class="flex items-center justify-center pt-4">
+                                    <i class="fa-solid fa-circle-exclamation fa-2xl"></i>
+                                </div>
+                                <p class="text-center text-2xl mt-4 ">문의내역이 없습니다.</p>
+                            </div>
+                            <div th:if="${!#lists.isEmpty(questionList)}">
+                                <ul class="flex items-center justify-center py-2" th:each="question : ${questionList}">
+                                    <li class="myPage-list-item px-4 text-xl flex-none w-[100px]" th:text="${question.id}"></li>
+                                    <li class="myPage-list-item px-4 text-xl basis-1/2" th:text="${question.subject}"></li>
+                                    <li class="myPage-list-item px-4 text-xl basis-1/4" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
+                                    <li class="myPage-list-item px-4 text-2xl basis-1/4">
+                                        <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="alarm-list" class="myPage-hidden bg-white  p-4 mt-2">
+                    <div>
+                        <span>※ 경매상품에 알림받기를 누르면 경매시작 1시간전, 10분전, 5분전 알림을 받게됩니다. </span>
+                        <div class="border-t-2 border-slate-600">
+                            <ul class="flex items-center justify-center">
+                                <li class="myPage-list-item px-4 text-3xl flex-none w-[100px]">번호</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/2 ">제목</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/4 ">날짜</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/4 " >처리상태</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="flex items-center justify-center py-2" th:each="question : ${questionList}">
+                                <li class="myPage-list-item px-4 text-xl flex-none w-[100px] " th:text="${question.id}"></li>
+                                <li class="myPage-list-item px-4 text-xl basis-1/2 " th:text="${question.subject}"></li>
+                                <li class="myPage-list-item px-4 text-xl basis-1/4 " th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
+                                <li class="myPage-list-item px-4 text-2xl basis-1/4 " >
+                                    <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mx-auto h-[200px] px-[200px]"></div>
+        </div>
+    </div>
+</div>
+</html>
+
+
+<script>
+    document.getElementById('info-update').addEventListener('click', function() {
+        toggleVisibility('info-form', 'info-form2');
+        setActiveState('info-update');
+    });
+
+    document.getElementById('question-list-toggle').addEventListener('click', function() {
+        toggleVisibility('question-list');
+        setActiveState('question-list-toggle');
+    });
+
+    document.getElementById('wish-list-toggle').addEventListener('click', function() {
+        toggleVisibility('wish-list');
+        setActiveState('wish-list-toggle');
+    });
+
+    document.getElementById('alarm-list-toggle').addEventListener('click', function() {
+        toggleVisibility('alarm-list');
+        setActiveState('alarm-list-toggle');
+    });
+
+    function toggleVisibility(...elements) {
+        const allSections = ['info-form', 'info-form2', 'question-list', 'wish-list', 'alarm-list'];
+        allSections.forEach(section => {
+            const element = document.getElementById(section);
+            if (elements.includes(section)) {
+                element.classList.remove('myPage-hidden');
+            } else {
+                element.classList.add('myPage-hidden');
+            }
+        });
+    }
+
+    function setActiveState(activeId) {
+        const allTabs = ['info-update', 'question-list-toggle', 'wish-list-toggle', 'alarm-list-toggle'];
+        allTabs.forEach(tab => {
+            const element = document.getElementById(tab);
+            if (tab === activeId) {
+                element.classList.add('myPage-active');
+            } else {
+                element.classList.remove('myPage-active');
+            }
+        });
+    }
+</script>

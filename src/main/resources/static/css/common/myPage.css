@@ -1,0 +1,32 @@
+.myPage-hidden {
+    display: none;
+}
+.myPage-active::after {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding-top: 15px;
+    border-bottom: 2px solid black;
+    bottom: -10px;
+
+}
+.myPage-grid-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+.myPage-grid-item > input {
+        height: 40px;
+        margin-left: 5px;
+}
+.myPage-grid-item > label {
+        font-weight: bold;
+}
+.myPage-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-basis: 1/6;
+        text-align: center;
+}

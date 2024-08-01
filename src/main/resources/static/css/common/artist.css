@@ -34,6 +34,8 @@
     text-align: center;
 }
 
+
+:
 .thumbnail img,
 .thumbnail button.iconBT {
     width: 150px;  /* 동일한 크기 설정 */
@@ -51,6 +53,7 @@
     /* 이미지에 배경색을 적용하지 않으므로 따로 배경색 설정하지 않음 */
     display: block;  /* 블록 요소로 설정하여 가운데 정렬 */
     margin: 0 auto;  /* 수평 가운데 정렬 */
+
 }
 
 .thumbnail button.iconBT {
