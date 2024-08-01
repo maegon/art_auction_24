@@ -7,10 +7,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
     @Query("SELECT a FROM Artist a WHERE LOWER(a.korName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Artist> findByKeyword(@Param("keyword") String keyword);
+
+    Optional<Artist> findByKorName(String korName);
 
 }

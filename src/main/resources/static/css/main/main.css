@@ -79,6 +79,10 @@ border-radius: 10px;
 
 }
 
+.ongoing-img:hover {
+ box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+ }
+
 .ongoing-slide > .ongoing-info {
   text-align: left;
   margin-top: 20px;
@@ -94,6 +98,13 @@ border-radius: 10px;
 .ongoing-info-artistName{
     font-size: 17px;
     color: gray;
+    margin: 10px 0;
+}
+
+.ongoing-info-currentBid{
+    font-size: 17px;
+    color: black;
+    font-weight: bold;
     margin-top: 10px;
 }
 
@@ -103,6 +114,11 @@ border-radius: 10px;
    margin-top: 4px;
 }
 
+.ongoing-info-Bid{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
 
 /*ongoing-auction end*/
 
@@ -141,6 +157,10 @@ border-radius: 10px;
   object-fit: cover;
    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 }
+
+.upcoming-img:hover {
+ box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+ }
 
 .upcoming-slide > .upcoming-info {
   text-align: left;

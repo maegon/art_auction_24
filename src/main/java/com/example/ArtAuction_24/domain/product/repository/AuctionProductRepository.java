@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.product.repository;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,8 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AuctionProductRepository extends JpaRepository<AuctionProduct, Long> {
+
+    @Query("SELECT a FROM AuctionProduct a WHERE LOWER(a.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<AuctionProduct> findByKeyword(@Param("keyword") String keyword);
 
     Page<AuctionProduct> findAll(Pageable pageable);
 
@@ -20,4 +26,6 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
             or p.description like %:kw%
             """)
     Page<AuctionProduct> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+
+    List<AuctionProduct> findAllByOrderByCreateDateDesc(); //경매 그림을 최신순으로 가져와준다.
 }

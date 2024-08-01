@@ -1,5 +1,7 @@
 package com.example.ArtAuction_24.domain.product.service;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AuctionProductService {
-    private final AuctionProductRepository productRepository;
+    private final AuctionProductRepository auctionProductRepository;
 
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
@@ -33,14 +35,14 @@ public class AuctionProductService {
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 8, Sort.by(sorts));
 
-        return productRepository.findAllByKeyword(kw, pageable);
+        return auctionProductRepository.findAllByKeyword(kw, pageable);
     }
 
     public void create(String title, String description, String medium, String dimensions,
                        BigDecimal startingPrice, BigDecimal currentBid,
-                       LocalDateTime auctionStartDate, MultipartFile thumbnail, String category) {
+                       LocalDateTime auctionStartDate, String thumbnailImg, String category, Artist artist) {
         // 유효성 검사
-        if (thumbnail.isEmpty() || startingPrice.compareTo(BigDecimal.ZERO) < 0 || currentBid.compareTo(BigDecimal.ZERO) < 0) {
+        if (thumbnailImg.isEmpty() || startingPrice.compareTo(BigDecimal.ZERO) < 0 || currentBid.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Invalid input data");
         }
 
@@ -49,21 +51,6 @@ public class AuctionProductService {
             throw new IllegalArgumentException("Current bid must be equal to starting price at auction creation");
         }
 
-        String thumbnailRelPath = "image/" + UUID.randomUUID().toString() + ".jpg";
-        File thumbnailDir = new File(genFileDirPath + File.separator + "image");
-
-        // 디렉토리 생성
-        if (!thumbnailDir.exists()) {
-            thumbnailDir.mkdirs();
-        }
-
-        File thumbnailFile = new File(thumbnailDir, thumbnailRelPath);
-
-        try {
-            thumbnail.transferTo(thumbnailFile);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save thumbnail", e);
-        }
 
         AuctionProduct p = AuctionProduct.builder()
                 .title(title)
@@ -73,14 +60,15 @@ public class AuctionProductService {
                 .startingPrice(startingPrice)
                 .currentBid(currentBid)  // startingPrice와 동일하게 설정
                 .auctionStartDate(auctionStartDate)
-                .thumbnailImg(thumbnailRelPath)
+                .thumbnailImg(thumbnailImg)
                 .category(category)
+                .artist(artist)
                 .build();
-        productRepository.save(p);
+        auctionProductRepository.save(p);
     }
 
     public AuctionProduct getProduct(Long id) {
-        Optional<AuctionProduct> product = productRepository.findById(id);
+        Optional<AuctionProduct> product = auctionProductRepository.findById(id);
 
         if (product.isPresent()) {
             return product.get();
@@ -90,6 +78,14 @@ public class AuctionProductService {
     }
 
     public List<AuctionProduct> getList() {
-        return productRepository.findAll();
+        return auctionProductRepository.findAll();
+    }
+
+    public List<AuctionProduct> findByKeyword(String keyword) {
+        return auctionProductRepository.findByKeyword(keyword);
+    }
+
+    public List<AuctionProduct> findAllAuctionProductOrderByCreateDateDesc() {
+        return auctionProductRepository.findAllByOrderByCreateDateDesc();
     }
 }

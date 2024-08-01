@@ -105,4 +105,8 @@ public class ArtistService {
         return artistRepository.findByKeyword(keyword);
     }
 
+    public Artist getArtistByKorName(String korName) {
+        Optional<Artist> artistOptional = artistRepository.findByKorName(korName);
+        return artistOptional.orElseThrow(() -> new DataNotFoundException("Artist not found with korName: " + korName));
+    }
 }
