@@ -1,16 +1,11 @@
 package com.example.ArtAuction_24.domain.question.controller;
 
 
-<<<<<<< HEAD:src/main/java/com/example/ArtAuction_24/domain/question/controller/QuestionController.java
+
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
-=======
-import com.example.ArtAuction_24.question.entity.Question;
 import com.example.ArtAuction_24.question.form.QuestionForm;
-import com.example.ArtAuction_24.question.repository.QuestionRepository;
-import com.example.ArtAuction_24.question.service.QuestionService;
 import jakarta.validation.Valid;
->>>>>>> 947518b (myPage info modify):src/main/java/com/example/ArtAuction_24/question/controller/QuestionController.java
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

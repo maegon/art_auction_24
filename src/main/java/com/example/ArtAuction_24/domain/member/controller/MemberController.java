@@ -1,16 +1,11 @@
 package com.example.ArtAuction_24.domain.member.controller;
 
-<<<<<<< HEAD:src/main/java/com/example/ArtAuction_24/domain/member/controller/MemberController.java
+
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.question.entity.Question;
+import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.global.email.EmailService;
-=======
-import com.example.ArtAuction_24.email.EmailService;
-import com.example.ArtAuction_24.member.form.MemberForm;
-import com.example.ArtAuction_24.member.service.MemberService;
-import com.example.ArtAuction_24.question.entity.Question;
-import com.example.ArtAuction_24.question.service.QuestionService;
->>>>>>> 947518b (myPage info modify):src/main/java/com/example/ArtAuction_24/member/controller/MemberController.java
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
