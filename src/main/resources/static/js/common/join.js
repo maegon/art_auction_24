@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function validateForm() {
         const joinError = document.getElementById("joinError");
         const nicknameError = document.getElementById("nicknameError");
-        const submitButton = document.querySelector(".join-submit");
+        const submitButton2 = document.querySelector(".join-submit");
         const checkButton = document.getElementsByClassName("checkBtn");
         const username = usernameInput.value.trim();
         const nickname = nicknameInput.value.trim();
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         joinError.innerText = "(이미 존재하는 아이디입니다.)";
                         joinError.classList.remove("success");
                         joinError.classList.add("error");
-                        submitButton.disabled = true;
+                        submitButton2.disabled = true;
                         checkButton.disabled = false;
                     } else {
                         joinError.innerText = "(입력하신 아이디는 사용 가능합니다.)";
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         nicknameError.innerText = "(이미 존재하는 닉네임입니다.)";
                         nicknameError.classList.remove("success");
                         nicknameError.classList.add("error");
-                        submitButton.disabled = true;
+                        submitButton2.disabled = true;
                         checkButton.disabled = false;
                     } else {
                         nicknameError.innerText = "(입력하신 닉네임은 사용 가능합니다.)";
@@ -136,14 +136,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const password = document.getElementById("password").value;
         const passwordConfirm = document.getElementById("passwordConfirm").value;
         const passwordMatchError = document.getElementById("passwordMatchError");
-        const submitButton = document.querySelector(".join-submit");
+        const submitButton2 = document.querySelector(".join-submit");
 
         if (password && passwordConfirm) {
             if (password !== passwordConfirm) {
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
                 passwordMatchError.classList.add("error");
-                submitButton.disabled = true;
+                submitButton2.disabled = true;
                 checkButton.disabled = false;
             } else {
                 passwordMatchError.innerText = "비밀번호가 일치합니다.";
