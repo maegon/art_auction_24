@@ -8,6 +8,7 @@ import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.global.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,6 @@ public class MemberController {
     private final MemberService memberService;
     private final EmailService emailService;
     private final QuestionService questionService;
-
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
 

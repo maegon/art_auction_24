@@ -38,8 +38,8 @@ h6 span{
 .full-height{
   min-height: 100vh;
 }
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked){
+.checkbox:checked,
+.checkbox:not(:checked){
   position: absolute;
   left: -9999px;
 }
@@ -64,7 +64,7 @@ h6 span{
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #102770;
+  background-color: #1f2029;
   font-family: 'unicons';
   content: '\e82b';
   z-index: 20;
@@ -79,12 +79,19 @@ h6 span{
   transform: translateX(44px) rotate(-270deg);
 }
 
+input[id="saveId"] {
+  position: static;
+}
+
+input[id="saveId"] > span {
+  font-size: 1.5rem;
+}
 
 .card-3d-wrap {
   position: relative;
   width: 640px;
   max-width: 100%;
-  height: 1100px;
+  height: 700px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
@@ -100,15 +107,28 @@ h6 span{
   transform-style: preserve-3d;
   transition: all 600ms ease-out;
 }
+.loginPostForm,
+.joinPostForm {
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: all 600ms ease-out;
+}
 .card-front, .card-back {
   width: 100%;
   height: 100%;
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  background-color: #FFF;
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 300%;
   position: absolute;
-  border-radius: 6px;
+  border: 1px solid rgba(43, 43, 43, .2);
+  border-radius: 16px;
+  box-shadow: 6px 6px 5px 1px rgba(0, 0, 44, .2);
   left: 0;
   top: 0;
   -webkit-transform-style: preserve-3d;
@@ -117,14 +137,6 @@ h6 span{
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
-}
-
-.card-front {
-  background-color: #ffa1d6;
-}
-
-.card-back {
-  background-color: #8fe3d9;
 }
 
 .card-back {
@@ -260,7 +272,7 @@ h6 span{
   text-align: center;
   border: none;
   background-color: #ffeba7;
-  color: #102770;
+  color: #1f2029;
   box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 .btn:active,
@@ -270,7 +282,7 @@ h6 span{
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 .btn:hover{
-  background-color: #102770;
+  background-color: #1f2029;
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
@@ -315,12 +327,13 @@ h6 span{
 
 .checkBtn {
     height: 3rem;
-    width: 4rem;
+    width: 5rem;
     border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: .75rem;
+    line-height: .8rem;
+    font-weight: 300;
     background-color: #ffeba7;
-    color: #102770;
+    color: #1f2029;
     box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 
@@ -345,4 +358,13 @@ option {
 .info .box#domain-list option {
   font-size: 14px;
   background-color: #ffffff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input[type=file]::file-selector-button {
+  display: none;
 }
