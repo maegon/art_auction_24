@@ -5,7 +5,7 @@
             <div class="container mx-auto w-[300px] h-[380px] mt-[200px] bg-stone-100">
                 <div class="container mx-auto  h-[250px]">
                     <ul>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-3"><span>작품 및 작가</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>작품 및 작가</span></li>
                         <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>작품구매</span></li>
                         <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>SERVICE</span></li>
                         <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>배송</span></li>
@@ -30,21 +30,77 @@
             </div>
         </div>
         <div class="w-full border-2 border-rose-600 flex flex-col">
-            <div class="h-[150px] border-2 border-rose-600 flex justify-center items-center">
-                <span class="text-center font-bold text-3xl">FAQ</span>
+            <div class="h-[150px] border-2 mt-10 border-rose-600 flex items-center">
+                <span class="ml-80 font-bold text-5xl">FAQ</span>
             </div>
-            <div class="border-2 border-blue-600 mx-20 my-20">
+            <div class="mt-20 w-full border-2 border-rose-600 flex flex-col">
+                <div class="border-2 border-blue-600 mx-20 mt-20">
 
-                    <div class="w-full">
-                        <span class="font-bold text-2xl ml-20"> 작품 및 작가</span>
+                    <div class="ml-24">
+                        <i class="fa-solid fa-palette"></i>
+                        <span class="font-bold text-2xl ml-2"> 작품 및 작가</span>
                     </div>
 
 
-                    <ul class="ml-40" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
+                        <li  th:text="${question.content}"></li>
+                    </ul>
+                </div>
+                <div class="border-2 border-blue-600 mx-20 mt-20">
+
+                    <div class="ml-24">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span class="font-bold text-2xl ml-2"> 작품구매</span>
+                    </div>
+
+
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
+                </div>
+                <div class="border-2 border-blue-600 mx-20 mt-20">
+
+                    <div class="ml-24">
+                        <i class="fa-brands fa-servicestack"></i>
+                        <span class="font-bold text-2xl ml-2"> SERVICE</span>
+                    </div>
+
+
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
+                        <li th:text="${question.createDate}"></li>
+                    </ul>
+                </div>
+                <div class="border-2 border-blue-600 mx-20 mt-20">
+
+                    <div class="ml-24">
+                        <i class="fa-solid fa-truck"></i>
+                        <span class="font-bold text-2xl ml-2"> 배송</span>
+                    </div>
+
+
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
+                        <li th:text="${question.createDate}"></li>
+                    </ul>
+                </div>
+                <div class="border-2 border-blue-600 mx-20 mt-20">
+
+                    <div class="ml-24">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span class="font-bold text-2xl ml-2"> 반품</span>
+                    </div>
+
+
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
+                        <li th:text="${question.createDate}"></li>
+                    </ul>
+                </div>
             </div>
+
         </div>
 
     </div>
