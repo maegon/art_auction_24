@@ -1,66 +1,89 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <form th:action="@{/member/login}" method="POST">
-        <div class="section">
-            <div class="container">
-                <div class="row full-height justify-center">
-                    <div class="col-12 text-center align-self-center">
-                        <div class="section pb-3 pt-3 pt-sm-2 text-center">
-                            <h6 class="mb-0 pb-3">
-                                <span>Log In </span>
-                                <span>Join</span></h6>
-                            <input class="checkbox" type="checkbox" id="reg-log" name="changeForm reg-log"/>
-                            <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
-                            <div class="card-3d-wrap mx-auto">
-                                <div class="card-3d-wrapper">
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-center">
+                <div class="col-12 text-center align-self-center">
+                    <div class="section pb-3 pt-3 pt-sm-2 text-center">
+                        <h6 class="mb-0 pb-3">
+                            <span>Log In </span>
+                            <span>Join</span></h6>
+                        <input class="checkbox" type="checkbox" id="reg-log" name="changeForm reg-log"/>
+                        <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+                                <form th:action="@{/member/login}" class="loginPostForm" method="POST">
                                     <div class="card-front">
                                         <div class="center-wrap">
                                             <div class="section text-center">
-                                                <h4 class="mb-8 pb-3 text-4xl">로그인</h4>
                                                 <div class="form-group mt-8 ml-6 mr-6">
-                                                    <input type="text" name="username" class="form-style component-input" placeholder="아이디 입력" id="component-input-id" autocomplete="off" value>
+                                                    <input type="text" name="username" class="form-style component-input"
+                                                           placeholder="아이디 입력" id="component-input-id" autocomplete="off"
+                                                           value>
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <p id="username-error" class="error-message text-red-500">아이디가 존재하지 않습니다.</p>
+                                                    <p id="username-error" class="error-message text-red-500">아이디가 존재하지
+                                                        않습니다.</p>
                                                 </div>
                                                 <div class="form-group mt-14 ml-6 mr-6">
-                                                    <input type="password" name="password" class="form-style component-input" placeholder="비밀번호 입력" id="component-input-password" autocomplete="off" value>
+                                                    <input type="password" name="password"
+                                                           class="form-style component-input" placeholder="비밀번호 입력"
+                                                           id="component-input-password" autocomplete="off" value>
                                                     <i class="input-icon uil uil-lock-alt"></i>
-                                                    <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지 않습니다.</p>
+                                                    <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지
+                                                        않습니다.</p>
                                                 </div>
                                                 <div class="form-group mt-6 ml-6 mr-6 flex justify-start">
-                                                    <input style='zoom:1.4;' type="checkbox" id="saveId" class="text-lg mr-2"><span class="text-sm">아이디 저장</span>
+                                                    <input style='zoom:1.4;' type="checkbox" id="saveId"
+                                                           class="text-lg mr-2"><span class="text-sm">아이디 저장</span>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-8" onclick="login()" disabled>로그인</button>
-                                                <p class="mb-2 mt-8 text-center"><a href="/sendmail/password" class="link">비밀번호를 잊어버리셨나요?</a></p>
+                                                <button type="submit" class="login-submit btn mt-8" onclick="login()"
+                                                        disabled>로그인
+                                                </button>
+                                                <p class="mb-2 mt-8 text-center"><a href="/sendmail/password" class="link">비밀번호를
+                                                    잊어버리셨나요?</a></p>
                                                 <div class="social-login-wrap mt-8">
-                                                    <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png" alt="카카오로그인" width="80px"></a>
-                                                    <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png" alt="네이버로그인" width="80px"></a>
-                                                    <a href="/oauth2/authorization/google"><img src="/image/google_logo.png" alt="구글로그인" width="80px"></a>
+                                                    <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png"
+                                                                                               alt="카카오로그인"
+                                                                                               width="80px"></a>
+                                                    <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png"
+                                                                                               alt="네이버로그인"
+                                                                                               width="80px"></a>
+                                                    <a href="/oauth2/authorization/google"><img src="/image/google_logo.png"
+                                                                                                alt="구글로그인"
+                                                                                                width="80px"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </form>
+                                <form th:action="@{/member/join}" class="joinPostForm" method="POST">
                                     <div class="card-back">
                                         <div class="center-wrap">
                                             <div class="section text-center">
-                                                <h4 class="pb-1 text-4xl">회원가입</h4>
                                                 <div class="form-group ml-6 mr-6 inputUsernameDiv">
-                                                    <input type="text" name="username" class="form-style" placeholder="아이디 입력" id="username" autocomplete="off">
+                                                    <input type="text" name="username" class="form-style"
+                                                           placeholder="아이디 입력" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2 p-1 text-xs">중복확인</button>
+                                                    <button type="button" onclick="validateForm()"
+                                                            class="checkBtn btn ml-2 mt-1 mb-1 p-1">중복확인
+                                                    </button>
                                                     <div id="joinError" th:text="${joinError}" class="error"></div>
                                                 </div>
                                                 <div class="form-group ml-6 mr-6">
-                                                    <input type="password" name="password" class="form-style" maxlength="24" placeholder="비밀번호 입력" id="password" autocomplete="off">
+                                                    <input type="password" name="password" class="form-style" maxlength="24"
+                                                           placeholder="비밀번호 입력" id="password" autocomplete="off">
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                 </div>
                                                 <div class="form-group mt-1 ml-6 mr-6">
-                                                    <input type="password" name="password_confirm" class="form-style" maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm" autocomplete="off">
+                                                    <input type="password" name="password_confirm" class="form-style"
+                                                           maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm"
+                                                           autocomplete="off">
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                     <div id="passwordMatchError" class="error"></div>
                                                 </div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                    <input class="form-style box w-xm mr-2" id="domain-txt" type="text" placeholder="이메일 입력" name="logemail" autocomplete="off">@
+                                                    <input class="form-style box w-xm mr-2" id="domain-txt" type="text"
+                                                           placeholder="이메일 입력" name="logemail" autocomplete="off">@
                                                     <i class="input-icon uil uil-at"></i>
                                                     <select class="box form-style ml-2" id="domain-list">
                                                         <option value="type">직접 입력</option>
@@ -72,43 +95,56 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group ml-6 mr-6 inputNicknameDiv">
-                                                    <input type="text" name="nickname" class="form-style" placeholder="닉네임 입력" id="nickname" autocomplete="off">
+                                                    <input type="text" name="nickname" class="form-style"
+                                                           placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()" class="checkBtn m-2 p-1 text-xs">중복확인</button>
+                                                    <button type="button" onclick="validateForm()"
+                                                            class="checkBtn btn ml-2 mt-1 mb-1 p-1">중복확인
+                                                    </button>
                                                     <div id="nicknameError" th:text="${nicknameError}" class="error"></div>
                                                 </div>
                                                 <div class="form-group ml-6 mr-6">
-                                                    <input type="tel" name="phoneNumber" class="form-style" placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
+                                                    <input type="tel" name="phoneNumber" class="form-style"
+                                                           placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                     <i class="input-icon uil uil-phone"></i>
                                                 </div>
                                                 <div class="form-group mt-1 ml-6 mr-6">
                                                     <div class="address_sec_1 flex">
-                                                        <input type="text" id="address sample6_postcode" class="form-control form-style" placeholder="우편번호">
-                                                        <input type="button" onclick="sample6_execDaumPostcode()" class="btn ml-2 mr-2 mt-auto mb-auto p-2 text-xs" value="우편번호 찾기">
+                                                        <i class="input-icon uil uil-estate"></i>
+                                                        <input type="text" id="address sample6_postcode" class="form-style"
+                                                               placeholder="우편번호">
+                                                        <input type="button" onclick="sample6_execDaumPostcode()"
+                                                               class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편번호 찾기">
                                                     </div>
-                                                    <input type="text" id="component-input-address address sample6_address" name="address" class="form-control form-style mt-1 mb-1" placeholder="주소">
+                                                    <input type="text" id="component-input-address address sample6_address"
+                                                           name="address" class="form-style mt-1 mb-1" placeholder="주소">
                                                     <div class="address_sec_2 flex">
-                                                        <input type="text" id="sample6_detailAddress address" class="form-control form-style" placeholder="상세주소">
-                                                        <input type="text" id="sample6_extraAddress" class="form-control form-style ml-4" placeholder="참고항목">
+                                                        <input type="text" id="sample6_detailAddress address"
+                                                               class="form-style" placeholder="상세주소">
+                                                        <input type="text" id="sample6_extraAddress" class="form-style ml-2"
+                                                               placeholder="참고항목">
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                    <label id="component-input-img" for="profileImage" class="component-input"></label>
-                                                    <input type="file" name="profileImage" id="profileImage" class="form-control form-style">
+                                                    <i class="input-icon uil uil-user-square"></i>
+                                                    <label id="component-input-img" for="profileImage"
+                                                           class="component-input"></label>
+                                                    <input type="file" name="profileImage" id="profileImage"
+                                                           class="form-style">
                                                 </div>
-                                                <button type="submit" class="join-submit btn mt-2" disabled>회원가입</button>
+                                                <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 </html>
 

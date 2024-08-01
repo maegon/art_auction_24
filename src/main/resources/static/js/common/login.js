@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const usernameInput = document.getElementById("component-input-id");
     const passwordInput = document.getElementById("component-input-password");
     const rememberMeCheckbox = document.getElementById("saveId");
-    const autoLoginCheckbox = document.getElementById("autoLogin");
 
     const savedUsername = localStorage.getItem("savedUsername");
 
@@ -21,14 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function handleLogin(event) {
-        event.preventDefault(); // 기본 폼 제출 동작 방지
+        event.preventDefault();
         if (rememberMeCheckbox.checked) {
             localStorage.setItem("savedUsername", usernameInput.value);
         } else {
             localStorage.removeItem("savedUsername");
         }
     }
-
     usernameInput.addEventListener("input", updateLoginButtonState);
     passwordInput.addEventListener("input", updateLoginButtonState);
     loginButton.addEventListener("click", handleLogin);
