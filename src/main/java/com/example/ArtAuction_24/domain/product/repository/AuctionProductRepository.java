@@ -20,12 +20,14 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
     Page<AuctionProduct> findAll(Pageable pageable);
 
     @Query("""
-            select distinct p
-            from AuctionProduct p
-            where p.title like %:kw%
-            or p.description like %:kw%
+            SELECT p
+            FROM AuctionProduct p
+            WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :kw, '%'))
+            OR LOWER(p.description) LIKE LOWER(CONCAT('%', :kw, '%'))
             """)
     Page<AuctionProduct> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
 
-    List<AuctionProduct> findAllByOrderByCreateDateDesc(); //경매 그림을 최신순으로 가져와준다.
+    List<AuctionProduct> findAllByOrderByCreateDateDesc();
+
+
 }

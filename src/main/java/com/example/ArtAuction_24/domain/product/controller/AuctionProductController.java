@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/AuctionProduct")
 public class AuctionProductController {
 
-    private final AuctionProductService productService;
+    private final AuctionProductService auctionProductService;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "kw", defaultValue = "") String kw){
 
-        Page<AuctionProduct> paging = productService.getList(page, kw);
+        Page<AuctionProduct> paging = auctionProductService.getList(page, kw);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "AuctionProduct/list";
@@ -29,10 +29,10 @@ public class AuctionProductController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model){
-        AuctionProduct product = productService.getProduct(id);
+        AuctionProduct auctionProduct = auctionProductService.getProduct(id);
 
-        model.addAttribute("product", product);
-        System.out.println(product.toString());
+        model.addAttribute("auctionProduct", auctionProduct);
+        System.out.println(auctionProduct.toString());
         return "AuctionProduct/detail";
     }
 

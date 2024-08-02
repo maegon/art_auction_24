@@ -5,20 +5,21 @@ function toggleMenu() {
 }
 
 
+ document.addEventListener('DOMContentLoaded', function() {
+            const profileElement = document.getElementById('header_profile');
+            const dropdownContent = document.getElementById('profileDropdown');
 
-/*$(document).ready(function() {
-    $('#search_button').click(function() {
-        var $searchInput = $('#search_input');
-        var $searchContainer = $('#search_container');
+            profileElement.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
 
-        $searchInput.toggleClass('show');
-        $searchInput.focus(); // 검색창이 보일 때 포커스 설정
+            // 드롭다운 외부를 클릭하면 닫히도록 설정
+            window.addEventListener('click', function(event) {
+                if (!profileElement.contains(event.target)) {
+                    dropdownContent.style.display = 'none';
+                }
+            });
+        });
 
-        // `show` 클래스에 따라 `border-bottom`을 추가하거나 제거
-        if ($searchInput.hasClass('show')) {
-            $searchContainer.css('border-bottom', '1px solid black');
-        } else {
-            $searchContainer.css('border-bottom', 'none');
-        }
-    });
-});*/

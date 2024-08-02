@@ -49,6 +49,9 @@ public class DevInitData implements BeforeInitData {
             memberService.join("", "user1", password, "user1@test.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
 
+            memberService.join("", "user2", password, "user2@test.com", "user2",
+                    "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "");
+
             artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","Artist@naver.com","naver.com","안녕! 나 김작가");
             artistService.create("나작가", "naArtist", "1968-12-08", "010-4567-5678","Artist@google.com","google.com","안녕! 나 나작가");
             artistService.create("박작가", "parkArtist", "1999-04-03", "010-9874-5678","Artist@daum.com","daum.com","안녕! 나 박작가");
@@ -64,14 +67,14 @@ public class DevInitData implements BeforeInitData {
             Artist park = artistService.getArtistByKorName("박작가");
             Artist lee = artistService.getArtistByKorName("이작가");
 
-            auctionProductService.create("파란물고기 그림", "파란물고기 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("10000"), new BigDecimal("10000"), LocalDateTime.now(), "/image/파란물고기사진.jpg", "수채화", kim);
-            auctionProductService.create("풀 그림", "풀 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("12000"), new BigDecimal("12000"), LocalDateTime.now(), "/image/풀사진.jpg", "수채화", na);
-            auctionProductService.create("아이 그림", "아이 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("13000"), new BigDecimal("13000"), LocalDateTime.now(), "/image/아이사진.jpg", "수채화", park);
-            auctionProductService.create("산 그림", "산 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("14000"), new BigDecimal("14000"), LocalDateTime.now(), "/image/산사진.jpg", "수채화", lee);
-            auctionProductService.create("노란머리여자 그림", "노란머리여자 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("15000"), new BigDecimal("15000"), LocalDateTime.now(), "/image/노란머리여자사진.jpg", "수채화", kim);
-            auctionProductService.create("그리다만여자 그림", "그리다만여자 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("16000"), new BigDecimal("16000"), LocalDateTime.now(), "/image/그리다만여자사진.jpg", "수채화", na);
-            auctionProductService.create("눈 그림", "눈 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("17000"), new BigDecimal("17000"), LocalDateTime.now(), "/image/눈사진.jpg", "수채화", park);
-            auctionProductService.create("레몬 그림", "레몬 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal("18000"), new BigDecimal("18000"), LocalDateTime.now(), "/image/레몬사진.jpg", "수채화", lee);
+            auctionProductService.create("파란물고기 그림", "파란물고기 그림 설명", "사용된 재료", "10x10 크기", 10000, 10000, LocalDateTime.now(), "/image/파란물고기사진.jpg", "수채화", kim);
+            auctionProductService.create("풀 그림", "풀 그림 설명", "사용된 재료", "10x10 크기", 11000, 11000, LocalDateTime.now(), "/image/풀사진.jpg", "수채화", na);
+            auctionProductService.create("아이 그림", "아이 그림 설명", "사용된 재료", "10x10 크기", 12000, 12000, LocalDateTime.now(), "/image/아이사진.jpg", "수채화", park);
+            auctionProductService.create("산 그림", "산 그림 설명", "사용된 재료", "10x10 크기", 13000, 13000, LocalDateTime.now(), "/image/산사진.jpg", "수채화", lee);
+            auctionProductService.create("노란머리여자 그림", "노란머리여자 그림 설명", "사용된 재료", "10x10 크기", 14000, 14000, LocalDateTime.now(), "/image/노란머리여자사진.jpg", "수채화", kim);
+            auctionProductService.create("그리다만여자 그림", "그리다만여자 그림 설명", "사용된 재료", "10x10 크기", 15000, 15000, LocalDateTime.now(), "/image/그리다만여자사진.jpg", "수채화", na);
+            auctionProductService.create("눈 그림", "눈 그림 설명", "사용된 재료", "10x10 크기", 60000, 60000, LocalDateTime.now(), "/image/눈사진.jpg", "수채화", park);
+            auctionProductService.create("레몬 그림", "레몬 그림 설명", "사용된 재료", "10x10 크기", 100000, 100000, LocalDateTime.now(), "/image/레몬사진.jpg", "수채화", lee);
 
         };
     }

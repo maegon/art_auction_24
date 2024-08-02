@@ -32,8 +32,8 @@ public class AuctionProduct extends BaseEntity {
     private String description;
     private String medium; //사용된 재료
     private String dimensions; //크기
-    private BigDecimal startingPrice; //시작 가격
-    private BigDecimal currentBid; // 현재 입찰가
+    private int startingPrice; //시작 가격
+    private int currentBid; // 현재 입찰가
     private LocalDateTime auctionStartDate; // 시작 일
     private String thumbnailImg; // 그림 이미지
     private String category; // 카테고리
@@ -46,4 +46,12 @@ public class AuctionProduct extends BaseEntity {
 
     @OneToMany(mappedBy = "auctionProduct", cascade = CascadeType.REMOVE)
     private List<Review> reviewList;
+
+    public void updateBid(int newBid) {
+        if (newBid > currentBid) {
+            currentBid = newBid;
+        } else {
+            throw new IllegalArgumentException("새 입찰가가 현재 입찰가보다 작습니다.");
+        }
+    }
 }

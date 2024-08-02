@@ -23,8 +23,25 @@
                     </button>
                     </form>
                 </div>
+                <!-- 로그인 및 로그아웃 버튼 -->
                 <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
-                <a id="header_logoutBtn" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+
+
+                <div id="profileSection" sec:authorize="isAuthenticated()">
+                    <a id="header_profile" href="#">
+                        <!-- 현재 로그인한 사용자의 프로필 사진과 이름 표시 -->
+                        <img th:if="${profileImage != null}" th:src="@{|${profileImage}|}" alt="프로필 사진" class="profile-image"/>
+                        <img th:if="${profileImage == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진" class="profile-image"/>
+                    </a>
+
+                    <!-- 드롭다운 메뉴 -->
+                    <div id="profileDropdown" class="dropdown-content" style="display: none;">
+                        <a th:href="@{/member/myPage}">프로필 수정</a>
+                        <a th:href="@{/member/logout}">로그아웃</a>
+                        <a th:href="@{/question/list}">문의하기</a>
+                    </div>
+                </div>
+
             </div>
         </nav>
     </section>
