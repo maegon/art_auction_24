@@ -4,6 +4,7 @@ import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
+import com.example.ArtAuction_24.global.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -39,17 +41,8 @@ public class AuctionProductService {
     }
 
     public void create(String title, String description, String medium, String dimensions,
-                       BigDecimal startingPrice, BigDecimal currentBid,
+                       int startingPrice, int currentBid,
                        LocalDateTime auctionStartDate, String thumbnailImg, String category, Artist artist) {
-        // 유효성 검사
-        if (thumbnailImg.isEmpty() || startingPrice.compareTo(BigDecimal.ZERO) < 0 || currentBid.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Invalid input data");
-        }
-
-        // 경매 시작 시 currentBid는 startingPrice와 동일
-        if (!currentBid.equals(startingPrice)) {
-            throw new IllegalArgumentException("Current bid must be equal to starting price at auction creation");
-        }
 
 
         AuctionProduct p = AuctionProduct.builder()
@@ -88,4 +81,6 @@ public class AuctionProductService {
     public List<AuctionProduct> findAllAuctionProductOrderByCreateDateDesc() {
         return auctionProductRepository.findAllByOrderByCreateDateDesc();
     }
+
+
 }
