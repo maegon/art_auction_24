@@ -37,12 +37,12 @@
                 <div class="border-2 border-blue-600 mx-20 mt-20">
 
                     <div class="ml-24">
-                        <i class="fa-solid fa-palette"></i>
+                        <i class="fa-solid fa-palette" style="color: #f561d5;"></i>
                         <span class="font-bold text-2xl ml-2"> 작품 및 작가</span>
                     </div>
 
 
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'} or ${question.questionType.name() == 'ARTWORK'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li  th:text="${question.content}"></li>
                     </ul>
@@ -50,12 +50,12 @@
                 <div class="border-2 border-blue-600 mx-20 mt-20">
 
                     <div class="ml-24">
-                        <i class="fa-solid fa-credit-card"></i>
+                        <i class="fa-solid fa-credit-card" style="color: #f561d5;"></i>
                         <span class="font-bold text-2xl ml-2"> 작품구매</span>
                     </div>
 
 
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'PURCHASE'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
@@ -63,12 +63,12 @@
                 <div class="border-2 border-blue-600 mx-20 mt-20">
 
                     <div class="ml-24">
-                        <i class="fa-brands fa-servicestack"></i>
-                        <span class="font-bold text-2xl ml-2"> SERVICE</span>
+                        <i class="fa-brands fa-servicestack" style="color: #f561d5;"></i>
+                        <span class="font-bold text-2xl ml-2">SERVICE</span>
                     </div>
 
 
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'SERVICE'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
@@ -76,12 +76,12 @@
                 <div class="border-2 border-blue-600 mx-20 mt-20">
 
                     <div class="ml-24">
-                        <i class="fa-solid fa-truck"></i>
+                        <i class="fa-solid fa-truck" style="color: #f561d5;"></i>
                         <span class="font-bold text-2xl ml-2"> 배송</span>
                     </div>
 
 
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'DELIVERY'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
@@ -89,12 +89,12 @@
                 <div class="border-2 border-blue-600 mx-20 mt-20">
 
                     <div class="ml-24">
-                        <i class="fa-solid fa-rotate-left"></i>
+                        <i class="fa-solid fa-rotate-left" style="color: #f561d5;"></i>
                         <span class="font-bold text-2xl ml-2"> 반품</span>
                     </div>
 
 
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'RETURN'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>

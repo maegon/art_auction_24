@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.answer.entity;
 
+import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 
 import com.example.ArtAuction_24.domain.question.entity.Question;
@@ -25,6 +26,9 @@ public class Answer extends BaseEntity {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private Member member;
 
 
 }

@@ -1,13 +1,17 @@
 package com.example.ArtAuction_24.domain.member.service;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.form.MemberForm;
+import com.example.ArtAuction_24.domain.member.form.MemberForm2;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -56,5 +60,26 @@ public class MemberService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return memberRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
+    }
+
+    public void updateMember(MemberForm2 memberForm, String username) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        member.setUsername(memberForm.getUsername());
+        member.setEmail(memberForm.getEmail());
+        member.setNickname(memberForm.getNickname());
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
+        memberRepository.save(member);
+    }
+
+
+
+    public Member getMember(Long id) {
+        Optional<Member> op = memberRepository.findById(id);
+        if (op.isPresent() == false) {
+            throw new DateTimeException("Member not found");
+        }
+        return op.get();
     }
 }

@@ -1,9 +1,13 @@
-package com.example.ArtAuction_24.question.entity;
+package com.example.ArtAuction_24.domain.question.entity;
+
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 
 public enum QuestionType {
-    작품및작가,
-    구매,
+    ARTWORK,
+    ARTIST,
+    PURCHASE,
     SERVICE,
-    배송,
-    반품
+    DELIVERY,
+    RETURN,
+    OTHER
 }

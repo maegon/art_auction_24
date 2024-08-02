@@ -2,9 +2,12 @@ package com.example.ArtAuction_24.domain.question.service;
 
 
 import com.example.ArtAuction_24.domain.question.entity.Question;
+import com.example.ArtAuction_24.domain.question.entity.QuestionType;
+import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import com.example.ArtAuction_24.domain.question.repository.QuestionRepository;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,10 +32,11 @@ public class QuestionService {
     }
 
 
-    public void create(String subject, String content) {
+    public void create(QuestionForm questionForm, QuestionType questionType) {
         Question q = new Question();
-        q.setSubject(subject);
-        q.setContent(content);
+        q.setSubject(questionForm.getSubject());
+        q.setContent(questionForm.getContent());
+        q.setQuestionType(questionType);
         q.setCreateDate(LocalDateTime.now());
         this.questionRepository.save(q);
     }
