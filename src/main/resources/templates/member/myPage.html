@@ -17,34 +17,33 @@
                 <div id="info-form" class="myPage-hidden p-4 mt-2">
                     <h1 class="text-xl">회원 정보수정</h1>
                     <div class="bg-stone-100 min-h-[260px]">
-                        <form class="">
+                        <form id="updateForm" th:action="@{/member/update}" th:object="${memberForm2}" method="post">
                             <div class="myPage-form grid grid-rows-2 grid-flow-col gap-4 justify-stretch w-full h-[200px]">
                                 <div class="myPage-grid-item">
                                     <label for="username">아이디:</label>
-                                    <input type="text" id="username" name="username">
+                                    <input type="text" id="username" th:field="*{username}">
                                 </div>
                                 <div class="myPage-grid-item">
                                     <label for="password">비밀번호:</label>
-                                    <input type="password" name="password" id="password" maxlength="24"
+                                    <input type="password" id="password" th:field="*{password}" maxlength="24"
                                            placeholder="비밀번호를 입력해주세요" autocomplete="off">
                                 </div>
                                 <div class="myPage-grid-item">
                                     <label for="nickname">닉네임:</label>
-                                    <input type="text" id="nickname" name="nickname">
+                                    <input type="text" id="nickname" th:field="*{nickname}">
                                 </div>
                                 <div class="myPage-grid-item">
                                     <label for="passwordConfirm">비밀번호확인:</label>
-                                    <input type="password" name="password_confirm" maxlength="24"
-                                           placeholder="비밀번호를 재입력해주세요" id="passwordConfirm" autocomplete="off">
+                                    <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" maxlength="24"
+                                           placeholder="비밀번호를 재입력해주세요" autocomplete="off">
                                 </div>
                                 <div class="myPage-grid-item">
                                     <label for="email">Email:</label>
-                                    <input type="email" id="email" name="email">
+                                    <input type="email" id="email" th:field="*{email}">
                                 </div>
                             </div>
                             <div class="myPage-grid-item flex items-center justify-end">
-                                <button class="bg-black text-[#D5A770] text-xl h-10 px-4 w-[150px] rounded-xl mr-3"
-                                        type="submit">업데이트
+                                <button id="updateButton" class="bg-black text-[#D5A770] text-xl h-10 px-4 w-[150px] rounded-xl mr-3" type="submit">업데이트
                                 </button>
                             </div>
                         </form>
@@ -159,7 +158,6 @@
 </div>
 </html>
 
-
 <script>
     document.getElementById('info-update').addEventListener('click', function() {
         toggleVisibility('info-form', 'info-form2');
@@ -179,6 +177,16 @@
     document.getElementById('alarm-list-toggle').addEventListener('click', function() {
         toggleVisibility('alarm-list');
         setActiveState('alarm-list-toggle');
+    });
+
+    document.getElementById('updateButton').addEventListener('click', function(event) {
+        var password = document.getElementById('password').value;
+        var passwordConfirm = document.getElementById('passwordConfirm').value;
+
+        if (password !== passwordConfirm) {
+            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+            event.preventDefault();
+        }
     });
 
     function toggleVisibility(...elements) {

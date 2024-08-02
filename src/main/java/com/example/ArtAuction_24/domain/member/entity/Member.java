@@ -1,5 +1,7 @@
 package com.example.ArtAuction_24.domain.member.entity;
 
+import com.example.ArtAuction_24.domain.answer.entity.Answer;
+import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.notification.entity.Notification;
@@ -43,4 +45,10 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.REMOVE)
     private List<Notification> notifications; // 회원이 수신한 알림 목록
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Question> questionList; // 질문 목록
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList; // 답변목록
 }

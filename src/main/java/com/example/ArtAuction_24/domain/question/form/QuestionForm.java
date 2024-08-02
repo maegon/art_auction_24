@@ -1,4 +1,4 @@
-package com.example.ArtAuction_24.question.form;
+package com.example.ArtAuction_24.domain.question.form;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
