@@ -36,7 +36,7 @@
                                                     <input style='zoom:1.4;' type="checkbox" id="saveId"
                                                            class="text-lg mr-2"><span class="text-sm">아이디 저장</span>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-8" onclick="login()"
+                                                <button type="submit" class="login-submit btn mt-8"
                                                         disabled>로그인
                                                 </button>
                                                 <p class="mb-2 mt-8 text-center"><a href="/sendmail/password" class="link">비밀번호를
@@ -82,8 +82,11 @@
                                                 </div>
                                                 <div id="passwordMatchError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                    <input class="form-style box w-xm mr-2" id="domain-txt" type="text"
-                                                           placeholder="이메일 입력" name="logemail" autocomplete="off">@
+                                                    <input class="form-style box w-xm mr-2" id="email-txt" type="text"
+                                                           placeholder="이메일 입력" name="logemailT" autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
+                                                    @<input class="form-style box w-xm ml-2" id="domain-txt" type="text"
+                                                           placeholder="이메일 선택" name="logemail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                     <select class="box form-style ml-2" id="domain-list">
                                                         <option value="type">직접 입력</option>
