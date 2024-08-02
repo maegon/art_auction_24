@@ -67,8 +67,8 @@
                                                     <button type="button" onclick="validateForm()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
                                                     </button>
-                                                    <div id="joinError" th:text="${joinError}" class="error"></div>
                                                 </div>
+                                                <div id="usernameMatchError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6">
                                                     <input type="password" name="password" class="form-style" maxlength="24"
                                                            placeholder="비밀번호 입력" id="password" autocomplete="off">
@@ -79,8 +79,8 @@
                                                            maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm"
                                                            autocomplete="off">
                                                     <i class="input-icon uil uil-lock-alt"></i>
-                                                    <div id="passwordMatchError" class="error"></div>
                                                 </div>
+                                                <div id="passwordMatchError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
                                                     <input class="form-style box w-xm mr-2" id="domain-txt" type="text"
                                                            placeholder="이메일 입력" name="logemail" autocomplete="off">@

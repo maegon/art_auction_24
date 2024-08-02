@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const emailInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
+    const addressInput2 = document.getElementById("sample6_detailAddress");
     const profileImageInput = document.getElementById("profileImage");
     const domainListEl = document.querySelector('#domain-list');
     const joinError = document.getElementById("joinError");
     const nicknameError = document.getElementById("nicknameError");
     const passwordMatchError = document.getElementById("passwordMatchError");
+    const usernameMatchError = document.getElementById("usernameMatchError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
     const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
 
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
             nicknameInput.value.trim() !== "" &&
             phoneNumberInput.value.trim() !== "" &&
             addressInput.value.trim() !== "" &&
+            addressInput2.value.trim() !== "" &&
             profileImageInput.files.length > 0
         ) {
             joinButton.removeAttribute("disabled");
@@ -68,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         nicknameInput,
         phoneNumberInput,
         addressInput,
+        addressInput2,
         profileImageInput
     ];
 
@@ -113,15 +117,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.exists) {
-                        joinError.innerText = "(이미 존재하는 아이디입니다.)";
-                        joinError.classList.remove("success");
-                        joinError.classList.add("error");
+                        usernameMatchError.innerText = "중복된 아이디가 있습니다.";
+                        usernameMatchError.classList.remove("success");
+                        usernameMatchError.classList.add("error");
                         joinButton.disabled = true;
                         usernameCheckButton.disabled = false;
                     } else {
-                        joinError.innerText = "(입력하신 아이디는 사용 가능합니다.)";
-                        joinError.classList.remove("error");
-                        joinError.classList.add("success");
+                        usernameMatchError.innerText = "사용 가능한 아이디입니다.";
+                        usernameMatchError.classList.remove("error");
+                        usernameMatchError.classList.add("success");
                         usernameCheckButton.disabled = true;
                         updateJoinButtonState();
                     }
