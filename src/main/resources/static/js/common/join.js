@@ -1,6 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
     const phoneNumberInput = document.getElementById("phoneNumber");
+    const joinButton = document.querySelector(".join-submit");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const passwordConfirmInput = document.getElementById("passwordConfirm");
+    const emailInput = document.getElementById("domain-txt");
+    const nicknameInput = document.getElementById("nickname");
+    const addressInput = document.getElementById("sample6_postcode");
+    const profileImageInput = document.getElementById("profileImage");
+    const domainListEl = document.querySelector('#domain-list');
+    const joinError = document.getElementById("joinError");
+    const nicknameError = document.getElementById("nicknameError");
+    const passwordMatchError = document.getElementById("passwordMatchError");
+    const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
+    const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
 
+    // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
         let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
         let formattedInput = '';
@@ -16,31 +31,18 @@ document.addEventListener("DOMContentLoaded", function() {
         event.target.value = formattedInput;
     });
 
-    // 회원가입 버튼 상태 업데이트
-    const joinButton = document.querySelector(".join-submit");
-    const usernameInput = document.getElementById("username");
-    const passwordInput = document.getElementById("password");
-    const passwordConfirmInput = document.getElementById("passwordConfirm");
-    const emailInput = document.getElementById("domain-txt");
-    const nicknameInput = document.getElementById("nickname");
-    const phoneNumberInput = document.getElementById("phoneNumber");
-    const addressInput = document.getElementById("address");
-    const profileImageInput = document.getElementById("profileImage");
-
-    // 이메일 직접 입력/이메일 선택
-    const domainListEl = document.querySelector('#domain-list');
-    const domainInputEl = document.querySelector('#domain-txt');
-
+    // 이메일 도메인 선택
     domainListEl.addEventListener('change', (event) => {
         if (event.target.value !== "type") {
-            domainInputEl.value = event.target.value;
-            domainInputEl.disabled = true;
+            emailInput.value = event.target.value;
+            emailInput.disabled = true;
         } else {
-            domainInputEl.value = "";
-            domainInputEl.disabled = false;
+            emailInput.value = "";
+            emailInput.disabled = false;
         }
     });
 
+    // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {
         if (
             usernameInput.value.trim() !== "" &&
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             joinButton.setAttribute("disabled", "true");
         }
     }
-
+    // 입력 필드 이벤트 리스너 추가
     const inputs = [
         usernameInput,
         passwordInput,
@@ -71,19 +73,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
     inputs.forEach(input => {
         input.addEventListener("input", updateJoinButtonState);
+        if (input === passwordInput || input === passwordConfirmInput) {
+            input.addEventListener("input", checkPasswords);
+        }
     });
+
+    // 중복 확인 버튼 상태 업데이트
+    function updateCheckButtonState() {
+        if (usernameInput.value.trim().length !== "") {
+            usernameCheckButton.removeAttribute("disabled");
+        } else {
+            usernameCheckButton.setAttribute("disabled", "true");
+        }
+
+        if (nicknameInput.value.trim().length !== "") {
+            nicknameCheckButton.removeAttribute("disabled");
+        } else {
+            nicknameCheckButton.setAttribute("disabled", "true");
+        }
+    }
+
+    // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
+    usernameInput.addEventListener("input", updateCheckButtonState);
+    nicknameInput.addEventListener("input", updateCheckButtonState);
 
     // 폼 유효성 검사
     function validateForm() {
-        const joinError = document.getElementById("joinError");
-        const nicknameError = document.getElementById("nicknameError");
-        const submitButton2 = document.querySelector(".join-submit");
-        const checkButton = document.getElementsByClassName("checkBtn");
         const username = usernameInput.value.trim();
         const nickname = nicknameInput.value.trim();
+        const checkButton = document.querySelectorAll(".checkBtn");
 
         // 사용자 아이디 검사
-        if (username !== "") {
+        if (username.length < 4 || username.length > 24) {
+            setErrorMessage('username', 'size');
+            joinButton.disabled = true;
+            usernameCheckButton.disabled = false;
+        } else {
             fetch("/member/check-username?username=" + username)
                 .then(response => response.json())
                 .then(data => {
@@ -91,23 +116,25 @@ document.addEventListener("DOMContentLoaded", function() {
                         joinError.innerText = "(이미 존재하는 아이디입니다.)";
                         joinError.classList.remove("success");
                         joinError.classList.add("error");
-                        submitButton2.disabled = true;
-                        checkButton.disabled = false;
+                        joinButton.disabled = true;
+                        usernameCheckButton.disabled = false;
                     } else {
                         joinError.innerText = "(입력하신 아이디는 사용 가능합니다.)";
                         joinError.classList.remove("error");
                         joinError.classList.add("success");
-                        checkButton.disabled = true;
+                        usernameCheckButton.disabled = true;
                         updateJoinButtonState();
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                .catch(error => console.error('Error:', error));
         }
 
         // 닉네임 검사
-        if (nickname !== "") {
+        if (nickname.length === 0) {
+            setErrorMessage('nickname', 'notBlank');
+            joinButton.disabled = true;
+            nicknameCheckButton.disabled = false;
+        } else {
             fetch("/member/check-nickname?nickname=" + nickname)
                 .then(response => response.json())
                 .then(data => {
@@ -115,41 +142,37 @@ document.addEventListener("DOMContentLoaded", function() {
                         nicknameError.innerText = "(이미 존재하는 닉네임입니다.)";
                         nicknameError.classList.remove("success");
                         nicknameError.classList.add("error");
-                        submitButton2.disabled = true;
-                        checkButton.disabled = false;
+                        joinButton.disabled = true;
+                        nicknameCheckButton.disabled = false;
                     } else {
                         nicknameError.innerText = "(입력하신 닉네임은 사용 가능합니다.)";
                         nicknameError.classList.remove("error");
                         nicknameError.classList.add("success");
-                        checkButton.disabled = true;
+                        nicknameCheckButton.disabled = true;
                         updateJoinButtonState();
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                .catch(error => console.error('Error:', error));
         }
     }
 
     // 비밀번호 확인
     function checkPasswords() {
-        const password = document.getElementById("password").value;
-        const passwordConfirm = document.getElementById("passwordConfirm").value;
-        const passwordMatchError = document.getElementById("passwordMatchError");
-        const submitButton2 = document.querySelector(".join-submit");
+        const password = passwordInput.value;
+        const passwordConfirm = passwordConfirmInput.value;
+        const checkButton = document.querySelectorAll(".checkBtn");
 
         if (password && passwordConfirm) {
             if (password !== passwordConfirm) {
+                setErrorMessage('password', 'pattern');
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
                 passwordMatchError.classList.add("error");
-                submitButton2.disabled = true;
-                checkButton.disabled = false;
+                joinButton.disabled = true;
             } else {
                 passwordMatchError.innerText = "비밀번호가 일치합니다.";
                 passwordMatchError.classList.remove("error");
                 passwordMatchError.classList.add("success");
-                checkButton.disabled = true;
                 updateJoinButtonState();
             }
         } else {
@@ -157,46 +180,43 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // 비밀번호 입력 시 확인
-    passwordInput.addEventListener("input", checkPasswords);
-    passwordConfirmInput.addEventListener("input", checkPasswords);
-
-    // 주소 검색
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                if (data.userSelectedType === 'R') {
-                    addr = data.roadAddress;
-                } else {
-                    addr = data.jibunAddress;
-                }
-
-                if (data.userSelectedType === 'R') {
-                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                        extraAddr += data.bname;
-                    }
-                    if (data.buildingName !== '' && data.apartment === 'Y') {
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    if (extraAddr !== '') {
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-
-    // 비밀번호 확인 기능 추가
-    passwordInput.addEventListener("input", checkPasswords);
-    passwordConfirmInput.addEventListener("input", checkPasswords);
 });
+
+// 에러 메시지 객체
+const errMsg = {
+    username: {
+        size: "아이디는 최소 4자리 ~ 최대 24자리여야 합니다.",
+        notBlank: "아이디를 입력해주세요."
+    },
+    password: {
+        size: "비밀번호는 최소 6자리 ~ 최대 24자리여야 합니다.",
+        notBlank: "비밀번호를 입력해주세요.",
+        pattern: "각각 하나 이상의 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요."
+    },
+    email: {
+        notBlank: "이메일 주소를 입력해주세요.",
+        pattern: "유효한 이메일 주소를 입력해주세요."
+    },
+    nickname: {
+        notBlank: "닉네임을 입력해주세요.",
+        pattern: "부적절한 단어가 포함되어 있습니다."
+    },
+    phoneNumber: {
+        notBlank: "전화번호를 입력해주세요.",
+        pattern: "전화번호를 - 없이 작성해주세요."
+    }
+};
+
+// 각 필드에 대한 에러 메시지를 설정하는 함수
+function setErrorMessage(field, errorType) {
+    const errorElement = document.getElementById(`${field}Error`);
+    if (errMsg[field] && errMsg[field][errorType]) {
+        errorElement.innerText = errMsg[field][errorType];
+        errorElement.classList.remove("success");
+        errorElement.classList.add("error");
+    } else {
+        errorElement.innerText = "";
+        errorElement.classList.remove("error");
+        errorElement.classList.add("success");
+    }
+}
