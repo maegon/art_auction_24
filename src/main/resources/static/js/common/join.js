@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const phoneNumberInput = document.getElementById("phoneNumber");
     const joinButton = document.querySelector(".join-submit");
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
+    const phoneNumberInput = document.getElementById("phoneNumber");
     const emailInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const profileImageInput = document.getElementById("profileImage");
     const domainListEl = document.querySelector('#domain-list');
     const joinError = document.getElementById("joinError");
-    const nicknameError = document.getElementById("nicknameError");
     const passwordMatchError = document.getElementById("passwordMatchError");
     const usernameMatchError = document.getElementById("usernameMatchError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
@@ -46,17 +45,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {
-        if (
-            usernameInput.value.trim() !== "" &&
-            passwordInput.value.trim() !== "" &&
-            passwordConfirmInput.value.trim() !== "" &&
-            emailInput.value.trim() !== "" &&
-            nicknameInput.value.trim() !== "" &&
-            phoneNumberInput.value.trim() !== "" &&
-            addressInput.value.trim() !== "" &&
-            addressInput2.value.trim() !== "" &&
-            profileImageInput.files.length > 0
-        ) {
+        let allFilled = true;
+        for (let field of fields) {
+            if (field.input.type === "file") {
+                if (field.input.files.length === 0) {
+                    allFilled = false;
+                    break;
+                }
+            } else {
+                if (field.input.value.trim() === "") {
+                    allFilled = false;
+                    break;
+                }
+            }
+        }
+        if (allFilled) {
             joinButton.removeAttribute("disabled");
         } else {
             joinButton.setAttribute("disabled", "true");
@@ -84,76 +87,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 중복 확인 버튼 상태 업데이트
     function updateCheckButtonState() {
+        // 아이디 중복 확인 버튼 활성화 여부
         if (usernameInput.value.trim().length !== "") {
             usernameCheckButton.removeAttribute("disabled");
         } else {
             usernameCheckButton.setAttribute("disabled", "true");
         }
-
+        // 닉네임 중복 확인 버튼 활성화 여부
         if (nicknameInput.value.trim().length !== "") {
             nicknameCheckButton.removeAttribute("disabled");
         } else {
             nicknameCheckButton.setAttribute("disabled", "true");
         }
     }
+    usernameCheckButton.addEventListener("click", validateUsername);
 
-    // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
+//    // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
     usernameInput.addEventListener("input", updateCheckButtonState);
     nicknameInput.addEventListener("input", updateCheckButtonState);
 
-    // 폼 유효성 검사
-    function validateForm() {
+    // 폼 유효성 검사(아이디)
+    function validateUsername() {
+        // 아이디에 공백이 있는지 확인하고 있으면 경고 표시
+//        if(usernameInput.value)
         const username = usernameInput.value.trim();
-        const nickname = nicknameInput.value.trim();
-        const checkButton = document.querySelectorAll(".checkBtn");
 
-        // 사용자 아이디 검사
         if (username.length < 4 || username.length > 24) {
-            setErrorMessage('username', 'size');
-            joinButton.disabled = true;
-            usernameCheckButton.disabled = false;
+            usernameMatchError.innerText = "아이디는 최소 4자리 ~ 최대 24자리여야 합니다.";
+            usernameMatchError.classList.remove("success");
+            usernameMatchError.classList.add("error");
+            // 경고 문구 표시 후 중복확인 버튼 초기화 함수 추가할 것
+            // ...
         } else {
             fetch("/member/check-username?username=" + username)
                 .then(response => response.json())
                 .then(data => {
                     if (data.exists) {
-                        usernameMatchError.innerText = "중복된 아이디가 있습니다.";
+                        usernameMatchError.innerText = "사용 중인 아이디 입니다.";
                         usernameMatchError.classList.remove("success");
                         usernameMatchError.classList.add("error");
-                        joinButton.disabled = true;
-                        usernameCheckButton.disabled = false;
                     } else {
                         usernameMatchError.innerText = "사용 가능한 아이디입니다.";
                         usernameMatchError.classList.remove("error");
                         usernameMatchError.classList.add("success");
-                        usernameCheckButton.disabled = true;
-                        updateJoinButtonState();
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        // 닉네임 검사
-        if (nickname.length === 0) {
-            setErrorMessage('nickname', 'notBlank');
-            joinButton.disabled = true;
-            nicknameCheckButton.disabled = false;
-        } else {
-            fetch("/member/check-nickname?nickname=" + nickname)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        nicknameError.innerText = "(이미 존재하는 닉네임입니다.)";
-                        nicknameError.classList.remove("success");
-                        nicknameError.classList.add("error");
-                        joinButton.disabled = true;
-                        nicknameCheckButton.disabled = false;
-                    } else {
-                        nicknameError.innerText = "(입력하신 닉네임은 사용 가능합니다.)";
-                        nicknameError.classList.remove("error");
-                        nicknameError.classList.add("success");
-                        nicknameCheckButton.disabled = true;
-                        updateJoinButtonState();
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -167,17 +143,17 @@ document.addEventListener("DOMContentLoaded", function() {
         const checkButton = document.querySelectorAll(".checkBtn");
 
         if (password && passwordConfirm) {
-            if (password !== passwordConfirm) {
+            if (password === passwordConfirm) {
+                passwordMatchError.innerText = "비밀번호가 일치합니다.";
+                passwordMatchError.classList.remove("error");
+                passwordMatchError.classList.add("success");
+                updateJoinButtonState();
+            } else {
                 setErrorMessage('password', 'pattern');
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
                 passwordMatchError.classList.add("error");
                 joinButton.disabled = true;
-            } else {
-                passwordMatchError.innerText = "비밀번호가 일치합니다.";
-                passwordMatchError.classList.remove("error");
-                passwordMatchError.classList.add("success");
-                updateJoinButtonState();
             }
         } else {
             passwordMatchError.innerText = "";

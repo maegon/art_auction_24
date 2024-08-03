@@ -68,7 +68,7 @@
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
-                                                <div id="usernameMatchError" class="error"></div>
+                                                <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
                                                 <div class="form-group ml-6 mr-6">
                                                     <input type="password" name="password" class="form-style" maxlength="24"
                                                            placeholder="비밀번호 입력" id="password" autocomplete="off">
@@ -97,6 +97,7 @@
                                                         <option value="daum.net">daum.net</option>
                                                     </select>
                                                 </div>
+                                                <div id="emailError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6 inputNicknameDiv">
                                                     <input type="text" name="nickname" class="form-style"
                                                            placeholder="닉네임 입력" id="nickname" autocomplete="off">
@@ -104,13 +105,14 @@
                                                     <button type="button" onclick="validateForm()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
                                                     </button>
-                                                    <div id="nicknameError" th:text="${nicknameError}" class="error"></div>
                                                 </div>
+                                                <div id="nicknameError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6">
                                                     <input type="tel" name="phoneNumber" class="form-style"
                                                            placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                     <i class="input-icon uil uil-phone"></i>
                                                 </div>
+                                                <div id="phoneNumberError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6">
                                                     <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
                                                     <div class="address_sec_1 flex">
@@ -129,6 +131,7 @@
                                                                placeholder="참고항목">
                                                     </div>
                                                 </div>
+                                                <div id="addressError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
                                                     <i class="input-icon uil uil-user-square"></i>
                                                     <label id="component-input-img" for="profileImage"
@@ -136,6 +139,7 @@
                                                     <input type="file" name="profileImage" id="profileImage"
                                                            class="form-style">
                                                 </div>
+                                                <div id="profileImageError" class="error"></div>
                                                 <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>

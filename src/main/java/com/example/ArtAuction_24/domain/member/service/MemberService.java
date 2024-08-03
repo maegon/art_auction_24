@@ -64,7 +64,7 @@ public class MemberService {
 
     public void updateMember(MemberForm2 memberForm, String username) {
         Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
         member.setUsername(memberForm.getUsername());
         member.setEmail(memberForm.getEmail());
         member.setNickname(memberForm.getNickname());
@@ -73,12 +73,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public boolean checkUsernameExists(String username) {
+        return memberRepository.existsByUsername(username);
+    }
 
 
     public Member getMember(Long id) {
         Optional<Member> op = memberRepository.findById(id);
         if (op.isPresent() == false) {
-            throw new DateTimeException("Member not found");
+            throw new DateTimeException("회원을 찾을 수 없습니다.");
         }
         return op.get();
     }
