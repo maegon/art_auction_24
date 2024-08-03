@@ -83,4 +83,15 @@ public class AuctionProductService {
     }
 
 
+    public AuctionProduct getTopAuctionProductByView() {
+        return auctionProductRepository.findTopByOrderByViewDesc();
+    }
+
+    @Transactional
+    public void incrementViews(Long id) {
+        AuctionProduct auctionProduct = auctionProductRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("auctionProduct not found"));
+        auctionProduct.setView(auctionProduct.getView() + 1);
+        auctionProductRepository.save(auctionProduct);
+    }
 }

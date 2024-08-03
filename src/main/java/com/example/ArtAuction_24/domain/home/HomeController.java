@@ -28,6 +28,9 @@ public class HomeController {
         List<AuctionProduct> auctionProductList = auctionProductService.findAllAuctionProductOrderByCreateDateDesc();
         model.addAttribute("auctionProductList", auctionProductList);
 
+        AuctionProduct topProduct = auctionProductService.getTopAuctionProductByView();
+        model.addAttribute("topProduct", topProduct);
+
         // 현재 로그인한 사용자의 프로필 이미지와 이름을 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {

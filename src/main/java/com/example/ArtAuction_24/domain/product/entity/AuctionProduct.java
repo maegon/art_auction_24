@@ -37,6 +37,7 @@ public class AuctionProduct extends BaseEntity {
     private LocalDateTime auctionStartDate; // 시작 일
     private String thumbnailImg; // 그림 이미지
     private String category; // 카테고리
+    private int view;
 
     @ManyToOne
     private Artist artist;

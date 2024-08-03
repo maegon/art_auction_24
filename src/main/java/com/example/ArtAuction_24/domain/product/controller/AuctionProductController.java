@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/AuctionProduct")
+@RequestMapping("/auctionProduct")
 public class AuctionProductController {
 
     private final AuctionProductService auctionProductService;
@@ -29,10 +29,9 @@ public class AuctionProductController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model){
+        this.auctionProductService.incrementViews(id);
         AuctionProduct auctionProduct = auctionProductService.getProduct(id);
-
         model.addAttribute("auctionProduct", auctionProduct);
-        System.out.println(auctionProduct.toString());
         return "AuctionProduct/detail";
     }
 
