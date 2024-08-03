@@ -64,7 +64,7 @@
                                                     <input type="text" name="username" class="form-style"
                                                            placeholder="아이디 입력" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()"
+                                                    <button type="button" onclick="validateUsername()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
@@ -102,7 +102,7 @@
                                                     <input type="text" name="nickname" class="form-style"
                                                            placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()"
+                                                    <button type="button" onclick="validateNickname()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
@@ -140,7 +140,7 @@
                                                            class="form-style">
                                                 </div>
                                                 <div id="profileImageError" class="error"></div>
-                                                <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
+                                                <button type="submit" class="join-submit btn mt-3" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>
                                         </div>

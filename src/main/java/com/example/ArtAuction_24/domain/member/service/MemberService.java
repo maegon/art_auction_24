@@ -73,8 +73,14 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    // 아이디 중복 확인
     public boolean checkUsernameExists(String username) {
         return memberRepository.existsByUsername(username);
+    }
+
+    // 닉네임 중복 확인
+    public boolean checkNicknameExists(String nickname) {
+        return memberRepository.existsByNickname(nickname);
     }
 
 

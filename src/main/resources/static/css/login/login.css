@@ -91,7 +91,7 @@ input[id="saveId"] > span {
   position: relative;
   width: 640px;
   max-width: 100%;
-  height: 700px;
+  height: 740px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;

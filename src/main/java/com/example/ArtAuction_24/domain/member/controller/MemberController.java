@@ -54,6 +54,14 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Map<String, Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
+        boolean exists = memberService.checkNicknameExists(nickname);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/join")
     public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
         //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
