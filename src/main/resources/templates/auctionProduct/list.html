@@ -1,15 +1,29 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="auctionProductList-container container mx-auto px-4 sm:px-6 lg:px-8" style="max-width: calc(100% - 600px);">
-        <h1 class="text-2xl font-bold flex justify-center py-5">그림 리스트</h1>
-        <div id="search_container" class="flex justify-center mb-5">
-            <form class="flex border border-gray-300 rounded-lg overflow-hidden" th:action="@{/home/search}" method="get">
-                <input type="text" name="kw" id="search_input" placeholder="찾으시는 작품명을 입력해주세요"
-                       class="px-4 py-2 w-64 sm:w-80 md:w-96 focus:outline-none"/>
-                <button type="submit" id="search_button" class="bg-blue-500 text-white px-4 flex items-center justify-center">
+        <h1 class="text-2xl font-bold flex justify-center py-5">작품 리스트</h1>
+        <div id="search_container" class="flex justify-between mb-5 pb-4 items-center">
+            <!-- 드롭다운 추가 부분 -->
+            <div class="relative ml-4">
+                <button id="sortButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                    <span id="sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
+                </button>
+                <div id="sortDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
+                </div>
+            </div>
+
+            <form id="searchForm" class="flex border border-gray-300 rounded-lg overflow-hidden" th:action="@{/auctionProduct/list}" method="get">
+                <input type="text" name="kw" id="search_input" placeholder="작가 또는 작품명"
+                       class="px-4 py-2 w-64 sm:w-80 md:w-96 focus:outline-none" th:value="${kw}"/>
+                <button type="submit" id="search_button" class="bg-white text-gray-600 px-4 flex items-center justify-center">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
+                <input type="hidden" name="sort" id="sortInput" th:value="${sort}"/>
             </form>
+
         </div>
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-3">
             <li th:each="auctionProduct, loop : ${paging}" class="flex flex-col group w-full">
@@ -22,12 +36,15 @@
                 <a th:href="@{|/auctionProduct/detail/${auctionProduct.id}|}" th:text="${auctionProduct.medium}" class="text-left text-gray-500 md:text-left mt-2"></a>
                 <hr>
                 <span class="flex justify-between items-center text-center md:text-left">
-                <span>Current Bid</span>
-                <a th:href="@{|/auctionProduct/detail/${auctionProduct.id}|}" th:text="|KRW ${auctionProduct.currentBid}|" class="text-red-500 ml-1"></a>
-            </span>
+                    <span>Current Bid</span>
+                    <a th:href="@{|/auctionProduct/detail/${auctionProduct.id}|}" th:text="|KRW ${auctionProduct.currentBid}|" class="text-red-500 ml-1"></a>
+                </span>
             </li>
         </ul>
 
+        <div th:if="${paging.empty}" class="flex justify-center items-center h-80">
+            <p class="text-center text-gray-500">데이터가 존재하지 않습니다.</p>
+        </div>
         <!-- 페이징 처리 시작 -->
         <ul th:if="${!paging.isEmpty()}" class="pagination flex justify-center mt-5">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
@@ -49,13 +66,5 @@
                 </a>
             </li>
         </ul>
-        <form th:action="@{/product/list}" method="get" id="searchForm" class="hidden">
-            <input type="hidden" id="kw" name="kw" th:value="${kw}">
-            <input type="hidden" id="page" name="page" th:value="${paging.number}">
-        </form>
     </div>
-
-
-
 </div>
-</html>

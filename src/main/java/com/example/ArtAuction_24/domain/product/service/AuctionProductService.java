@@ -1,16 +1,19 @@
 package com.example.ArtAuction_24.domain.product.service;
 
+import com.example.ArtAuction_24.domain.answer.entity.Answer;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
 import com.example.ArtAuction_24.global.DataNotFoundException;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,19 +35,26 @@ public class AuctionProductService {
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
 
-    public Page<AuctionProduct> getList(int page, String kw) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page, 8, Sort.by(sorts));
+    public Page<AuctionProduct> getProductsWithSorting(String keyword, Pageable pageable, String sortOption) {
+        Sort sort = switch (sortOption) {
+            case "price-asc" -> Sort.by("startingPrice").ascending();
+            case "price-desc" -> Sort.by("startingPrice").descending();
+            case "latest" -> Sort.by("createDate").descending();
+            default -> Sort.by("createDate").descending();
+        };
 
-        return auctionProductRepository.findAllByKeyword(kw, pageable);
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        if (keyword != null && !keyword.isEmpty()) {
+            return auctionProductRepository.findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(keyword, keyword, keyword, sortedPageable);
+        } else {
+            return auctionProductRepository.findAll(sortedPageable);
+        }
     }
 
     public void create(String title, String description, String medium, String dimensions,
                        int startingPrice, int currentBid,
                        LocalDateTime auctionStartDate, String thumbnailImg, String category, Artist artist) {
-
-
         AuctionProduct p = AuctionProduct.builder()
                 .title(title)
                 .description(description)
@@ -61,13 +71,8 @@ public class AuctionProductService {
     }
 
     public AuctionProduct getProduct(Long id) {
-        Optional<AuctionProduct> product = auctionProductRepository.findById(id);
-
-        if (product.isPresent()) {
-            return product.get();
-        } else {
-            throw new RuntimeException("product not found");
-        }
+        return auctionProductRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     public List<AuctionProduct> getList() {
@@ -82,7 +87,6 @@ public class AuctionProductService {
         return auctionProductRepository.findAllByOrderByCreateDateDesc();
     }
 
-
     public AuctionProduct getTopAuctionProductByView() {
         return auctionProductRepository.findTopByOrderByViewDesc();
     }
@@ -90,8 +94,16 @@ public class AuctionProductService {
     @Transactional
     public void incrementViews(Long id) {
         AuctionProduct auctionProduct = auctionProductRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("auctionProduct not found"));
+                .orElseThrow(() -> new RuntimeException("AuctionProduct not found"));
         auctionProduct.setView(auctionProduct.getView() + 1);
         auctionProductRepository.save(auctionProduct);
+    }
+
+    public Page<AuctionProduct> searchProducts(String keyword, Pageable pageable) {
+        return auctionProductRepository.findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(keyword, keyword, keyword, pageable);
+    }
+
+    public Page<AuctionProduct> getAuctionProducts(Pageable pageable) {
+        return auctionProductRepository.findAll(pageable);
     }
 }

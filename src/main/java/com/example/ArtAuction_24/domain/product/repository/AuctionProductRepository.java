@@ -31,4 +31,6 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
 
 
     AuctionProduct findTopByOrderByViewDesc();
+
+    Page<AuctionProduct> findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(String title, String korName, String engName, Pageable pageable);
 }
