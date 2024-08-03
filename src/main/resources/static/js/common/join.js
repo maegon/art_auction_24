@@ -180,28 +180,51 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // 비밀번호 확인
-    function checkPasswords() {
-        const password = passwordInput.value;
-        const passwordConfirm = passwordConfirmInput.value;
-        const checkButton = document.querySelectorAll(".checkBtn");
 
-        if (password && passwordConfirm) {
+    // 비밀번호 일치 여부 확인 함수
+    function checkPasswords() {
+        const password = passwordInput.value.trim();
+        const passwordConfirm = passwordConfirmInput.value.trim();
+
+        // 비밀번호 유효성 검사 정규 표현식
+        const validPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{6,24}$/;
+
+        // 비밀번호 길이 검사
+        if (password.length < 6 || password.length > 24) {
+            passwordMatchError.innerText = "비밀번호는 최소 6자리 ~ 최대 24자리여야 합니다.";
+            passwordMatchError.classList.remove("success");
+            passwordMatchError.classList.add("error");
+            joinButton.disabled = true;
+        }
+        // 비밀번호 유효성 검사
+        else if (!validPasswordRegex.test(password)) {
+            passwordMatchError.innerText = "하나 이상의 숫자와 특수문자(!,@,#)를 포함해야 합니다.";
+            passwordMatchError.classList.remove("success");
+            passwordMatchError.classList.add("error");
+            joinButton.disabled = true;
+        }
+        // 비밀번호와 비밀번호 확인 일치 검사
+        else if (password && passwordConfirm) {
             if (password === passwordConfirm) {
                 passwordMatchError.innerText = "비밀번호가 일치합니다.";
                 passwordMatchError.classList.remove("error");
                 passwordMatchError.classList.add("success");
-                updateJoinButtonState();
+                joinButton.disabled = false;
             } else {
-                setErrorMessage('password', 'pattern');
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
                 passwordMatchError.classList.add("error");
                 joinButton.disabled = true;
             }
         } else {
+            // 비밀번호 입력이 비어 있을 경우
             passwordMatchError.innerText = "";
+            joinButton.disabled = true;
         }
     }
+
+    // 비밀번호 입력 필드에 이벤트 리스너 추가
+    passwordInput.addEventListener("input", checkPasswords);
+    passwordConfirmInput.addEventListener("input", checkPasswords);
 
 });
