@@ -97,6 +97,15 @@
                                                         <option value="daum.net">daum.net</option>
                                                     </select>
                                                 </div>
+                                                <div class="form-group mt-1 ml-6 mr-6 flex">
+                                                    <input type="text" name="email_confirm" class="form-style box w-xm mr-1"
+                                                           placeholder="인증 번호 입력" id="emailConfirm"
+                                                           autocomplete="off">
+                                                    <i class="input-icon uil uil-envelope-check"></i>
+                                                    <button type="button" onclick="validateEmail()"
+                                                            class="checkBtn btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton" disabled>메일인증
+                                                    </button>
+                                                </div>
                                                 <div id="emailError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6 inputNicknameDiv">
                                                     <input type="text" name="nickname" class="form-style"
@@ -116,12 +125,12 @@
                                                 <div class="form-group mt-1 ml-6 mr-6">
                                                     <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
                                                     <div class="address_sec_1 flex">
-                                                        <i class="input-icon uil uil-estate"></i>
                                                         <input type="text" id="sample6_postcode" class="form-style"
                                                                placeholder="우편번호">
                                                         <input type="button" onclick="sample6_execDaumPostcode()"
                                                                class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편번호 찾기">
                                                     </div>
+                                                    <i class="input-icon uil uil-estate"></i>
                                                     <input type="text" id="sample6_address"
                                                            name="address" class="form-style mt-1 mb-1" placeholder="주소">
                                                     <div class="address_sec_2 flex">
@@ -139,7 +148,6 @@
                                                     <input type="file" name="profileImage" id="profileImage"
                                                            class="form-style">
                                                 </div>
-                                                <div id="profileImageError" class="error"></div>
                                                 <button type="submit" class="join-submit btn mt-3" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>

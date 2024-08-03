@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 passwordMatchError.innerText = "비밀번호가 일치합니다.";
                 passwordMatchError.classList.remove("error");
                 passwordMatchError.classList.add("success");
-                joinButton.disabled = false;
+                updateJoinButtonState();
             } else {
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
