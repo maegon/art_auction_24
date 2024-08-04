@@ -69,7 +69,7 @@
 }
 
 .nav__login a {
-    margin-left: 15px;
+    margin-left: 8px;
     text-decoration: none;
     color: black;
 }
@@ -97,6 +97,9 @@
 }
 
 /*프로필 부분 처리 시작*/
+#header_profile{
+    margin-left: 15px;
+}
 #profileSection{
     margin-bottom: 20px;
     margin-left: 10px;
@@ -114,7 +117,6 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    padding: 10px; /* 옵션, 말풍선 내 여백 */
     border-radius: 4px; /* 옵션, 말풍선 테두리 둥글게 하기 */
     border: 1px solid #ddd; /* 회색 테두리 추가 */
     top: 70px; /* 전체적으로 아래로 이동 */
@@ -123,13 +125,12 @@
 #profileDropdown::after {
     content: "";
     position: absolute;
-    top: 0; /* 삼각형을 말풍선 중앙에 위치시킵니다 */
-    left: 0; /* 삼각형을 말풍선의 왼쪽에 위치시킵니다 */
-    width: 0;
-    height: 0;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent transparent transparent transparent; /* 삼각형 색상 설정 */
+    top: -6px;
+    left: 16px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ddd;
+    border-left: 6px solid transparent;
 }
 
 #profileDropdown a {
@@ -142,7 +143,7 @@
 #profileDropdown a:hover {
     color: black;
     background-color: #f1f1f1;
-    border-left: 2px solid green;
+    border-left: 3px solid green;
 }
 /*프로필 부분 처리 끝*/
 
@@ -158,12 +159,13 @@
         }
 
         .nav__logo {
-            width: 80px;
+
             order: 1; /* 로고를 맨 위로 */
         }
 
         .nav__bar {
             display: block;
+            font-size: 40px;
             order: 2; /* 메뉴 버튼을 로고 아래로 */
         }
 
@@ -210,8 +212,7 @@
                 transform: none;
         }
         #profileDropdown::after {
-            left: 0; /* 모바일에서 삼각형의 위치 조정 */
-            transform: none; /* 모바일에서 삼각형의 가운데 정렬 제거 */
+            display: none;
         }
 }
 /*반응형 처리 끝*/

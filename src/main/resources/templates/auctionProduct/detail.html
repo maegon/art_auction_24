@@ -7,8 +7,9 @@
             </div>
 
             <ul class="list-group list-group-flush gap-2 divide-y divide-gray-200">
-                <li class="list-group-item p-4">
-                    <img class="w-full max-w-[300px] mx-auto border rounded-lg" th:src="@{${auctionProduct.thumbnailImg}}" alt="상품이미지">
+                <li class="list-group-item p-4" >
+                    <img class="w-full max-w-[300px] mx-auto border auctionProductTarget" th:src="@{${auctionProduct.thumbnailImg}}" alt="상품이미지" >
+                   <span class="text-gray-500">* 작품을 확대하려면 마우스를 올려주세요</span>
                 </li>
                 <li class="list-group-item p-4 flex justify-between">
                     <span class="font-medium">번호 </span>

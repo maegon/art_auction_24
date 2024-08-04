@@ -8,7 +8,7 @@
                 <button id="sortButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center">
                     <span id="sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
                 </button>
-                <div id="sortDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
+                <div id="sortDropdown" class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
@@ -18,7 +18,7 @@
             <form id="searchForm" class="flex border border-gray-300 rounded-lg overflow-hidden w-full sm:w-auto">
                 <input type="text" name="kw" id="search_input" placeholder="작가 또는 작품명"
                        class="px-4 py-2 w-full sm:w-64 focus:outline-none" th:value="${kw}"/>
-                <button type="submit" id="search_button" class="bg-white text-gray-600 px-4 flex items-center justify-center ml-auto mt-2 sm:mt-0">
+                <button type="submit" id="search_button" class="bg-white text-gray-600 px-4 flex items-center justify-center ml-auto sm:mt-0">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
                 <input type="hidden" name="sort" id="sortInput" th:value="${sort}"/>
