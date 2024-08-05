@@ -52,6 +52,10 @@ public class DevInitData implements BeforeInitData {
             memberService.join("", "user2", password, "user2@test.com", "user2",
                     "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "");
 
+            memberService.join("", "artist", password, "artist1@test.com", "artist1",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+
+
             artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","Artist@naver.com","naver.com","안녕! 나 김작가");
             artistService.create("나작가", "naArtist", "1968-12-08", "010-4567-5678","Artist@google.com","google.com","안녕! 나 나작가");
             artistService.create("박작가", "parkArtist", "1999-04-03", "010-9874-5678","Artist@daum.com","daum.com","안녕! 나 박작가");
