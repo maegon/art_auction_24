@@ -231,6 +231,4 @@ document.addEventListener("DOMContentLoaded", function() {
     passwordInput.addEventListener("input", checkPasswords);
     passwordConfirmInput.addEventListener("input", checkPasswords);
 
-    // 이메일 인증 번호 보내기
-    ...
 });
