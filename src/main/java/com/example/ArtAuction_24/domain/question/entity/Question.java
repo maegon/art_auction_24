@@ -29,6 +29,8 @@ public class Question extends BaseEntity {
 
     private String content;
 
+    private String thumbnailImg;
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 
@@ -37,5 +39,7 @@ public class Question extends BaseEntity {
 
     @ManyToOne
     private Member member;
+
+
 
 }

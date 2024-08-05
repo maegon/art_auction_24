@@ -91,4 +91,11 @@ public class MemberService {
         }
         return op.get();
     }
+    public Member getMember(String username) {
+        Optional<Member> op = memberRepository.findByUsername(username);
+        if (op.isPresent() == false) {
+            throw new DateTimeException("Member not found");
+        }
+        return op.get();
+    }
 }

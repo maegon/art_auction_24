@@ -2,6 +2,8 @@ package com.example.ArtAuction_24.domain.question.controller;
 
 
 
+import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
@@ -12,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,6 +25,7 @@ import java.util.List;
 @RequestMapping("/question")
 public class QuestionController {
     private final QuestionService questionService;
+    private final MemberService memberService;
     @GetMapping("/list")
     public String questionList(Model model){
         List<Question> questionList = questionService.findAll();
@@ -48,11 +53,13 @@ public class QuestionController {
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm,
                                  BindingResult bindingResult,
-                                 @RequestParam("questionType") QuestionType questionType) {
+                                 @RequestParam("thumbnail") MultipartFile thumbnail,
+                                 Principal principal) {
+        Member member = memberService.getMember(principal.getName());
         if (bindingResult.hasErrors()) {
             return "question/write";
         }
-        this.questionService.create(questionForm, questionType);
+        this.questionService.create(questionForm, thumbnail, member);
         return "redirect:/question/list";
     }
 
