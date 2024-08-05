@@ -30,8 +30,9 @@ public class MemberForm {
             message = "유효한 이메일 주소를 입력해주세요.")
     private String email;
 
+    @Size(min = 1, max = 16)
     @NotBlank
-    @Pattern(regexp = "^(?!.*(admin|관리자|어드민)).*$",
+    @Pattern(regexp = "^(?!.*(admin|관리자|운영자)).*$",
             message = "부적절한 단어가 포함되어 있습니다.")
     private String nickname;
 

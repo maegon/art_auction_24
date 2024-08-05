@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const phoneNumberInput = document.getElementById("phoneNumber");
     const joinButton = document.querySelector(".join-submit");
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
+    const phoneNumberInput = document.getElementById("phoneNumber");
+//    const emailInput = document.getElementById('email-txt');
     const emailInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
@@ -11,11 +12,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const profileImageInput = document.getElementById("profileImage");
     const domainListEl = document.querySelector('#domain-list');
     const joinError = document.getElementById("joinError");
-    const nicknameError = document.getElementById("nicknameError");
     const passwordMatchError = document.getElementById("passwordMatchError");
     const usernameMatchError = document.getElementById("usernameMatchError");
+    const nicknameError = document.getElementById("nicknameError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
     const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
+//    const emailCheckButton = document.getElementById('emailCheckButton');
+//    const emailConfirmInput = document.getElementById('emailConfirm');
+//    const emailError = document.getElementById('emailError');
 
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
@@ -46,17 +50,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {
-        if (
-            usernameInput.value.trim() !== "" &&
-            passwordInput.value.trim() !== "" &&
-            passwordConfirmInput.value.trim() !== "" &&
-            emailInput.value.trim() !== "" &&
-            nicknameInput.value.trim() !== "" &&
-            phoneNumberInput.value.trim() !== "" &&
-            addressInput.value.trim() !== "" &&
-            addressInput2.value.trim() !== "" &&
-            profileImageInput.files.length > 0
-        ) {
+        let allFilled = true;
+        for (let field of fields) {
+            if (field.input.type === "file") {
+                if (field.input.files.length === 0) {
+                    allFilled = false;
+                    break;
+                }
+            } else {
+                if (field.input.value.trim() === "") {
+                    allFilled = false;
+                    break;
+                }
+            }
+        }
+        if (allFilled) {
             joinButton.removeAttribute("disabled");
         } else {
             joinButton.setAttribute("disabled", "true");
@@ -84,143 +92,143 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 중복 확인 버튼 상태 업데이트
     function updateCheckButtonState() {
+        // 아이디 중복 확인 버튼 활성화 여부
         if (usernameInput.value.trim().length !== "") {
             usernameCheckButton.removeAttribute("disabled");
         } else {
             usernameCheckButton.setAttribute("disabled", "true");
         }
-
+        // 닉네임 중복 확인 버튼 활성화 여부
         if (nicknameInput.value.trim().length !== "") {
             nicknameCheckButton.removeAttribute("disabled");
         } else {
             nicknameCheckButton.setAttribute("disabled", "true");
         }
     }
+    usernameCheckButton.addEventListener("click", validateUsername);
+    nicknameCheckButton.addEventListener("click", validateNickname);
 
     // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
     usernameInput.addEventListener("input", updateCheckButtonState);
     nicknameInput.addEventListener("input", updateCheckButtonState);
 
-    // 폼 유효성 검사
-    function validateForm() {
+    // 아이디 중복 확인 함수
+    function validateUsername() {
+        // 아이디에 공백, 한글, 특수문자가 있는지 확인하고 있으면 경고 표시
+        // 영문자와 숫자만 허용
+        const validUsernameRegex = /^[a-zA-Z0-9]+$/;
         const username = usernameInput.value.trim();
-        const nickname = nicknameInput.value.trim();
-        const checkButton = document.querySelectorAll(".checkBtn");
 
-        // 사용자 아이디 검사
         if (username.length < 4 || username.length > 24) {
-            setErrorMessage('username', 'size');
-            joinButton.disabled = true;
-            usernameCheckButton.disabled = false;
+            usernameMatchError.innerText = "아이디는 최소 4자리 ~ 최대 24자리여야 합니다.";
+            usernameMatchError.classList.remove("success");
+            usernameMatchError.classList.add("error");
+            // 경고 문구 표시 후 중복확인 버튼 초기화
+            usernameCheckButton.disabled = true;
+        } else if (!validUsernameRegex.test(username)) {
+            usernameMatchError.innerText = "사용할 수 없는 문자(한글, 공백, 특수문자)가 포함되어 있습니다.";
+            usernameMatchError.classList.remove("success");
+            usernameMatchError.classList.add("error");
+            // 경고 문구 표시 후 중복확인 버튼 초기화
+            usernameCheckButton.disabled = true;
         } else {
             fetch("/member/check-username?username=" + username)
                 .then(response => response.json())
                 .then(data => {
                     if (data.exists) {
-                        usernameMatchError.innerText = "중복된 아이디가 있습니다.";
+                        usernameMatchError.innerText = "사용 중인 아이디입니다.";
                         usernameMatchError.classList.remove("success");
                         usernameMatchError.classList.add("error");
-                        joinButton.disabled = true;
-                        usernameCheckButton.disabled = false;
                     } else {
                         usernameMatchError.innerText = "사용 가능한 아이디입니다.";
                         usernameMatchError.classList.remove("error");
                         usernameMatchError.classList.add("success");
-                        usernameCheckButton.disabled = true;
-                        updateJoinButtonState();
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        // 닉네임 검사
-        if (nickname.length === 0) {
-            setErrorMessage('nickname', 'notBlank');
-            joinButton.disabled = true;
-            nicknameCheckButton.disabled = false;
-        } else {
-            fetch("/member/check-nickname?nickname=" + nickname)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        nicknameError.innerText = "(이미 존재하는 닉네임입니다.)";
-                        nicknameError.classList.remove("success");
-                        nicknameError.classList.add("error");
-                        joinButton.disabled = true;
-                        nicknameCheckButton.disabled = false;
-                    } else {
-                        nicknameError.innerText = "(입력하신 닉네임은 사용 가능합니다.)";
-                        nicknameError.classList.remove("error");
-                        nicknameError.classList.add("success");
-                        nicknameCheckButton.disabled = true;
-                        updateJoinButtonState();
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
     }
 
-    // 비밀번호 확인
-    function checkPasswords() {
-        const password = passwordInput.value;
-        const passwordConfirm = passwordConfirmInput.value;
-        const checkButton = document.querySelectorAll(".checkBtn");
+    // 닉네임 중복 확인 함수
+    function validateNickname() {
+        const nickname = nicknameInput.value.trim();
 
-        if (password && passwordConfirm) {
-            if (password !== passwordConfirm) {
-                setErrorMessage('password', 'pattern');
+        // 유효하지 않은 닉네임을 검사하는 정규식
+        const validNicknameRegex = /^(?!.*(admin|관리자|운영자|fuck|shit|bitch|cunt|sex|porn|xxx|rape|asshole|slut|whore|nigger|chink|gook|spic|beaner|faggot|cocksucker|motherfucker|bastard|idiot|stupid|retard|dumb|jew|nazi|fascist|terrorist|prick|dick|cunt|ass|pussy|clit|femdom|gay|lesbian|homosexual|transgender|sexist|misogynist|racist|hate|bigot|xenophobe|bully|harass|abuse|정신병|미친|병신|년|개새끼|후리|놈|걸레|창녀|쓰레기|짱깨|좆|빡대가리|대가리|찌질이|천민|한남|패륜|불륜|강간|성폭력|토착왜구|매국노|일베|새끼|지랄|까발리|씨발|걸레|핵쓰레기|개돼지|쪽발이|찌질이|강간범|성희롱|성추행|성폭행|성희롱범|좆|좆같은|섹스)).*[a-zA-Z0-9가-힣]+$/;
+
+        if (nickname.length < 4 || nickname.length > 24) {
+            nicknameError.innerText = "닉네임은 최소 4자리 ~ 최대 24자리여야 합니다.";
+            nicknameError.classList.remove("success");
+            nicknameError.classList.add("error");
+            nicknameCheckButton.disabled = true;
+        } else if (!validNicknameRegex.test(nickname)) {
+            nicknameError.innerText = "사용할 수 없는 문자가 포함되어 있습니다.";
+            nicknameError.classList.remove("success");
+            nicknameError.classList.add("error");
+            nicknameCheckButton.disabled = true;
+        } else {
+            fetch("/member/check-nickname?nickname=" + encodeURIComponent(nickname))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        nicknameError.innerText = "이미 존재하는 닉네임입니다.";
+                        nicknameError.classList.remove("success");
+                        nicknameError.classList.add("error");
+                    } else {
+                        nicknameError.innerText = "사용 가능한 닉네임입니다.";
+                        nicknameError.classList.remove("error");
+                        nicknameError.classList.add("success");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+
+    // 비밀번호 일치 여부 확인 함수
+    function checkPasswords() {
+        const password = passwordInput.value.trim();
+        const passwordConfirm = passwordConfirmInput.value.trim();
+
+        // 비밀번호 유효성 검사 정규 표현식
+        const validPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{6,24}$/;
+
+        // 비밀번호 길이 검사
+        if (password.length < 6 || password.length > 24) {
+            passwordMatchError.innerText = "비밀번호는 최소 6자리 ~ 최대 24자리여야 합니다.";
+            passwordMatchError.classList.remove("success");
+            passwordMatchError.classList.add("error");
+            joinButton.disabled = true;
+        }
+        // 비밀번호 유효성 검사
+        else if (!validPasswordRegex.test(password)) {
+            passwordMatchError.innerText = "하나 이상의 숫자와 특수문자(!,@,#)를 포함해야 합니다.";
+            passwordMatchError.classList.remove("success");
+            passwordMatchError.classList.add("error");
+            joinButton.disabled = true;
+        }
+        // 비밀번호와 비밀번호 확인 일치 검사
+        else if (password && passwordConfirm) {
+            if (password === passwordConfirm) {
+                passwordMatchError.innerText = "비밀번호가 일치합니다.";
+                passwordMatchError.classList.remove("error");
+                passwordMatchError.classList.add("success");
+                joinButton.disabled = false;
+            } else {
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
                 passwordMatchError.classList.add("error");
                 joinButton.disabled = true;
-            } else {
-                passwordMatchError.innerText = "비밀번호가 일치합니다.";
-                passwordMatchError.classList.remove("error");
-                passwordMatchError.classList.add("success");
-                updateJoinButtonState();
             }
         } else {
+            // 비밀번호 입력이 비어 있을 경우
             passwordMatchError.innerText = "";
+            joinButton.disabled = true;
         }
     }
 
+    // 비밀번호 입력 필드에 이벤트 리스너 추가
+    passwordInput.addEventListener("input", checkPasswords);
+    passwordConfirmInput.addEventListener("input", checkPasswords);
+
 });
-
-// 에러 메시지 객체
-const errMsg = {
-    username: {
-        size: "아이디는 최소 4자리 ~ 최대 24자리여야 합니다.",
-        notBlank: "아이디를 입력해주세요."
-    },
-    password: {
-        size: "비밀번호는 최소 6자리 ~ 최대 24자리여야 합니다.",
-        notBlank: "비밀번호를 입력해주세요.",
-        pattern: "각각 하나 이상의 숫자, 특수문자(!,@,#)를 포함하여 최소 6자리 ~ 최대 24자리 까지 입력해주세요."
-    },
-    email: {
-        notBlank: "이메일 주소를 입력해주세요.",
-        pattern: "유효한 이메일 주소를 입력해주세요."
-    },
-    nickname: {
-        notBlank: "닉네임을 입력해주세요.",
-        pattern: "부적절한 단어가 포함되어 있습니다."
-    },
-    phoneNumber: {
-        notBlank: "전화번호를 입력해주세요.",
-        pattern: "전화번호를 - 없이 작성해주세요."
-    }
-};
-
-// 각 필드에 대한 에러 메시지를 설정하는 함수
-function setErrorMessage(field, errorType) {
-    const errorElement = document.getElementById(`${field}Error`);
-    if (errMsg[field] && errMsg[field][errorType]) {
-        errorElement.innerText = errMsg[field][errorType];
-        errorElement.classList.remove("success");
-        errorElement.classList.add("error");
-    } else {
-        errorElement.innerText = "";
-        errorElement.classList.remove("error");
-        errorElement.classList.add("success");
-    }
-}

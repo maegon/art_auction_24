@@ -64,11 +64,11 @@
                                                     <input type="text" name="username" class="form-style"
                                                            placeholder="아이디 입력" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()"
+                                                    <button type="button" onclick="validateUsername()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
-                                                <div id="usernameMatchError" class="error"></div>
+                                                <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
                                                 <div class="form-group ml-6 mr-6">
                                                     <input type="password" name="password" class="form-style" maxlength="24"
                                                            placeholder="비밀번호 입력" id="password" autocomplete="off">
@@ -97,29 +97,40 @@
                                                         <option value="daum.net">daum.net</option>
                                                     </select>
                                                 </div>
+<!--                                                <div class="form-group mt-1 ml-6 mr-6 flex">-->
+<!--                                                    <input type="text" name="email_confirm" class="form-style box w-xm mr-1"-->
+<!--                                                           placeholder="인증 번호 입력" id="emailConfirm"-->
+<!--                                                           autocomplete="off">-->
+<!--                                                    <i class="input-icon uil uil-envelope-check"></i>-->
+<!--                                                    <button type="button" onclick="validateEmail()"-->
+<!--                                                            class="checkBtn btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton" disabled>인증 번호 보내기-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+<!--                                                <div id="emailError" class="error"></div>-->
                                                 <div class="form-group ml-6 mr-6 inputNicknameDiv">
                                                     <input type="text" name="nickname" class="form-style"
                                                            placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateForm()"
+                                                    <button type="button" onclick="validateNickname()"
                                                             class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
                                                     </button>
-                                                    <div id="nicknameError" th:text="${nicknameError}" class="error"></div>
                                                 </div>
+                                                <div id="nicknameError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6">
                                                     <input type="tel" name="phoneNumber" class="form-style"
                                                            placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                     <i class="input-icon uil uil-phone"></i>
                                                 </div>
+                                                <div id="phoneNumberError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6">
                                                     <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
                                                     <div class="address_sec_1 flex">
-                                                        <i class="input-icon uil uil-estate"></i>
                                                         <input type="text" id="sample6_postcode" class="form-style"
                                                                placeholder="우편번호">
                                                         <input type="button" onclick="sample6_execDaumPostcode()"
                                                                class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편번호 찾기">
                                                     </div>
+                                                    <i class="input-icon uil uil-estate"></i>
                                                     <input type="text" id="sample6_address"
                                                            name="address" class="form-style mt-1 mb-1" placeholder="주소">
                                                     <div class="address_sec_2 flex">
@@ -129,6 +140,7 @@
                                                                placeholder="참고항목">
                                                     </div>
                                                 </div>
+                                                <div id="addressError" class="error"></div>
                                                 <div class="form-group mt-1 ml-6 mr-6 flex">
                                                     <i class="input-icon uil uil-user-square"></i>
                                                     <label id="component-input-img" for="profileImage"
@@ -136,7 +148,7 @@
                                                     <input type="file" name="profileImage" id="profileImage"
                                                            class="form-style">
                                                 </div>
-                                                <button type="submit" class="join-submit btn mt-4" disabled>회원가입</button>
+                                                <button type="submit" class="join-submit btn mt-3" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>
                                         </div>
