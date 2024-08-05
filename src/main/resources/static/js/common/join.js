@@ -4,22 +4,22 @@ document.addEventListener("DOMContentLoaded", function() {
     const passwordInput = document.getElementById("password");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
     const phoneNumberInput = document.getElementById("phoneNumber");
-//    const emailInput = document.getElementById('email-txt');
-    const emailInput = document.getElementById("domain-txt");
+    const emailTextInput = document.getElementById('email-txt');
+    const domainInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
     const addressInput2 = document.getElementById("sample6_detailAddress");
     const profileImageInput = document.getElementById("profileImage");
-    const domainListEl = document.querySelector('#domain-list');
+    const domainListEl = document.getElementById('domain-list');
     const joinError = document.getElementById("joinError");
     const passwordMatchError = document.getElementById("passwordMatchError");
     const usernameMatchError = document.getElementById("usernameMatchError");
     const nicknameError = document.getElementById("nicknameError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
     const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
-//    const emailCheckButton = document.getElementById('emailCheckButton');
-//    const emailConfirmInput = document.getElementById('emailConfirm');
-//    const emailError = document.getElementById('emailError');
+    const emailCheckButton = document.getElementById('emailCheckButton');
+    const emailConfirmInput = document.getElementById('emailConfirm');
+    const emailError = document.getElementById('emailError');
 
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
@@ -40,25 +40,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // 이메일 도메인 선택
     domainListEl.addEventListener('change', (event) => {
         if (event.target.value !== "type") {
-            emailInput.value = event.target.value;
-            emailInput.disabled = true;
+            domainInput.value = event.target.value;
+            domainInput.disabled = true;
         } else {
-            emailInput.value = "";
-            emailInput.disabled = false;
+            domainInput.value = "";
+            domainInput.disabled = false;
         }
     });
 
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {
         let allFilled = true;
-        for (let field of fields) {
-            if (field.input.type === "file") {
-                if (field.input.files.length === 0) {
+        for (let input of inputs) {
+            if (input.type === "file") {
+                if (input.files.length === 0) {
                     allFilled = false;
                     break;
                 }
             } else {
-                if (field.input.value.trim() === "") {
+                if (input.value.trim() === "") {
                     allFilled = false;
                     break;
                 }
@@ -70,12 +70,14 @@ document.addEventListener("DOMContentLoaded", function() {
             joinButton.setAttribute("disabled", "true");
         }
     }
+
     // 입력 필드 이벤트 리스너 추가
     const inputs = [
         usernameInput,
         passwordInput,
         passwordConfirmInput,
-        emailInput,
+        emailTextInput,
+        domainInput,
         nicknameInput,
         phoneNumberInput,
         addressInput,
@@ -118,6 +120,21 @@ document.addEventListener("DOMContentLoaded", function() {
         // 영문자와 숫자만 허용
         const validUsernameRegex = /^[a-zA-Z0-9]+$/;
         const username = usernameInput.value.trim();
+
+        const digitCounts = {};
+
+        // 동일한 숫자가 4번 이상 포함되어 있는지 검사
+        for (const char of username) {
+            if (/\d/.test(char)) { // 숫자일 경우
+                digitCounts[char] = (digitCounts[char] || 0) + 1;
+                if (digitCounts[char] > 3) {
+                    usernameMatchError.innerText = "동일한 숫자를 4번 이상 사용할 수 없습니다.";
+                    usernameMatchError.classList.remove("success");
+                    usernameMatchError.classList.add("error");
+                    return;
+                }
+            }
+        }
 
         if (username.length < 4 || username.length > 24) {
             usernameMatchError.innerText = "아이디는 최소 4자리 ~ 최대 24자리여야 합니다.";
@@ -184,7 +201,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-
     // 비밀번호 일치 여부 확인 함수
     function checkPasswords() {
         const password = passwordInput.value.trim();
@@ -231,4 +247,72 @@ document.addEventListener("DOMContentLoaded", function() {
     passwordInput.addEventListener("input", checkPasswords);
     passwordConfirmInput.addEventListener("input", checkPasswords);
 
+    let generatedCode = "";
+
+    document.getElementById("emailCheckButton").addEventListener("click", function() {
+        const email = `${emailTextInput.value.trim()}@${domainInput.value.trim()}`;
+
+        if (!emailTextInput.value.trim() || !domainInput.value.trim()) {
+            emailError.innerText = "이메일 주소를 입력하세요.";
+            emailError.classList.add("error");
+            joinButton.disabled = true;
+            return;
+        }
+
+        if (emailTextInput.value.trim()) {
+            emailError.innerText = "인증번호를 입력 해주세요.";
+            emailError.classList.remove("error");
+            emailError.classList.add("success");
+        }
+
+        fetch("/sendmail/confirmCode", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('응답되지 않습니다.');
+            }
+        })
+         .then(data => {
+            if (data.code) {
+                emailError.innerText = "인증 메일이 발송되었습니다. 이메일을 확인하세요.";
+                emailError.classList.remove("error");
+                emailError.classList.add("success");
+            } else {
+                emailError.innerText = "이메일 발송에 실패했습니다.";
+                emailError.classList.remove("success");
+                emailError.classList.add("error");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            emailError.innerText = "이메일 발송 중 오류가 발생했습니다.";
+            emailError.classList.remove("success");
+            emailError.classList.add("error");
+        });
+    });
+
+    emailConfirmInput.addEventListener("input", function() {
+        const userEnteredCode = emailConfirmInput.value.trim();
+
+        if (userEnteredCode === "") {
+            emailError.innerText = "인증번호를 입력해 주세요.";
+            emailError.classList.add("error");
+            joinButton.disabled = true;
+        } else if (userEnteredCode === generatedCode) {
+            emailError.innerText = "이메일 인증이 완료되었습니다.";
+            emailError.classList.add("success");
+            joinButton.disabled = false;
+        } else {
+            emailError.innerText = "인증 번호가 일치하지 않습니다.";
+            emailError.classList.add("error");
+            joinButton.disabled = true;
+        }
+    });
 });

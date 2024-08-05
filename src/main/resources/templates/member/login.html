@@ -97,16 +97,15 @@
                                                         <option value="daum.net">daum.net</option>
                                                     </select>
                                                 </div>
-<!--                                                <div class="form-group mt-1 ml-6 mr-6 flex">-->
-<!--                                                    <input type="text" name="email_confirm" class="form-style box w-xm mr-1"-->
-<!--                                                           placeholder="인증 번호 입력" id="emailConfirm"-->
-<!--                                                           autocomplete="off">-->
-<!--                                                    <i class="input-icon uil uil-envelope-check"></i>-->
-<!--                                                    <button type="button" onclick="validateEmail()"-->
-<!--                                                            class="checkBtn btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton" disabled>인증 번호 보내기-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-<!--                                                <div id="emailError" class="error"></div>-->
+                                                <div class="form-group mt-1 ml-6 mr-6 flex">
+                                                    <input type="text" name="email_confirm" class="form-style box w-xm mr-1"
+                                                           placeholder="인증 번호 입력" id="emailConfirm"
+                                                           autocomplete="off" required>
+                                                    <i class="input-icon uil uil-envelope-check"></i>
+                                                    <button type="button" class="checkBtn btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호<br>발급
+                                                    </button>
+                                                </div>
+                                                <div id="emailError" class="error"></div>
                                                 <div class="form-group ml-6 mr-6 inputNicknameDiv">
                                                     <input type="text" name="nickname" class="form-style"
                                                            placeholder="닉네임 입력" id="nickname" autocomplete="off">
@@ -128,7 +127,7 @@
                                                         <input type="text" id="sample6_postcode" class="form-style"
                                                                placeholder="우편번호">
                                                         <input type="button" onclick="sample6_execDaumPostcode()"
-                                                               class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편번호 찾기">
+                                                               class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편찾기">
                                                     </div>
                                                     <i class="input-icon uil uil-estate"></i>
                                                     <input type="text" id="sample6_address"
