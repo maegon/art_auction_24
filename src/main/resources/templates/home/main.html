@@ -31,7 +31,7 @@
                         <hr>
                         <span class="ongoing-info-Bid">
                         <span>Current Bid </span>
-                        <span> KRW <span class="ongoing-info-currentBid" id="currentBid" th:text="${auction.currentBid}">현재 경매가</span></span>
+                        <span> KRW <span class="ongoing-info-currentBid" id="currentBid" th:text="${auction.formattedCurrentBid}">현재 경매가</span></span>
                             </span>
                         <!--<div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>-->
                     </div>
@@ -130,18 +130,23 @@
         <div class="bestArtist-title flex justify-between items-center text-xl font-bold mt-20 border-b border-black">
             <div>추천 작가</div>
         </div>
-        <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-8">
+        <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-8" th:each="topProduct : ${topProduct}">
             <div class="artist-container flex flex-wrap items-center justify-between mb-5">
                 <div class="artist-info flex-1 text-white p-5 font-bold max-w-xl">
-                    <div class="bestArtist-info-artistName text-lg text-white font-bold mb-2 flex">
-                        작가 이름&lt;&lt;<div class="bestArtist-info-title">작품 이름</div>&gt;&gt;
+                    <div class="text-4xl text-white font-bold mb-2 flex">
+                    <div class="bestArtist-info-artistName" th:text="${topProduct.artist.korName}">
+                        작가 이름
                     </div>
-                    <div class="bestArtist-info-description text-base text-white mb-2">작품 설명</div>
-                    <div class="bestArtist-info-endTime text-sm text-red-500">예정 07-24 3:00 PM</div>
+                    (<div class="bestArtist-info-title" th:text="${topProduct.title}">작품 이름</div>)
+                    </div>
+                    <div class="bestArtist-info-description text-xl text-white mb-2" th:text="${topProduct.description}">작품 설명</div>
+                    <div class="bestArtist-info-endTime text-sm text-red-500" th:text="${#temporals.format(topProduct.auctionStartDate, 'yyyy-MM-dd HH:mm')}">예정 07-24 3:00 PM</div>
                 </div>
-                <div class="artist-image">
-                    <img th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1" class="w-full max-w-xs rounded-lg mr-5">
-                </div>
+                <a th:href="@{|/auctionProduct/detail/${topProduct.id}|}">
+                    <div class="artist-image">
+                        <img th:src="@{${topProduct.thumbnailImg}}" alt="이미지 1" class="w-full max-w-xs rounded-lg mr-5">
+                    </div>
+                </a>
             </div>
         </div>
     </div>

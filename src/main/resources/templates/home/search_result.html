@@ -55,7 +55,7 @@
                     <div class="pb-4">
                         <h5 class="text-lg font-bold mb-2 context" th:text="${auction.title}"></h5>
                         <h5 class="text-lg font-bold mb-2 context" th:text="${auction.artist.korName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${auction.currentBid}"></p>
+                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${auction.formattedCurrentBid}"></p>
                     </div>
                 </div>
             </div>

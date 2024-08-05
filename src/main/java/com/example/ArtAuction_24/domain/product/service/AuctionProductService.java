@@ -53,7 +53,7 @@ public class AuctionProductService {
     }
 
     public void create(String title, String description, String medium, String dimensions,
-                       int startingPrice, int currentBid,
+                       BigDecimal startingPrice, BigDecimal currentBid,
                        LocalDateTime auctionStartDate, String thumbnailImg, String category, Artist artist) {
         AuctionProduct p = AuctionProduct.builder()
                 .title(title)

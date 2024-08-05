@@ -6,7 +6,7 @@
                     <img th:src="@{/image/logo1.png}" alt="이미지">
                 </a>
             </div>
-            <a href="#" class="nav__bar" onclick="toggleMenu()">
+            <a class="nav__bar" onclick="toggleMenu()" sec:authorize="isAuthenticated()">
                 <i class="fa-solid fa-bars"></i>
             </a>
             <ul class="nav__main">
@@ -23,12 +23,9 @@
                     </button>
                     </form>
                 </div>
-                <!-- 로그인 및 로그아웃 버튼 -->
-                <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
 
-
-                <div id="profileSection" sec:authorize="isAuthenticated()">
-                    <a id="header_profile" href="#">
+                <div id="profileSection" sec:authorize="isAuthenticated()" >
+                    <a id="header_profile" >
                         <!-- 현재 로그인한 사용자의 프로필 사진과 이름 표시 -->
                         <img th:if="${profileImage != null}" th:src="@{|${profileImage}|}" alt="프로필 사진" class="profile-image"/>
                         <img th:if="${profileImage == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진" class="profile-image"/>
@@ -36,14 +33,16 @@
 
                     <!-- 드롭다운 메뉴 -->
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
-                        <a th:href="@{/member/myPage}">프로필 수정</a>
-                        <a th:href="@{/question/list}">문의하기</a>
+                        <a class="header_profile" th:href="@{/member/myPage}">프로필 수정</a>
+                        <a class="header_qna" th:href="@{/question/list}">문의하기</a>
                         <hr>
-                        <a th:href="@{/member/logout}">로그아웃</a>
+                        <a class="header_logout" th:href="@{/member/logout}">로그아웃</a>
                     </div>
                 </div>
 
             </div>
+            <!-- 로그인 및 로그아웃 버튼 -->
+            <a id="header_loginBtn" sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
         </nav>
     </section>
 </nav>

@@ -68,11 +68,6 @@
     margin-left: auto;
 }
 
-.nav__login a {
-    margin-left: 8px;
-    text-decoration: none;
-    color: black;
-}
 
 .nav__bar {
     display: none;
@@ -96,8 +91,14 @@
     outline: none;
 }
 
+.header_profile, .header_qna, .header_logout{
+    margin-left: 0px;
+    text-decoration: none;
+    color: black;
+}
+
 /*프로필 부분 처리 시작*/
-#header_profile{
+#header_profile, #header_loginBtn{
     margin-left: 15px;
 }
 #profileSection{
@@ -158,10 +159,7 @@
             padding: 0; /* 모바일에서는 패딩 제거 */
         }
 
-        .nav__logo {
 
-            order: 1; /* 로고를 맨 위로 */
-        }
 
         .nav__bar {
             display: block;
@@ -208,7 +206,7 @@
 
         #profileDropdown {
                 top: 90%;
-                left: 210px;
+                left: 120px;
                 transform: none;
         }
         #profileDropdown::after {

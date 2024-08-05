@@ -36,7 +36,7 @@
                 <hr>
                 <span class="flex justify-between items-center text-center md:text-left">
                     <span>Current Bid</span>
-                    <a th:href="@{|/auctionProduct/detail/${auctionProduct.id}|}" th:text="|KRW ${auctionProduct.currentBid}|" class="text-red-500 ml-1"></a>
+                    <a th:href="@{|/auctionProduct/detail/${auctionProduct.id}|}" th:text="|KRW ${auctionProduct.formattedCurrentBid}|" class="text-red-500 ml-1"></a>
                 </span>
             </li>
         </ul>
