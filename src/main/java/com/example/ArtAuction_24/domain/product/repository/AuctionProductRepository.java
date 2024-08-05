@@ -30,4 +30,7 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
     List<AuctionProduct> findAllByOrderByCreateDateDesc();
 
 
+    AuctionProduct findTopByOrderByViewDesc();
+
+    Page<AuctionProduct> findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(String title, String korName, String engName, Pageable pageable);
 }

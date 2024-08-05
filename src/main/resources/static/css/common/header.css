@@ -68,11 +68,6 @@
     margin-left: auto;
 }
 
-.nav__login a {
-    margin-left: 15px;
-    text-decoration: none;
-    color: black;
-}
 
 .nav__bar {
     display: none;
@@ -96,7 +91,16 @@
     outline: none;
 }
 
+.header_profile, .header_qna, .header_logout{
+    margin-left: 0px;
+    text-decoration: none;
+    color: black;
+}
+
 /*프로필 부분 처리 시작*/
+#header_profile, #header_loginBtn{
+    margin-left: 15px;
+}
 #profileSection{
     margin-bottom: 20px;
     margin-left: 10px;
@@ -114,36 +118,52 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    border-radius: 4px; /* 옵션, 말풍선 테두리 둥글게 하기 */
+    border: 1px solid #ddd; /* 회색 테두리 추가 */
+    top: 70px; /* 전체적으로 아래로 이동 */
+}
+
+#profileDropdown::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 16px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ddd;
+    border-left: 6px solid transparent;
 }
 
 #profileDropdown a {
-    color: black;
+    color: gray;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 #profileDropdown a:hover {
+    color: black;
     background-color: #f1f1f1;
+    border-left: 3px solid green;
 }
 /*프로필 부분 처리 끝*/
 
 
 
 /*반응형 처리 시작*/
+
+
 @media screen and (max-width: 770px) {
        .header_nav {
             flex-direction: column;
             padding: 0; /* 모바일에서는 패딩 제거 */
         }
 
-        .nav__logo {
-            width: 80px;
-            order: 1; /* 로고를 맨 위로 */
-        }
+
 
         .nav__bar {
             display: block;
+            font-size: 40px;
             order: 2; /* 메뉴 버튼을 로고 아래로 */
         }
 
@@ -182,6 +202,15 @@
 
         .nav__login a{
          margin-left: 0px;
+        }
+
+        #profileDropdown {
+                top: 90%;
+                left: 120px;
+                transform: none;
+        }
+        #profileDropdown::after {
+            display: none;
         }
 }
 /*반응형 처리 끝*/

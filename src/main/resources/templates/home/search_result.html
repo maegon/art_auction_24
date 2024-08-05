@@ -45,7 +45,7 @@
             <div class="card-list flex overflow-x-auto space-x-4 p-4 items-center">
                 <div th:each="auction : ${auctionProductList}">
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-72 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
-                        <a th:href="@{/home/introduce}" class="no-underline">
+                        <a th:href="@{|/auctionProduct/detail/${auction.id}|}" class="no-underline">
                             <div>
                                 <img th:if="${auction.thumbnailImg != null}" th:src="@{${auction.thumbnailImg}}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
                                 <img th:unless="${auction.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
@@ -55,7 +55,7 @@
                     <div class="pb-4">
                         <h5 class="text-lg font-bold mb-2 context" th:text="${auction.title}"></h5>
                         <h5 class="text-lg font-bold mb-2 context" th:text="${auction.artist.korName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${auction.currentBid}"></p>
+                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${auction.formattedCurrentBid}"></p>
                     </div>
                 </div>
             </div>
