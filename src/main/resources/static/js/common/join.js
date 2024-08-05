@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const passwordInput = document.getElementById("password");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
     const phoneNumberInput = document.getElementById("phoneNumber");
+    const emailInput = document.getElementById('email-txt');
     const emailInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
@@ -16,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const nicknameError = document.getElementById("nicknameError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
     const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
+    const emailCheckButton = document.getElementById('emailCheckButton');
+    const emailConfirmInput = document.getElementById('emailConfirm');
+    const emailError = document.getElementById('emailError');
 
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
@@ -227,4 +231,6 @@ document.addEventListener("DOMContentLoaded", function() {
     passwordInput.addEventListener("input", checkPasswords);
     passwordConfirmInput.addEventListener("input", checkPasswords);
 
+    // 이메일 인증 번호 보내기
+    ...
 });
