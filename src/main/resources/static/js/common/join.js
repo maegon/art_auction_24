@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const passwordInput = document.getElementById("password");
     const passwordConfirmInput = document.getElementById("passwordConfirm");
     const phoneNumberInput = document.getElementById("phoneNumber");
-    const emailInput = document.getElementById('email-txt');
+//    const emailInput = document.getElementById('email-txt');
     const emailInput = document.getElementById("domain-txt");
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
     usernameCheckButton.addEventListener("click", validateUsername);
     nicknameCheckButton.addEventListener("click", validateNickname);
 
-//    // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
+    // 아이디, 닉네임 입력 시 중복 확인 버튼 상태 업데이트
     usernameInput.addEventListener("input", updateCheckButtonState);
     nicknameInput.addEventListener("input", updateCheckButtonState);
 
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 passwordMatchError.innerText = "비밀번호가 일치합니다.";
                 passwordMatchError.classList.remove("error");
                 passwordMatchError.classList.add("success");
-                updateJoinButtonState();
+                joinButton.disabled = false;
             } else {
                 passwordMatchError.innerText = "비밀번호가 일치하지 않습니다.";
                 passwordMatchError.classList.remove("success");
