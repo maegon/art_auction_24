@@ -9,7 +9,7 @@
             </div>
 
 
-            <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+            <form th:action="@{/question/create}" th:object="${questionForm}" method="post" enctype="multipart/form-data">
 
             <div class="container mx-auto min-h-[600px] px-[200px]">
                 <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
@@ -24,7 +24,7 @@
                             <option value="PURCHASE">구매</option>
                             <option value="SERVICE">SERVICE</option>
                             <option value="DELIVERY">배송</option>
-                            <option value="RETURN">반품</option>
+                            <option value="RETURN">환불</option>
                             <option value="OTHER">기타</option>
                         </select>
                     </div>
@@ -46,7 +46,9 @@ Please feel free to submit your inquiry in your native language. For languages o
 "></textarea>
                     <hr class="border-2 border-slate-300 my-3 mx-3">
                     <div>
-                        여기에 사진첨부하는기능
+
+                        여기에 사진첨부하는기능asda
+                        <input type="file" name="thumbnail"  accept="image/png, image/gif, image/jpeg">
                     </div>
                 </div>
 

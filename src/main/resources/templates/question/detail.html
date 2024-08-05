@@ -10,8 +10,30 @@
             <div class="container mx-auto h-[150px] py-3 flex items-center justify-center">
                 <h1 class="text-5xl">CONTACT</h1>
             </div>
+            <div class="container mx-auto px-[200px] flex items-center justify-end">
+                <div>
+                    <div class="flex items-center">
+                        <div >
+                            <span>작성자 : </span>
+                        </div>
+                        <div class="ml-2">
+                            <span class="font-bold" th:text="${question.member.nickname}"></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div>
+                            <span>작성일 : </span>
+                        </div>
+                        <div class="ml-2">
+                            <span  th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
             <div class="container mx-auto min-h-[600px] px-[200px]">
-                <div class="border-2 border-slate-300 min-h-[70px] my-10 flex items-center justify-center">
+                <div class="border-2 border-slate-300 min-h-[70px] mb-10 flex items-center justify-center">
                     <h1 th:text="${question.subject}"></h1>
                 </div>
                 <div class="border-2 border-slate-300 min-h-[500px] my-10 px-3 py-3">
@@ -22,10 +44,19 @@
 
 
             <div class="container mx-auto min-h-[200px] px-[200px]">
-                <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
-                <div>
-                    <ul>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                <div class="flex">
+                    <div>
+                        <i class="fa-regular fa-hand-point-down"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-xl ml-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+                    </div>
+                </div>
+
+                <div >
+                    <ul class="py-2" th:each="answer : ${question.answerList}">
+                        <li class="text-[#D5A770] text-xl" th:text="${answer.member.username}"></li>
+                        <li class="" th:text="${answer.content}"></li>
                     </ul>
                 </div>
 

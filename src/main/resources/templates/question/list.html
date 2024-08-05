@@ -1,109 +1,106 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="container mx-auto px-4 min-h-[1200px] flex">
-        <div class="container w-[600px] border-2 border-rose-600">
-            <div class="container mx-auto w-[300px] h-[380px] mt-[200px] bg-stone-100">
+        <div class="container w-[600px] ">
+            <div class="fixed container ml-[50px] w-[300px] h-[380px] mt-[200px] bg-stone-100">
                 <div class="container mx-auto  h-[250px]">
                     <ul>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>작품 및 작가</span></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>작품구매</span></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>SERVICE</span></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>배송</span></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><span>반품</span></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewArtworkAndArtist">작품 및 작가</a></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewPurchase">구매</a></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewService">SERVICE</a></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewDelivery">배송</a></li>
+                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewReturn">환불</a></li>
                     </ul>
                 </div>
                 <hr>
                 <div class="container mx-auto w-[250px] h-[150px]">
                     <span class="text-xl my-3 block">답변을 못찾으셨나요?</span>
-
-
-
                     <div class="bg-black text-[#D5A770] text-xl h-10 px-4 my-4 ml-[100px] rounded-xl flex items-center justify-center">
                         <a th:href="@{/question/create}">문의하기</a>
                     </div>
-
-
-
                 </div>
-
-
             </div>
         </div>
-        <div class="w-full border-2 border-rose-600 flex flex-col">
-            <div class="h-[150px] border-2 mt-10 border-rose-600 flex items-center">
+        <div class="w-full flex flex-col">
+            <div class="h-[150px] mt-10 flex items-center">
                 <span class="ml-80 font-bold text-5xl">FAQ</span>
             </div>
-            <div class="mt-20 w-full border-2 border-rose-600 flex flex-col">
-                <div class="border-2 border-blue-600 mx-20 mt-20">
-
-                    <div class="ml-24">
-                        <i class="fa-solid fa-palette" style="color: #f561d5;"></i>
-                        <span class="font-bold text-2xl ml-2"> 작품 및 작가</span>
+            <div class="mt-20 w-full flex flex-col">
+                <div class="mx-20 mt-20">
+                    <div id="ViewArtworkAndArtist" class="ml-24 flex items-center ">
+                        <i class="fa-solid fa-palette fa-xl" style="color: #f561d5;"></i>
+                        <span class="font-bold text-3xl ml-2"> 작품 및 작가</span>
                     </div>
-
-
                     <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'} or ${question.questionType.name() == 'ARTWORK'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li  th:text="${question.content}"></li>
+                        <li th:text="${question.content}"></li>
                     </ul>
                 </div>
-                <div class="border-2 border-blue-600 mx-20 mt-20">
-
-                    <div class="ml-24">
-                        <i class="fa-solid fa-credit-card" style="color: #f561d5;"></i>
-                        <span class="font-bold text-2xl ml-2"> 작품구매</span>
+                <div class="mx-20 mt-20">
+                    <div id="ViewPurchase" class="ml-24 flex items-center ">
+                        <i class="fa-solid fa-credit-card fa-xl" style="color: #f561d5;"></i>
+                        <span class="font-bold text-3xl ml-2"> 작품구매</span>
                     </div>
-
-
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'PURCHASE'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
                 </div>
-                <div class="border-2 border-blue-600 mx-20 mt-20">
-
-                    <div class="ml-24">
-                        <i class="fa-brands fa-servicestack" style="color: #f561d5;"></i>
-                        <span class="font-bold text-2xl ml-2">SERVICE</span>
+                <div class="mx-20 mt-20">
+                    <div id="ViewService" class="ml-24 flex items-center ">
+                        <i class="fa-brands fa-servicestack fa-xl" style="color: #f561d5;"></i>
+                        <span class="font-bold text-3xl ml-2">SERVICE</span>
                     </div>
-
-
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'SERVICE'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
                 </div>
-                <div class="border-2 border-blue-600 mx-20 mt-20">
-
-                    <div class="ml-24">
-                        <i class="fa-solid fa-truck" style="color: #f561d5;"></i>
-                        <span class="font-bold text-2xl ml-2"> 배송</span>
+                <div class="mx-20 mt-20">
+                    <div id="ViewDelivery" class="ml-24 flex items-center ">
+                        <i class="fa-solid fa-truck fa-xl" style="color: #f561d5;"></i>
+                        <span class="font-bold text-3xl ml-2"> 배송</span>
                     </div>
-
-
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'DELIVERY'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
                 </div>
-                <div class="border-2 border-blue-600 mx-20 mt-20">
-
-                    <div class="ml-24">
-                        <i class="fa-solid fa-rotate-left" style="color: #f561d5;"></i>
-                        <span class="font-bold text-2xl ml-2"> 반품</span>
+                <div class="mx-20 mt-20">
+                    <div id="ViewReturn" class="ml-24 flex items-center ">
+                        <i class="fa-solid fa-rotate-left fa-xl" style="color: #f561d5;"></i>
+                        <span class="font-bold text-3xl ml-2"> 환불</span>
                     </div>
-
-
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'RETURN'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
                         <li th:text="${question.createDate}"></li>
                     </ul>
                 </div>
             </div>
-
         </div>
-
     </div>
-
-    </div>
+</div>
 </html>
+
+<script>
+       document.addEventListener('DOMContentLoaded', () => {
+
+           document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+               anchor.addEventListener('click', function (e) {
+                   e.preventDefault();
+
+                   const targetId = this.getAttribute('href').substring(1);
+                   const targetElement = document.getElementById(targetId);
+
+                   if (targetElement) {
+                       window.scrollTo({
+                           top: targetElement.offsetTop - 400,
+                           behavior: 'smooth'
+                       });
+                   }
+               });
+           });
+       });
+</script>
+
+</script>
