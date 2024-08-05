@@ -8,7 +8,7 @@
 }
 .artistContainer {
     background-color: white;
-    padding: 20px;
+    padding: 40px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -30,7 +30,7 @@
 }
 .thumbnail {
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
@@ -62,19 +62,43 @@
     outline: none; /* 버튼 아웃라인 제거 */
     background: #e9ecef; /* 버튼 배경색 */
 }
-button.btn-primary {
+.btn-primary-art {
     background-color: #5C5C5C;
     color: white;
-    border: none;
     padding: 10px 40px;
     border-radius: 5px;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
+    display: flex;
+    margin: 0 auto;
 }
 
-button.btn-primary:hover {
+.btn-primary-art:hover {
     background-color: #5C5C5C;
+    color: white;
+}
+.artistAdds button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #5C5C5C;
+    display: flex;
+    margin: 0 auto 10px;
+}
+
+.artistAdds button:hover {
+    color: #5C5C5C;
+}
+
+.artistAdds input {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 75px;
+    width: 80%;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }

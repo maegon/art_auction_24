@@ -18,11 +18,15 @@
             if (selectElement.value === 'self') {
                 selectElementDiv.style.display = 'none';
                 inputElement.style.display = 'inline-block';
+                inputElement.name = "mailType"; // 입력 필드의 이름 설정
                 inputElement.focus();
+            } else {
+                inputElement.style.display = 'none';
+                inputElement.name = ""; // 입력 필드의 이름 비우기
+                selectElement.name = "mailType"; // 선택 필드의 이름 설정
             }
         }
 
-        // Reset mail type selection when the input loses focus
         document.addEventListener('DOMContentLoaded', function() {
             const mailTypeInput = document.getElementById('mailTypeInput');
             mailTypeInput.addEventListener('blur', function() {
@@ -32,17 +36,16 @@
                     selectElementDiv.style.display = 'inline-block';
                     this.style.display = 'none';
                     selectElement.value = '';
+                    this.name = ""; // 입력 필드의 이름 비우기
+                    selectElement.name = "mailType"; // 선택 필드의 이름 설정
                 }
             });
         });
 
-
-        // 파일 선택 트리거 함수
         function triggerFileInput() {
             document.getElementById('thumbnail').click();
         }
 
-        // 이미지 미리보기 함수
         function previewThumbnail(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -63,7 +66,7 @@
 <body>
 <div layout:fragment="content">
     <div class="artistCreateContainer">
-        <form th:action method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
+        <form id="artistForm" th:action="@{/artist/create}" method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
             <div class="thumbnail">
                 <img id="thumbnailPreview" src="#" alt="미리보기" style="display: none;" onclick="triggerFileInput()">
                 <input type="file" id="thumbnail" th:field="*{thumbnail}" class="form-control" style="display: none;" onchange="previewThumbnail(this)">
@@ -74,40 +77,46 @@
             <div class="form-groupArt">
                 <label for="engName" class="form-label">영문 이름:</label>
                 <input type="text" id="engName" class="form-control" th:field="*{engName}">
+                <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
             </div>
             <div class="form-groupArt">
                 <label for="korName" class="form-label">한글 이름:</label>
                 <input type="text" id="korName" class="form-control" th:field="*{korName}">
+                <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
             </div>
             <div class="form-groupArt">
                 <label for="birthDate" class="form-label">생년월일:</label>
                 <input type="text" id="birthDate" class="form-control" th:field="*{birthDate}">
+                <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
             </div>
             <div class="form-groupArt">
                 <label for="tel" class="form-label">전화번호:</label>
                 <input type="text" id="tel" class="form-control" th:field="*{tel}">
+                <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect telephone</div>
             </div>
             <div class="form-groupArt">
                 <label for="mail" class="form-label">E-mail:</label>
                 <input type="text" id="mail" class="form-control" th:field="*{mail}">
                 <span class="mailIcon">@</span>
                 <div id="mailTypeDiv">
-                    <select id="mailType" class="form-control" onchange="handleMailTypeChange(this)">
+                    <select id="mailType" class="form-control" onchange="handleMailTypeChange(this)" name="mailType">
                         <option value="">선택</option>
-                        <option value="naver">naver.com</option>
-                        <option value="google">gmail.com</option>
-                        <option value="daum">daum.net</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="daum.net">daum.net</option>
                         <option value="self">직접 입력</option>
                     </select>
                 </div>
-                <input type="text" id="mailTypeInput" class="form-control" name="mailType" style="display: none;">
+                <input type="text" id="mailTypeInput" class="form-control" style="display: none;">
+                <div th:if="${#fields.hasErrors('mailType')}" th:errors="*{mailType}">Incorrect mail type</div>
             </div>
             <div class="artistAdds">
+                <label for="artistAddsContainer" class="form-label">추가 입력:</label>
                 <div id="artistAddsContainer">
                     <button type="button" onclick="addInputField()"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
-            <button type="submit" class="btn-primary">등록</button>
+            <button type="submit" class="btn-primary-art">등록</button>
         </form>
     </div>
 </div>

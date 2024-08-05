@@ -1,17 +1,16 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Data
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class ArtistAdd {
 

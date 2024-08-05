@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -25,29 +27,57 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class ArtistController {
-
     private final ArtistService artistService;
     private final MemberService memberService;
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile")
+    public String getProfile(Model model) {
+        Member currentMember = memberService.getCurrentMember();
+        Artist artist = artistService.findByMember(currentMember);
+        if (artist == null) {
+            // 아티스트 정보가 없을 경우 처리
+            return "redirect:/error"; // 기본 에러 페이지로 리다이렉트
+        }
+        model.addAttribute("artist", artist);
+        return "artist/profile";
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String create(ArtistForm artistForm) {
+    public String create(Model model) {
+        model.addAttribute("artistForm", new ArtistForm());
         return "artist/artistForm";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String artistCreate(
-            @Valid ArtistForm artistForm,
+    public String create(
+            @ModelAttribute @Valid ArtistForm artistForm,
             BindingResult bindingResult,
+            @RequestParam("thumbnail") MultipartFile thumbnail,
+            @RequestParam(value = "artistAdds", required = false) List<String> artistAdds,
             Principal principal) {
+
+        // BindingResult 에러 출력
         if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println(error.getDefaultMessage());
+            });
             return "artist/artistForm";
+        }
+
+        // MultipartFile 상태 출력
+        if (thumbnail.isEmpty()) {
+            System.out.println("파일이 업로드되지 않았습니다.");
+            return "artist/artistForm";
+        } else {
+            System.out.println("파일 업로드 성공: " + thumbnail.getOriginalFilename());
         }
 
         Member member = this.memberService.getCurrentMember();
         Artist artist = this.artistService.create(
-                artistForm.getThumbnail(),
+                thumbnail,
                 artistForm.getKorName(),
                 artistForm.getEngName(),
                 artistForm.getBirthDate(),
@@ -57,20 +87,34 @@ public class ArtistController {
                 member
         );
 
-        List<ArtistAdd> artistAdds = new ArrayList<>();
-        for (String content : artistForm.getArtistAdds()) {
-            ArtistAdd artistAdd = new ArtistAdd();
-            artistAdd.setContent(content);
-            artistAdds.add(artistAdd);
+        if (artist == null) {
+            System.out.println("DB에 아티스트 정보가 저장되지 않았습니다.");
+            return "artist/artistForm";
         }
 
-        return "redirect:/artist/profileForm";
+        if (artistAdds == null) {
+            artistAdds = new ArrayList<>();
+        }
+
+        List<ArtistAdd> artistAddList = new ArrayList<>();
+        for (String content : artistAdds) {
+            if (content != null && !content.trim().isEmpty()) {
+                ArtistAdd artistAdd = new ArtistAdd();
+                artistAdd.setContent(content);
+                artistAdd.setArtist(artist);
+                artistAddList.add(artistAdd);
+            }
+        }
+        this.artistService.saveArtistAdds(artistAddList);
+
+        return "redirect:/artist/profile";
+
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String artistModify(@Valid ArtistForm artistForm, BindingResult bindingResult,
-                               Principal principal, @PathVariable("id") Long id) {
+                               Principal principal, @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors()) {
             return "profileForm";
         }
@@ -100,7 +144,7 @@ public class ArtistController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String artistModify(ArtistForm artistForm, @PathVariable("id") Long id, Principal principal) {
+    public String artistModify(ArtistForm artistForm, @PathVariable("id") Integer id, Principal principal) {
         Artist artist = artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {
@@ -149,7 +193,7 @@ public class ArtistController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String artistDelete(Principal principal, @PathVariable("id") Long id) {
+    public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
         Artist artist = this.artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {

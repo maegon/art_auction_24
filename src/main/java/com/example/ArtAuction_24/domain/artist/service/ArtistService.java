@@ -1,6 +1,8 @@
 package com.example.ArtAuction_24.domain.artist.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.artist.entity.ArtistAdd;
+import com.example.ArtAuction_24.domain.artist.repository.ArtistAddRepository;
 import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @Service
 public class ArtistService {
     private final ArtistRepository artistRepository;
+    private final ArtistAddRepository artistAddRepository; // 추가
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
@@ -27,14 +30,20 @@ public class ArtistService {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
+        // 파일 저장 전 디렉토리 존재 확인 및 생성
+        File dir = new File(fileDirPath + "/image/artist");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
         try {
             thumbnail.transferTo(thumbnailFile);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage());
         }
 
         Artist artist = Artist.builder()
-                .thumbnailImg(thumbnailRelPath)
+                .thumbnailImg(thumbnailRelPath)  // 썸네일 이미지 경로 설정
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
@@ -43,28 +52,11 @@ public class ArtistService {
                 .mailType(mailType)
                 .author(member)
                 .build();
-        artistRepository.save(artist);
 
-        return artist;
+        return artistRepository.save(artist); // 아티스트 저장 후 반환
     }
 
-    public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce) {
-
-        Artist artist = Artist.builder()
-                .korName(korName)
-                .engName(engName)
-                .birthDate(birthDate)
-                .tel(tel)
-                .mail(mail)
-                .mailType(mailType)
-                .introduce(introduce)
-                .build();
-        artistRepository.save(artist);
-
-        return artist;
-    }
-
-    public Artist getArtist(Long id) {
+    public Artist getArtist(Integer id) {
         Optional<Artist> of = artistRepository.findById(id);
         if (of.isEmpty()) throw new DataNotFoundException("artist not found");
         return of.get();
@@ -101,6 +93,15 @@ public class ArtistService {
         artistRepository.delete(artist);
     }
 
+    public void saveArtistAdds(List<ArtistAdd> artistAddList) {
+        artistAddRepository.saveAll(artistAddList); // ArtistAdd 객체 리스트 저장
+    }
+
+    public Artist findByMember(Member member) {
+        return artistRepository.findByAuthor(member)
+                .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
+    }
+
     public List<Artist> findByKeyword(String keyword) {
         return artistRepository.findByKeyword(keyword);
     }
@@ -109,4 +110,21 @@ public class ArtistService {
         Optional<Artist> artistOptional = artistRepository.findByKorName(korName);
         return artistOptional.orElseThrow(() -> new DataNotFoundException("Artist not found with korName: " + korName));
     }
+
+    public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce) {
+
+        Artist artist = Artist.builder()
+                .korName(korName)
+                .engName(engName)
+                .birthDate(birthDate)
+                .tel(tel)
+                .mail(mail)
+                .mailType(mailType)
+                .introduce(introduce)
+                .build();
+        artistRepository.save(artist);
+
+        return artist;
+    }
 }
+

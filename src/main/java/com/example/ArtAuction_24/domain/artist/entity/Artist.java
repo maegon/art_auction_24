@@ -24,7 +24,6 @@ public class Artist {
     private String korName;
     private String engName;
     private String birthDate;
-    private String education;
     private String tel;
     private String mail;
     private String mailType;
@@ -37,6 +36,10 @@ public class Artist {
 
     @ManyToOne
     private Member author;
+
+    @OneToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    private Member member;
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
