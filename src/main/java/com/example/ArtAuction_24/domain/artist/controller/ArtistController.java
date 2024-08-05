@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/artist")
 @Controller
@@ -34,12 +35,18 @@ public class ArtistController {
     @GetMapping("/profile")
     public String getProfile(Model model) {
         Member currentMember = memberService.getCurrentMember();
-        Artist artist = artistService.findByMember(currentMember);
-        if (artist == null) {
-            // 아티스트 정보가 없을 경우 처리
-            return "redirect:/error"; // 기본 에러 페이지로 리다이렉트
+        System.out.println("Current Member: " + currentMember);
+        Optional<Artist> artistOpt = Optional.ofNullable(artistService.findByMember(currentMember));
+
+        if (artistOpt.isEmpty()) {
+            // 아티스트 정보가 없을 경우 로그 추가
+            System.out.println("아티스트 정보를 찾을 수 없습니다.");
+            model.addAttribute("errorMessage", "아티스트 정보를 찾을 수 없습니다.");
+            return "error/artistNotFound"; // 에러 템플릿이 있는지 확인
         }
-        model.addAttribute("artist", artist);
+
+        System.out.println("Artist: " + artistOpt.get());
+        model.addAttribute("artist", artistOpt.get());
         return "artist/profile";
     }
 

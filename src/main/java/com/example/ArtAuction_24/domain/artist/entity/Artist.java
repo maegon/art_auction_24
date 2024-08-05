@@ -35,20 +35,20 @@ public class Artist {
     private String content;
 
     @ManyToOne
-    private Member author;
-
-    @OneToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
-    private Member member;
+    @JoinColumn(name = "author_id")
+    private Member author; // 변경된 필드
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<ArtistAdd> artistAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<ContentAdd> contentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<TitleAdd> titleAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)

@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"artist"})
 public class ArtistAdd {
 
     @Id
@@ -21,6 +21,5 @@ public class ArtistAdd {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "artist_id")
     private Artist artist;
 }
