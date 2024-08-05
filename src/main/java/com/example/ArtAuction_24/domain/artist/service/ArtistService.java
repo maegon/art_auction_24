@@ -33,13 +33,19 @@ public class ArtistService {
         // 파일 저장 전 디렉토리 존재 확인 및 생성
         File dir = new File(fileDirPath + "/image/artist");
         if (!dir.exists()) {
-            dir.mkdirs();
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
+            }
         }
 
         try {
             thumbnail.transferTo(thumbnailFile);
+            // 파일 저장 후 확인
+            if (!thumbnailFile.exists()) {
+                throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
+            }
         } catch (IOException e) {
-            throw new RuntimeException("파일 저장 실패: " + e.getMessage());
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
         }
 
         Artist artist = Artist.builder()
@@ -55,6 +61,7 @@ public class ArtistService {
 
         return artistRepository.save(artist); // 아티스트 저장 후 반환
     }
+
 
     public Artist getArtist(Integer id) {
         Optional<Artist> of = artistRepository.findById(id);

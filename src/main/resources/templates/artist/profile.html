@@ -6,7 +6,7 @@
 <body>
 <div layout:fragment="content">
     <div class="artistImg">
-        <img th:src="@{/file/{filename}(filename=${artist.thumbnailImg})}" class="artist-img" alt="Thumbnail">
+        <img th:src="@{/{filename}(filename=${artist.thumbnailImg})}" class="artist-img" alt="Thumbnail">
     </div>
     <div class="engName">
         <span th:text="${artist.engName}"></span>
