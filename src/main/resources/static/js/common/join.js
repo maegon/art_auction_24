@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const nicknameError = document.getElementById("nicknameError");
     const usernameCheckButton = document.getElementById("usernameCheckButton"); // 아이디 중복 확인 버튼
     const nicknameCheckButton = document.getElementById("nicknameCheckButton"); // 닉네임 중복 확인 버튼
-    const emailCheckButton = document.getElementById('emailCheckButton');
-    const emailConfirmInput = document.getElementById('emailConfirm');
-    const emailError = document.getElementById('emailError');
+//    const emailCheckButton = document.getElementById('emailCheckButton');
+//    const emailConfirmInput = document.getElementById('emailConfirm');
+//    const emailError = document.getElementById('emailError');
 
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
