@@ -66,7 +66,6 @@ public class MemberController {
     @PostMapping("/join")
     public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
         //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
-        // 작가로 선택된 회원의 예술활동증명서도 추가해봐야 함
         if (bindingResult.hasErrors()) {
             return "redirect:/member/login";
         }

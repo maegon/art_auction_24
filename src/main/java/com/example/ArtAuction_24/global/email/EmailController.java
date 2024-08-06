@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -65,38 +67,20 @@ public class EmailController {
     }
 
     @PostMapping("/confirmCode")
-    public ResponseEntity<EmailResponseDto> sendCodeMail(@RequestBody EmailRequestDto emailRequestDto) {
-        try {
-            // 이메일 수신자
-            String email = emailRequestDto.getEmail();
+    public ResponseEntity<Map<String, String>> sendConfirmationCode(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String code = emailService.createConfirmCode();
 
-            // 인증번호 생성
-            String code = emailService.createConfirmCode();
+        System.out.println("email : " + email);
+        System.out.println("code : " + code);
 
-            // 이메일 본문 내용
-            String body = String.format(
-                    "안녕하세요, <b>Art Auction 입니다.<br><br>" +
-                            "Art Auction 이메일 인증번호 발급 안내입니다.<br><br>" +
-                            "회원님의 인증 번호는 %s 입니다.<br><br>" +
-                            "인증번호 입력란에 작성해주세요." +
-                            "<br><br>" +
-                            "Art Auction 드림.",
-                    code
-            );
+        // 이메일로 인증 코드 전송 (구현 필요)
+        emailService.sendConfirmCode(email, code);
 
-            // 이메일 발송
-            emailService.send(email, "[Art Auction] 이메일 인증번호 발급 안내입니다.", body);
-
-            // 인증번호를 클라이언트로 반환
-            EmailResponseDto responseDto = new EmailResponseDto(code);
-            return ResponseEntity.ok(responseDto);
-        } catch (Exception e) {
-            // 로그 기록
-            e.printStackTrace();
-
-            // 오류 응답 반환
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        // 클라이언트로 인증 코드 전달
+        Map<String, String> response = new HashMap<>();
+        response.put("code", code);
+        return ResponseEntity.ok(response);
     }
 
 }

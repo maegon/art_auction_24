@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
     passwordInput.addEventListener("input", checkPasswords);
     passwordConfirmInput.addEventListener("input", checkPasswords);
 
+    // 이메일 인증
     let generatedCode = "";
 
     document.getElementById("emailCheckButton").addEventListener("click", function() {
@@ -265,10 +266,17 @@ document.addEventListener("DOMContentLoaded", function() {
             emailError.classList.add("success");
         }
 
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        console.log('CSRF Token:', csrfToken);
+        console.log('CSRF Header:', csrfHeader);
+
         fetch("/sendmail/confirmCode", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
             },
             body: JSON.stringify({ email: email })
         })
@@ -280,7 +288,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
          .then(data => {
+            console.log("")
             if (data.code) {
+                generatedCode = data.code;
                 emailError.innerText = "인증 메일이 발송되었습니다. 이메일을 확인하세요.";
                 emailError.classList.remove("error");
                 emailError.classList.add("success");
@@ -303,14 +313,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (userEnteredCode === "") {
             emailError.innerText = "인증번호를 입력해 주세요.";
+            emailError.classList.remote("success");
             emailError.classList.add("error");
             joinButton.disabled = true;
         } else if (userEnteredCode === generatedCode) {
             emailError.innerText = "이메일 인증이 완료되었습니다.";
+            emailError.classList.remote("error");
             emailError.classList.add("success");
             joinButton.disabled = false;
         } else {
             emailError.innerText = "인증 번호가 일치하지 않습니다.";
+            emailError.classList.remote("success");
             emailError.classList.add("error");
             joinButton.disabled = true;
         }

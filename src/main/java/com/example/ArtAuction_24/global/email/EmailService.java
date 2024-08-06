@@ -59,4 +59,28 @@ public class EmailService {
 
         return codeBuilder.toString();
     }
+
+    public void sendConfirmCode(String to, String code) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        String subject = "[Art Auction] 이메일 인증 번호 발급 안내입니다.";
+        String body = String.format(
+                "안녕하세요, <b>Art Auction 입니다.<br><br>" +
+                        "Art Auction 이메일 인증번호 발급 안내입니다.<br><br>" +
+                        "회원님의 인증 번호는 %s 입니다.<br><br>" +
+                        "인증번호 입력란에 작성해주세요." +
+                        "<br><br>" +
+                        "Art Auction 드림.",
+                code
+        );
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            mimeMessageHelper.setTo(to); // 메일 수신자
+            mimeMessageHelper.setSubject(subject); // 메일 제목
+            mimeMessageHelper.setText(body, true); // 메일 본문 내용, HTML 여부
+            mailSender.send(mimeMessage); // 메일 발송
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
