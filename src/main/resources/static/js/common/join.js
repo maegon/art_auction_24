@@ -313,17 +313,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (userEnteredCode === "") {
             emailError.innerText = "인증번호를 입력해 주세요.";
-            emailError.classList.remote("success");
+            emailError.classList.remove("success");
             emailError.classList.add("error");
             joinButton.disabled = true;
         } else if (userEnteredCode === generatedCode) {
             emailError.innerText = "이메일 인증이 완료되었습니다.";
-            emailError.classList.remote("error");
+            emailError.classList.remove("error");
             emailError.classList.add("success");
             joinButton.disabled = false;
         } else {
             emailError.innerText = "인증 번호가 일치하지 않습니다.";
-            emailError.classList.remote("success");
+            emailError.classList.remove("success");
             emailError.classList.add("error");
             joinButton.disabled = true;
         }
