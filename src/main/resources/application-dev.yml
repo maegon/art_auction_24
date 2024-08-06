@@ -13,5 +13,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-custom:
-  genFileDirPath: C:\work\ArtAuction_24\src\main\resources\static

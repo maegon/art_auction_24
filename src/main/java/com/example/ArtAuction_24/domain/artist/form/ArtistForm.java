@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.codehaus.groovy.util.FastArray;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -14,11 +13,11 @@ import java.util.List;
 @Getter
 public class ArtistForm {
 
-    @NotBlank(message = "자기소개는 필수입니다.")
+
     @Size(max = 2000, message = "자기소개를 입력하세요")
     private String introduce;
 
-    @NotBlank(message = "대표작품은 필수입니다.")
+
     @Size(max = 200, message = "대표작품을 입력하세요 ex) <나비>(2012): 각 157X130, 수채화")
     private String majorWork;
 
@@ -50,6 +49,7 @@ public class ArtistForm {
     @Size(max = 30, message = "이메일을 입력해주세요.")
     private String mail;
 
+    @NotBlank(message = "이메일 타입은 필수입니다.")
     private String mailType;
 
     private String existingThumbnailUrl;
@@ -58,4 +58,3 @@ public class ArtistForm {
     private List<String> contentAdds = new ArrayList<>();
     private List<String> titleAdds = new ArrayList<>();
 }
-

@@ -24,7 +24,6 @@ public class Artist {
     private String korName;
     private String engName;
     private String birthDate;
-    private String education;
     private String tel;
     private String mail;
     private String mailType;
@@ -36,16 +35,20 @@ public class Artist {
     private String content;
 
     @ManyToOne
-    private Member author;
+    @JoinColumn(name = "author_id")
+    private Member author; // 변경된 필드
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<ArtistAdd> artistAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<ContentAdd> contentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<TitleAdd> titleAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
@@ -54,4 +57,6 @@ public class Artist {
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;
     }
+
+
 }

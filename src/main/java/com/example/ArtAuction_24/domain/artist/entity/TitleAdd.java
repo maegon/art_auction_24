@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"artist"})
 public class TitleAdd {
 
     @Id

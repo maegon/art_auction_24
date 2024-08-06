@@ -1,0 +1,84 @@
+<html layout:decorate="~{/layout/layout}">
+<head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthDateElement = document.getElementById('birthDate');
+            const telElement = document.getElementById('tel');
+
+            if (birthDateElement) {
+                let birthDate = birthDateElement.textContent.trim();
+                if (birthDate.length === 8) {
+                    birthDateElement.textContent = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+                }
+            }
+
+            if (telElement) {
+                let tel = telElement.textContent.trim();
+                if (tel.length === 11) {
+                    telElement.textContent = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                } else if (tel.length === 10) {
+                    telElement.textContent = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="artistProfileContainer">
+        <div class="basicArtistProfile">
+            <div class="artistImg">
+                <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
+            </div>
+            <div class="engName">
+                <span th:text="${artist.engName}"></span>
+            </div>
+            <div class="information">
+                <div class="korName">
+                    <span th:text="${artist.korName}"></span> 작가
+                </div>
+                <div class="line">
+                    <div class="lineInformation">
+                        <div class="name-group">
+                            <span th:text="${artist.korName}"></span>
+                            (<span th:text="${artist.engName}"></span>)
+                        </div>
+                        <div class="birthDateNum">
+                            <span id="birthDate" th:text="${artist.birthDate}"></span>
+                        </div>
+                        <!-- 추가 입력 부분 -->
+                        <div class="add" th:each="add : ${artist.artistAdds}">
+                            <span th:text="${add.content}"></span>
+                        </div>
+                        <div class="telNum">
+                            Tel.<span id="tel" th:text="${artist.tel}"></span>
+                        </div>
+                        <div class="mail-group">
+                            E-mail.<span th:text="${artist.mail}"></span>
+                            <span>@</span>
+                            <span th:text="${artist.mailType}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+            </div>
+                <div class="textArtistProfile">
+                <a th:href="@{|/artist/modify/${artist.id}|}"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"
+                   class="btn btn-sm btn-outline-secondary button-gray">
+                    <i class="far fa-edit fa-lg"></i>
+                </a>
+    <!--            <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/post/delete/${post.id}|}"-->
+    <!--               sec:authorize="isAuthenticated()"-->
+    <!--               th:if="${post.author != null and (#authentication.getPrincipal().getUsername() == post.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}"-->
+    <!--               class="btn btn-sm btn-outline-secondary button-gray">-->
+    <!--                <i class="fas fa-trash-alt fa-lg"></i>-->
+    <!--            </a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

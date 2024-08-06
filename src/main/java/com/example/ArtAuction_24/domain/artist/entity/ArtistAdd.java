@@ -1,18 +1,17 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Data
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@ToString(exclude = {"artist"})
 public class ArtistAdd {
 
     @Id
@@ -22,6 +21,5 @@ public class ArtistAdd {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "artist_id")
     private Artist artist;
 }
