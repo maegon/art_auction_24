@@ -40,16 +40,20 @@ public class ArtistService {
 
         try {
             thumbnail.transferTo(thumbnailFile);
+            System.out.println("파일 저장 경로: " + thumbnailFile.getAbsolutePath());
             // 파일 저장 후 확인
             if (!thumbnailFile.exists()) {
                 throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
+            } else {
+                System.out.println("파일 저장 성공: " + thumbnailFile.getAbsolutePath());
             }
         } catch (IOException e) {
+            System.out.println("파일 저장 중 예외 발생: " + e.getMessage());
             throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
         }
 
         Artist artist = Artist.builder()
-                .thumbnailImg(thumbnailRelPath)  // 썸네일 이미지 경로 설정
+                .thumbnailImg(thumbnailRelPath)
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
@@ -58,8 +62,9 @@ public class ArtistService {
                 .mailType(mailType)
                 .author(member)
                 .build();
+        artistRepository.save(artist);
 
-        return artistRepository.save(artist); // 아티스트 저장 후 반환
+        return artist;
     }
 
 
@@ -134,4 +139,3 @@ public class ArtistService {
         return artist;
     }
 }
-

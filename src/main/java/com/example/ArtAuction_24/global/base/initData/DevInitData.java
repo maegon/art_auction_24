@@ -44,7 +44,7 @@ public class DevInitData implements BeforeInitData {
 
 
             memberService.join("", "admin", password, "admin@test.com", "admin",
-                   "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+                    "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
 
             memberService.join("", "user1", password, "user1@test.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
@@ -60,6 +60,7 @@ public class DevInitData implements BeforeInitData {
             artistService.create("정작가", "jungArtist", "1980-07-19", "010-2345-6789", "Artist@yahoo.com", "yahoo.com", "안녕! 나 정작가");
             artistService.create("강작가", "kangArtist", "1992-03-25", "010-3456-7890", "Artist@msn.com", "msn.com", "안녕! 나 강작가");
             artistService.create("한작가", "hanArtist", "2001-09-17", "010-5678-0123", "Artist@hotmail.com", "hotmail.com", "안녕! 나 한작가");
+
 
             Artist kim = artistService.getArtistByKorName("김작가");
             Artist na = artistService.getArtistByKorName("나작가");

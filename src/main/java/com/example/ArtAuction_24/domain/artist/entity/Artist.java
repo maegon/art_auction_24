@@ -57,4 +57,6 @@ public class Artist {
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;
     }
+
+
 }
