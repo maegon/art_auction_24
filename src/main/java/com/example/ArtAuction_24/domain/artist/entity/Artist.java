@@ -39,10 +39,6 @@ public class Artist {
     @JoinColumn(name = "author_id")
     private Member author; // 변경된 필드
 
-    @OneToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
-    private Member member;
-
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

@@ -47,12 +47,6 @@ public class ArtistController {
 
         System.out.println("Artist: " + artistOpt.get());
         model.addAttribute("artist", artistOpt.get());
-        Artist artist = artistService.findByMember(currentMember);
-        if (artist == null) {
-            // 아티스트 정보가 없을 경우 처리
-            return "redirect:/error"; // 기본 에러 페이지로 리다이렉트
-        }
-        model.addAttribute("artist", artist);
         return "artist/profile";
     }
 
