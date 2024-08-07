@@ -34,7 +34,7 @@
                     <!-- 드롭다운 메뉴 -->
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/member/myPage}">작품 추가</a>
-                        <a sec:authorize="hasAuthority('ARTIST')" class="header_profileCreate" th:href="@{/artist/artistForm}">프로필 제작</a>
+                        <a sec:authorize="hasAuthority('ARTIST')" class="header_profileCreate" th:href="@{/artist/create}">프로필 제작</a>
                         <a class="header_profile" th:href="@{/member/myPage}">프로필 수정</a>
                         <a class="header_qna" th:href="@{/question/list}">문의하기</a>
                         <hr>
