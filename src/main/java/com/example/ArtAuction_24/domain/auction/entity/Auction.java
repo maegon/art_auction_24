@@ -1,11 +1,11 @@
 package com.example.ArtAuction_24.domain.auction.entity;
 
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,9 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,8 +32,11 @@ public class Auction extends BaseEntity { // 여러 제품을 경매에 올려 �
 
     private String status; // 경매 상태 (예: 활성화, 종료, 취소)
 
-    @OneToMany(mappedBy = "auction")
-    private List<AuctionProduct> products;
-
-
+    @ManyToMany
+    @JoinTable(
+            name = "AuctionProduct",
+            joinColumns = @JoinColumn(name = "auction_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Product> products = new HashSet<>();
 }

@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.domain.home;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class SearchController {
 
     private final ArtistService artistService;
 
-    private final AuctionProductService auctionProductService;
+    private final ProductService productService;
 
     @GetMapping("/search")
     public String search(@RequestParam(value = "kw", defaultValue = "") String keyword, Model model)
@@ -35,11 +36,11 @@ public class SearchController {
         } else {
             // 키워드가 있는 경우
             List<Artist> artistList = artistService.findByKeyword(keyword);
-            List<AuctionProduct> auctionProductList = auctionProductService.findByKeyword(keyword);
+            List<Product> productList = productService.findByKeyword(keyword);
 
             model.addAttribute("keyword", keyword); // 키워드를 넘겨줌
             model.addAttribute("artistList", artistList);
-            model.addAttribute("auctionProductList", auctionProductList);
+            model.addAttribute("productList", productList);
         }
         return "home/search_result";
     }

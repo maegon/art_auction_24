@@ -1,16 +1,16 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="py-5 text-center">
-        <p class="text-xl font-bold mb-4" th:if="${#lists.isEmpty(artistList) && #lists.isEmpty(auctionProductList)}">
+        <p class="text-xl font-bold mb-4" th:if="${#lists.isEmpty(artistList) && #lists.isEmpty(productList)}">
             "<strong th:text="${keyword}" id="keyword" class="context"></strong>"에 해당하는 검색 결과가 없습니다.
         </p>
         <p class="text-xl font-bold mb-4" th:if="${not #lists.isEmpty(artistList)}">
             "<strong th:text="${keyword}" class="context"></strong>"에 해당하는 작가를
             <span th:text="${artistList.size()}"></span>명 찾았습니다.
         </p>
-        <p class="text-xl font-bold mb-4" th:if="${not #lists.isEmpty(auctionProductList)}">
+        <p class="text-xl font-bold mb-4" th:if="${not #lists.isEmpty(productList)}">
             "<strong th:text="${keyword}" class="context"></strong>"에 해당하는 그림을
-            <span th:text="${auctionProductList.size()}"></span>개 찾았습니다.
+            <span th:text="${productList.size()}"></span>개 찾았습니다.
         </p>
     </div>
 
@@ -43,19 +43,19 @@
         <h2 class="text-2xl font-bold mb-4 ml-5">그림 검색 결과</h2>
         <div class="relative flex items-center" style="min-height: 250px;">
             <div class="card-list flex overflow-x-auto space-x-4 p-4 items-center">
-                <div th:each="auction : ${auctionProductList}">
+                <div th:each="product : ${productList}">
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-72 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
-                        <a th:href="@{|/auctionProduct/detail/${auction.id}|}" class="no-underline">
+                        <a th:href="@{|/product/detail/${product.id}|}" class="no-underline">
                             <div>
-                                <img th:if="${auction.thumbnailImg != null}" th:src="@{${auction.thumbnailImg}}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
-                                <img th:unless="${auction.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
+                                <img th:if="${product.thumbnailImg != null}" th:src="@{${product.thumbnailImg}}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
+                                <img th:unless="${product.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
                             </div>
                         </a>
                     </div>
                     <div class="pb-4">
-                        <h5 class="text-lg font-bold mb-2 context" th:text="${auction.title}"></h5>
-                        <h5 class="text-lg font-bold mb-2 context" th:text="${auction.artist.korName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${auction.formattedCurrentBid}"></p>
+                        <h5 class="text-lg font-bold mb-2 context" th:text="${product.title}"></h5>
+                        <h5 class="text-lg font-bold mb-2 context" th:text="${product.artist.korName}"></h5>
+                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${product.formattedCurrentBid}"></p>
                     </div>
                 </div>
             </div>

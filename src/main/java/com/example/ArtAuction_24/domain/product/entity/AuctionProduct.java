@@ -3,10 +3,7 @@ package com.example.ArtAuction_24.domain.product.entity;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
-
-import com.example.ArtAuction_24.domain.review.entity.Review;
 import jakarta.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -26,41 +22,11 @@ import java.util.List;
 @AllArgsConstructor
 public class AuctionProduct extends BaseEntity {
 
-    private String title;
-    private String description;
-    private String medium; //사용된 재료
-    private String dimensions; //크기
-    private BigDecimal startingPrice; //시작 가격
-    private BigDecimal currentBid; // 현재 입찰가
-    private LocalDateTime auctionStartDate; // 시작 일
-    private String thumbnailImg; // 그림 이미지
-    private String category; // 카테고리
-    private int view;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;  // 제품과의 연관 관계 추가
 
-    @ManyToOne
-    private Artist artist;
-
-    @ManyToOne
-    private Auction auction;
-
-    @OneToMany(mappedBy = "auctionProduct", cascade = CascadeType.REMOVE)
-    private List<Review> reviewList;
-
-    private transient String formattedCurrentBid;
-
-    @PostLoad
-    private void postLoad() {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        this.formattedCurrentBid = formatter.format(this.currentBid);
-    }
-
-    public void updateBid(BigDecimal newBid) {
-        if (newBid.compareTo(currentBid) > 0) {
-            currentBid = newBid;
-        } else {
-            throw new IllegalArgumentException("새 입찰가가 현재 입찰가보다 작습니다.");
-        }
-    }
-    
-    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id")
+    private Auction auction;  // 경매와의 연관 관계 추가
 }

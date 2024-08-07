@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.review.entity;
 
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.ExhibitionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.member.entity.Member;import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -25,7 +26,7 @@ public class Review extends BaseEntity {
     private Member member; // 리뷰를 작성한 회원
 
     @ManyToOne
-    private AuctionProduct auctionProduct; // 리뷰가 작성된 제품
+    private Product product; // 리뷰가 작성된 제품
 
     @ManyToOne
     private ExhibitionProduct exhibitionProduct; // 리뷰가 작성된 제품

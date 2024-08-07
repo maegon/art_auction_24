@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import lombok.*;
@@ -52,7 +53,7 @@ public class Artist {
     private List<TitleAdd> titleAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
-    private List<AuctionProduct> product;
+    private List<Product> product;
 
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;

@@ -4,7 +4,9 @@ import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
+import com.example.ArtAuction_24.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,15 +22,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final AuctionProductService auctionProductService;
+    private final ProductService productService;
     private final MemberService memberService;
 
     @GetMapping("/")
     public String index(Model model) {
-        List<AuctionProduct> auctionProductList = auctionProductService.findAllAuctionProductOrderByCreateDateDesc();
-        model.addAttribute("auctionProductList", auctionProductList);
+        List<Product> productList = productService.findAllProductOrderByCreateDateDesc();
+        model.addAttribute("productList", productList);
 
-        AuctionProduct topProduct = auctionProductService.getTopAuctionProductByView();
+        Product topProduct = productService.getTopProductByView();
         model.addAttribute("topProduct", topProduct);
 
         // 현재 로그인한 사용자의 프로필 이미지와 이름을 가져옵니다.
