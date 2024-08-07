@@ -9,16 +9,19 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
-    /*border: 1px solid #9E9E9E;*/
+    border: 1px solid #9E9E9E;
     /*justify-content: center;*/
     align-items: center;
 }
-.artist-img {
-    width: 265px;  /* 동일한 크기 설정 */
-    height: 265px; /* 동일한 크기 설정 */
-    display: flex;
+.artistImgModify {
+    display: inline;
+    margin-top: 50px;
+}
+.artist-img-Modify {
+    width: 200px;
+    height: 200px;
+    display: inline;
     border-radius: 50%;
-    margin-top: 80px;
 }
 .engName {
     display: inline;
@@ -51,30 +54,32 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
-.mail-group {
+.mail-group-modify {
+    display: flex;
     font-size: 18px;
     margin-bottom: 5px;
+    flex-direction: row;
 }
 .textArtistProfile{
     display: flex;
     flex-direction: column;
     height: 700px;
     width: 50%;
-    /*border: 1px solid #9E9E9E;*/
-    /*justify-content: center;*/
+    border: 1px solid #9E9E9E;
+    justify-content: center;
     align-items: center;
 }
 .textAdd {
     margin-top: 70px;
     height: 560px;
     width: 80%;
-    /*border: 1px solid #9E9E9E;*/
+    border: 1px solid #9E9E9E;
 }
 .textTileForm {
     height: auto;
     width: 100%;
     margin-bottom: 30px;
-    /*border: 1px solid #9E9E9E;*/
+    border: 1px solid #9E9E9E;
 }
 .title {
     font-size: 25px;
@@ -90,4 +95,29 @@
 }
 .button-majorWorkForm: hover {
     color: gray;
+}
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 적절한 간격 추가 */
+}
+
+.input-group input {
+    flex: 1;
+}
+
+.input-group button {
+    margin-left: 10px;
+}
+
+.remove-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: darkred;
 }
