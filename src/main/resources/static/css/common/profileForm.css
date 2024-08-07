@@ -9,13 +9,14 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
-    border: 1px solid #9E9E9E;
+    /*border: 1px solid #9E9E9E;*/
     /*justify-content: center;*/
     align-items: center;
 }
 .artistImgModify {
     display: inline;
     margin-top: 50px;
+    margin-bottom:10px;
 }
 .artist-img-Modify {
     width: 200px;
@@ -26,9 +27,12 @@
 .engName {
     display: inline;
     font-size: 20px;
+    margin-bottom: 8px;
 }
-.korName {
-    font-size: 25px;
+.korNameModify {
+    display: flex;
+    flex-direction: row;
+    font-size: 23px;
 }
 .line {
     border-left: 2px solid #333;
@@ -42,17 +46,17 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
-.birthDateNum {
+.birthDateNumModify {
     font-size: 18px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .add {
     font-size: 18px;
     margin-bottom: 5px;
 }
-.telNum {
+.telNumModify {
     font-size: 18px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .mail-group-modify {
     display: flex;
@@ -65,21 +69,21 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
-    border: 1px solid #9E9E9E;
+    /*border: 1px solid #9E9E9E;*/
     justify-content: center;
     align-items: center;
 }
 .textAdd {
-    margin-top: 70px;
+    margin-top: 50px;
     height: 560px;
     width: 80%;
-    border: 1px solid #9E9E9E;
+    /*border: 1px solid #9E9E9E;*/
 }
 .textTileForm {
     height: auto;
     width: 100%;
     margin-bottom: 30px;
-    border: 1px solid #9E9E9E;
+   /* border: 1px solid #9E9E9E;*/
 }
 .title {
     font-size: 25px;

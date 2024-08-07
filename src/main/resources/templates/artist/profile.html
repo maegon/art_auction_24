@@ -1,43 +1,29 @@
+<!DOCTYPE html>
 <html layout:decorate="~{/layout/layout}">
-
 <head>
     <script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> bebcbcb (aa)
         document.addEventListener('DOMContentLoaded', function() {
-          const birthDateElement = document.getElementById('birthDate');
-          const telElement = document.getElementById('tel');
-          if (birthDateElement) {
-            let birthDate = birthDateElement.textContent.trim();
-            if (birthDate.length === 8) {
-              birthDateElement.textContent = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+            const birthDateElement = document.getElementById('birthDate');
+            const telElement = document.getElementById('tel');
+            if (birthDateElement) {
+                let birthDate = birthDateElement.textContent.trim();
+                if (birthDate.length === 8) {
+                    birthDateElement.textContent = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+                }
             }
-          }
-          if (telElement) {
-            let tel = telElement.textContent.trim();
-            if (tel.length === 11) {
-              telElement.textContent = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-            } else if (tel.length === 10) {
-              telElement.textContent = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            if (telElement) {
+                let tel = telElement.textContent.trim();
+                if (tel.length === 11) {
+                    telElement.textContent = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                } else if (tel.length === 10) {
+                    telElement.textContent = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                }
             }
-          }
         });
-<<<<<<< HEAD
-=======
->>>>>>> 0db3884 (re)
-=======
->>>>>>> bebcbcb (aa)
     </script>
 </head>
-
 <body>
 <div layout:fragment="content">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> bebcbcb (aa)
     <div class="artistProfileContainer">
         <div class="basicArtistProfile">
             <div class="artistImg">
@@ -73,60 +59,48 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                </div>
             </div>
-<<<<<<< HEAD
-=======
-    <div class="artistImg">
-        <img th:src="@{/{filename}(filename=${artist.thumbnailImg})}" class="artist-img" alt="Thumbnail">
-    </div>
-    <div class="engName">
-        <span th:text="${artist.engName}"></span>
-    </div>
-    <div class="korName">
-        <span th:text="${artist.korName}"></span>작가
-    </div>
-    <div class="information">
-        <div class="name-group">
-            <span th:text="${artist.korName}"></span>
-            <span th:text="${artist.engName}"></span>
-        </div>
-        <span th:text="${artist.birthDate}"></span>
-        <span th:text="${artist.artistAdds}"></span>
-        Tel.<span th:text="${artist.tel}"></span>
-        <div class="mail-group">
-            E-mail.<span th:text="${artist.mail}"></span>
-            <span>@</span>
-            <span th:text="${artist.mailType}"></span>
->>>>>>> 0db3884 (re)
-=======
->>>>>>> bebcbcb (aa)
         </div>
         <div class="textArtistProfile">
             <div class="textAdd">
                 <div class="textTileForm">
                     <span class="title">INTRODUCE</span>
-                    <span class="add" th:each="add : ${artist.contentAdds}"></span>
+                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+                        <span th:text="${add.content}"></span>
+                    </div>
                 </div>
                 <div class="textTileForm">
                     <span class="title">MAJOR WORK</span>
-                    <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                    <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"
+                       th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"
+                       class="button-majorWorkForm">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
-                    <span class="add" th:each="add : ${artist.contentAdds}"></span>
+                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+                        <span th:text="${add.content}"></span>
+                    </div>
                 </div>
                 <div class="textTileForm">
-                    <span class="title" th:each="add : ${artist.titleAdds}"></span>
-                    <span class="add" th:each="add : ${artist.contentAdds}"></span>
+                    <div class="titleAdd" th:each="add : ${artist.titleAdds}">
+                        <span th:text="${add.content}"></span>
+                    </div>
+                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+                        <span th:text="${add.content}"></span>
+                    </div>
                 </div>
             </div>
             <div class="button">
-                <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-modify">
+                <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"
+                   th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"
+                   class="button-modify">
                     수정
                 </a>
                 <span>/</span>
-                <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/artist/delete/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and (#authentication.getPrincipal().getUsername() == artist.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}" class="button-delete">
+                <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');"
+                   th:href="@{|/artist/delete/${artist.id}|}"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${artist.author != null and (#authentication.getPrincipal().getUsername() == artist.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}"
+                   class="button-delete">
                     삭제
                 </a>
             </div>

@@ -155,8 +155,9 @@
                     <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
                 </div>
                 <div class="information">
-                    <div class="korName">
+                    <div class="korNameModify">
                         <input type="text" id="korName" class="form-control" th:field="*{korName}">
+                        <span>작가</span>
                         <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
                     </div>
                     <div class="line">
@@ -165,7 +166,7 @@
                                 <span id="korNameDisplay" th:text="${artist.korName}"></span>
                                 (<span id="engNameDisplay" th:text="${artist.engName}"></span>)
                             </div>
-                            <div class="birthDateNum">
+                            <div class="birthDateNumModify">
                                 <input type="text" id="birthDate" class="form-control" th:field="*{birthDate}">
                                 <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
                             </div>
@@ -175,14 +176,14 @@
                                 </div>
                                 <button type="button" onclick="addInputField('artistAddsContainer', 'artistAdds')">+</button>
                             </div>
-                            <div class="telNum">
+                            <div class="telNumModify">
                                 <input type="text" id="tel" class="form-control" th:field="*{tel}">
                                 <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect telephone</div>
                             </div>
                             <div class="mail-group-modify">
-                                <input type="text" id="mail" class="form-control" th:field="*{mail}">
+                                <input type="text" id="mail" class="form-control" th:field="*{mail}" style="height: 37px;">
                                 <span class="mailIcon">@</span>
-                                <div id="mailTypeDiv">
+                                <div id="mailTypeDiv" >
                                     <select id="mailType" class="form-control" onchange="handleMailTypeChange(this)" name="mailType">
                                         <option value="">선택</option>
                                         <option value="naver.com">naver.com</option>
@@ -223,14 +224,16 @@
                     <div class="textTileForm">
                         <div class="titleAdd" id="titleAddsContainer">
                             <!-- 여기서 기존 titleAdds 값들을 스크립트로 추가 -->
+                            <span> 추가 제목</span>
                             <div th:if="${#fields.hasErrors('titleAdds')}" th:errors="*{titleAdds}">Incorrect title</div>
                         </div>
-                        <button type="button" onclick="addInputField('titleAddsContainer', 'titleAdds')">+</button>
+                        <button type="button" onclick="addInputField('titleAddsContainer', 'titleAdds')" class="plusBnt">+</button>
                         <div class="contentAdd" id="contentAddsContainer_3">
                             <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
+                            <span> 추가 내용</span>
                             <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
                         </div>
-                        <button type="button" onclick="addInputField('contentAddsContainer_3', 'contentAdds')">+</button>
+                        <button type="button" onclick="addInputField('contentAddsContainer_3', 'contentAdds')" class="plusBnt">+</button>
                     </div>
                 </div>
                 <div class="button">
