@@ -33,12 +33,9 @@ public class ArtistService {
         // 파일 저장 전 디렉토리 존재 확인 및 생성
         File dir = new File(fileDirPath + "/image/artist");
         if (!dir.exists()) {
-
             if (!dir.mkdirs()) {
                 throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
             }
-            dir.mkdirs();
-
         }
 
         try {
@@ -56,7 +53,7 @@ public class ArtistService {
         }
 
         Artist artist = Artist.builder()
-                .thumbnailImg(thumbnailRelPath)  // 썸네일 이미지 경로 설정
+                .thumbnailImg(thumbnailRelPath)
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
@@ -65,9 +62,11 @@ public class ArtistService {
                 .mailType(mailType)
                 .author(member)
                 .build();
+        artistRepository.save(artist);
 
-        return artistRepository.save(artist); // 아티스트 저장 후 반환
+        return artist;
     }
+
 
     public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce, String majorWork) {
 
@@ -157,5 +156,3 @@ public class ArtistService {
         return artist;
     }
 }
-
-

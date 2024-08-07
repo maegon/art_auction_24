@@ -47,12 +47,6 @@ public class ArtistController {
 
         System.out.println("Artist: " + artistOpt.get());
         model.addAttribute("artist", artistOpt.get());
-        Artist artist = artistService.findByMember(currentMember);
-        if (artist == null) {
-            // 아티스트 정보가 없을 경우 처리
-            return "redirect:/error"; // 기본 에러 페이지로 리다이렉트
-        }
-        model.addAttribute("artist", artist);
         return "artist/profile";
     }
 
@@ -157,13 +151,14 @@ public class ArtistController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String artistModify(ArtistForm artistForm, @PathVariable("id") Integer id, Principal principal) {
+    public String artistModify(Model model, @PathVariable("id") Integer id, Principal principal) {
         Artist artist = artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
+        ArtistForm artistForm = new ArtistForm();
         artistForm.setKorName(artist.getKorName());
         artistForm.setEngName(artist.getEngName());
         artistForm.setBirthDate(artist.getBirthDate());
@@ -174,32 +169,21 @@ public class ArtistController {
         artistForm.setMajorWork(artist.getMajorWork());
         artistForm.setTitle(artist.getTitle());
         artistForm.setContent(artist.getContent());
-
         artistForm.setExistingThumbnailUrl(artist.getThumbnailImg());
 
-        // 추가된 입력란 데이터 처리
-        List<ArtistAdd> artistAdds = new ArrayList<>();
-        for (String content : artistForm.getArtistAdds()) {
-            ArtistAdd artistAdd = new ArtistAdd();
-            artistAdd.setContent(content);
-            artistAdds.add(artistAdd);
+        // Assuming the fields are arrays/lists in ArtistForm
+        if (artistForm.getArtistAdds() == null) {
+            artistForm.setArtistAdds(new ArrayList<>());
+        }
+        if (artistForm.getContentAdds() == null) {
+            artistForm.setContentAdds(new ArrayList<>());
+        }
+        if (artistForm.getTitleAdds() == null) {
+            artistForm.setTitleAdds(new ArrayList<>());
         }
 
-        // 동일하게 contentAdds와 titleAdds 처리
-        List<ContentAdd> contentAdds = new ArrayList<>();
-        for (String content : artistForm.getContentAdds()) {
-            ContentAdd contentAdd = new ContentAdd();
-            contentAdd.setContent(content);
-            contentAdds.add(contentAdd);
-        }
-
-        //
-        List<TitleAdd> titleAdds = new ArrayList<>();
-        for (String title : artistForm.getTitleAdds()) {
-            TitleAdd titleAdd = new TitleAdd();
-            titleAdd.setTitle(title);
-            titleAdds.add(titleAdd);
-        }
+        model.addAttribute("artistForm", artistForm);
+        model.addAttribute("artist", artist);
 
         return "artist/profileForm";
     }
