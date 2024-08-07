@@ -91,7 +91,8 @@
     outline: none;
 }
 
-.header_profile, .header_qna, .header_logout{
+.header_profile, .header_qna, .header_logout
+, .header_productAdd, .header_profileCreate{
     margin-left: 0px;
     text-decoration: none;
     color: black;
@@ -121,6 +122,7 @@
     border-radius: 4px; /* 옵션, 말풍선 테두리 둥글게 하기 */
     border: 1px solid #ddd; /* 회색 테두리 추가 */
     top: 70px; /* 전체적으로 아래로 이동 */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 #profileDropdown::after {
@@ -159,25 +161,23 @@
             padding: 0; /* 모바일에서는 패딩 제거 */
         }
 
-
-
-        .nav__bar {
+       .nav__bar {
             display: block;
             font-size: 40px;
             order: 2; /* 메뉴 버튼을 로고 아래로 */
-        }
+       }
 
-        .nav__main {
+       .nav__main {
             order: 3;
             display: none;
-        }
+       }
 
-        .nav__login {
+       .nav__login {
             order: 4;
             display: none;
             margin: 0 10px;
             padding: 5px 40px;
-        }
+       }
 
         #search_input{
         width: 200px;
@@ -209,6 +209,7 @@
                 left: 120px;
                 transform: none;
         }
+
         #profileDropdown::after {
             display: none;
         }

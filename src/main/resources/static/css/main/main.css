@@ -107,10 +107,13 @@ border-radius: 10px;
 }
 
 .ongoing-info-currentBid{
-    font-size: 17px;
-    color: black;
+    color: red;
     font-weight: bold;
     margin-top: 10px;
+}
+
+.ongoing-info-currentBid-kor{
+       color: red;
 }
 
 .ongoing-info-endTime{
@@ -123,6 +126,7 @@ border-radius: 10px;
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
+     font-size: 15px;
 }
 
 /*ongoing-auction end*/

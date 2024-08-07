@@ -1,9 +1,13 @@
 package com.example.ArtAuction_24.global.security;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +33,17 @@ public class UserSecurityService implements UserDetailsService {
 
         Member member = _user.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if ( "admin".equals(username) ) {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
+        }
+        else if("artist".contains(username)){
+            authorities.add(new SimpleGrantedAuthority(MemberRole.ARTIST.getValue()));
+        }
+        else {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.MEMBER.getValue()));
+        }
+
 
         return new User(member.getUsername(), member.getPassword(), authorities);
     }
