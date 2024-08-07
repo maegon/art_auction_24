@@ -2,6 +2,7 @@
 <html layout:decorate="~{/layout/layout}">
 <head>
     <script>
+<<<<<<< HEAD
         document.addEventListener('DOMContentLoaded', function() {
             const birthDateElement = document.getElementById('birthDate');
             const telElement = document.getElementById('tel');
@@ -20,10 +21,13 @@
                 }
             }
         });
+=======
+>>>>>>> 0db3884 (re)
     </script>
 </head>
 <body>
 <div layout:fragment="content">
+<<<<<<< HEAD
     <div class="artistProfileContainer">
         <div class="basicArtistProfile">
             <div class="artistImg">
@@ -104,6 +108,29 @@
                     삭제
                 </a>
             </div>
+=======
+    <div class="artistImg">
+        <img th:src="@{/file/{filename}(filename=${artist.thumbnailImg})}" class="artist-img" alt="Thumbnail">
+    </div>
+    <div class="engName">
+        <span th:text="${artist.engName}"></span>
+    </div>
+    <div class="korName">
+        <span th:text="${artist.korName}"></span>작가
+    </div>
+    <div class="information">
+        <div class="name-group">
+            <span th:text="${artist.korName}"></span>
+            <span th:text="${artist.engName}"></span>
+        </div>
+        <span th:text="${artist.birthDate}"></span>
+        <span th:text="${artist.artistAdds}"></span>
+        Tel.<span th:text="${artist.tel}"></span>
+        <div class="mail-group">
+            E-mail.<span th:text="${artist.mail}"></span>
+            <span>@</span>
+            <span th:text="${artist.mailType}"></span>
+>>>>>>> 0db3884 (re)
         </div>
     </div>
 </div>
