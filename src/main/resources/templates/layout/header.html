@@ -11,7 +11,7 @@
             </a>
             <ul class="nav__main">
                 <li><a href="#" class="nav_Auction"><span>경매</span></a></li>
-                <li><a th:href="@{/auctionProduct/list}" class="nav_Product"><span>작품</span></a></li>
+                <li><a th:href="@{/product/list}" class="nav_Product"><span>작품</span></a></li>
                 <li><a href="#" class="nav_Calender"><span>캘린더</span></a></li>
             </ul>
             <div class="nav__login">
@@ -35,6 +35,7 @@
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/member/myPage}">작품 추가</a>
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_profileCreate" th:href="@{/artist/create}">프로필 제작</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/auction/create}">경매 추가</a>
                         <a class="header_profile" th:href="@{/member/myPage}">프로필 수정</a>
                         <a class="header_qna" th:href="@{/question/list}">문의하기</a>
                         <hr>

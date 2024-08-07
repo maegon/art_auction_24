@@ -1,0 +1,10 @@
+
+@media (min-width: 1024px) {
+.fixed-info-section {
+      position: fixed;
+      top: 100px;
+      right: 324px; /* 부모 컨테이너의 우측 패딩과 맞추기 */
+      z-index: 50;
+
+}
+}

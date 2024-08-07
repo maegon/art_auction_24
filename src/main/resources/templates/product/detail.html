@@ -1,0 +1,88 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="container mx-auto px-6 lg:px-[220px]">
+        <div id="container" class="bg-white shadow-md rounded-lg overflow-hidden">
+
+            <div class="p-4 flex flex-col lg:flex-row">
+                <!-- 이미지 부분 -->
+                <div class="w-full lg:w-[700px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
+                    <img class="w-full max-w-[300px] border auctionProductTarget"
+                         th:src="@{${product.thumbnailImg}}" alt="상품이미지">
+                </div>
+
+                <!-- 정보 부분 -->
+                <div id="infoSection" class="w-full lg:w-[350px] p-4">
+                    <div class="text-sm lg:text-base">
+                        <div class="py-2">
+                            NO.<span class="font-bold" th:text="${product.id}"></span>
+                        </div>
+                        <div class="flex justify-between">
+                                <span class="text-xl lg:text-3xl font-bold">
+                                    <span th:text="${product.artist.korName}"></span>
+                                </span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-base lg:text-lg font-medium text-gray-600" th:text="${product.artist.engName}"></span>
+                        </div>
+                        <div class="py-2 flex justify-between">
+                            <span class="text-lg lg:text-xl font-medium mt-1" th:text="${product.title}"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs lg:text-sm text-gray-600" th:text="${product.medium}"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs lg:text-sm text-gray-600 mb-3" th:text="${product.dimensions}"></span>
+                        </div>
+                        <hr>
+                        <div class="py-2 flex justify-between text-xs lg:text-sm">
+                            <span class="font-medium">시작 가격</span>
+                            <span th:text="|KRW ${product.formattedCurrentBid}|"></span>
+                        </div>
+                        <div class="py-2 flex justify-between text-xs lg:text-sm">
+                            <span class="font-medium">현재 가격</span>
+                            <span th:text="|KRW ${product.formattedCurrentBid}|"></span>
+                        </div>
+                        <div class="py-2 flex justify-between text-xs lg:text-sm mt-1">
+                            <span class="font-medium">마감일</span>
+                            <span th:text="${#temporals.format(product.auctionEndDate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                        <button class="bg-black border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-sky-700 hover:border-[#8c8c8c]">
+                            응찰하기
+                        </button>
+                        <div class="flex justify-center items-center mt-2 text-gray-600 text-xs lg:text-sm">
+                            <i class="fa-solid fa-headset"></i>&nbsp;<a th:href="@{/question/list}">작품문의</a>
+                            <div>&nbsp;|&nbsp;</div>
+                            <div>042-1234-5678</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 w-full lg:w-[650px] lg:px-[100px] break-words">
+                <div class="w-full max-w-md p-6">
+                    <div class="mt-4 mb-20 text-sm lg:text-base">
+                        <div class="flex justify-start items-center mt-2 text-gray-600">
+                            <div class="text-black text-lg">작품 설명</div>
+                            <div>&nbsp;|&nbsp;</div>
+                            <div>Product Detail</div>
+                        </div>
+                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.medium}"></p>
+                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.dimensions}"></p>
+                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.category}"></p>
+                        <p class="text-gray-700 mt-3 text-xs lg:text-sm" th:text="${product.description}"></p>
+                    </div>
+                    <div class="mt-4 mb-20 text-sm lg:text-base">
+                        <div class="flex justify-start items-center mt-2 text-gray-600">
+                            <div class="text-black text-lg">작가 소개</div>
+                            <div>&nbsp;|&nbsp;</div>
+                            <div>Artist Introduce</div>
+                        </div>
+                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.artist.korName}"></p>
+                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.artist.majorWork}"></p>
+                        <p class="text-gray-700 mt-3 text-xs lg:text-sm" th:text="${product.artist.introduce}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -3,14 +3,11 @@ package com.example.ArtAuction_24.domain.product.controller;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,22 +16,29 @@ public class AuctionProductController {
 
     private final AuctionProductService auctionProductService;
 
+    @GetMapping("/{id}")
+    public String getAuctionProduct(@PathVariable Long id, Model model) {
+        AuctionProduct auctionProduct = auctionProductService.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        model.addAttribute("auctionProduct", auctionProduct);
+        return "auctionProduct/detail";
+    }
+
     @GetMapping("/list")
-    public String list(Pageable pageable, Model model,
-                       @RequestParam(value = "kw", required = false) String keyword,
-                       @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort) {
-        Page<AuctionProduct> paging = auctionProductService.getProductsWithSorting(keyword, pageable, sort);
-        model.addAttribute("paging", paging);
-        model.addAttribute("kw", keyword);
-        model.addAttribute("sort", sort);
+    public String listAuctionProducts(@RequestParam Long auctionId, Model model) {
+        List<AuctionProduct> auctionProducts = auctionProductService.findByAuctionId(auctionId);
+        model.addAttribute("auctionProducts", auctionProducts);
         return "auctionProduct/list";
     }
 
-    @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Long id, Model model){
-        auctionProductService.incrementViews(id);
-        AuctionProduct auctionProduct = auctionProductService.getProduct(id);
-        model.addAttribute("auctionProduct", auctionProduct);
-        return "auctionProduct/detail";
+    @PostMapping("/create")
+    public String createAuctionProduct(@ModelAttribute AuctionProduct auctionProduct) {
+        auctionProductService.createAuctionProduct(auctionProduct);
+        return "redirect:/auctionProduct/list";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteAuctionProduct(@PathVariable Long id) {
+        auctionProductService.deleteById(id);
+        return "redirect:/auctionProduct/list";
     }
 }

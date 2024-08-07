@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.domain.bid.entity;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -31,6 +32,6 @@ public class Bid extends BaseEntity { // 특정 제품에 대한 개별 입찰.
     private Member member;
 
     @ManyToOne
-    private AuctionProduct product;
+    private Product product;
 
 }

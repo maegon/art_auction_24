@@ -1,0 +1,72 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>경매 정보 입력</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const productsSelect = document.getElementById("products");
+            const selectedProductsContainer = document.getElementById("selectedProducts");
+
+            productsSelect.addEventListener("change", function() {
+                const selectedOptions = Array.from(productsSelect.selectedOptions);
+                selectedProductsContainer.innerHTML = "";
+
+                selectedOptions.forEach(option => {
+                    const item = document.createElement("div");
+                    item.textContent = option.textContent;
+                    selectedProductsContainer.appendChild(item);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="max-w-lg w-full bg-white p-6 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-bold mb-4">경매 정보 입력</h1>
+            <form th:action="@{/auction/create}" th:object="${auctionForm}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Auction Title:</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Enter auction title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
+                    <input type="datetime-local" id="startDate" th:field="*{startDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
+                    <input type="datetime-local" id="endDate" th:field="*{endDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="products" class="block text-gray-700 text-sm font-bold mb-2">Select Products:</label>
+                    <select id="products" th:field="*{products}" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="${product.title}">Product Name</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('products')}" th:errors="*{products}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products:</label>
+                    <div id="selectedProducts" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Auction</button>
+                </div>
+
+                <div th:if="${error}" class="mt-4">
+                    <p th:text="${error}" class="text-red-500 text-xs italic"></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
