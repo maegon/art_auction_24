@@ -68,15 +68,12 @@ public class ArtistService {
     }
 
 
-    public Artist getArtist(Integer id) {
-
-    public Artist create(String korName, String engName, String birthDate, String education, String tel, String mail, String mailType, String introduce, String majorWork) {
+    public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce, String majorWork) {
 
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
-                .education(education)
                 .tel(tel)
                 .mail(mail)
                 .mailType(mailType)
@@ -88,7 +85,7 @@ public class ArtistService {
         return artist;
     }
 
-    public Artist getArtist(Long id) {
+    public Artist getArtist(Integer id) {
         Optional<Artist> of = artistRepository.findById(id);
         if (of.isEmpty()) throw new DataNotFoundException("artist not found");
         return of.get();
