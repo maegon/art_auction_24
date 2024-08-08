@@ -41,19 +41,23 @@ public class QuestionService {
     }
 
 
-    public void create(QuestionForm questionForm,  Member member) {
+
+
+    public Question create(QuestionForm questionForm, Member member) {
         Question q = new Question();
         q.setSubject(questionForm.getSubject());
         q.setContent(questionForm.getContent());
         q.setQuestionType(questionForm.getQuestionType());
         q.setCreateDate(LocalDateTime.now());
         q.setMember(member);
-        this.questionRepository.save(q);
+        return this.questionRepository.save(q);
     }
+
+
 
     public void create(QuestionForm questionForm,MultipartFile thumbnail, Member member ) {
 
-        String thumbnailRelPath = "image/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "image/question/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
         thumbnailFile.mkdir();

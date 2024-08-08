@@ -129,9 +129,12 @@ public class MemberController {
 
     @GetMapping("/myPage")
     public String myPage(Model model, Principal principal) {
+        Member member = memberService.getMember(principal.getName());
+        model.addAttribute("member",member);
 
         MemberForm2 memberForm2 = new MemberForm2();
         model.addAttribute("memberForm2", memberForm2);
+
 
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
