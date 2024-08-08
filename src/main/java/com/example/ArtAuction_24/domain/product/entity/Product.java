@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.product.entity;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.review.entity.Review;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -48,6 +49,7 @@ public class Product extends BaseEntity {
 
     private transient String formattedCurrentBid;
 
+
     @PostLoad
     private void postLoad() {
         DecimalFormat formatter = new DecimalFormat("#,###");
@@ -70,5 +72,5 @@ public class Product extends BaseEntity {
                 .max(LocalDateTime::compareTo)
                 .orElse(null);
     }
-    
+
 }

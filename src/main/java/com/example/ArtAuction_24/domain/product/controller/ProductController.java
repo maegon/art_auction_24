@@ -21,14 +21,19 @@ public class ProductController {
 
     private final ProductService productService;
 
+
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
                        @RequestParam(value = "kw", required = false) String keyword,
-                       @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort) {
-        Page<Product> paging = productService.getProductsWithSorting(keyword, pageable, sort);
+                       @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort,
+                       @RequestParam(value = "auction", required = false) Boolean auction) {
+        Page<Product> paging = productService.getProductsWithSorting(keyword, pageable, sort, auction);
+
+
         model.addAttribute("paging", paging);
         model.addAttribute("kw", keyword);
         model.addAttribute("sort", sort);
+        model.addAttribute("auction", auction);
         return "product/list";
     }
 

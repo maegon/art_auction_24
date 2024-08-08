@@ -47,7 +47,9 @@
                 <div class="mb-4">
                     <label for="products" class="block text-gray-700 text-sm font-bold mb-2">Select Products:</label>
                     <select id="products" th:field="*{products}" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="${product.title}">Product Name</option>
+
+                        <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="|${product.title} (${product.artist.korName})|">Product Name</option>
+
                     </select>
                     <p th:if="${#fields.hasErrors('products')}" th:errors="*{products}" class="text-red-500 text-xs italic"></p>
                 </div>
