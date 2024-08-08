@@ -57,7 +57,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form action="/member/join" class="joinPostForm" method="POST" enctype="multipart/form-data">
+                                <form th:action="@{/member/join}" th:object="${memberForm}" class="joinPostForm" method="POST" enctype="multipart/form-data">
                                     <div class="card-back">
                                         <div class="center-wrap">
                                             <div class="section text-center">
@@ -132,12 +132,12 @@
                                                     </div>
                                                     <i class="input-icon uil uil-estate"></i>
                                                     <input type="text" id="sample6_address"
-                                                           name="address" class="form-style mt-1 mb-1" placeholder="주소">
+                                                           name="address1" class="form-style mt-1 mb-1" placeholder="주소">
                                                     <div class="address_sec_2 flex">
                                                         <input type="text" id="sample6_detailAddress"
-                                                               class="form-style" placeholder="상세주소">
+                                                               name="address2" class="form-style" placeholder="상세주소">
                                                         <input type="text" id="sample6_extraAddress" class="form-style ml-2"
-                                                               placeholder="참고항목">
+                                                               name="address3" placeholder="참고항목">
                                                     </div>
                                                 </div>
                                                 <div id="addressError" class="error"></div>
@@ -146,7 +146,7 @@
                                                     <label id="component-input-img" for="profileImage"
                                                            class="component-input"></label>
                                                     <input type="file" name="profileImage" id="profileImage"
-                                                           class="form-style" accept="image/png, image/gif, image/jpeg">
+                                                           class="form-style" accept="image/png">
                                                 </div>
                                                 <button type="submit" class="join-submit btn mt-3" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>

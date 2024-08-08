@@ -1,25 +1,37 @@
 package com.example.ArtAuction_24.domain.member.service;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm2;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${custom.genFileDirPath}")
+    private String genFileDirPath;
 
     // 회원가입
     public Member join(String providerTypeCode, String username, String password, String email, String nickname,
@@ -34,10 +46,30 @@ public class MemberService {
                 .phoneNumber(phoneNumber)
                 .address(address)
                 .image(imageFileName) // 프로필 이미지 파일명 저장
+                .role(MemberRole.MEMBER)
                 .createDate(LocalDateTime.now()) // 생성일자
                 .build();
+
         return memberRepository.save(member); // 데이터베이스에 저장
     }
+
+    public String memberProfileImage(MultipartFile profileImage) {
+
+        String uploadDir = genFileDirPath + "\\image\\profileImageUpload\\";
+        Path uploadPath = Paths.get(uploadDir);
+
+        String fileName = UUID.randomUUID().toString();
+        String imageFileName = fileName + ".png";
+        try {
+            Path filePath = uploadPath.resolve(imageFileName);
+            Files.copy(profileImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not image file", e);
+        }
+
+        return "/images/profileImageUpload/" + imageFileName;
+    }
+
 
     @Transactional
     public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String profileImageUrl, String email) {

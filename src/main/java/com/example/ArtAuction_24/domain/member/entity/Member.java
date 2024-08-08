@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 
@@ -22,12 +23,21 @@ import java.util.List;
 public class Member extends BaseEntity {
     @Column(unique = true)
     private String username;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
     private String nickname;
+
     private String phoneNumber;
     private String address;
     private String providerTypeCode;
+
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 
     @Column(unique = false)
     private String image; // 이미지 파일 이름을 저장
