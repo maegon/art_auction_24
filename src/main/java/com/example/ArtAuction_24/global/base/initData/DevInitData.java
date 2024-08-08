@@ -1,41 +1,31 @@
 package com.example.ArtAuction_24.global.base.initData;
 
 
-import com.example.ArtAuction_24.domain.answer.entity.Answer;
 import com.example.ArtAuction_24.domain.answer.service.AnswerService;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
-import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
-import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
-
 import com.example.ArtAuction_24.domain.product.service.ProductService;
-
 import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+
 
 @Configuration
 @RequiredArgsConstructor
@@ -49,27 +39,23 @@ public class DevInitData implements BeforeInitData {
     private final AnswerService answerService;
 
     @Bean
-    CommandLineRunner init(MemberService memberService, ArtistService artistService, AuctionProductService auctionProductService) {
+    CommandLineRunner init(MemberService memberService, ArtistService artistService, ProductService productService) {
 
         return args -> {
             beforeInit();
-
             String password = "test123!";
 
+            memberService.join("", "admin", password, "admin@test.com", "admin",
+                    "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-
-            Member M1 = memberService.join("", "admin", password, "admin@test.com", "admin",
-
-                    "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
-
-            memberService.join("", "user1", password, "user1@test.com", "user1",
-                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+            Member M1 = memberService.join("", "user1", password, "user1@test.com", "user1",
+                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user2", password, "user2@test.com", "user2",
-                    "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "");
+                    "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "artist", password, "artist1@test.com", "artist1",
-                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
 
             artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","Artist@naver.com","naver.com","안녕! 나 김작가", "SBS 아트협회 임원");
@@ -117,6 +103,5 @@ public class DevInitData implements BeforeInitData {
             answerService.create(questionService.create(   new QuestionForm(  "배송받았는데 작품이 파손되어있습니다.", "content", QuestionType.RETURN), M1),  "배송완료후 작품이파손된경우 바로문의주시면 환불을도와드립니다.", M1);
         };
     }
-
 
 }

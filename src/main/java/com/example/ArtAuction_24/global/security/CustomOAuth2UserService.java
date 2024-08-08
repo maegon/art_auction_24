@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             Map<String, Object> attributes = oAuth2User.getAttributes();
             Map attributesProperties = (Map) attributes.get("properties");
             String nickname = (String) attributesProperties.get("nickname");
-            String profileImageUrl = (String) attributesProperties.get("profile_image");
+            MultipartFile profileImageUrl = (MultipartFile) attributesProperties.get("profile_image");
             String email = (String) ((Map<String, Object>) attributes.get("kakao_account")).get("email");
             String username = providerTypeCode + "__%s".formatted(oauthId);
 
@@ -44,7 +45,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
 
             // 새로운 회원 생성
-            Member member = memberService.whenSocialLogin(providerTypeCode, username, nickname, profileImageUrl, email);
+            Member member = memberService.whenSocialLogin(providerTypeCode, username, nickname, email);
 
             List<GrantedAuthority> authorityList = new ArrayList<>();
 
@@ -56,7 +57,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             String oauthId = oAuth2User.getAttribute("sub");
             String email = oAuth2User.getAttribute("email");
             String name = oAuth2User.getAttribute("name");
-            String profileImageUrl = oAuth2User.getAttribute("picture");
+            MultipartFile profileImageUrl = oAuth2User.getAttribute("picture");
 
             String username = providerTypeCode + "__%s".formatted(oauthId);
 
@@ -66,7 +67,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
 
             // 새로운 회원 생성
-            Member member = memberService.whenSocialLogin(providerTypeCode, username, name, profileImageUrl, email);
+            Member member = memberService.whenSocialLogin(providerTypeCode, username, name, email);
 
             List<GrantedAuthority> authorityList = new ArrayList<>();
 
@@ -83,7 +84,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             // "response" 속성에서 필요한 정보를 추출합니다.
             String oauthId = (String) responseAttributes.get("id");
             String nickname = (String) responseAttributes.get("nickname");
-            String profileImageUrl = (String) responseAttributes.get("profile_image");
+            MultipartFile profileImageUrl = (MultipartFile) responseAttributes.get("profile_image");
             String email = (String) responseAttributes.get("email");
             // 사용자의 고유한 username을 생성합니다.
             String username = providerTypeCode + "__%s".formatted(oauthId);
@@ -97,7 +98,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
 
             // 새로운 회원인 경우 회원을 생성합니다.
-            Member member = memberService.whenSocialLogin(providerTypeCode, username, nickname, profileImageUrl, email);
+            Member member = memberService.whenSocialLogin(providerTypeCode, username, nickname, email);
 
 
             // 새로운 회원의 권한 목록을 생성합니다. (현재는 빈 목록)

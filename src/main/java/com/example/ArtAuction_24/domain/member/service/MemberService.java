@@ -1,19 +1,29 @@
 package com.example.ArtAuction_24.domain.member.service;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm2;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,31 +31,46 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${custom.genFileDirPath}")
+    private String genFileDirPath;
+
     // 회원가입
     public Member join(String providerTypeCode, String username, String password, String email, String nickname,
-                       String phoneNumber, String address, String imageFileName) {
+                       String phoneNumber, String address) {
+
+        // 이메일 중복 확인
+        if (email != null && memberRepository.findByEmail(email).isPresent()) {
+            throw new IllegalStateException("Email already exists");
+        }
+
+        // 회원 객체 생성 및 설정
         Member member = Member.builder()
                 .providerTypeCode(providerTypeCode)
                 .username(username)
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncoder.encode(password)) // 비밀번호 암호화
                 .email(email)
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .image(imageFileName) // 이미지 파일명 저장(프로필 사진)
-                .createDate(LocalDateTime.now())
+                .role(MemberRole.MEMBER)
+                .createDate(LocalDateTime.now()) // 생성일자
                 .build();
-        return memberRepository.save(member);
+
+        return memberRepository.save(member); // 데이터베이스에 저장
+
+
     }
 
+
+
     @Transactional
-    public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String profileImageUrl, String email) {
+    public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String email) {
         Optional<Member> opMember = findByUsernameAndProviderTypeCode(username, providerTypeCode);
 
         if (opMember.isPresent()) return opMember.get();
 
         // 소셜 로그인를 통한 가입시 비번은 없다.
-        return join(providerTypeCode, username, "", email,nickname, "", "", profileImageUrl); // 최초 로그인 시 딱 한번 실행
+        return join(providerTypeCode, username, "", email, nickname, "", ""); // 최초 로그인 시 딱 한번 실행
     }
 
     public Optional<Member> findByUsernameAndProviderTypeCode(String username, String providerTypeCode) {
