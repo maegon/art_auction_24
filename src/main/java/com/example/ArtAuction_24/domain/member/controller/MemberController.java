@@ -11,6 +11,7 @@ import com.example.ArtAuction_24.global.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -65,16 +66,27 @@ public class MemberController {
 
     @PostMapping("/join")
     public String join(@Valid MemberForm memberForm, BindingResult bindingResult, Model model) {
-        //, @RequestParam("profileImage") MultipartFile profileImage 나중에 프로필 사진 미리보기 추가 하게 되면..
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/login";
+            return "member/login"; // 유효성 검사에 오류가 있는 경우
         }
+
         try {
-            String imageFileName = myProfileImage(memberForm.getProfileImage());
-            memberService.join(memberForm.getProviderTypeCode(), memberForm.getUsername(), memberForm.getPassword(), memberForm.getEmail(), memberForm.getNickname(), memberForm.getPhoneNumber(), memberForm.getAddress(), imageFileName);
+            // 회원가입 서비스 호출
+            memberService.join(
+                    memberForm.getProviderTypeCode(),
+                    memberForm.getUsername(),
+                    memberForm.getPassword(),
+                    memberForm.getEmail(),
+                    memberForm.getNickname(),
+                    memberForm.getPhoneNumber(),
+                    memberForm.getAddress(),
+                    String.valueOf(memberForm.getProfileImage())
+            );
+
+            // 회원가입 성공 시 이메일 발송
             String bodyText = String.format(
                     "안녕하세요, <b>%s</b>님<br><br>" +
-                            "Art Auction을 가입해주신 것을 진심으로 환영합니다! 저희는 미술 작품을 온라인 경매를 통해 작품을 공유하고 소장할 수 있는 공간을 만들고자 합니다.<br><br>" +
+                            "Art Auction에 가입해주신 것을 진심으로 환영합니다! 저희는 미술 작품을 온라인 경매를 통해 작품을 공유하고 소장할 수 있는 공간을 만들고자 합니다.<br><br>" +
                             "Art Auction에서는 작가가 손수 작업한 예술품이 많은 이들과 함께 소중한 경험, 건강한 힐링이 될 것입니다.<br><br>" +
                             "저희는 Art Auction을 이용해주시는 고객님들께 아래 정보를 제공합니다.<br><br>" +
                             "* 다양한 미술 작품과 작가들의 최신 경매 소식을 먼저 접하실 수 있습니다.<br><br>" +
@@ -86,44 +98,14 @@ public class MemberController {
                     memberForm.getUsername()
             );
 
-
             emailService.send(memberForm.getEmail(), "Art Auction 가입을 환영합니다!", bodyText);
 
-        } catch (IllegalStateException e) {
-            model.addAttribute("joinError", "입력한 정보를 확인해주세요.");
-            return "redirect:/member/login";
+        } catch (Exception e) {
+            model.addAttribute("joinError", "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+            return "member/login";
         }
-
 
         return "redirect:/member/login";
-    }
-
-    public String myProfileImage(MultipartFile profileImage) {
-        // 이미지 저장 디렉토리 경로
-
-        String uploadDir = genFileDirPath + "\\image\\profileImageUpload";
-
-        // 디렉토리가 존재하지 않으면 생성합니다.
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            try {
-                Files.createDirectories(uploadPath);
-            } catch (IOException e) {
-                throw new IllegalStateException("Could not create upload directory", e);
-            }
-        }
-        // 파일명 중복을 피하기 위해 임의의 파일명을 생성합니다.
-        String fileName = UUID.randomUUID().toString(); // UUID로 파일명 생성
-        String imageFileName = fileName + ".png"; // 파일 확장자 지정
-        // 파일을 저장합니다.
-        try {
-            Path filePath = uploadPath.resolve(imageFileName);
-            Files.copy(profileImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not store image file", e);
-        }
-        // 저장된 파일의 상대 경로를 반환합니다.
-        return "/images/profileImageUpload/" + imageFileName;
     }
 
 

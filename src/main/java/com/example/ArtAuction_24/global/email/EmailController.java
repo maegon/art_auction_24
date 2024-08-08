@@ -71,9 +71,6 @@ public class EmailController {
         String email = request.get("email");
         String code = emailService.createConfirmCode();
 
-        System.out.println("email : " + email);
-        System.out.println("code : " + code);
-
         // 이메일로 인증 코드 전송 (구현 필요)
         emailService.sendConfirmCode(email, code);
 

@@ -24,18 +24,19 @@ public class MemberService {
     // 회원가입
     public Member join(String providerTypeCode, String username, String password, String email, String nickname,
                        String phoneNumber, String address, String imageFileName) {
+        // 회원 객체 생성 및 설정
         Member member = Member.builder()
                 .providerTypeCode(providerTypeCode)
                 .username(username)
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncoder.encode(password)) // 비밀번호 암호화
                 .email(email)
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .image(imageFileName) // 이미지 파일명 저장(프로필 사진)
-                .createDate(LocalDateTime.now())
+                .image(imageFileName) // 프로필 이미지 파일명 저장
+                .createDate(LocalDateTime.now()) // 생성일자
                 .build();
-        return memberRepository.save(member);
+        return memberRepository.save(member); // 데이터베이스에 저장
     }
 
     @Transactional
