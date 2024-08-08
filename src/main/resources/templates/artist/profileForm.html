@@ -1,14 +1,93 @@
-<html layout:decorate="~{layout/layout}">
+<!DOCTYPE html>
+<html layout:decorate="~{/layout/layout}">
 <head>
     <script>
-        function addInputField() {
-            const container = document.getElementById("artistAddsContainer");
-            const input = document.createElement("input");
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthDateElement = document.getElementById('birthDate');
+            const telElement = document.getElementById('tel');
+            const thumbnailPreview = document.getElementById('thumbnailPreview');
+            const thumbnailInput = document.getElementById('thumbnail');
+
+            if (birthDateElement) {
+                let birthDate = birthDateElement.value.trim();
+                if (birthDate.length === 8) {
+                    birthDateElement.value = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+                }
+            }
+
+            if (telElement) {
+                let tel = telElement.value.trim();
+                if (tel.length === 11) {
+                    telElement.value = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                } else if (tel.length === 10) {
+                    telElement.value = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                }
+            }
+
+            const engNameInput = document.getElementById('engName');
+            const korNameInput = document.getElementById('korName');
+            const engNameDisplay = document.getElementById('engNameDisplay');
+            const korNameDisplay = document.getElementById('korNameDisplay');
+
+            function updateName() {
+                engNameDisplay.textContent = engNameInput.value;
+                korNameDisplay.textContent = korNameInput.value;
+            }
+
+            engNameInput.addEventListener('input', updateName);
+            korNameInput.addEventListener('input', updateName);
+
+            // 기존 artistAdds 필드 값 추가
+            const artistAddsValues = /*[[${artistForm.artistAdds}]]*/ [];
+            artistAddsValues.forEach(value => {
+                addInputField('artistAddsContainer', 'artistAdds', value);
+            });
+
+            // 기존 contentAdds 필드 값 추가
+            const contentAddsValues = /*[[${artistForm.contentAdds}]]*/ [];
+            contentAddsValues.forEach(value => {
+                addInputField('contentAddsContainer_1', 'contentAdds', value);
+                addInputField('contentAddsContainer_2', 'contentAdds', value);
+                addInputField('contentAddsContainer_3', 'contentAdds', value);
+            });
+
+            // 기존 titleAdds 필드 값 추가
+            const titleAddsValues = /*[[${artistForm.titleAdds}]]*/ [];
+            titleAddsValues.forEach(value => {
+                addInputField('titleAddsContainer', 'titleAdds', value);
+            });
+
+            // Initial image preview setup
+            if (thumbnailPreview.src) {
+                thumbnailPreview.style.display = 'block';
+            } else {
+                thumbnailPreview.style.display = 'none';
+            }
+        });
+
+        function addInputField(containerId, name, value = '') {
+            const container = document.getElementById(containerId);
+            const inputGroup = document.createElement('div');
+            inputGroup.className = "input-group";
+            const input = document.createElement('input');
+            const removeButton = document.createElement('button');
+
             input.type = "text";
-            input.name = "artistAdds"; // name 배열로 설정
+            input.name = name;
+            input.value = value;
             input.className = "form-control";
             input.maxLength = 200; // 각 필드에 따라 적절한 길이 설정
-            container.appendChild(input);
+
+            removeButton.type = "button";
+            removeButton.textContent = "-";
+            removeButton.className = "remove-button";
+            removeButton.onclick = function() {
+                container.removeChild(inputGroup);
+            };
+
+            inputGroup.appendChild(input);
+            inputGroup.appendChild(removeButton);
+            container.appendChild(inputGroup);
         }
 
         function handleMailTypeChange(selectElement) {
@@ -18,12 +97,12 @@
             if (selectElement.value === 'self') {
                 selectElementDiv.style.display = 'none';
                 inputElement.style.display = 'inline-block';
-                inputElement.name = "mailType"; // 입력 필드의 이름 설정
+                inputElement.name = "mailType";
                 inputElement.focus();
             } else {
                 inputElement.style.display = 'none';
-                inputElement.name = ""; // 입력 필드의 이름 비우기
-                selectElement.name = "mailType"; // 선택 필드의 이름 설정
+                inputElement.name = "";
+                selectElement.name = "mailType";
             }
         }
 
@@ -36,8 +115,8 @@
                     selectElementDiv.style.display = 'inline-block';
                     this.style.display = 'none';
                     selectElement.value = '';
-                    this.name = ""; // 입력 필드의 이름 비우기
-                    selectElement.name = "mailType"; // 선택 필드의 이름 설정
+                    this.name = "";
+                    selectElement.name = "mailType";
                 }
             });
         });
@@ -52,73 +131,141 @@
 
                 reader.onload = function(e) {
                     const preview = document.getElementById('thumbnailPreview');
-                    const uploadButton = document.getElementById('uploadButton');
                     preview.src = e.target.result;
                     preview.style.display = 'block';
-                    uploadButton.style.display = 'none';
                 };
 
                 reader.readAsDataURL(input.files[0]);
             }
         }
+        let fieldGroupCount = 0; // 초기 필드 그룹 수
+
+        function addFieldGroup() {
+            if (fieldGroupCount < 2) {
+                fieldGroupCount++;
+                const formContainer = document.getElementById('formContainer');
+                const newFieldGroup = document.createElement('div');
+                newFieldGroup.classList.add('field-group');
+                newFieldGroup.innerHTML = `
+                    <div class="titleAdd">
+                        <span>추가 제목</span>
+                        <div th:if="\${#fields.hasErrors('titleAdds')}" th:errors="*{titleAdds}">Incorrect title</div>
+                        <input type="text" name="titleAdds" />
+                    </div>
+                    <div class="contentAdd">
+                        <span>추가 내용</span>
+                        <div th:if="\${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
+                        <input type="text" name="contentAdds" />
+                        <button type="button" class="plusBnt" onclick="addContentField(this)">+</button>
+                    </div>
+                `;
+                formContainer.appendChild(newFieldGroup);
+
+                if (fieldGroupCount >= 2) {
+                    document.getElementById('addFieldGroupButton').style.display = 'none';
+                }
+            }
+        }
+
+        function addContentField(button) {
+            const contentContainer = button.parentElement;
+            const newContentField = document.createElement('div');
+            newContentField.innerHTML = `<input type="text" name="contentAdds" />`;
+            contentContainer.appendChild(newContentField);
+        }
     </script>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="artistCreateContainer">
-        <form id="artistForm" th:action="@{/artist/create}" method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
-            <div class="thumbnail">
-                <img id="thumbnailPreview" src="#" alt="미리보기" style="display: none;" onclick="triggerFileInput()">
-                <input type="file" id="thumbnail" th:field="*{thumbnail}" class="form-control" style="display: none;" onchange="previewThumbnail(this)">
-                <button type="button" id="uploadButton" onclick="triggerFileInput()" class="iconBT">
-                    <i class="fa-solid fa-user-plus" style="margin-left: 15px;"></i>
-                </button>
-            </div>
-            <div class="form-groupArt">
-                <label for="engName" class="form-label">영문 이름:</label>
-                <input type="text" id="engName" class="form-control" th:field="*{engName}">
-                <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="korName" class="form-label">한글 이름:</label>
-                <input type="text" id="korName" class="form-control" th:field="*{korName}">
-                <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="birthDate" class="form-label">생년월일:</label>
-                <input type="text" id="birthDate" class="form-control" th:field="*{birthDate}">
-                <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="tel" class="form-label">전화번호:</label>
-                <input type="text" id="tel" class="form-control" th:field="*{tel}">
-                <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect telephone</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="mail" class="form-label">E-mail:</label>
-                <input type="text" id="mail" class="form-control" th:field="*{mail}">
-                <span class="mailIcon">@</span>
-                <div id="mailTypeDiv">
-                    <select id="mailType" class="form-control" onchange="handleMailTypeChange(this)" name="mailType">
-                        <option value="">선택</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="daum.net">daum.net</option>
-                        <option value="self">직접 입력</option>
-                    </select>
+    <form th:action="@{/artist/modify/{id}(id=${artist.id})}" th:object="${artistForm}" method="post" enctype="multipart/form-data">
+        <div class="artistProfileContainer">
+            <div class="basicArtistProfile">
+                <div class="artistImgModify">
+                    <!-- Image path updated -->
+                    <img id="thumbnailPreview" th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img-Modify" alt="미리보기" onclick="triggerFileInput()">
+                    <input type="file" id="thumbnail" th:field="*{thumbnail}" class="artist-img-Modify" onchange="previewThumbnail(this)" style="display: none;">
                 </div>
-                <input type="text" id="mailTypeInput" class="form-control" style="display: none;">
-                <div th:if="${#fields.hasErrors('mailType')}" th:errors="*{mailType}">Incorrect mail type</div>
-            </div>
-            <div class="artistAdds">
-                <label for="artistAddsContainer" class="form-label">추가 입력:</label>
-                <div id="artistAddsContainer">
-                    <button type="button" onclick="addInputField()"><i class="fa-solid fa-plus"></i></button>
+                <div class="engName">
+                    <input type="text" id="engName" class="form-control" th:field="*{engName}">
+                    <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
+                </div>
+                <div class="information">
+                    <div class="korName">
+                        <input type="text" id="korName" class="form-control" th:field="*{korName}">
+                        <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
+                    </div>
+                    <div class="line">
+                        <div class="lineInformation">
+                            <div class="name-group">
+                                <span id="korNameDisplay" th:text="${artist.korName}"></span>
+                                (<span id="engNameDisplay" th:text="${artist.engName}"></span>)
+                            </div>
+                            <div class="birthDateNumModify">
+                                <input type="text" id="birthDate" class="form-control" th:field="*{birthDate}">
+                                <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
+                            </div>
+                            <div class="artistAdd">
+                                <div id="artistAddsContainer">
+                                    <!-- 여기서 기존 artistAdds 값들을 스크립트로 추가 -->
+                                </div>
+                                <button type="button" onclick="addInputField('artistAddsContainer', 'artistAdds')">+</button>
+                            </div>
+                            <div class="telNumModify">
+                                <input type="text" id="tel" class="form-control" th:field="*{tel}">
+                                <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect telephone</div>
+                            </div>
+                            <div class="mail-group-modify">
+                                <input type="text" id="mail" class="form-control" th:field="*{mail}" style="height: 37px;">
+                                <span class="mailIcon">@</span>
+                                <div id="mailTypeDiv" >
+                                    <select id="mailType" class="form-control" onchange="handleMailTypeChange(this)" name="mailType">
+                                        <option value="">선택</option>
+                                        <option value="naver.com">naver.com</option>
+                                        <option value="gmail.com">gmail.com</option>
+                                        <option value="daum.net">daum.net</option>
+                                        <option value="self">직접 입력</option>
+                                    </select>
+                                </div>
+                                <input type="text" id="mailTypeInput" class="form-control" style="display: none;">
+                                <div th:if="${#fields.hasErrors('mailType')}" th:errors="*{mailType}">Incorrect mail type</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
                 </div>
             </div>
-            <button type="submit" class="btn-primary-art">등록</button>
-        </form>
-    </div>
+            <div class="textArtistProfile">
+                <div class="textAdd">
+                    <div class="textTileForm">
+                        <span class="title">INTRODUCE</span>
+                        <div class="contentAdd" id="contentAddsContainer_1">
+                            <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
+                            <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
+                        </div>
+                        <button type="button" onclick="addInputField('contentAddsContainer_1', 'contentAdds')">+</button>
+                    </div>
+                    <div class="textTileForm">
+                        <span class="title">MAJOR WORK</span>
+                        <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <div class="contentAdd" id="contentAddsContainer_2">
+                            <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
+                            <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
+                        </div>
+                        <button type="button" onclick="addInputField('contentAddsContainer_2', 'contentAdds')">+</button>
+                    </div>
+                    <div class="textTileForm" id="formContainer">
+                        <!-- 초기에는 제목과 내용 필드가 없는 상태로 시작 -->
+                    </div>
+                    <button type="button" id="addFieldGroupButton" onclick="addFieldGroup()" class="plusBnt">+</button>
+                </div>
+                <div class="button">
+                    <input type="submit" value="저장하기">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>
