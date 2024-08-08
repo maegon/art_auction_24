@@ -9,14 +9,21 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
+<<<<<<< HEAD
     /*border: 1px solid #9E9E9E;*/
+=======
+    border: 1px solid #9E9E9E;
+>>>>>>> 9898e55 (aa)
     /*justify-content: center;*/
     align-items: center;
 }
 .artistImgModify {
     display: inline;
     margin-top: 50px;
+<<<<<<< HEAD
     margin-bottom:10px;
+=======
+>>>>>>> 9898e55 (aa)
 }
 .artist-img-Modify {
     width: 200px;
@@ -27,12 +34,18 @@
 .engName {
     display: inline;
     font-size: 20px;
+<<<<<<< HEAD
     margin-bottom: 8px;
 }
 .korNameModify {
     display: flex;
     flex-direction: row;
     font-size: 23px;
+=======
+}
+.korName {
+    font-size: 25px;
+>>>>>>> 9898e55 (aa)
 }
 .line {
     border-left: 2px solid #333;
@@ -46,17 +59,29 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
+<<<<<<< HEAD
 .birthDateNumModify {
     font-size: 18px;
     margin-bottom: 10px;
+=======
+.birthDateNum {
+    font-size: 18px;
+    margin-bottom: 5px;
+>>>>>>> 9898e55 (aa)
 }
 .add {
     font-size: 18px;
     margin-bottom: 5px;
 }
+<<<<<<< HEAD
 .telNumModify {
     font-size: 18px;
     margin-bottom: 10px;
+=======
+.telNum {
+    font-size: 18px;
+    margin-bottom: 5px;
+>>>>>>> 9898e55 (aa)
 }
 .mail-group-modify {
     display: flex;
@@ -69,21 +94,36 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
+<<<<<<< HEAD
     /*border: 1px solid #9E9E9E;*/
+=======
+    border: 1px solid #9E9E9E;
+>>>>>>> 9898e55 (aa)
     justify-content: center;
     align-items: center;
 }
 .textAdd {
+<<<<<<< HEAD
     margin-top: 50px;
     height: 560px;
     width: 80%;
     /*border: 1px solid #9E9E9E;*/
+=======
+    margin-top: 70px;
+    height: 560px;
+    width: 80%;
+    border: 1px solid #9E9E9E;
+>>>>>>> 9898e55 (aa)
 }
 .textTileForm {
     height: auto;
     width: 100%;
     margin-bottom: 30px;
+<<<<<<< HEAD
    /* border: 1px solid #9E9E9E;*/
+=======
+    border: 1px solid #9E9E9E;
+>>>>>>> 9898e55 (aa)
 }
 .title {
     font-size: 25px;
