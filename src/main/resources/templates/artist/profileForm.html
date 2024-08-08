@@ -138,6 +138,7 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
         let fieldGroupCount = 0; // 초기 필드 그룹 수
 
         function addFieldGroup() {
@@ -148,15 +149,17 @@
                 newFieldGroup.classList.add('field-group');
                 newFieldGroup.innerHTML = `
                     <div class="titleAdd">
-                        <span>추가 제목</span>
-                        <div th:if="\${#fields.hasErrors('titleAdds')}" th:errors="*{titleAdds}">Incorrect title</div>
-                        <input type="text" name="titleAdds" />
+                        <span>추가 제목:</span>
+                        <div th:if="\${#fields.hasErrors('titleAdds')}" th:errors="*{titleAdds}"></div>
+                        <input type="text" name="titleAdds" class="form-control" />
+                        <button type="button" class="remove-button" onclick="removeFieldGroup(this)">-</button>
                     </div>
                     <div class="contentAdd">
-                        <span>추가 내용</span>
-                        <div th:if="\${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
-                        <input type="text" name="contentAdds" />
+                        <span>추가 내용:</span>
+                        <div th:if="\${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}"></div>
+                        <input type="text" name="contentAdds" class="form-control" />
                         <button type="button" class="plusBnt" onclick="addContentField(this)">+</button>
+                        <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
                     </div>
                 `;
                 formContainer.appendChild(newFieldGroup);
@@ -170,10 +173,28 @@
         function addContentField(button) {
             const contentContainer = button.parentElement;
             const newContentField = document.createElement('div');
-            newContentField.innerHTML = `<input type="text" name="contentAdds" />`;
+            newContentField.className = 'input-group';
+            newContentField.innerHTML = `<input type="text" name="contentAdds" class="form-control" /><button type="button" class="remove-button" onclick="removeContentField(this)">-</button>`;
             contentContainer.appendChild(newContentField);
         }
+
+        function removeFieldGroup(button) {
+            const fieldGroup = button.closest('.field-group');
+            fieldGroup.parentNode.removeChild(fieldGroup);
+            fieldGroupCount--;
+
+            if (fieldGroupCount < 2) {
+                document.getElementById('addFieldGroupButton').style.display = 'inline-block';
+            }
+        }
+
+        function removeContentField(button) {
+            const contentField = button.parentNode;
+            contentField.parentNode.removeChild(contentField);
+        }
+
     </script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div layout:fragment="content">
@@ -208,7 +229,7 @@
                                 <div id="artistAddsContainer">
                                     <!-- 여기서 기존 artistAdds 값들을 스크립트로 추가 -->
                                 </div>
-                                <button type="button" onclick="addInputField('artistAddsContainer', 'artistAdds')">+</button>
+                                <button type="button" class="plusBnt" onclick="addInputField('artistAddsContainer', 'artistAdds')">+</button>
                             </div>
                             <div class="telNumModify">
                                 <input type="text" id="tel" class="form-control" th:field="*{tel}">
@@ -239,10 +260,9 @@
                     <div class="textTileForm">
                         <span class="title">INTRODUCE</span>
                         <div class="contentAdd" id="contentAddsContainer_1">
-                            <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
+                            <textarea type="text" name="contentAdds" class="form-control" ></textarea>
                             <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
                         </div>
-                        <button type="button" onclick="addInputField('contentAddsContainer_1', 'contentAdds')">+</button>
                     </div>
                     <div class="textTileForm">
                         <span class="title">MAJOR WORK</span>
@@ -253,7 +273,7 @@
                             <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
                             <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
                         </div>
-                        <button type="button" onclick="addInputField('contentAddsContainer_2', 'contentAdds')">+</button>
+                        <button type="button" class="plusBnt" onclick="addInputField('contentAddsContainer_2', 'contentAdds')">+</button>
                     </div>
                     <div class="textTileForm" id="formContainer">
                         <!-- 초기에는 제목과 내용 필드가 없는 상태로 시작 -->
