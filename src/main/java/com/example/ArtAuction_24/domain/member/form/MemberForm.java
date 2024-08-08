@@ -2,6 +2,8 @@ package com.example.ArtAuction_24.domain.member.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +21,7 @@ public class MemberForm {
     private String password;
 
     @Email
-    @NotBlank
+    @NotNull
     private String email;
 
     @NotBlank
@@ -28,10 +30,8 @@ public class MemberForm {
     @NotBlank
     private String phoneNumber;
 
-    @NotBlank
+    @NotNull
     private String address;
-
-    private MultipartFile profileImage;
 
     private String providerTypeCode;
 

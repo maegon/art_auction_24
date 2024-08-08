@@ -12,12 +12,17 @@ import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -38,23 +43,19 @@ public class DevInitData implements BeforeInitData {
 
         return args -> {
             beforeInit();
-
             String password = "test123!";
 
+            memberService.join("", "admin", password, "admin@test.com", "admin",
+                    "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-
-            Member M1 = memberService.join("", "admin", password, "admin@test.com", "admin",
-
-                    "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
-
-            memberService.join("", "user1", password, "user1@test.com", "user1",
-                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+            Member M1 = memberService.join("", "user1", password, "user1@test.com", "user1",
+                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user2", password, "user2@test.com", "user2",
-                    "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "");
+                    "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "artist", password, "artist1@test.com", "artist1",
-                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층", "/image/고라파덕.jpg");
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
 
             artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","Artist@naver.com","naver.com","안녕! 나 김작가", "SBS 아트협회 임원");

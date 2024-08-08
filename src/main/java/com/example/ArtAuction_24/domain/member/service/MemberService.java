@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +36,13 @@ public class MemberService {
 
     // 회원가입
     public Member join(String providerTypeCode, String username, String password, String email, String nickname,
-                       String phoneNumber, String address, String imageFileName) {
+                       String phoneNumber, String address) {
+
+        // 이메일 중복 확인
+        if (email != null && memberRepository.findByEmail(email).isPresent()) {
+            throw new IllegalStateException("Email already exists");
+        }
+
         // 회원 객체 생성 및 설정
         Member member = Member.builder()
                 .providerTypeCode(providerTypeCode)
@@ -45,40 +52,25 @@ public class MemberService {
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .image(imageFileName) // 프로필 이미지 파일명 저장
                 .role(MemberRole.MEMBER)
                 .createDate(LocalDateTime.now()) // 생성일자
                 .build();
 
         return memberRepository.save(member); // 데이터베이스에 저장
+
+
     }
 
-    public String memberProfileImage(MultipartFile profileImage) {
-
-        String uploadDir = genFileDirPath + "\\image\\profileImageUpload\\";
-        Path uploadPath = Paths.get(uploadDir);
-
-        String fileName = UUID.randomUUID().toString();
-        String imageFileName = fileName + ".png";
-        try {
-            Path filePath = uploadPath.resolve(imageFileName);
-            Files.copy(profileImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not image file", e);
-        }
-
-        return "/images/profileImageUpload/" + imageFileName;
-    }
 
 
     @Transactional
-    public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String profileImageUrl, String email) {
+    public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String email) {
         Optional<Member> opMember = findByUsernameAndProviderTypeCode(username, providerTypeCode);
 
         if (opMember.isPresent()) return opMember.get();
 
         // 소셜 로그인를 통한 가입시 비번은 없다.
-        return join(providerTypeCode, username, "", email,nickname, "", "", profileImageUrl); // 최초 로그인 시 딱 한번 실행
+        return join(providerTypeCode, username, "", email, nickname, "", ""); // 최초 로그인 시 딱 한번 실행
     }
 
     public Optional<Member> findByUsernameAndProviderTypeCode(String username, String providerTypeCode) {

@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const nicknameInput = document.getElementById("nickname");
     const addressInput = document.getElementById("sample6_postcode");
     const addressInput2 = document.getElementById("sample6_detailAddress");
-    const profileImageInput = document.getElementById("profileImage");
     const domainListEl = document.getElementById('domain-list');
     const joinError = document.getElementById("joinError");
     const passwordMatchError = document.getElementById("passwordMatchError");
@@ -81,8 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
         nicknameInput,
         phoneNumberInput,
         addressInput,
-        addressInput2,
-        profileImageInput
+        addressInput2
     ];
 
     inputs.forEach(input => {
