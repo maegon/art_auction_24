@@ -12,26 +12,16 @@ import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-<<<<<<< HEAD
 
-=======
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
->>>>>>> bf6ccc6 (auction list sort add)
+
 
 @Configuration
 @RequiredArgsConstructor
