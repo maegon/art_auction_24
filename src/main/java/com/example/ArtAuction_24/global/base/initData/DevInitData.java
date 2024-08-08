@@ -25,7 +25,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 
+=======
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+>>>>>>> bf6ccc6 (auction list sort add)
 
 @Configuration
 @RequiredArgsConstructor
@@ -37,6 +43,8 @@ public class DevInitData implements BeforeInitData {
     private final ArtistService artistService;
     private final QuestionService questionService;
     private final AnswerService answerService;
+
+
 
     @Bean
     CommandLineRunner init(MemberService memberService, ArtistService artistService, ProductService productService) {

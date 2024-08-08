@@ -5,9 +5,14 @@ import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +42,7 @@ public class AuctionService {
         return auctionRepository.save(auction);
     }
 
-    @Scheduled(fixedDelay = 60000) // 1분마다 실행
+    @Scheduled(fixedDelay = 10000) // 1분마다 실행
     public void closeExpiredAuctions() {
         LocalDateTime now = LocalDateTime.now();
         List<Auction> expiredAuctions = auctionRepository.findByEndDateBeforeAndStatus(now, AuctionStatus.ACTIVE);
@@ -47,4 +52,30 @@ public class AuctionService {
             logger.info("Auction with ID {} has been closed.", auction.getId());
         }
     }
+
+    public List<Auction> findAll() {
+        return auctionRepository.findAll();
+    }
+
+    public List<Auction> getAuctionsByStatus(AuctionStatus status) {
+        return auctionRepository.findByStatus(status);
+    }
+
+    // AuctionService.java
+    public Page<Product> getProductsWithFilteringAndSorting(String keyword, Pageable pageable, String sort) {
+        Sort sortOrder = switch (sort) {
+            case "price-asc" -> Sort.by("startingPrice").ascending();
+            case "price-desc" -> Sort.by("startingPrice").descending();
+            case "latest" -> Sort.by("auctionStartDate").descending();
+            default -> Sort.by("auctionStartDate").descending();
+        };
+
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortOrder);
+
+        // status가 ACTIVE인 경매에 포함된 제품만 필터링
+        Page<Product> products = productRepository.findByActiveAuctionsAndFilter(keyword, sortedPageable);
+
+        return products;
+    }
+
 }

@@ -4,36 +4,15 @@ $(document).ready(function () {
     // 페이지 링크 클릭 시 페이지 번호 설정 후 폼 제출
        $(".page-link").on("click", function () {
            $("#page").val($(this).data("page"));
-           $("#product-searchForm").submit();
+           $("#auction-searchForm").submit();
        });
 
        // 검색 버튼 클릭 시 검색어와 페이지 번호를 초기화 후 폼 제출
        $("#btn_search").on("click", function () {
            $("#kw").val($("#search_kw").val());
            $("#page").val(0);
-           $("#product-searchForm").submit();
+           $("#auction-searchForm").submit();
        });
-
-       // 경매 작품만 보기 버튼 클릭 시 토글 및 텍스트 변경
-       $("#auctionOnlyButton").on("click", function () {
-           const auctionInput = $("#auctionInput");
-           const isChecked = auctionInput.val() === 'true';
-
-           // 토글 상태 및 텍스트 업데이트
-           auctionInput.val(isChecked ? 'false' : 'true');
-           $(this).find('span').text(isChecked ? '경매 작품만 보기' : '전체보기');
-
-           // 검색 폼 제출
-           $("#product-searchForm").submit();
-       });
-
-       // 페이지 로드 시 경매 작품만 보기 버튼 상태 초기화
-       const auctionInputValue = $("#auctionInput").val();
-       if (auctionInputValue === 'true') {
-           $("#auctionOnlyButton").find('span').text('전체보기');
-       } else {
-           $("#auctionOnlyButton").find('span').text('경매 작품만 보기');
-       }
 
 
 });
@@ -42,11 +21,11 @@ $(document).ready(function () {
 
 /* list 드롭다운 메뉴 부분 시작 */
 document.addEventListener('DOMContentLoaded', function () {
-    const sortButton = document.getElementById('product-sortButton');
-    const sortDropdown = document.getElementById('product-sortDropdown');
-    const sortText = document.getElementById('product-sortText');
-    const sortInput = document.getElementById('product-sortInput');
-    const searchForm = document.getElementById('product-searchForm');
+    const sortButton = document.getElementById('auction-sortButton');
+    const sortDropdown = document.getElementById('auction-sortDropdown');
+    const sortText = document.getElementById('auction-sortText');
+    const sortInput = document.getElementById('auction-sortInput');
+    const searchForm = document.getElementById('auction-searchForm');
     const sortLinks = sortDropdown.querySelectorAll('a');
 
     // 페이지 로드 시 정렬 옵션 버튼 텍스트 설정
@@ -86,7 +65,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 /* list 드롭다운 메뉴 부분 끝 */
-
-/*버튼 기능 수정 시작*/
-
-/*버튼 기능 수정 끝*/

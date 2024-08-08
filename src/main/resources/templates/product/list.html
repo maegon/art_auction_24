@@ -1,33 +1,43 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="container mx-auto px-6 lg:px-[220px]">
-        <h1 class="text-2xl font-bold text-center py-5">작품 리스트</h1>
+        <h1 class="text-2xl font-bold text-center py-5">모든 작품</h1>
         <div id="search_container" class="flex flex-col sm:flex-row justify-between mb-5 pb-4 items-center space-y-4 sm:space-y-0">
             <!-- 드롭다운 추가 부분 -->
             <div class="relative sm:ml-4 flex-shrink-0">
-                <button id="sortButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center">
-                    <span id="sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
+                <button id="product-sortButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+                    <span id="product-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
                 </button>
-                <div id="sortDropdown" class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
+                <div id="product-sortDropdown" class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
+                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
+                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
+                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
                 </div>
             </div>
 
-            <form id="searchForm" class="flex border border-gray-300 rounded-lg overflow-hidden w-full sm:w-auto">
+            <!-- 경매 작품만 보기 버튼 -->
+            <div class="relative sm:ml-4 flex-shrink-0">
+                <button id="auctionOnlyButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
+                    <span>경매 작품만 보기</span>
+                </button>
+            </div>
+
+            <form id="product-searchForm" class="flex border border-gray-300 rounded-lg overflow-hidden w-full sm:w-auto">
                 <input type="text" name="kw" id="search_input" placeholder="작가 또는 작품명"
                        class="px-4 py-2 w-full sm:w-64 focus:outline-none" th:value="${kw}"/>
                 <button type="submit" id="search_button" class="bg-white text-gray-600 px-4 flex items-center justify-center ml-auto sm:mt-0">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-                <input type="hidden" name="sort" id="sortInput" th:value="${sort}"/>
+                <input type="hidden" name="sort" id="product-sortInput" th:value="${sort}"/>
+                <input type="hidden" name="auction" id="auctionInput" th:value="${auction}"/>
+                <input type="hidden" name="viewAll" id="viewAllInput" value="false"/>
             </form>
         </div>
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-3">
-            <li th:each="product, loop : ${paging}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden">
+            <li th:each="product, loop : ${paging}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item"
+                data-auction-active="${product.auctions.size > 0 && product.auctions[0].status == 'ACTIVE'}">
                 <a th:href="@{|/product/detail/${product.id}|}"
-                   class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
+                   class="block w-full h-64 bg-gray-200 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                     <img class="object-contain object-center w-full h-full transition-transform duration-500"
                          th:src="@{${product.thumbnailImg}}"
                          alt="이미지가 존재하지 않습니다.">
@@ -36,18 +46,16 @@
                     <span th:text="${product.artist.korName}" class="text-left font-bold text-lg"></span>
                     <span th:text="${product.title}" class="text-left text-md mt-1"></span>
                     <span class="flex text-xs mt-3 mb-1">
-                            <span th:text="${product.dimensions}" class="text-gray-500"></span>
-                            <span class="text-gray-500 mx-1">|</span>
-                            <span th:text="${product.medium}" class="text-gray-500"></span>
-                        </span>
+                        <span th:text="${product.dimensions}" class="text-gray-500"></span>
+                        <span class="text-gray-500 mx-1">|</span>
+                        <span th:text="${product.medium}" class="text-gray-500"></span>
+                    </span>
                     <hr class="my-2">
-                    <span class="flex justify-between items-center text-center mt-1">
-                            <span>Current Bid</span>
-                            <a th:href="@{|/product/detail/${product.id}|}" th:text="|KRW ${product.formattedCurrentBid}|" class="text-red-500"></a>
-                        </span>
-                    <button class="bg-white border border-gray-300 text-lg mt-3 px-4 py-2 transition-colors duration-150 ease-in-out hover:bg-sky-700 hover:border-gray-500">
-                        응찰하기
-                    </button>
+                    <span class="flex justify-between items-center text-center mt-1 text-sm">
+                        <span>Current Bid</span>
+                        <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-red-500 text-sm"></a>
+                    </span>
+                    </span>
                 </div>
             </li>
         </ul>
@@ -60,7 +68,7 @@
         <ul th:if="${!paging.isEmpty()}" class="flex justify-center items-center mt-10 mb-2 space-x-2">
             <!-- 이전 페이지 버튼 -->
             <li th:classappend="${!paging.hasPrevious} ? 'opacity-50 cursor-not-allowed'">
-                <a class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out"
+                <a class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out page-link"
                    href="javascript:void(0)" th:data-page="${paging.number-1}">
                     <span class="font-semibold text-lg">&lt;</span>
                 </a>
@@ -71,13 +79,13 @@
                 th:if="${page >= paging.number-4 and page <= paging.number+4}"
                 th:classappend="${page == paging.number} ? 'text-white border-blue-600'">
                 <a th:text="${page+1}"
-                   class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out"
+                   class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out page-link"
                    href="javascript:void(0)" th:data-page="${page}"></a>
             </li>
 
             <!-- 다음 페이지 버튼 -->
             <li th:classappend="${!paging.hasNext} ? 'opacity-50 cursor-not-allowed'">
-                <a class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out"
+                <a class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-600 bg-white hover:bg-gray-200 hover:text-gray-800 transition-colors duration-200 ease-in-out page-link"
                    href="javascript:void(0)" th:data-page="${paging.number+1}">
                     <span class="font-semibold text-lg">&gt;</span>
                 </a>

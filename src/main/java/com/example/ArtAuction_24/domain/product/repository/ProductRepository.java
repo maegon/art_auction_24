@@ -21,16 +21,45 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("""
             SELECT p
             FROM Product p
-            WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :kw, '%'))
-            OR LOWER(p.description) LIKE LOWER(CONCAT('%', :kw, '%'))
+            WHERE (LOWER(p.title) LIKE LOWER(CONCAT('%', :kw, '%'))
+            OR LOWER(p.description) LIKE LOWER(CONCAT('%', :kw, '%')))
+            AND (p IN (SELECT ap.product FROM AuctionProduct ap JOIN ap.auction a WHERE a.status = 'ACTIVE'))
             """)
-    Page<Product> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+    Page<Product> findByKeywordAndAuctionActive(@Param("kw") String kw, Pageable pageable);
+
+    @Query("""
+            SELECT p
+            FROM Product p
+            WHERE p IN (SELECT ap.product FROM AuctionProduct ap JOIN ap.auction a WHERE a.status = 'ACTIVE')
+            """)
+    Page<Product> findByAuctionActive(Pageable pageable);
 
     List<Product> findAllByOrderByCreateDateDesc();
-
 
     Product findTopByOrderByViewDesc();
 
     Page<Product> findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(String title, String korName, String engName, Pageable pageable);
+
+    @Query("SELECT DISTINCT p FROM Product p JOIN FETCH p.auctions")
+    List<Product> findAllWithAuction();
+
+    @Query("""
+            SELECT DISTINCT p
+            FROM Product p
+            JOIN p.auctions a
+            WHERE a.status = 'ACTIVE'
+            """)
+    List<Product> findProductsByActiveAuctions();
+
+    @Query("""
+    SELECT DISTINCT p
+    FROM Product p
+    JOIN p.auctions a
+    WHERE a.status = 'ACTIVE' AND
+          (:keyword IS NULL OR p.title LIKE %:keyword%)
+""")
+    Page<Product> findByActiveAuctionsAndFilter(@Param("keyword") String keyword, Pageable pageable);
+
+
 
 }

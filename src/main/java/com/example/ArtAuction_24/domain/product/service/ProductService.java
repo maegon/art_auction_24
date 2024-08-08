@@ -27,7 +27,7 @@ public class ProductService {
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
 
-    public Page<Product> getProductsWithSorting(String keyword, Pageable pageable, String sortOption) {
+    public Page<Product> getProductsWithSorting(String keyword, Pageable pageable, String sortOption, Boolean auction) {
         Sort sort = switch (sortOption) {
             case "price-asc" -> Sort.by("startingPrice").ascending();
             case "price-desc" -> Sort.by("startingPrice").descending();
@@ -38,9 +38,17 @@ public class ProductService {
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
         if (keyword != null && !keyword.isEmpty()) {
-            return productRepository.findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(keyword, keyword, keyword, sortedPageable);
+            if (Boolean.TRUE.equals(auction)) {
+                return productRepository.findByKeywordAndAuctionActive(keyword, sortedPageable);
+            } else {
+                return productRepository.findByTitleContainingOrArtistKorNameContainingOrArtistEngNameContaining(keyword, keyword, keyword, sortedPageable);
+            }
         } else {
-            return productRepository.findAll(sortedPageable);
+            if (Boolean.TRUE.equals(auction)) {
+                return productRepository.findByAuctionActive(sortedPageable);
+            } else {
+                return productRepository.findAll(sortedPageable);
+            }
         }
     }
 
@@ -100,11 +108,15 @@ public class ProductService {
     }
 
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return productRepository.findAllWithAuction(); // 경매 정보와 함께 모든 제품을 가져옴
     }
 
     public AuctionProduct getAuctionProduct(Long id) {
         return auctionProductRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("AuctionProduct not found"));
+    }
+
+    public List<Product> findProductsByActiveAuctions() {
+        return productRepository.findProductsByActiveAuctions();
     }
 }

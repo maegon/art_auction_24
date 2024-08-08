@@ -29,9 +29,12 @@
         </div>
         <div class="swiper ongoingAuc">
             <div class="swiper-wrapper">
-                <div class="swiper-slide ongoing-slide" th:each="product : ${productList}">
-                    <a th:href="@{|/product/detail/${product.id}|}">
-                    <img class="ongoing-img" th:src="@{${product.thumbnailImg}}" alt="이미지 1">
+                <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
+                    <a th:href="@{|/product/detail/${product.id}|}"
+                       class="block w-full h-64  overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
+                        <img class="bg-gray-200 object-contain object-center w-full h-full transition-transform duration-500"
+                             th:src="@{${product.thumbnailImg}}"
+                             alt="이미지가 존재하지 않습니다.">
                     </a>
                     <div class="ongoing-info">
                         <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
