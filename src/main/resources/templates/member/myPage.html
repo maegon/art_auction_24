@@ -102,7 +102,7 @@
                                 <li class="myPage-list-item px-4 text-3xl flex-none w-[100px]">번호</li>
                                 <li class="myPage-list-item px-4 text-3xl basis-1/2">제목</li>
                                 <li class="myPage-list-item px-4 text-3xl basis-1/4">날짜</li>
-                                <li class="myPage-list-item px-4 text-3xl basis-1/4">처리상태</li>
+                                <li class="myPage-list-item px-4 text-3xl basis-1/4">상태</li>
                             </ul>
                         </div>
                         <div>
@@ -115,7 +115,9 @@
                             <div th:if="${!#lists.isEmpty(questionList)}">
                                 <ul class="flex items-center justify-center py-2" th:each="question : ${questionList}">
                                     <li class="myPage-list-item px-4 text-xl flex-none w-[100px]" th:text="${question.id}"></li>
-                                    <li class="myPage-list-item px-4 text-xl basis-1/2" th:text="${question.subject}"></li>
+                                    <li class="myPage-list-item px-4 text-xl basis-1/2">
+                                        <a class="text" th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                                    </li>
                                     <li class="myPage-list-item px-4 text-xl basis-1/4" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
                                     <li class="myPage-list-item px-4 text-2xl basis-1/4">
                                         <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
@@ -214,9 +216,58 @@
     }
 </script>
 <script>
-    (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+    // Define global JavaScript variables with Thymeleaf expressions
+    var memberNickname = '[[${member.nickname}]]';
+    var memberId = '[[${member.id}]]';
+    var memberMobileNumber = /*[[${member.phoneNumber}]]*/ 'default_mobile_number';
+    var memberLandlineNumber = 'default_landline_number'; // Update as needed
 
+    // Function to initialize ChannelIO
+    (function() {
+        var w = window;
+        if (w.ChannelIO) {
+            return w.console.error("ChannelIO script included twice.");
+        }
+        var ch = function() {
+            ch.c(arguments);
+        };
+        ch.q = [];
+        ch.c = function(args) {
+            ch.q.push(args);
+        };
+        w.ChannelIO = ch;
+        function l() {
+            if (w.ChannelIOInitialized) {
+                return;
+            }
+            w.ChannelIOInitialized = true;
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
+            var x = document.getElementsByTagName("script")[0];
+            if (x.parentNode) {
+                x.parentNode.insertBefore(s, x);
+            }
+        }
+        if (document.readyState === "complete") {
+            l();
+        } else {
+            w.addEventListener("DOMContentLoaded", l);
+            w.addEventListener("load", l);
+        }
+    })();
+
+    // Initialize ChannelIO with dynamic data
     ChannelIO('boot', {
-      "pluginKey": "72ea21d5-9db0-4a66-ac19-1aa0eb72e588"
+        "pluginKey": "72ea21d5-9db0-4a66-ac19-1aa0eb72e588",
+        "memberId": memberId, // fill user's member id
+        "profile": { // fill user's profile
+            "name": memberNickname, // fill user's name
+            "mobileNumber": memberMobileNumber, // fill user's mobile number
+            "landlineNumber": memberLandlineNumber, // fill user's landline number
+            "CUSTOM_VALUE_1": "VALUE_1", // custom property
+            "CUSTOM_VALUE_2": "VALUE_2" // custom property
+        }
     });
 </script>

@@ -2,6 +2,8 @@ package com.example.ArtAuction_24.domain.question.controller;
 
 
 
+import com.example.ArtAuction_24.domain.answer.entity.Answer;
+import com.example.ArtAuction_24.domain.answer.service.AnswerService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
@@ -26,17 +28,20 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
     private final MemberService memberService;
+    private final AnswerService answerService;
+
     @GetMapping("/list")
     public String questionList(Model model){
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
+
         return "question/list";
 
     }
 
 
 
-    @GetMapping(value = "/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
@@ -46,21 +51,32 @@ public class QuestionController {
 
 
     @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm) {
+    public String questionCreate(QuestionForm questionForm,Model model) {
+        List<Question> questionList= questionService.findAll();
+        model.addAttribute("questionList", questionList);
         return "question/write";
     }
 
     @PostMapping("/create")
-    public String questionCreate(@Valid QuestionForm questionForm,
-                                 BindingResult bindingResult,
-                                 @RequestParam("thumbnail") MultipartFile thumbnail,
-                                 Principal principal) {
+    public String questionCreateAddImg(@Valid QuestionForm questionForm,
+                                       BindingResult bindingResult,
+                                       @RequestParam("thumbnail") MultipartFile thumbnail,
+                                       Principal principal) {
         Member member = memberService.getMember(principal.getName());
         if (bindingResult.hasErrors()) {
             return "question/write";
         }
-        this.questionService.create(questionForm, thumbnail, member);
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            // Handle the file upload logic here
+            this.questionService.create(questionForm, thumbnail, member);
+        } else {
+            // Handle the logic without the file
+            this.questionService.create(questionForm, member);
+        }
+
+
         return "redirect:/question/list";
     }
+
 
 }

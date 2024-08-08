@@ -37,8 +37,19 @@
                     <h1 th:text="${question.subject}"></h1>
                 </div>
                 <div class="border-2 border-slate-300 min-h-[500px] my-10 px-3 py-3">
-                    <div th:text="${question.content}"></div>
+
+                    <div class="min-h-[300px]">
+                        <ul>
+
+                            <li th:text="${question.content}"></li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div>
+                        <li><img class="py-3" th:src="@{|/file/${question.thumbnailImg}|}" alt="(이미지 없음)"></li>
+                    </div>
                 </div>
+
             </div>
 
 

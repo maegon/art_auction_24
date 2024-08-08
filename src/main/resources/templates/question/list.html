@@ -2,7 +2,7 @@
 <div layout:fragment="content">
     <div class="container mx-auto px-4 min-h-[1200px] flex">
         <div class="container w-[600px] ">
-            <div class="fixed container ml-[50px] w-[300px] h-[380px] mt-[200px] bg-stone-100">
+            <div class="fixed container ml-[150px] w-[300px] h-[380px] mt-[200px] bg-stone-100">
                 <div class="container mx-auto  h-[250px]">
                     <ul>
                         <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewArtworkAndArtist">작품 및 작가</a></li>
@@ -33,7 +33,7 @@
                     </div>
                     <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'} or ${question.questionType.name() == 'ARTWORK'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:text="${question.content}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -41,9 +41,9 @@
                         <i class="fa-solid fa-credit-card fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 작품구매</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'PURCHASE'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:text="${question.createDate}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -51,9 +51,9 @@
                         <i class="fa-brands fa-servicestack fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2">SERVICE</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'SERVICE'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:text="${question.createDate}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -61,9 +61,9 @@
                         <i class="fa-solid fa-truck fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 배송</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
+                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'DELIVERY'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:text="${question.createDate}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -73,7 +73,7 @@
                     </div>
                     <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
                         <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:text="${question.createDate}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
             </div>
