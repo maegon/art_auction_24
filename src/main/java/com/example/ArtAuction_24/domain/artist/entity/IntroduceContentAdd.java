@@ -7,28 +7,25 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+
 @Entity
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = {"artist"})
-public class TitleAdd {
-
+public class IntroduceContentAdd {
+    // Getter and Setter methods if Lombok is not used
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Ensure there is a no-argument setter for title
-    // Ensure there is a no-argument getter for title
-    @Setter
     @Getter
-    private String title; // Ensure this field is defined
+    @Setter
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
-    @Setter
-    private String content;
 
 }

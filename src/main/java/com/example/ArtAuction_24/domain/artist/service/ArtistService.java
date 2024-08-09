@@ -1,9 +1,7 @@
 package com.example.ArtAuction_24.domain.artist.service;
 
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
-import com.example.ArtAuction_24.domain.artist.entity.ArtistAdd;
-import com.example.ArtAuction_24.domain.artist.repository.ArtistAddRepository;
-import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
+import com.example.ArtAuction_24.domain.artist.entity.*;
+import com.example.ArtAuction_24.domain.artist.repository.*;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +21,10 @@ import java.util.UUID;
 public class ArtistService {
     private final ArtistRepository artistRepository;
     private final ArtistAddRepository artistAddRepository; // 추가
+    private final TitleAddRepository titleAddRepository;  // 추가
+    private final ContentAddRepository contentAddRepository;  // 추가
+    private final IntroduceContentAddRepository introduceContentAddRepository;
+    private final MajorWorkContentAddRepository majorWorkContentAddRepository;
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
@@ -91,32 +94,124 @@ public class ArtistService {
         return of.get();
     }
 
-    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce, String majorWork, String title, String content) {
+
+
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType,
+                       List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
+                       List<String> introduceContentAdds, List<String> majorWorkContentAdds) {
+
+        // 이미지 파일 업데이트 처리
         if (thumbnail != null && !thumbnail.isEmpty()) {
             String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
             try {
                 thumbnail.transferTo(thumbnailFile);
+                artist.setThumbnail(thumbnailRelPath);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
             }
-
-            artist.setThumbnail(thumbnailRelPath);
         }
+
+        // 기본 정보 업데이트
         artist.setKorName(korName);
         artist.setEngName(engName);
         artist.setBirthDate(birthDate);
         artist.setTel(tel);
         artist.setMail(mail);
         artist.setMailType(mailType);
-        artist.setIntroduce(introduce);
-        artist.setMajorWork(majorWork);
-        artist.setTitle(title);
-        artist.setContent(content);
 
+        // 연관된 엔티티 업데이트
+        updateArtistAdds(artist, artistAdds);
+        updateTitleAdds(artist, titleAdds);
+        updateContentAdds(artist, contentAdds);
+        updateIntroduceContentAdds(artist, introduceContentAdds);
+        updateMajorWorkContentAdds(artist, majorWorkContentAdds);
+
+        // 엔티티 저장
         artistRepository.save(artist);
     }
+
+    private void updateArtistAdds(Artist artist, List<String> artistAdds) {
+        // 새 ArtistAdd 추가
+        if (artistAdds != null) {
+            List<ArtistAdd> artistAddList = new ArrayList<>();
+            for (String content : artistAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    ArtistAdd artistAdd = new ArtistAdd();
+                    artistAdd.setContent(content);
+                    artistAdd.setArtist(artist);
+                    artistAddList.add(artistAdd);
+                }
+            }
+            artistAddRepository.saveAll(artistAddList);
+        }
+    }
+
+    private void updateTitleAdds(Artist artist, List<String> titleAdds) {
+        // 새 TitleAdd 추가
+        if (titleAdds != null) {
+            List<TitleAdd> titleAddList = new ArrayList<>();
+            for (String content : titleAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    TitleAdd titleAdd = new TitleAdd();
+                    titleAdd.setContent(content);
+                    titleAdd.setArtist(artist);
+                    titleAddList.add(titleAdd);
+                }
+            }
+            titleAddRepository.saveAll(titleAddList);
+        }
+    }
+
+    private void updateContentAdds(Artist artist, List<String> contentAdds) {
+        // 새 ContentAdd 추가
+        if (contentAdds != null) {
+            List<ContentAdd> contentAddList = new ArrayList<>();
+            for (String content : contentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    ContentAdd contentAdd = new ContentAdd();
+                    contentAdd.setContent(content);
+                    contentAdd.setArtist(artist);
+                    contentAddList.add(contentAdd);
+                }
+            }
+            contentAddRepository.saveAll(contentAddList);
+        }
+    }
+
+    private void updateIntroduceContentAdds(Artist artist, List<String> introduceContentAdds) {
+        // 새 IntroduceContentAdd 추가
+        if (introduceContentAdds != null) {
+            List<IntroduceContentAdd> introduceContentAddList = new ArrayList<>();
+            for (String content : introduceContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    IntroduceContentAdd introduceContentAdd = new IntroduceContentAdd();
+                    introduceContentAdd.setContent(content);
+                    introduceContentAdd.setArtist(artist);
+                    introduceContentAddList.add(introduceContentAdd);
+                }
+            }
+            introduceContentAddRepository.saveAll(introduceContentAddList);
+        }
+    }
+
+    private void updateMajorWorkContentAdds(Artist artist, List<String> majorWorkContentAdds) {
+        // 새 MajorWorkContentAdd 추가
+        if (majorWorkContentAdds != null) {
+            List<MajorWorkContentAdd> majorWorkContentAddList = new ArrayList<>();
+            for (String content : majorWorkContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    MajorWorkContentAdd majorWorkContentAdd = new MajorWorkContentAdd();
+                    majorWorkContentAdd.setContent(content);
+                    majorWorkContentAdd.setArtist(artist);
+                    majorWorkContentAddList.add(majorWorkContentAdd);
+                }
+            }
+            majorWorkContentAddRepository.saveAll(majorWorkContentAddList);
+        }
+    }
+
 
     public void delete(Artist artist) {
         artistRepository.delete(artist);
@@ -155,4 +250,6 @@ public class ArtistService {
 
         return artist;
     }
+
+
 }

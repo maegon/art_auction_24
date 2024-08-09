@@ -1,9 +1,6 @@
 package com.example.ArtAuction_24.domain.artist.controller;
 
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
-import com.example.ArtAuction_24.domain.artist.entity.ArtistAdd;
-import com.example.ArtAuction_24.domain.artist.entity.ContentAdd;
-import com.example.ArtAuction_24.domain.artist.entity.TitleAdd;
+import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -23,6 +20,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequestMapping("/artist")
 @Controller
@@ -32,17 +30,17 @@ public class ArtistController {
     private final MemberService memberService;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/profile")
-    public String getProfile(Model model) {
+    @GetMapping("/profile/{id}")
+    public String getProfile(Model model, @PathVariable("id") Integer id) {
+        Artist artist = artistService.getArtist(id);
         Member currentMember = memberService.getCurrentMember();
         System.out.println("Current Member: " + currentMember);
         Optional<Artist> artistOpt = Optional.ofNullable(artistService.findByMember(currentMember));
 
         if (artistOpt.isEmpty()) {
-            // 아티스트 정보가 없을 경우 로그 추가
             System.out.println("아티스트 정보를 찾을 수 없습니다.");
             model.addAttribute("errorMessage", "아티스트 정보를 찾을 수 없습니다.");
-            return "error/artistNotFound"; // 에러 템플릿이 있는지 확인
+            return "error/artistNotFound";
         }
 
         System.out.println("Artist: " + artistOpt.get());
@@ -66,7 +64,6 @@ public class ArtistController {
             @RequestParam(value = "artistAdds", required = false) List<String> artistAdds,
             Principal principal) {
 
-        // BindingResult 에러 출력
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> {
                 System.out.println(error.getDefaultMessage());
@@ -74,7 +71,6 @@ public class ArtistController {
             return "artist/artistForm";
         }
 
-        // MultipartFile 상태 출력
         if (thumbnail.isEmpty()) {
             System.out.println("파일이 업로드되지 않았습니다.");
             return "artist/artistForm";
@@ -114,8 +110,7 @@ public class ArtistController {
         }
         this.artistService.saveArtistAdds(artistAddList);
 
-        return "redirect:/artist/profile";
-
+        return "redirect:/artist/profile/" + artist.getId();
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -125,6 +120,7 @@ public class ArtistController {
         if (bindingResult.hasErrors()) {
             return "profileForm";
         }
+
         Artist artist = artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {
@@ -140,13 +136,27 @@ public class ArtistController {
                 artistForm.getTel(),
                 artistForm.getMail(),
                 artistForm.getMailType(),
-                artistForm.getIntroduce(),
-                artistForm.getMajorWork(),
-                artistForm.getTitle(),
-                artistForm.getContent()
+                artistForm.getArtistAdds(),
+                artistForm.getTitleAdds(),
+                artistForm.getContentAdds(),
+                artistForm.getIntroduceContentAdds(),
+                artistForm.getMajorWorkContentAdds()
         );
 
-        return "redirect:/artist/profileForm/%s".formatted(id);
+        System.out.println("getThumbnail:" + artistForm.getThumbnail());
+        System.out.println("getKorName:" + artistForm.getKorName());
+        System.out.println("getEngName:" + artistForm.getEngName());
+        System.out.println("getBirthDate:" + artistForm.getBirthDate());
+        System.out.println("getTel:" + artistForm.getTel());
+        System.out.println("getMail:" + artistForm.getMail());
+        System.out.println("getMailType:" + artistForm.getMailType());
+        System.out.println("getArtistAdds:" + artistForm.getArtistAdds());
+        System.out.println("getTitleAdds:" + artistForm.getTitleAdds());
+        System.out.println("getContentAdds:" + artistForm.getContentAdds());
+        System.out.println("getIntroduceContentAdds:" + artistForm.getIntroduceContentAdds());
+        System.out.println("getMajorWorkContentAdds:" + artistForm.getMajorWorkContentAdds());
+
+        return "redirect:/artist/profile/" + id;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -165,22 +175,24 @@ public class ArtistController {
         artistForm.setTel(artist.getTel());
         artistForm.setMail(artist.getMail());
         artistForm.setMailType(artist.getMailType());
-        artistForm.setIntroduce(artist.getIntroduce());
-        artistForm.setMajorWork(artist.getMajorWork());
-        artistForm.setTitle(artist.getTitle());
-        artistForm.setContent(artist.getContent());
         artistForm.setExistingThumbnailUrl(artist.getThumbnailImg());
 
-        // Assuming the fields are arrays/lists in ArtistForm
-        if (artistForm.getArtistAdds() == null) {
-            artistForm.setArtistAdds(new ArrayList<>());
-        }
-        if (artistForm.getContentAdds() == null) {
-            artistForm.setContentAdds(new ArrayList<>());
-        }
-        if (artistForm.getTitleAdds() == null) {
-            artistForm.setTitleAdds(new ArrayList<>());
-        }
+        // 기존의 관련 데이터 설정
+        artistForm.setArtistAdds(artist.getArtistAdds().stream()
+                .map(ArtistAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setTitleAdds(artist.getTitleAdds().stream()
+                .map(TitleAdd::getContent)  // `getTitle()` 메서드가 `getContent()`로 수정됨을 주의하세요
+                .collect(Collectors.toList()));
+        artistForm.setContentAdds(artist.getContentAdds().stream()
+                .map(ContentAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setIntroduceContentAdds(artist.getIntroduceContentAdds().stream()
+                .map(IntroduceContentAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setMajorWorkContentAdds(artist.getMajorWorkContentAdds().stream()
+                .map(MajorWorkContentAdd::getContent)
+                .collect(Collectors.toList()));
 
         model.addAttribute("artistForm", artistForm);
         model.addAttribute("artist", artist);
@@ -188,13 +200,14 @@ public class ArtistController {
         return "artist/profileForm";
     }
 
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
         Artist artist = this.artistService.getArtist(id);
 
         if (!artist.getAuthor().getUsername().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
         artistService.delete(artist);

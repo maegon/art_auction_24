@@ -1,16 +1,17 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(exclude = {"artist"})
 public class ArtistAdd {
 
@@ -18,8 +19,13 @@ public class ArtistAdd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    // Ensure there is a no-argument getter for content
+    @Setter
+    @Getter
+    private String content; // Ensure this field is defined
 
     @ManyToOne
+    @JoinColumn(name = "artist_id")
     private Artist artist;
+
 }

@@ -13,22 +13,16 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = {"artist"})
-public class TitleAdd {
-
+public class MajorWorkContentAdd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Ensure there is a no-argument setter for title
-    // Ensure there is a no-argument getter for title
-    @Setter
     @Getter
-    private String title; // Ensure this field is defined
+    private String content; // Ensure this field is defined
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
-    @Setter
-    private String content;
 
 }

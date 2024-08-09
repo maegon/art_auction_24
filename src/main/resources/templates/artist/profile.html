@@ -65,18 +65,18 @@
             <div class="textAdd">
                 <div class="textTileForm">
                     <span class="title">INTRODUCE</span>
-                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+                    <div class="contentAdd" th:each="add : ${artist.introduceContentAdds}">
                         <span th:text="${add.content}"></span>
                     </div>
                 </div>
                 <div class="textTileForm">
                     <span class="title">MAJOR WORK</span>
-                    <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"
-                       th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"
-                       class="button-majorWorkForm">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+<!--                    <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"-->
+<!--                       th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"-->
+<!--                       class="button-majorWorkForm">-->
+<!--                        <i class="fa-solid fa-arrow-right"></i>-->
+<!--                    </a>-->
+                    <div class="contentAdd" th:each="add : ${artist.majorWorkContentAdds}">
                         <span th:text="${add.content}"></span>
                     </div>
                 </div>
