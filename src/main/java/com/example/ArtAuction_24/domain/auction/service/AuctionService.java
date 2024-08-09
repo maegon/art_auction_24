@@ -53,6 +53,7 @@ public class AuctionService {
         }
     }
 
+
     public List<Auction> findAll() {
         return auctionRepository.findAll();
     }
@@ -62,7 +63,7 @@ public class AuctionService {
     }
 
     // AuctionService.java
-    public Page<Product> getProductsWithFilteringAndSorting(String keyword, Pageable pageable, String sort) {
+    public Page<Product> getProductsWithFilteringAndSorting(String keyword, String auctionName, Pageable pageable, String sort) {
         Sort sortOrder = switch (sort) {
             case "price-asc" -> Sort.by("startingPrice").ascending();
             case "price-desc" -> Sort.by("startingPrice").descending();
@@ -72,10 +73,16 @@ public class AuctionService {
 
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortOrder);
 
-        // status가 ACTIVE인 경매에 포함된 제품만 필터링
-        Page<Product> products = productRepository.findByActiveAuctionsAndFilter(keyword, sortedPageable);
+        // status가 ACTIVE인 경매에 포함된 제품만 필터링 및 auctionName 필터링 추가
+        Page<Product> products = productRepository.findByActiveAuctionsAndFilter(keyword, auctionName, sortedPageable);
 
         return products;
+    }
+
+
+    // 중복 제거된 카테고리 이름 목록을 가져오는 메서드
+    public List<String> getDistinctAuctionNames() {
+        return auctionRepository.findDistinctAuctionNames();
     }
 
 }

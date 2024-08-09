@@ -179,6 +179,10 @@
             padding: 5px 40px;
        }
 
+       #header_loginBtn{
+        margin-left: 0px;
+       }
+
         #search_input{
         width: 200px;
         }

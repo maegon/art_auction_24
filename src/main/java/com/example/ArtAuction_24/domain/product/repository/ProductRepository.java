@@ -56,9 +56,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     FROM Product p
     JOIN p.auctions a
     WHERE a.status = 'ACTIVE' AND
-          (:keyword IS NULL OR p.title LIKE %:keyword%)
+          (:keyword IS NULL OR p.title LIKE %:keyword%) AND
+          (:auctionName IS NULL OR :auctionName = '' OR a.name = :auctionName)
 """)
-    Page<Product> findByActiveAuctionsAndFilter(@Param("keyword") String keyword, Pageable pageable);
+    Page<Product> findByActiveAuctionsAndFilter(@Param("keyword") String keyword, @Param("auctionName") String auctionName, Pageable pageable);
 
 
 
