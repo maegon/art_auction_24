@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /*category 정렬 시작*/
 document.addEventListener('DOMContentLoaded', function() {
-    const categoryLinks = document.querySelectorAll('.category-link');
+    const categoryLinks = document.querySelectorAll('.AuctionListCategory-link');
 
     categoryLinks.forEach(link => {
         link.addEventListener('click', function(event) {

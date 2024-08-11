@@ -1,7 +1,10 @@
 package com.example.ArtAuction_24.domain.product.repository;
 
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +15,5 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
     List<AuctionProduct> findByAuctionId(Long auctionId);
 
     Optional<AuctionProduct> findByProductId(Long productId);
+
 }

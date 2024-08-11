@@ -199,16 +199,92 @@ border-radius: 10px;
 
 /*upcoming-auction end*/
 
-/*bestArtist-container start*/
+/*up animation start*/
+:root {
+  --size: clamp(10rem, 10rem + 40vmin, 30rem);
+  --gap: calc(var(--size) / 5); /* 사이 간격을 늘리기 위해 조정 */
+  --duration: 60s;
+  --scroll-start: 0;
+  --scroll-end: calc(-100% - var(--gap));
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--gap);
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background-color: #f5f5f5; /* gray-100의 대략적인 색상 코드 */
+}
+
+.marquee__group {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--gap);
+  min-width: 100%;
+  animation: scroll-x var(--duration) linear infinite;
+}
+
+.marquee img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover; /* 이미지가 요소를 채우도록 설정 */
+}
 
 
-/*bestArtist-container end*/
+@media (prefers-reduced-motion: reduce) {
+  .marquee__group {
+    animation-play-state: paused;
+  }
+}
 
-/*guide-container start*/
+.marquee--vertical {
+  --mask-direction: to bottom;
+}
+
+.marquee--vertical,
+.marquee--vertical .marquee__group {
+  flex-direction: column;
+}
+
+.marquee--vertical .marquee__group {
+  animation-name: scroll-y;
+}
+
+.marquee--reverse .marquee__group {
+  animation-direction: reverse;
+  animation-delay: -3s;
+}
+
+@keyframes scroll-x {
+  from {
+    transform: translateX(var(--scroll-start));
+  }
+  to {
+    transform: translateX(var(--scroll-end));
+  }
+}
+
+@keyframes scroll-y {
+  from {
+    transform: translateY(var(--scroll-start));
+  }
+  to {
+    transform: translateY(var(--scroll-end));
+  }
+}
 
 
+/*up animation end*/
 
-/*guide-container end*/
 
 /*scroll bar start*/
 

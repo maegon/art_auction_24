@@ -20,128 +20,147 @@
     </div>
 
     <div class="main-container">
+
         <div class="ongoing-container">
-        <div class="aucTitle">
-            <div>진행중인 경매</div>
-            <a th:href="@{/product/list}">
-            <div class="viewAll">전체보기 →</div>
-            </a>
-        </div>
-        <div class="swiper ongoingAuc">
-            <div class="swiper-wrapper mt-3">
-                <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
-                    <a th:href="@{|/product/detail/${product.id}|}"
-                       class="block w-full h-64  overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
-                        <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
-                             th:src="@{${product.thumbnailImg}}"
-                             alt="이미지가 존재하지 않습니다.">
+
+            <div th:if="${#lists.isEmpty(activeAuctionProducts)}">
+                <div class="aucTitle">
+                    <div>등록된 작품</div>
+                    <a th:href="@{/product/list}">
+                        <div class="viewAll">전체보기 →</div>
                     </a>
-                    <div class="ongoing-info">
-                        <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
-                        <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
-                        <hr>
-                        <span class="ongoing-info-Bid">
-                        <span>Current Bid </span>
-                        <span class="ongoing-info-currentBid-kor"> KRW <span class="ongoing-info-currentBid" id="currentBid" th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
-                            </span>
-                        <!--<div class="ongoing-info-endTime">마감 07-24 3:00 PM</div>-->
+                </div>
+                <div class="swiper ongoingAuc">
+                    <div class="swiper-wrapper mt-4">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
+                            <a th:href="@{|/product/detail/${product.id}|}"
+                                class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
+                                <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
+                                    th:src="@{${product.thumbnailImg}}"
+                                    alt="이미지가 존재하지 않습니다.">
+                            </a>
+                            <div class="ongoing-info">
+                                <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
+                                <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
+                                <hr>
+                                <span class="ongoing-info-Bid">
+                                    <span>Current Bid </span>
+                                    <span class="ongoing-info-currentBid-kor"> KRW <span class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="swiper-pagination ongoing-pagination"></div>
                 </div>
             </div>
-            <div class="swiper-pagination ongoing-pagination"></div>
+            <div th:if="${not #lists.isEmpty(activeAuctionProducts)}">
+                <div class="aucTitle">
+                    <div>진행중인 경매</div>
+                    <a th:href="@{/auction/list}">
+                        <div class="viewAll">전체보기 →</div>
+                    </a>
+                </div>
+                <div class="swiper ongoingAuc">
+                    <div class="swiper-wrapper mt-4">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${activeAuctionProducts}">
+                            <a th:href="@{|/product/detail/${product.id}|}"
+                               class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
+                                <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
+                                     th:src="@{${product.thumbnailImg}}"
+                                     alt="이미지가 존재하지 않습니다.">
+                            </a>
+                            <div class="ongoing-info">
+                                <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
+                                <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
+                                <hr>
+                                <span class="ongoing-info-Bid">
+                                    <span>Current Bid </span>
+                                    <span class="ongoing-info-currentBid-kor"> KRW <span class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination ongoing-pagination"></div>
+                </div>
+            </div>
         </div>
-        </div>
+
 
         <div class="upcoming-container">
             <div class="aucTitle">
                 <div>예정된 경매</div>
-                <div class="viewAll">전체보기 →</div>
+                <a th:href="@{/auction/scheduled}">
+                    <div class="viewAll">전체보기 →</div>
+                </a>
             </div>
-            <div class="swiper upcomingAuc">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/그리다만여자사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/풀사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/파란물고기사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/아이사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/산사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/물고기사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/레몬사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/눈사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide upcoming-slide">
-                        <img class="upcoming-img" th:src="@{/image/노란머리여자사진.jpg}" alt="이미지 1">
-                        <div class="upcoming-info">
-                            <div class="upcoming-info-title">작품 제목</div>
-                            <div class="upcoming-info-artistName">작가 이름</div>
-                            <div class="upcoming-info-endTime">예정 07-24 3:00 PM</div>
-                        </div>
-                    </div>
+            <div class="flex items-center justify-between space-x-4 pt-4 border-t border-black">
+                <!-- 사진 -->
+                <div>
+                    <img class="w-32 h-32 object-cover rounded-lg" src="/image/comming soon.png" alt="작품 이미지">
                 </div>
-                <div class="swiper-pagination upcoming-pagination"></div>
+                <!-- 정보 -->
+                <div >
+                    <div class="text-lg font-semibold mb-2">작품 제목</div>
+                    <div class="text-sm text-gray-600 mb-2">작가 이름</div>
+                    <div class="text-sm text-gray-500">예정 07-24 3:00 PM</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="marquee-wrapper mt-20 md:px-[300px]">
+        <div class="marquee">
+            <div class="marquee__group">
+                <!-- 반복할 이미지들 -->
+                <img src="image/풀사진.jpg" alt="Description 1">
+                <img src="image/나무들.jpg" alt="Description 2">
+                <img src="image/아이사진.jpg" alt="Description 3">
+                <img src="image/산사진.jpg" alt="Description 4">
+                <img src="image/노란머리여자사진.jpg" alt="Description 5">
+                <!-- 추가 이미지들 -->
+            </div>
+            <div aria-hidden="true" class="marquee__group">
+                <!-- 반복할 이미지들 (동일한 이미지들) -->
+                <img src="image/풀사진.jpg" alt="Description 1">
+                <img src="image/나무들.jpg" alt="Description 2">
+                <img src="image/아이사진.jpg" alt="Description 3">
+                <img src="image/산사진.jpg" alt="Description 4">
+                <img src="image/노란머리여자사진.jpg" alt="Description 5">
+                <!-- 추가 이미지들 -->
+            </div>
+        </div>
+
+        <div class="marquee marquee--reverse mt-5">
+            <div class="marquee__group">
+                <!-- 반대 방향으로 스크롤할 이미지들 -->
+                <img src="image/레몬사진.jpg" alt="Description 5">
+                <img src="image/폭포.jpg" alt="Description 4">
+                <img src="image/토끼.jpg" alt="Description 3">
+                <img src="image/바다.jpg" alt="Description 2">
+                <img src="image/들판.jpg" alt="Description 1">
+                <!-- 추가 이미지들 -->
+            </div>
+            <div aria-hidden="true" class="marquee__group">
+                <!-- 반대 방향으로 반복할 이미지들 -->
+                <img src="image/레몬사진.jpg" alt="Description 5">
+                <img src="image/폭포.jpg" alt="Description 4">
+                <img src="image/토끼.jpg" alt="Description 3">
+                <img src="image/바다.jpg" alt="Description 2">
+                <img src="image/들판.jpg" alt="Description 1">
+                <!-- 추가 이미지들 -->
             </div>
         </div>
     </div>
 
-    <div class="bestArtist-container w-full mt-10 md:px-[300px]">
+
+
+
+    <div class="bestArtist-container w-full mt-20 md:px-[300px]">
         <div class="bestArtist-title flex justify-between items-center text-xl font-bold mt-20 border-b border-black">
             <div>추천 작가</div>
         </div>
-        <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-8" th:each="topProduct : ${topProduct}">
+        <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-4" th:each="topProduct : ${topProduct}">
             <div class="artist-container flex flex-wrap items-center justify-between mb-5">
                 <div class="artist-info flex-1 text-white p-5 font-bold max-w-xl">
                     <div class="text-4xl text-white font-bold mb-2 flex">
@@ -163,11 +182,11 @@
     </div>
 
 
-    <div class="guide-container mb-24 md:px-[300px]">
+    <div class="guide-container mb-24 mt-20 md:px-[300px]">
         <div class="guide-Title flex justify-between items-center text-xl font-bold mt-20 border-b border-black">
             <div>경매 가이드</div>
         </div>
-        <div class="guide-section flex flex-col md:flex-row justify-around items-center p-5 mt-8 space-y-5 md:space-y-0">
+        <div class="guide-section flex flex-col md:flex-row justify-around items-center mt-4 space-y-5 md:space-y-0">
             <div class="guide-section-left relative bg-gradient-to-l from-gray-200 to-indigo-200 w-96 rounded-lg">
                 <div class="text-overlay absolute bottom-12 right-2 p-2">
                     <div class="howToBuyTitle text-lg font-bold">구매 방법</div>

@@ -1,28 +1,22 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="container mx-auto px-6 lg:px-[220px]">
+    <div class="productList-container mx-auto px-6 lg:px-[300px]">
         <h1 class="text-2xl font-bold text-center py-5">모든 작품</h1>
         <div id="search_container" class="flex flex-col sm:flex-row justify-between mb-5 pb-4 items-center space-y-4 sm:space-y-0">
 
             <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0">
             <!-- 드롭다운 추가 부분 -->
-            <div class="relative sm:ml-4 flex-shrink-0">
+            <div class="relative flex-shrink-0">
                 <button id="product-sortButton" class="border border-black text-gray-700 px-4 py-2 w-48 flex items-center justify-center">
                     <span id="product-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
                 </button>
-                <div id="product-sortDropdown" class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 hidden">
+                <div id="product-sortDropdown" class="absolute left-0 w-48 bg-white border border-gray-300 shadow-lg z-10 hidden">
                     <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
                     <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
                     <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
                 </div>
             </div>
 
-            <!-- 경매 작품만 보기 버튼 -->
-            <div class="sm:ml-4 flex-shrink-0 flex justify-center items-center">
-                <button id="auctionOnlyButton" class="bg-black text-white text-bold px-4 py-2 flex items-center justify-center">
-                    <span>경매 작품만 보기</span>
-                </button>
-            </div>
             </div>
             <form id="product-searchForm" class="flex border border-gray-300 rounded-lg overflow-hidden w-full sm:w-auto">
                 <input type="text" name="kw" id="search_input" placeholder="작가 또는 작품명"
@@ -63,7 +57,7 @@
         </ul>
 
         <div th:if="${paging.empty}" class="flex justify-center items-center h-80">
-            <p class="text-center text-gray-500 text-lg">데이터가 존재하지 않습니다.</p>
+            <p class="text-center text-gray-500 text-lg">작품이 존재하지 않습니다.</p>
         </div>
 
         <!-- 페이징 처리 시작 -->

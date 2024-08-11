@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.product.repository;
 
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import org.springframework.data.domain.Page;
@@ -61,6 +62,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 """)
     Page<Product> findByActiveAuctionsAndFilter(@Param("keyword") String keyword, @Param("auctionName") String auctionName, Pageable pageable);
 
-
+    // ACTIVE 상태의 경매에 포함된 제품을 찾기 위한 메소드
+    @Query("SELECT p FROM Product p JOIN p.auctions a WHERE a.status = :status")
+    List<Product> findProductsByAuctionStatus(@Param("status") AuctionStatus status);
 
 }

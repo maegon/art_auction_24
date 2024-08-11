@@ -52,6 +52,13 @@ public class AuctionController {
         return "auction/list";
     }
 
+    @GetMapping("/scheduled")
+    public String scheduledAuctions(Model model) {
+        List<Auction> scheduledAuctions = auctionService.getScheduledAuctions();
+        model.addAttribute("scheduledAuctions", scheduledAuctions);
+        return "auction/scheduled";
+    }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")

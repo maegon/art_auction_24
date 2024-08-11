@@ -1,19 +1,19 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <!-- 컨텐츠 영역 -->
-    <div class="ml-4 lg:ml-40 container mx-auto px-6 lg:px-[220px]">
+    <div class="auctionList-container mx-auto px-6 lg:px-[300px]">
         <h1 class="text-2xl font-bold text-center py-5">경매 작품</h1>
 
         <!-- Flexbox 컨테이너 추가 -->
         <div id="AuctionList_container" class="flex flex-col lg:flex-row">
             <!-- 왼쪽에 고정된 네비게이션 스타일의 검색 및 정렬 박스 -->
-            <div id="AuctionSearch_nav" class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-10 pl-0 lg:pl-4 z-10 bg-white h-auto lg:h-80">
+            <div id="AuctionSearch_nav" class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-16 pb-4 pl-0 lg:pr-4 z-10 bg-white h-auto lg:h-80">
                 <!-- 드롭다운 부분 -->
                 <div class="relative flex-shrink-0">
                     <button id="auction-sortButton" class="border border-black text-gray-700 px-4 mt-5 py-2 flex items-center w-full justify-center">
                         <span id="auction-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
                     </button>
-                    <div id="auction-sortDropdown" class="absolute left-0 mt-2 w-full bg-white border border-gray-300 shadow-lg hidden">
+                    <div id="auction-sortDropdown" class="absolute left-0 w-full bg-white border border-gray-300 shadow-lg hidden">
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-asc">가격 낮은 순</a>
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="price-desc">가격 높은 순</a>
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" data-sort="latest">최신 순</a>
@@ -39,14 +39,14 @@
                     <ul id="AuctionCategory-list" class="list-disc text-gray-500">
                         <!-- 최대 6개의 카테고리만 표시 -->
                         <li th:each="category, iterStat : ${categories}" th:if="${iterStat.index < 6}">
-                            <a href="#" th:text="${category}" th:attr="data-category=${category}" class="category-link"></a>
+                            <a href="#" th:text="${category}" th:attr="data-category=${category}" class="AuctionListCategory-link"></a>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <!-- 경매 작품 목록 -->
-            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-3 mb-10">
+            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
                 <li th:each="product, loop : ${paging}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item">
                     <a th:href="@{|/product/detail/${product.id}|}"
                        class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
@@ -76,7 +76,7 @@
         </div>
 
         <div th:if="${paging.empty}" class="flex justify-center items-center h-80">
-            <p class="text-center text-gray-500 text-lg">등록된 작품이 없습니다.</p>
+            <p class="text-center text-gray-500 text-lg">경매 진행중인 작품이 없습니다.</p>
         </div>
 
         <!-- 페이징 처리 시작 -->
