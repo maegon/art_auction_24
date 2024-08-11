@@ -53,6 +53,8 @@ public class MemberService {
                 .phoneNumber(phoneNumber)
                 .address(address)
                 .role(MemberRole.MEMBER)
+                .isActive(true) // isActive 필드를 true로 설정 (민섭 추가)
+                .balance(0L) // 초기화된 balance 값 설정 (민섭추가)
                 .createDate(LocalDateTime.now()) // 생성일자
                 .build();
 
@@ -108,6 +110,10 @@ public class MemberService {
         return memberRepository.existsByNickname(nickname);
     }
 
+    public Long getMemberBalance(Long id) { //민섭 추가
+        Member member = getMember(id);
+        return member.getBalance();
+    }
 
     public Member getMember(Long id) {
         Optional<Member> op = memberRepository.findById(id);
@@ -122,5 +128,12 @@ public class MemberService {
             throw new DateTimeException("Member not found");
         }
         return op.get();
+    }
+
+    public void updateBalance(String username, Long amount) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        member.setBalance(member.getBalance() + amount);
+        memberRepository.save(member);
     }
 }
