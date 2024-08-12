@@ -1,10 +1,11 @@
 var swiper1 = new Swiper(".mySwiper", {
-      spaceBetween: 30,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
+  spaceBetween: 30, // 슬라이드 사이의 간격
+  pagination: {
+    el: ".swiper-pagination", // 페이지네이션 요소
+    clickable: true, // 페이지네이션 클릭 가능
+  },
+  loop: true, // 무한 루프 설정
+});
 
 /*ongoing js start*/
  var swiper2 = new Swiper(".ongoingAuc", {

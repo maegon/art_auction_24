@@ -65,27 +65,27 @@
         <h1 class="text-2xl font-bold text-center py-5">경매 정보 입력</h1>
             <form th:action="@{/auction/create}" th:object="${auctionForm}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div class="mb-4">
-                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Auction Title:</label>
-                    <input type="text" id="name" th:field="*{name}" placeholder="Enter auction title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Auction Title</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Enter auction title" class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
-                    <input type="datetime-local" id="startDate" th:field="*{startDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
+                    <input type="datetime-local" id="startDate" th:field="*{startDate}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
-                    <input type="datetime-local" id="endDate" th:field="*{endDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
+                    <input type="datetime-local" id="endDate" th:field="*{endDate}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Select Products:</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Select Products</label>
                     <div class="flex flex-col space-y-2">
-                        <div th:each="product : ${allProducts}" class="flex items-center mb-2 border-b border-gray-300 pb-2">
+                        <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2">
                             <label class="flex items-center space-x-3 cursor-pointer w-full">
                                 <input type="checkbox" name="products" th:value="${product.id}" class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-400"/>
                                 <img th:src="@{${product.thumbnailImg}}" alt="Product Image" class="w-16 h-16 object-cover"/>
@@ -97,12 +97,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products:</label>
-                    <div id="selectedProducts" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"></div>
+                    <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products</label>
+                    <div id="selectedProducts" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"></div>
                 </div>
 
                 <div class="flex items-center justify-between mt-4">
-                    <button type="submit" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" class="w-full sm:w-auto btn font-bold py-2 px-4 focus:outline-none focus:shadow-outline">
                         Create Auction
                     </button>
                 </div>

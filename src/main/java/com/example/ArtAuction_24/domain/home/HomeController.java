@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,6 +53,14 @@ public class HomeController {
         // ACTIVE 상태의 경매에 포함된 제품을 가져옵니다.
         List<Product> activeAuctionProducts = productService.findProductsByAuctionStatus(AuctionStatus.ACTIVE);
         model.addAttribute("activeAuctionProducts", activeAuctionProducts);
+
+        // SCHEDULED 상태의 경매의 정보를 가져옵니다.
+        List<Auction> scheduledAuctions = auctionService.getScheduledAuctions();
+        List<Auction> limitedScheduledAuctions = scheduledAuctions.stream()
+                .limit(2)
+                .collect(Collectors.toList());
+        model.addAttribute("scheduledAuctions", limitedScheduledAuctions);
+
 
         return "home/main";
     }

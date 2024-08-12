@@ -92,7 +92,7 @@
 }
 
 .header_profile, .header_qna, .header_logout
-, .header_productAdd, .header_profileCreate, .header_adminPage{
+, .header_productAdd, .header_profileCreate, .header_adminPage, .header_recharge{
     margin-left: 0px;
     text-decoration: none;
     color: black;
@@ -104,7 +104,7 @@
 }
 #profileSection{
     margin-bottom: 20px;
-    margin-left: 10px;
+
 }
 .profile-image {
     width: 40px;
@@ -146,7 +146,7 @@
 #profileDropdown a:hover {
     color: black;
     background-color: #f1f1f1;
-    border-left: 3px solid green;
+    border-left: 3px solid black;
 }
 /*프로필 부분 처리 끝*/
 
