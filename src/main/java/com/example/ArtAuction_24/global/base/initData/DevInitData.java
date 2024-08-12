@@ -71,9 +71,9 @@ public class DevInitData implements BeforeInitData {
             Artist park = artistService.getArtistByKorName("박작가");
             Artist lee = artistService.getArtistByKorName("이작가");
 
-            productService.create("파란물고기 그림", "파란물고기 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(10000), new BigDecimal(10000), LocalDateTime.now(), "/image/파란물고기사진.jpg", "수채화", kim);
-            productService.create("풀 그림", "풀 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(11000), new BigDecimal(11000), LocalDateTime.now(), "/image/풀사진.jpg", "수채화", na);
-            productService.create("아이 그림", "아이 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(12000), new BigDecimal(12000), LocalDateTime.now(), "/image/아이사진.jpg", "수채화", park);
+            productService.create("토끼 그림", "토끼를 그린 그림입니다.", "사용된 재료", "10x10 크기", new BigDecimal(10000), new BigDecimal(10000), LocalDateTime.now(), "/image/토끼.jpg", "수채화", kim);
+            productService.create("은하계 그림", "은하계를 그린 그림입니다.", "사용된 재료", "10x10 크기", new BigDecimal(11000), new BigDecimal(11000), LocalDateTime.now(), "/image/풀사진.jpg", "수채화", na);
+            productService.create("영혼 그림", "영혼을 그린 그림입니다.", "사용된 재료", "10x10 크기", new BigDecimal(12000), new BigDecimal(12000), LocalDateTime.now(), "/image/아이사진.jpg", "수채화", park);
             productService.create("산 그림", "산 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(13000), new BigDecimal(13000), LocalDateTime.now(), "/image/산사진.jpg", "수채화", lee);
             productService.create("노란머리여자 그림", "노란머리여자 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(14000), new BigDecimal(14000), LocalDateTime.now(), "/image/노란머리여자사진.jpg", "수채화", kim);
             productService.create("그리다만여자 그림", "그리다만여자 그림 설명", "사용된 재료", "10x10 크기", new BigDecimal(15000), new BigDecimal(15000), LocalDateTime.now(), "/image/그리다만여자사진.jpg", "수채화", na);

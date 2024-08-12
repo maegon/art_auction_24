@@ -6,11 +6,13 @@ import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.notification.entity.Notification;
 import com.example.ArtAuction_24.domain.review.entity.Review;
+import com.example.ArtAuction_24.recharge.entity.Recharge;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.management.relation.Role;
+import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -42,10 +44,15 @@ public class Member extends BaseEntity {
     @Column(unique = false)
     private String image; // 이미지 파일 이름을 저장
 
-    private String isActive;
+    @Column(nullable = false)
+    private Boolean isActive = true; // Boolean으로 변경하고 기본값을 true로 설정
 
+    @Column(nullable = false)
+    private Long balance = 0L; // 기본값을 0으로 설정
 
-    private Long balance; //충전 잔액
+    @OneToMany(mappedBy = "member")
+    private List<Recharge> rechargeList;
+
 
     @OneToMany(mappedBy = "member")
     private List<Bid> bidList;
@@ -61,4 +68,13 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Answer> answerList; // 답변목록
+
+    private transient String formattedbalance;
+
+
+    @PostLoad
+    private void postLoad() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        this.formattedbalance = formatter.format(this.balance);
+    }
 }

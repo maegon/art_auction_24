@@ -4,70 +4,113 @@
     <title>경매 정보 입력</title>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const productsSelect = document.getElementById("products");
+            const productsSelect = document.querySelectorAll("input[name='products']");
             const selectedProductsContainer = document.getElementById("selectedProducts");
 
-            productsSelect.addEventListener("change", function() {
-                const selectedOptions = Array.from(productsSelect.selectedOptions);
-                selectedProductsContainer.innerHTML = "";
+            // 선택된 체크박스 상태를 업데이트하는 함수
+            function updateSelectedProducts() {
+                selectedProductsContainer.innerHTML = ""; // 기존 내용을 지우기
 
-                selectedOptions.forEach(option => {
-                    const item = document.createElement("div");
-                    item.textContent = option.textContent;
-                    selectedProductsContainer.appendChild(item);
-                });
+                const selectedOptions = Array.from(productsSelect)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => {
+                        const label = checkbox.closest("label");
+                        return {
+                            text: label.querySelector("span").textContent,
+                            imageUrl: label.querySelector("img") ? label.querySelector("img").src : null
+                        };
+                    });
+
+                if (selectedOptions.length === 0) {
+                    const message = document.createElement("p");
+                    message.textContent = "선택된 작품이 없습니다.";
+                    message.classList.add("text-gray-500", "italic");
+                    selectedProductsContainer.appendChild(message);
+                } else {
+                    selectedOptions.forEach(option => {
+                        const item = document.createElement("div");
+                        item.classList.add("selected-product", "flex", "items-center", "mb-2", "border-b", "border-gray-300", "pb-2", "bg-gray-100");
+
+                        if (option.imageUrl) {
+                            const img = document.createElement("img");
+                            img.src = option.imageUrl;
+                            img.classList.add("w-16", "h-16", "object-cover", "mr-2");
+                            item.appendChild(img);
+                        }
+
+                        const text = document.createElement("span");
+                        text.textContent = option.text;
+                        text.classList.add("text-sm", "text-gray-700");
+                        item.appendChild(text);
+
+                        selectedProductsContainer.appendChild(item);
+                    });
+                }
+            }
+
+            // 체크박스 상태 변경 시 업데이트
+            productsSelect.forEach(checkbox => {
+                checkbox.addEventListener("change", updateSelectedProducts);
             });
+
+            // 페이지 로드 시 선택된 제품 초기화
+            updateSelectedProducts();
         });
     </script>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="bg-gray-100 flex items-center justify-center min-h-screen">
-        <div class="max-w-lg w-full bg-white p-6 rounded-lg shadow-lg">
-            <h1 class="text-2xl font-bold mb-4">경매 정보 입력</h1>
+    <div class="auctionForm-container mx-auto px-6 lg:px-[300px]">
+
+        <h1 class="text-2xl font-bold text-center py-5">경매 정보 입력</h1>
             <form th:action="@{/auction/create}" th:object="${auctionForm}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div class="mb-4">
-                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Auction Title:</label>
-                    <input type="text" id="name" th:field="*{name}" placeholder="Enter auction title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Auction Title</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Enter auction title" class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date:</label>
-                    <input type="datetime-local" id="startDate" th:field="*{startDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="startDate" class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
+                    <input type="datetime-local" id="startDate" th:field="*{startDate}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date:</label>
-                    <input type="datetime-local" id="endDate" th:field="*{endDate}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <label for="endDate" class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
+                    <input type="datetime-local" id="endDate" th:field="*{endDate}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
                     <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="products" class="block text-gray-700 text-sm font-bold mb-2">Select Products:</label>
-                    <select id="products" th:field="*{products}" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-
-                        <option th:each="product : ${allProducts}" th:value="${product.id}" th:text="|${product.title} (${product.artist.korName})|">Product Name</option>
-
-                    </select>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Select Products</label>
+                    <div class="flex flex-col space-y-2">
+                        <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2">
+                            <label class="flex items-center space-x-3 cursor-pointer w-full">
+                                <input type="checkbox" name="products" th:value="${product.id}" class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-400"/>
+                                <img th:src="@{${product.thumbnailImg}}" alt="Product Image" class="w-16 h-16 object-cover"/>
+                                <span th:text="|${product.title} (${product.artist.korName})|" class="ml-2 text-gray-700 text-sm"></span>
+                            </label>
+                        </div>
+                    </div>
                     <p th:if="${#fields.hasErrors('products')}" th:errors="*{products}" class="text-red-500 text-xs italic"></p>
                 </div>
 
                 <div class="mb-4">
-                    <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products:</label>
-                    <div id="selectedProducts" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></div>
+                    <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products</label>
+                    <div id="selectedProducts" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"></div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Auction</button>
+                <div class="flex items-center justify-between mt-4">
+                    <button type="submit" class="w-full sm:w-auto btn font-bold py-2 px-4 focus:outline-none focus:shadow-outline">
+                        Create Auction
+                    </button>
                 </div>
-
                 <div th:if="${error}" class="mt-4">
                     <p th:text="${error}" class="text-red-500 text-xs italic"></p>
                 </div>
             </form>
-        </div>
+
     </div>
 </div>
 </body>

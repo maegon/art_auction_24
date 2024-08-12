@@ -1,6 +1,9 @@
 package com.example.ArtAuction_24.domain.home;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class HomeController {
 
     private final ProductService productService;
     private final MemberService memberService;
+    private final AuctionService auctionService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -44,6 +49,18 @@ public class HomeController {
                 model.addAttribute("username", currentMember.getUsername());
             }
         }
+
+        // ACTIVE 상태의 경매에 포함된 제품을 가져옵니다.
+        List<Product> activeAuctionProducts = productService.findProductsByAuctionStatus(AuctionStatus.ACTIVE);
+        model.addAttribute("activeAuctionProducts", activeAuctionProducts);
+
+        // SCHEDULED 상태의 경매의 정보를 가져옵니다.
+        List<Auction> scheduledAuctions = auctionService.getScheduledAuctions();
+        List<Auction> limitedScheduledAuctions = scheduledAuctions.stream()
+                .limit(2)
+                .collect(Collectors.toList());
+        model.addAttribute("scheduledAuctions", limitedScheduledAuctions);
+
 
         return "home/main";
     }

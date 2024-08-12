@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.product.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
@@ -118,5 +119,10 @@ public class ProductService {
 
     public List<Product> findProductsByActiveAuctions() {
         return productRepository.findProductsByActiveAuctions();
+    }
+
+    // ACTIVE 상태의 경매에 포함된 제품을 찾기 위한 메소드
+    public List<Product> findProductsByAuctionStatus(AuctionStatus status) {
+        return productRepository.findProductsByAuctionStatus(status);
     }
 }

@@ -14,7 +14,6 @@ $(document).ready(function () {
            $("#auction-searchForm").submit();
        });
 
-
 });
 
 /* list 검색 부분 끝 */
@@ -64,4 +63,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
 /* list 드롭다운 메뉴 부분 끝 */
+
+/*category 정렬 시작*/
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryLinks = document.querySelectorAll('.AuctionListCategory-link');
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 클릭 동작 방지
+
+            // 데이터 속성 읽기
+            const auctionName = this.dataset.category;
+            console.log('Selected category:', auctionName); // 콘솔에서 값 확인
+
+            // URL 생성 및 페이지 이동
+            const encodedCategory = encodeURIComponent(auctionName);
+            const url = `/auction/list?kw=&sort=latest&viewAll=false&auctionName=${encodedCategory}`;
+            window.location.href = url;
+        });
+    });
+});
+
+/*category 정렬 끝*/

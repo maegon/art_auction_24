@@ -35,20 +35,30 @@ public class AuctionController {
     private final ProductRepository productRepository;
 
     @GetMapping("/list")
-    @PreAuthorize("isAuthenticated()")
     public String list(Pageable pageable, Model model,
                        @RequestParam(value = "kw", required = false) String keyword,
-                       @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort) {
+                       @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort,
+                       @RequestParam(value = "auctionName", required = false) String auctionName) {
 
-        // status가 ACTIVE인 경매에 포함된 제품을 필터링 및 정렬
-        Page<Product> paging = auctionService.getProductsWithFilteringAndSorting(keyword, pageable, sort);
+        // 필터링 및 정렬된 제품 목록 가져오기
+        Page<Product> paging = auctionService.getProductsWithFilteringAndSorting(keyword, auctionName, pageable, sort);
 
+        model.addAttribute("categories", auctionService.getDistinctAuctionNames());
         model.addAttribute("paging", paging);
         model.addAttribute("kw", keyword);
         model.addAttribute("sort", sort);
+        model.addAttribute("auctionName", auctionName);
 
         return "auction/list";
     }
+
+    @GetMapping("/scheduled")
+    public String scheduledAuctions(Model model) {
+        List<Auction> scheduledAuctions = auctionService.getScheduledAuctions();
+        model.addAttribute("scheduledAuctions", scheduledAuctions);
+        return "auction/scheduled";
+    }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")

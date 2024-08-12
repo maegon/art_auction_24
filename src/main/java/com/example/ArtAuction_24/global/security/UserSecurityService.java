@@ -37,7 +37,7 @@ public class UserSecurityService implements UserDetailsService {
         if ( "admin".equals(username) ) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
         }
-        else if("artist".contains(username)){
+        else if ("artist".equals(username)) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ARTIST.getValue()));
         }
         else {

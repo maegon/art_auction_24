@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.recharge.entity;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,14 +21,19 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recharge extends BaseEntity { // 충전
+public class Recharge extends BaseEntity { // 충전(사용 X)
 
 
-    private Long amount;
-    private LocalDateTime rechargeDate;
+    @Column(nullable = false)
+    private Long amount; // 충전액
 
-    @ManyToOne
+    @Column(nullable = false)
+    private LocalDateTime rechargeDate = LocalDateTime.now(); // 기본값 설정
+
+    @Column(nullable = false)
+    private String orderId; // 추가된 필드
+
+    @ManyToOne(optional = false)
     private Member member;
-
 
 }

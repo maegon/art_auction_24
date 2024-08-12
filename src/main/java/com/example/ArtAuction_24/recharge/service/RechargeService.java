@@ -39,4 +39,10 @@ public class RechargeService {
 
         return rechargeRepository.findByMember(member);
     }
+
+    public List<Recharge> findByMember(Member member) {
+        return rechargeRepository.findByMember(member);
+    }
+
+
 }

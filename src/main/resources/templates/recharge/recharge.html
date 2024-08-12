@@ -1,0 +1,154 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <style>
+        .active {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+        .button-active {
+            background-color: #000000; /* 검은색 배경 */
+            color: #ffffff; /* 흰색 글자 */
+        }
+        .amount-label {
+            background-color: #000000; /* 기본 배경색 */
+            border: 1px solid #000000; /* 기본 테두리 색상 */
+            color: #6b7280; /* 기본 글자색 */
+        }
+        .amount-label.active {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .amount-label.custom-active {
+            background-color: #000000; /* 검은색 배경 */
+            color: #ffffff; /* 흰색 글자 */
+        }
+    </style>
+</head>
+<div layout:fragment="content"  class=" leading-normal tracking-normal">
+    <div class="flex justify-center items-center min-h-screen py-8 px-4">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-lg overflow-hidden">
+            <div th:text="|${customerName}님의 총 충전금액은 ${totalBalance}원 입니다.|" class="total-balance-text p-4 mb-6 text-center text-lg font-semibold text-white rounded-lg shadow-md bg-black">
+            </div>
+
+            <!-- 결제 영역 -->
+            <div class="p-6">
+                <h1 class="text-3xl font-extrabold text-gray-800 mb-6">충전하기</h1>
+                <div id="custom-recharge-section">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">충전 금액 선택</h2>
+                    <div class="flex flex-wrap justify-center gap-4 mb-4">
+                        <!-- 모든 버튼 크기 일관되게 설정 -->
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="10000">10,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="50000">50,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="100000">100,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="500000">500,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="800000">800,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" data-amount="1000000">1,000,000원</label>
+                        <label class="amount-label bg-gray-200 border border-gray-300 rounded px-4 py-2 cursor-pointer text-gray-600 transition-transform transform hover:scale-105 hover:bg-gray-300  text-center" id="amountCustom">직접 입력</label>
+                    </div>
+                    <div id="customAmountContainer" class="hidden mb-4">
+                        <input type="number" id="customAmount" placeholder="충전 금액을 입력하세요" min="1" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </div>
+                <!-- 결제하기 버튼 -->
+                <button id="paymentButton" class="bg-black text-white rounded-lg px-6 py-3 font-semibold transition-transform transform hover:scale-105 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-black w-full" onclick="requestPayment()">결제하기</button>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <script th:inline="javascript">
+        // Thymeleaf 변수를 JavaScript 변수로 주입합니다.
+        let customerName = /*[[${customerName}]]*/;
+        let email = /*[[${email}]]*/;
+        let phoneNumber = /*[[${phoneNumber}]]*/;
+
+        let selectedAmount = null;
+
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.querySelectorAll('.amount-label').forEach(label => {
+                label.classList.remove('active');
+            });
+            document.querySelector(`.amount-label[data-amount="${amount}"]`).classList.add('active');
+        }
+
+        document.querySelectorAll('.amount-label').forEach(label => {
+            label.addEventListener('click', function() {
+                if (this.id === 'amountCustom') {
+                    // 직접 입력 버튼 클릭 시
+                    document.getElementById('customAmountContainer').classList.remove('hidden');
+                    document.getElementById('customAmount').focus();
+                    selectedAmount = null;
+
+                    // 모든 금액 버튼의 선택 상태를 제거
+                    document.querySelectorAll('.amount-label').forEach(label => {
+                        label.classList.remove('active', 'custom-active'); // 'active'와 'custom-active' 클래스를 제거
+                    });
+
+                    // 직접 입력 버튼에 'custom-active' 클래스 추가
+                    this.classList.add('custom-active');
+
+                } else {
+                    // 금액 버튼 클릭 시
+                    const amount = this.getAttribute('data-amount');
+                    selectAmount(amount);
+                    document.getElementById('customAmountContainer').classList.add('hidden');
+
+                    // 직접 입력 버튼에서 'custom-active' 클래스 제거
+                    document.getElementById('amountCustom').classList.remove('custom-active');
+                }
+            });
+        });
+
+        async function requestPayment(customerName,email,phoneNumber  ) {
+            if (selectedAmount === null && document.getElementById('customAmountContainer').classList.contains('hidden')) {
+                alert('충전 금액을 선택하세요.');
+                return;
+            }
+
+            const finalAmount = selectedAmount || parseFloat(document.getElementById('customAmount').value);
+
+            if (isNaN(finalAmount) || finalAmount <= 0) {
+                alert('올바른 충전 금액을 입력하세요.');
+                return;
+            }
+
+            // 결제 버튼을 클릭 상태로 변경
+            const paymentButton = document.getElementById('paymentButton');
+            paymentButton.classList.add('button-active');
+            paymentButton.disabled = true; // 버튼 클릭 후 비활성화
+
+            const clientKey = "test_ck_GjLJoQ1aVZbMXDBleB4lVw6KYe2R";
+            const customerKey = generateRandomString();
+            const tossPayments = TossPayments(clientKey);
+            const payment = tossPayments.payment({ customerKey });
+
+            await payment.requestPayment({
+                method: "CARD",
+                amount: { currency: "KRW", value: Math.floor(finalAmount) }, // 정수형으로 설정
+                orderId: generateRandomString(),
+                orderName: "충전 주문",
+                successUrl: window.location.origin + "/recharge/success",
+                failUrl: window.location.origin + "/recharge/fail",
+                customerName: customerName,
+                customerEmail: email,
+                customerMobilePhone: phoneNumber,
+                card: {
+                    useEscrow: false,
+                    flowMode: "DEFAULT",
+                    useCardPoint: false,
+                    useAppCardOnly: false,
+                },
+            }).finally(() => {
+                // 결제 요청 후 버튼 복원
+                paymentButton.classList.remove('button-active');
+                paymentButton.disabled = false;
+            });
+        }
+
+        function generateRandomString() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+    </script>
+</div>
+</html>
