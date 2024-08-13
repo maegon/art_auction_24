@@ -65,19 +65,33 @@
             <div class="textAdd">
                 <div class="textTileForm">
                     <span class="title">INTRODUCE</span>
-                    <div class="contentAdd" th:each="add : ${artist.introduceContentAdds}">
-                        <span th:text="${add.content}"></span>
-                    </div>
+                    <span id="introduce" th:text="${artist.introduce}"></span>
                 </div>
                 <div class="textTileForm">
                     <span class="title">MAJOR WORK</span>
-<!--                    <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"-->
-<!--                       th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"-->
-<!--                       class="button-majorWorkForm">-->
-<!--                        <i class="fa-solid fa-arrow-right"></i>-->
-<!--                    </a>-->
-                    <div class="contentAdd" th:each="add : ${artist.majorWorkContentAdds}">
-                        <span th:text="${add.content}"></span>
+                    <!-- 서버에서 전달된 데이터 출력 -->
+                    <div class="contentAddContainer">
+                        <div class="input-group">
+                            <div class="contentAdd" th:each="add : ${artist.titleContentAdds}">
+                                &lt;<span th:text="${add.content}"></span>&gt;
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.yearContentAdds}">
+                                (<span th:text="${add.content}"></span>):
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.widthContentAdds}">
+                                각 <span th:text="${add.content}"></span>
+                            </div>
+<!--                            <span>X</span>-->
+                            <div class="contentAdd" th:each="add : ${artist.heightContentAdds}">
+                                <span th:text="${add.content}"></span>
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.unitContentAdds}">
+                                <span th:text="${add.content}"></span>,
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.techniqueContentAdds}">
+                                <span th:text="${add.content}"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="textTileForm">

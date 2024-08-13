@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
+import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -59,11 +60,27 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<IntroduceContentAdd> introduceContentAdds;
+    private List<TitleContentAdd> titleContentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<MajorWorkContentAdd> majorWorkContentAdds;
+    private List<YearContentAdd> yearContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<WidthContentAdd> widthContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<HeightContentAdd> heightContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<UnitContentAdd> unitContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<TechniqueContentAdd> techniqueContentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
