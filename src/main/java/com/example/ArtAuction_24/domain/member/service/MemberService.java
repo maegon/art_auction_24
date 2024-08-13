@@ -2,8 +2,8 @@ package com.example.ArtAuction_24.domain.member.service;
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
-import com.example.ArtAuction_24.domain.member.form.MemberForm;
-import com.example.ArtAuction_24.domain.member.form.MemberForm2;
+import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
+import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -89,14 +84,47 @@ public class MemberService {
                 .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
     }
 
-    public void updateMember(MemberForm2 memberForm, String username) {
+    public void updateMember(MemberModifyForm memberForm, String username) {
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
-        member.setUsername(memberForm.getUsername());
-        member.setEmail(memberForm.getEmail());
-        member.setNickname(memberForm.getNickname());
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
 
+
+
+        if (memberForm.getEmail() != null && !memberForm.getEmail().trim().isEmpty()) {
+            member.setEmail(memberForm.getEmail());
+        }
+        if (memberForm.getNickname() != null && !memberForm.getNickname().trim().isEmpty()) {
+            member.setNickname(memberForm.getNickname());
+        }
+        if (memberForm.getPassword() != null && !memberForm.getPassword().trim().isEmpty()) {
+            member.setPassword(passwordEncoder.encode(memberForm.getPassword()));
+        }
+
+        if (memberForm.getMultipartFile() != null && !memberForm.getMultipartFile().isEmpty()) {
+            String thumbnailRelPath = "image/member/" + UUID.randomUUID().toString() + ".jpg";
+            File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+
+            thumbnailFile.mkdir();
+
+            try {
+                memberForm.getMultipartFile().transferTo(thumbnailFile);
+            } catch( IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            member.setImage(thumbnailRelPath);
+        }
+
+        memberRepository.save(member);
+    }
+
+    public void updateMemberAddress(MemberAddressForm memberAddressForm, String username) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
+
+        if (memberAddressForm.getAddress() != null && !memberAddressForm.getAddress().trim().isEmpty()) {
+            member.setAddress(memberAddressForm.getAddress());
+        }
         memberRepository.save(member);
     }
 
@@ -130,10 +158,12 @@ public class MemberService {
         return op.get();
     }
 
+
     public void updateBalance(String username, Long amount) {
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         member.setBalance(member.getBalance() + amount);
         memberRepository.save(member);
     }
+
 }

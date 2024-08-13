@@ -1,35 +1,28 @@
 package com.example.ArtAuction_24.domain.member.controller;
 
 
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
-import com.example.ArtAuction_24.domain.member.form.MemberForm2;
+import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.global.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -156,9 +149,13 @@ public class MemberController {
     public String myPage(Model model, Principal principal) {
         Member member = memberService.getMember(principal.getName());
         model.addAttribute("member",member);
+        String username = member.getUsername();
 
-        MemberForm2 memberForm2 = new MemberForm2();
-        model.addAttribute("memberForm2", memberForm2);
+        MemberModifyForm memberModifyForm = new MemberModifyForm();
+        model.addAttribute("memberModifyForm", memberModifyForm);
+        memberModifyForm.setUsername(username); // 로그인된 사용자 아이디 못바꾸게할려고 폼에집어넣음
+
+
 
 
         List<Question> questionList = questionService.findAll();
@@ -168,12 +165,28 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/update")
-    public String updateMember(@Valid MemberForm2 memberForm2, BindingResult result, Principal principal, Model model) {
+    public String updateMember(@Valid MemberModifyForm memberModifyForm, BindingResult result, Principal principal, RedirectAttributes redirectAttributes) {
 
 
-        memberService.updateMember(memberForm2, principal.getName());
-        return "redirect:/member/myPage";
+        memberService.updateMember(memberModifyForm, principal.getName());
+        return "redirect:/member/logout"; // 업데이트하고나서 로그아웃
 
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/addressUpdate")
+    public String updateMemberAddress(@Valid MemberAddressForm memberAddressForm, BindingResult result, Principal principal, RedirectAttributes redirectAttributes) {
+
+        String address = memberAddressForm.getAddress1() + ", " + memberAddressForm.getAddress2() + memberAddressForm.getAddress3();
+        memberAddressForm.setAddress(address);
+
+
+        memberService.updateMemberAddress(memberAddressForm, principal.getName());
+        return "redirect:/member/logout"; // 업데이트하고나서 로그아웃
+
+    }
+
+
+
 
 }

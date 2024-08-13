@@ -1,7 +1,6 @@
 package com.example.ArtAuction_24.domain.member.form;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @Setter
 @Getter
-public class MemberForm2 {
+public class MemberModifyForm {
 
     @NotBlank
     private String username;
@@ -28,4 +27,6 @@ public class MemberForm2 {
 
     @NotBlank
     private String nickname;
+
+    private MultipartFile multipartFile;
 }
