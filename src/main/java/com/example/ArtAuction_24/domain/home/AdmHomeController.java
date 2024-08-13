@@ -1,7 +1,6 @@
 package com.example.ArtAuction_24.domain.home;
 
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
-import com.example.ArtAuction_24.domain.member.dto.DailyVisitorData;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
