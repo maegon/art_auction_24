@@ -13,20 +13,6 @@ import java.util.List;
 @Getter
 public class ArtistForm {
 
-
-    @Size(max = 2000, message = "자기소개를 입력하세요")
-    private String introduce;
-
-
-    @Size(max = 200, message = "대표작품을 입력하세요 ex) <나비>(2012): 각 157X130, 수채화")
-    private String majorWork;
-
-    @Size(max = 200, message = "제목을 입력하세요.")
-    private String title;
-
-    @Size(max = 2000, message = "내용을 입력하세요.")
-    private String content;
-
     private MultipartFile thumbnail;
 
     @NotBlank(message = "이름은 필수입니다.")
@@ -52,9 +38,18 @@ public class ArtistForm {
     @NotBlank(message = "이메일 타입은 필수입니다.")
     private String mailType;
 
+    @Size(max = 500, message = "자기소개 입력해주세요.")
+    private String introduce;
+
     private String existingThumbnailUrl;
 
     private List<String> artistAdds = new ArrayList<>();
     private List<String> contentAdds = new ArrayList<>();
     private List<String> titleAdds = new ArrayList<>();
+    private List<String> titleContentAdds = new ArrayList<>();
+    private List<String> yearContentAdds = new ArrayList<>();
+    private List<String> widthContentAdds = new ArrayList<>();
+    private List<String> heightContentAdds = new ArrayList<>();
+    private List<String> unitContentAdds = new ArrayList<>();
+    private List<String> techniqueContentAdds = new ArrayList<>();
 }

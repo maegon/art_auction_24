@@ -19,9 +19,13 @@ public class ContentAdd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    // Ensure there is a no-argument setter for content
+    @Setter
+    @Getter
+    private String content; // Ensure this field is defined
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
 }

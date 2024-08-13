@@ -1,0 +1,89 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <script>
+        function triggerFileInput() {
+            document.getElementById('thumbnail').click();
+        }
+
+        function previewThumbnail(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const preview = document.getElementById('thumbnailPreview');
+                    const uploadButton = document.getElementById('uploadButton');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadButton.style.display = 'none';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="artCreateContainer">
+        <form id="artForm" th:action="@{/art/create}" method="post" th:object="${artForm}" enctype="multipart/form-data" class="artContainer">
+            <div class="artThumbnail">
+                <img id="thumbnailPreview" src="#" alt="미리보기" style="display: none;" onclick="triggerFileInput()">
+                <input type="file" id="thumbnail" th:field="*{thumbnail}" class="thumbnail-art" style="display: none;" onchange="previewThumbnail(this)">
+                <button type="button" id="uploadButton" onclick="triggerFileInput()" class="artIconBT">
+                    <i class="fa-solid fa-user-plus" style="margin-left: 15px;"></i>
+                </button>
+            </div>
+            <div class="form-groupArt">
+                <label for="korTitle" class="form-label-art">한글 제목:</label>
+                <input type="text" id="korTitle" class="form-controlArt" th:field="*{korTitle}">
+                <div th:if="${#fields.hasErrors('korTitle')}" th:errors="*{korTitle}">Incorrect name</div>
+            </div>
+            <div class="form-groupArt">
+                <label for="engTitle" class="form-label-art">영어 제목:</label>
+                <input type="text" id="engTitle" class="form-controlArt" th:field="*{engTitle}">
+                <div th:if="${#fields.hasErrors('engTitle')}" th:errors="*{engTitle}">Incorrect name</div>
+            </div>
+            <div class="form-groupArt">
+                <label for="artist" class="form-label-art">작가 이름:</label>
+                <input type="text" id="artist" class="form-controlArt" th:field="*{artist}">
+                <div th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}">Incorrect birth date</div>
+            </div>
+            <div class="form-groupArt-wh">
+                <label for="width" class="form-label-wh">가로 길이 X 세로 길이:</label>
+                <input type="text" id="width" class="form-control-art" th:field="*{width}">
+                <div th:if="${#fields.hasErrors('width')}" th:errors="*{width}">Incorrect telephone</div>
+                <span class="spanX">X</span>
+                <input type="text" id="height" class="form-control-art" th:field="*{height}">
+                <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}">Incorrect telephone</div>
+            </div>
+            <div class="form-groupArt-u">
+                <label for="unit" class="form-labelArt">단위:</label>
+                <input type="text" id="unit" class="form-controlArt" th:field="*{unit}">
+                <div th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}">Incorrect telephone</div>
+            </div>
+            <div class="form-groupArt-t">
+                <label for="technique" class="form-labelArt">제작 기법:</label>
+                <input type="text" id="technique" class="form-controlArt" th:field="*{technique}">
+                <div th:if="${#fields.hasErrors('technique')}" th:errors="*{technique}">Incorrect birth date</div>
+            </div>
+            <div class="form-groupArt-pr">
+                <label for="price" class="form-labelArt">낙찰가:</label>
+                <input type="text" id="price" class="form-controlArt" th:field="*{price}">
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Incorrect birth date</div>
+            </div>
+            <div class="form-groupArt-pl">
+                <label for="place" class="form-labelArt">소장지:</label>
+                <input type="text" id="place" class="form-controlArt" th:field="*{place}">
+                <div th:if="${#fields.hasErrors('place')}" th:errors="*{place}">Incorrect birth date</div>
+            </div>
+            <div class="form-groupArt-ai">
+                <label for="artIntroduction" class="form-labelArt">작품 소개:</label>
+                <textarea id="artIntroduction" class="form-labelArt-text" th:field="*{artIntroduction}"></textarea>
+                <div th:if="${#fields.hasErrors('artIntroduction')}" th:errors="*{artIntroduction}">Incorrect birth date</div>
+            </div>
+            <button type="submit" class="btn-art">등록</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

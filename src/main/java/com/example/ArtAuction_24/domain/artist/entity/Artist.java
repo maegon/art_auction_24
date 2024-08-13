@@ -1,6 +1,6 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
-import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -22,18 +22,28 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @Getter
     private String korName;
+    @Setter
+    @Getter
     private String engName;
+    @Setter
+    @Getter
     private String birthDate;
+    @Setter
+    @Getter
     private String tel;
+    @Setter
+    @Getter
     private String mail;
+    @Setter
+    @Getter
     private String mailType;
     private String thumbnailImg;
 
     private String introduce;
     private String majorWork;
-    private String title;
-    private String content;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -50,6 +60,30 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+    private List<TitleContentAdd> titleContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<YearContentAdd> yearContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<WidthContentAdd> widthContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<HeightContentAdd> heightContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<UnitContentAdd> unitContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<TechniqueContentAdd> techniqueContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<TitleAdd> titleAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
@@ -58,6 +92,5 @@ public class Artist {
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;
     }
-
 
 }

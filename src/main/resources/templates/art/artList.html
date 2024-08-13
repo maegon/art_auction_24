@@ -1,0 +1,18 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <script>
+
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="artListContainer">
+        <div class="artList">
+            <div class="artistListImg">
+                <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

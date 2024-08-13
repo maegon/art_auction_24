@@ -1,0 +1,112 @@
+.artCreateContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+.artContainer {
+    display: flex;
+    flex-direction: column;
+    height: 740px;
+    width: 40%;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid #9E9E9E;
+    align-items: center;
+    justify-content: center;
+}
+.thumbnail-art {
+    width: 150px;  /* 동일한 크기 설정 */
+    height: 150px; /* 동일한 크기 설정 */
+    display: flex;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+.artIconBT {
+    width: 150px;  /* 동일한 크기 설정 */
+    height: 150px; /* 동일한 크기 설정 */
+    border-radius: 50%;  /* 원형으로 설정 */
+    cursor: pointer;
+    display: inline-flex;  /* 이미지와 버튼 모두 inline-flex로 설정 */
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    background-color: #e9ecef;  /* 버튼의 배경색 */
+    color: #888;  /* 버튼의 아이콘 색상 */
+    font-size: 55px;
+    margin-top: 20px;
+}
+.form-groupArt {
+    margin-bottom: 3px;
+    margin-right:35px;
+}
+.form-groupArt-wh {
+    margin-right: 27px;
+    margin-top: 8px;
+}
+.form-control-art {
+    max-width: 130px;
+    height: 35px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+.spanX {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.form-groupArt-u {
+    margin-left: 3px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.form-groupArt-t {
+    margin-right: 27px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.form-groupArt-pr {
+    margin-right: 10px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.form-groupArt-pl {
+    margin-right: 8px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.form-groupArt-ai {
+    margin-right: 60px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.form-labelArt {
+    margin-top: 7px;
+}
+.form-controlArt {
+    max-width: 500px;
+    height: 35px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.form-labelArt-text {
+    max-width: 700px;
+    height: 60px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.btn-art {
+    font-size: 20px;
+    margin-top: 15px;
+    background-color: #cfcfcf;
+    border-radius: 5px;
+    height: 40px;
+    width: 80px;
+}
+
