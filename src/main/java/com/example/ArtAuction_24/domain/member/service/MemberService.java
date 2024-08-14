@@ -166,4 +166,13 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Member getMemberByUsername(String username) {
+        return findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
 }

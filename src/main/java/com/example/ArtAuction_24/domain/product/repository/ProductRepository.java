@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.product.repository;
 
+import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
@@ -66,4 +67,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN p.auctions a WHERE a.status = :status")
     List<Product> findProductsByAuctionStatus(@Param("status") AuctionStatus status);
 
+    List<Product> findAllByAuctions(Auction auction);
 }

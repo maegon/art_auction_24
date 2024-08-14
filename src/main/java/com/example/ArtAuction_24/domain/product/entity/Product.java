@@ -2,6 +2,9 @@ package com.example.ArtAuction_24.domain.product.entity;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.member.entity.Member;
+
 import com.example.ArtAuction_24.domain.review.entity.Review;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -46,17 +49,29 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Review> reviewList;
 
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<LikeProduct> likeProductList;
 
 
-    private transient String formattedCurrentBid;
+
+
+    private transient String formattedCurrentBid; //직렬화
+    private transient String formattedStartingPrice; //직렬화
+
+    @ManyToOne
+    @JoinColumn(name = "winning_bidder_id")
+    private Member winningBidder; //제품 낙찰자
+
+    @Column(name = "previous_bid")
+    private BigDecimal previousBid; //원래 입찰가 백업
 
 
     @PostLoad
     private void postLoad() {
         DecimalFormat formatter = new DecimalFormat("#,###");
         this.formattedCurrentBid = formatter.format(this.currentBid);
+        this.formattedStartingPrice = formatter.format(this.startingPrice);
     }
 
     public void updateBid(BigDecimal newBid) {
@@ -75,5 +90,12 @@ public class Product extends BaseEntity {
                 .max(LocalDateTime::compareTo)
                 .orElse(null);
     }
+
+    // 현재 입찰가를 반환하는 메소드
+    public BigDecimal getCurrentPrice() {
+        return currentBid;
+    }
+
+
 
 }

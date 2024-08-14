@@ -4,6 +4,10 @@ package com.example.ArtAuction_24.domain.product.controller;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.bid.entity.Bid;
+import com.example.ArtAuction_24.domain.bid.service.BidService;
+import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
@@ -19,8 +23,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Optional;
 import java.util.Set;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
+import java.util.Optional;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -28,8 +39,8 @@ import java.util.Set;
 public class ProductController {
 
     private final ProductService productService;
-
     private final MemberService memberService;
+    private final BidService bidService;
 
 
     @GetMapping("/list")
@@ -72,12 +83,15 @@ public class ProductController {
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
 
         try {
-            auctionProduct = productService.getAuctionProduct(id);
-            Auction auction = auctionProduct.getAuction();
+            auctionProduct = productService.getAuctionProduct(id); // 제품 ID로 AuctionProduct 조회
 
-            // 경매 상태 확인
-            if (auction != null) {
-                auctionStatus = auction.getStatus().name();
+            if (auctionProduct != null) {
+                Auction auction = auctionProduct.getAuction();
+
+                // 경매 상태 확인
+                if (auction != null) {
+                    auctionStatus = auction.getStatus().name();
+                }
             }
             model.addAttribute("auctionProduct", auctionProduct);
         } catch (RuntimeException e) {
@@ -85,8 +99,31 @@ public class ProductController {
         }
 
         model.addAttribute("auctionStatus", auctionStatus);
+
+        // 현재 사용자의 입찰 정보 조회
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = null;
+
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                username = ((UserDetails) authentication.getPrincipal()).getUsername();
+            } else {
+                username = authentication.getName();
+            }
+
+            if (username != null) {
+                Optional<Member> optionalMember = memberService.findByUsername(username);
+                if (optionalMember.isPresent()) {
+                    Member member = optionalMember.get();
+                    Optional<Bid> currentBid = bidService.findCurrentBidByProductAndMember(id, member.getId());
+                    model.addAttribute("currentBid", currentBid.orElse(null));
+                }
+            }
+        }
+
         return "product/detail";
     }
+
 
     @PostMapping("/like")
     public String likeProduct(@RequestParam("productId") Long productId,
@@ -97,6 +134,24 @@ public class ProductController {
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
 
+    }
+
+    @PostMapping("/cancelBid")
+    public String cancelBid(@RequestParam(name = "bidId") Long bidId, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            // 현재 사용자의 입찰만 취소할 수 있도록 확인
+            Optional<Member> optionalMember = memberService.findByUsername(principal.getName());
+            if (optionalMember.isPresent()) {
+                Member member = optionalMember.get();
+                bidService.cancelBid(bidId, member.getId());
+                redirectAttributes.addFlashAttribute("message", "입찰이 성공적으로 취소되었습니다.");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "회원 정보를 찾을 수 없습니다.");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "입찰 취소에 실패했습니다.");
+        }
+        return "redirect:/product/detail/" + bidId; // 적절히 리다이렉트 URL을 수정
     }
 
 

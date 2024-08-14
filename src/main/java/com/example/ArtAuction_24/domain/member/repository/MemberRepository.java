@@ -22,4 +22,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Object> findByEmail(String email);
 
+
+
 }

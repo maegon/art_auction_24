@@ -12,6 +12,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+
+import javax.management.relation.Role;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -79,5 +82,13 @@ public class Member extends BaseEntity {
     private void postLoad() {
         DecimalFormat formatter = new DecimalFormat("#,###");
         this.formattedbalance = formatter.format(this.balance);
+    }
+
+    public void deductBalance(BigDecimal amount) {
+        if (this.balance >= amount.longValue()) {
+            this.balance -= amount.longValue();
+        } else {
+            throw new IllegalArgumentException("잔액이 부족합니다.");
+        }
     }
 }
