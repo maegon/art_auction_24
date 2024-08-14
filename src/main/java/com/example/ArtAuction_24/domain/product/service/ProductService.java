@@ -2,9 +2,13 @@ package com.example.ArtAuction_24.domain.product.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
+import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
+import com.example.ArtAuction_24.domain.product.repository.LikeProductRepository;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,15 +22,22 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
     private final AuctionProductRepository auctionProductRepository;
+    private final MemberRepository memberRepository;
+    private final LikeProductRepository likeProductRepository;
 
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
+
+
 
     public Page<Product> getProductsWithSorting(String keyword, Pageable pageable, String sortOption, Boolean auction) {
         Sort sort = switch (sortOption) {
@@ -124,5 +135,37 @@ public class ProductService {
     // ACTIVE 상태의 경매에 포함된 제품을 찾기 위한 메소드
     public List<Product> findProductsByAuctionStatus(AuctionStatus status) {
         return productRepository.findProductsByAuctionStatus(status);
+    }
+
+    // 찜 추가 또는 취소
+    public void toggleLike(Long productId, Long memberId) {
+        Optional<LikeProduct> likeProductOpt = likeProductRepository.findByProductIdAndMemberId(productId, memberId);
+
+        if (likeProductOpt.isPresent()) {
+            // 이미 찜이 존재하면 삭제 (찜 취소)
+            likeProductRepository.delete(likeProductOpt.get());
+        } else {
+            // 찜이 없으면 추가
+            Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+            Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Member not found"));
+
+            LikeProduct likeProduct = new LikeProduct();
+            likeProduct.setProduct(product);
+            likeProduct.setMember(member);
+
+            likeProductRepository.save(likeProduct);
+        }
+    }
+
+    public Set<Long> getLikedProductIdsByMember(Long memberId) {
+        return likeProductRepository.findByMemberId(memberId).stream()
+                .map(likeProduct -> likeProduct.getProduct().getId())
+                .collect(Collectors.toSet());
+    }
+
+
+
+    public List<LikeProduct> getLikeProduct(Member member) {
+        return likeProductRepository.findByMember(member);
     }
 }

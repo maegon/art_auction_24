@@ -2,7 +2,6 @@ package com.example.ArtAuction_24.domain.product.entity;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
-import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.review.entity.Review;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -46,6 +45,10 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Review> reviewList;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<LikeProduct> likeProductList;
+
 
     private transient String formattedCurrentBid;
 

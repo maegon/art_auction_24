@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.member.entity;
 
 import com.example.ArtAuction_24.domain.answer.entity.Answer;
+import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
@@ -11,7 +12,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.management.relation.Role;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -68,6 +68,9 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Answer> answerList; // 답변목록
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<LikeProduct> likeProductList; // 답변목록
 
     private transient String formattedbalance;
 
