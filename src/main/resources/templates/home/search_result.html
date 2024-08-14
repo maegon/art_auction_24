@@ -31,7 +31,10 @@
                     <div class="pb-4">
                         <h5 class="text-lg font-bold mb-2 context" th:text="${artist.korName}"></h5>
                         <h5 class="text-lg font-bold mb-2 context" th:text="${artist.engName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4" th:text="${artist.introduce}"></p>
+                        <p class="text-sm leading-relaxed mb-4"
+                           th:text="${artist.introduce.length() > 18} ? ${#strings.substring(artist.introduce, 0, 18)} + '...' : ${artist.introduce}">
+                        </p>
+
                     </div>
                 </div>
             </div>

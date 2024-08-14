@@ -28,16 +28,13 @@ window.addEventListener('scroll', function() {
     }
 
     // 스크롤 제한 및 fixed-info-section 클래스 추가/제거
-    if (scrollPosition > triggerPoint && scrollPosition < maxScrollPosition && scrollPosition < 1000) {
+    if (scrollPosition > triggerPoint && scrollPosition < maxScrollPosition) {
         infoSection.classList.add('fixed-info-section');
     } else {
         infoSection.classList.remove('fixed-info-section');
     }
 
-    // 스크롤 위치가 1000px 이하로 제한되도록 설정
-    if (scrollPosition > 1000) {
-        window.scrollTo(0, 1000);
-    }
+
 });
 
 /*정보 부분 fixed 기능 끝*/

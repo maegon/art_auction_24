@@ -45,10 +45,10 @@
                                 <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
                                 <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
                                 <hr>
-                                <span class="ongoing-info-Bid">
-                                    <span>Current Bid </span>
-                                    <span class="ongoing-info-currentBid-kor"> KRW <span class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
-                                </span>
+                                <span style="font-size: 14px; color: gray;">현재가</span>
+                                <br>
+                                <span style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
+
                             </div>
                         </div>
                     </div>
@@ -75,10 +75,9 @@
                                 <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
                                 <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
                                 <hr>
-                                <span class="ongoing-info-Bid">
-                                    <span>Current Bid </span>
-                                    <span class="ongoing-info-currentBid-kor"> KRW <span class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
-                                </span>
+                                    <span style="font-size: 14px; color: gray;">현재가</span>
+                                    <br>
+                                    <span style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
                             </div>
                         </div>
                     </div>
@@ -120,18 +119,18 @@
         <div class="marquee">
             <div class="marquee__group">
                 <!-- 반복할 이미지들 -->
-                <img src="image/풀사진.jpg" alt="Description 1">
+                <img src="image/땅하늘우주.jpg" alt="Description 1">
                 <img src="image/나무들.jpg" alt="Description 2">
-                <img src="image/아이사진.jpg" alt="Description 3">
+                <img src="image/은하계.jpg" alt="Description 3">
                 <img src="image/산사진.jpg" alt="Description 4">
                 <img src="image/노란머리여자사진.jpg" alt="Description 5">
                 <!-- 추가 이미지들 -->
             </div>
             <div aria-hidden="true" class="marquee__group">
                 <!-- 반복할 이미지들 (동일한 이미지들) -->
-                <img src="image/풀사진.jpg" alt="Description 1">
+                <img src="image/땅하늘우주.jpg" alt="Description 1">
                 <img src="image/나무들.jpg" alt="Description 2">
-                <img src="image/아이사진.jpg" alt="Description 3">
+                <img src="image/은하계.jpg" alt="Description 3">
                 <img src="image/산사진.jpg" alt="Description 4">
                 <img src="image/노란머리여자사진.jpg" alt="Description 5">
                 <!-- 추가 이미지들 -->
@@ -141,7 +140,7 @@
         <div class="marquee marquee--reverse mt-5">
             <div class="marquee__group">
                 <!-- 반대 방향으로 스크롤할 이미지들 -->
-                <img src="image/레몬사진.jpg" alt="Description 5">
+                <img src="image/천사와악마.jpg" alt="Description 5">
                 <img src="image/폭포.jpg" alt="Description 4">
                 <img src="image/토끼.jpg" alt="Description 3">
                 <img src="image/바다.jpg" alt="Description 2">
@@ -150,7 +149,7 @@
             </div>
             <div aria-hidden="true" class="marquee__group">
                 <!-- 반대 방향으로 반복할 이미지들 -->
-                <img src="image/레몬사진.jpg" alt="Description 5">
+                <img src="image/천사와악마.jpg" alt="Description 5">
                 <img src="image/폭포.jpg" alt="Description 4">
                 <img src="image/토끼.jpg" alt="Description 3">
                 <img src="image/바다.jpg" alt="Description 2">
@@ -169,7 +168,7 @@
         </div>
         <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-4" th:each="topProduct : ${topProduct}">
             <div class="artist-container flex flex-col md:flex-row items-center justify-between mb-5">
-                <div class="artist-info flex-1 text-white p-1 font-bold max-w-full md:max-w-xl">
+                <div class="artist-info flex-1 text-white p-1 max-w-full md:max-w-xl">
                     <div class="text-2xl md:text-4xl text-white font-bold mb-2 flex flex-wrap">
                         <div class="bestArtist-info-artistName" th:text="${topProduct.artist.korName}">
                             작가 이름

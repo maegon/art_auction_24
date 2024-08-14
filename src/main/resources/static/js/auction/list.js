@@ -7,13 +7,6 @@ $(document).ready(function () {
            $("#auction-searchForm").submit();
        });
 
-       // 검색 버튼 클릭 시 검색어와 페이지 번호를 초기화 후 폼 제출
-       $("#btn_search").on("click", function () {
-           $("#kw").val($("#search_kw").val());
-           $("#page").val(0);
-           $("#auction-searchForm").submit();
-       });
-
 });
 
 /* list 검색 부분 끝 */

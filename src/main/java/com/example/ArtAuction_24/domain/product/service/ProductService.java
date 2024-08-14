@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.product.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
@@ -123,10 +124,12 @@ public class ProductService {
         return productRepository.findAllWithAuction(); // 경매 정보와 함께 모든 제품을 가져옴
     }
 
-    public AuctionProduct getAuctionProduct(Long id) {
-        return auctionProductRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AuctionProduct not found"));
+    public AuctionProduct getAuctionProduct(Long productId) {
+        return auctionProductRepository.findByProductId(productId)
+                .orElseThrow(() -> new RuntimeException("AuctionProduct not found for product id: " + productId));
     }
+
+
 
     public List<Product> findProductsByActiveAuctions() {
         return productRepository.findProductsByActiveAuctions();
@@ -167,5 +170,25 @@ public class ProductService {
 
     public List<LikeProduct> getLikeProduct(Member member) {
         return likeProductRepository.findByMember(member);
+    }
+    // ID로 상품 찾기
+    public Product findById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+    }
+
+    // 상품의 현재 가격 가져오기
+    public BigDecimal getCurrentPrice(Long productId) {
+        Product product = findById(productId);
+        return product.getCurrentPrice();
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
+
+    public List<Product> findAllByAuction(Auction auction) {
+        return productRepository.findAllByAuctions(auction);
+
     }
 }
