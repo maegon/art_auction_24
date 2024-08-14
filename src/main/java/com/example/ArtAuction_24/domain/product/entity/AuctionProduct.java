@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.product.entity;
 
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,4 +30,9 @@ public class AuctionProduct extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;  // 경매와의 연관 관계 추가
+
+    public boolean isActive() {
+        return this.auction != null && this.auction.getStatus() == AuctionStatus.ACTIVE;
+    }
+
 }

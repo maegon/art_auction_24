@@ -138,17 +138,17 @@ border-radius: 10px;
 .ongoing-info-artistName{
     font-size: 17px;
     color: gray;
-    margin: 10px 0;
+    margin-top: 10px;
 }
 
 .ongoing-info-currentBid{
-    color: red;
+    color: black;
     font-weight: bold;
     margin-top: 10px;
 }
 
 .ongoing-info-currentBid-kor{
-       color: red;
+       color: black;
 }
 
 .ongoing-info-endTime{
@@ -157,12 +157,7 @@ border-radius: 10px;
    margin-top: 4px;
 }
 
-.ongoing-info-Bid{
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-     font-size: 15px;
-}
+
 
 /*ongoing-auction end*/
 

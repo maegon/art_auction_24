@@ -1,7 +1,9 @@
 package com.example.ArtAuction_24.domain.product.controller;
 
+
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
@@ -61,17 +63,28 @@ public class ProductController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Long id, Model model){
+    public String detail(@PathVariable("id") Long id, Model model) {
         productService.incrementViews(id);
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
+
+        AuctionProduct auctionProduct = null;
+        String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
+
         try {
-            AuctionProduct auctionProduct = productService.getAuctionProduct(id);
+            auctionProduct = productService.getAuctionProduct(id);
+            Auction auction = auctionProduct.getAuction();
+
+            // 경매 상태 확인
+            if (auction != null) {
+                auctionStatus = auction.getStatus().name();
+            }
             model.addAttribute("auctionProduct", auctionProduct);
         } catch (RuntimeException e) {
-            // Handle the case where no auction information is available
             model.addAttribute("auctionProduct", null);
         }
+
+        model.addAttribute("auctionStatus", auctionStatus);
         return "product/detail";
     }
 
@@ -85,6 +98,7 @@ public class ProductController {
         return "redirect:" + referer;
 
     }
+
 
 
 }

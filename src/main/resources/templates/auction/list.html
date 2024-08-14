@@ -60,15 +60,15 @@
                     <div class="p-3 flex flex-col flex-grow">
                         <span th:text="${product.artist.korName}" class="text-left font-bold text-lg"></span>
                         <span th:text="${product.title}" class="text-left text-md mt-1"></span>
-                        <span class="flex text-xs mt-3 mb-1">
+                        <span class="flex text-xs mt-3">
                             <span th:text="${product.dimensions}" class="text-gray-500"></span>
                             <span class="text-gray-500 mx-1">|</span>
                             <span th:text="${product.medium}" class="text-gray-500"></span>
                         </span>
                         <hr class="my-2">
                         <span class="flex flex-col items-start text-left text-xs">
-                            <span class="text-gray-500">Current Bid</span>
-                            <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-red-500"></span>
+                            <span class="text-gray-500">현재가</span>
+                            <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-black"></span>
                         </span>
                         <a th:href="@{|/product/detail/${product.id}|}"
                            class="bg-white text-black border border-black text-lg mt-3 px-4 py-2 transition-colors duration-150 ease-in-out flex items-center justify-center hover:text-red-500"

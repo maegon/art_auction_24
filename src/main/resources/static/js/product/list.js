@@ -2,17 +2,7 @@
 
 $(document).ready(function () {
     // 페이지 링크 클릭 시 페이지 번호 설정 후 폼 제출
-       $(".page-link").on("click", function () {
-           $("#page").val($(this).data("page"));
-           $("#product-searchForm").submit();
-       });
 
-       // 검색 버튼 클릭 시 검색어와 페이지 번호를 초기화 후 폼 제출
-       $("#btn_search").on("click", function () {
-           $("#kw").val($("#search_kw").val());
-           $("#page").val(0);
-           $("#product-searchForm").submit();
-       });
 
        // 경매 작품만 보기 버튼 클릭 시 토글 및 텍스트 변경
        $("#auctionOnlyButton").on("click", function () {
