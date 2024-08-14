@@ -6,6 +6,8 @@ import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
+import com.example.ArtAuction_24.domain.product.service.ProductService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.global.email.EmailService;
@@ -23,6 +25,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class MemberController {
     private final MemberService memberService;
     private final EmailService emailService;
     private final QuestionService questionService;
+    private final ProductService productService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -155,8 +159,12 @@ public class MemberController {
         model.addAttribute("memberModifyForm", memberModifyForm);
         memberModifyForm.setUsername(username); // 로그인된 사용자 아이디 못바꾸게할려고 폼에집어넣음
 
+        Set<Long> likedProductIds = productService.getLikedProductIdsByMember(member.getId());
+        model.addAttribute("likedProductIds", likedProductIds);
 
 
+        List<LikeProduct> likeProductList = productService.getLikeProduct(member);
+        model.addAttribute("likeProductList", likeProductList);
 
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
