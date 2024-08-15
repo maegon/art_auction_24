@@ -99,12 +99,10 @@ public class MemberController {
         }
 
 
-        System.out.println("1111");
 
         // 회원가입 서비스 호출
         try {
 
-            System.out.println("22222");
             Member member = this.memberService.join(
                     memberForm.getProviderTypeCode(),
                     memberForm.getUsername(),
@@ -115,14 +113,10 @@ public class MemberController {
                     memberForm.getAddress()
             );
 
-            System.out.println("3333");
-
             if (member == null) {
                 System.out.println("DB에 회원 정보가 저장되지 않았습니다.");
                 return "member/login";
             }
-
-            System.out.println("4444");
 
             // 회원가입 성공 시 이메일 발송
             String bodyText = String.format(
@@ -199,4 +193,9 @@ public class MemberController {
 
 
 
+    @GetMapping("/applicantArtist1")
+    public String applicantArtist1() {
+
+        return "member/applicantArtist1";
+    }
 }

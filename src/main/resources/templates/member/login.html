@@ -1,13 +1,13 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="container">
+    <div class="admContainer">
             <div class="row full-height justify-center">
                 <div class="col-12 text-center align-self-center">
                     <div class="section pb-3 pt-3 pt-sm-2 text-center">
                         <h6 class="mb-0 pb-3">
                             <span>Log In </span>
                             <span>Join</span></h6>
-                        <input class="checkbox" type="checkbox" id="reg-log" name="changeForm reg-log"/>
+                        <input class="checkbox " type="checkbox" id="reg-log" name="changeForm reg-log"/>
                         <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
                         <div class="card-3d-wrap mx-auto">
                             <div class="card-3d-wrapper">
@@ -55,7 +55,72 @@
                                         </div>
                                     </div>
                                 </form>
-                                <form th:action="@{/member/join}" th:object="${memberForm}" class="joinPostForm" method="POST" enctype="multipart/form-data">
+                                
+                                
+                                <div class="card-back">
+                                    <div class="privacyCheckbox mt-4">
+                                        <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
+                                        <div class="privacy_copyright_section mt-4">
+                                            <div class="mb-3">
+                                                <div class="text-box">
+                                                    <h5 class="text-lg mt-4 mb-2">제 1장 총칙</h5>
+                                                    <h5 class="text-base mt-4 mb-2">제 1 조 (목적)</h5>
+                                                    <p class="text-sm mt-2 mb-2">이 이용약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 인터넷 서비스(이하 '서비스')의 가입조건, 당 사이트와 이용자의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 2 조 (용어의 정의)</h5>
+                                                    <p class="text-sm mt-2 mb-2">
+                                                        1. "이용자"라 함은 당 사이트에 접속하여 이 약관에 따라 당 사이트가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.<br/>
+                                                        2. "회원"이라 함은 서비스를 이용하기 위하여 당 사이트에 개인정보를 제공하여 아이디(ID)와 비밀번호를 부여 받은 자를 말합니다. 회원은 일반회원, 작가회원, 관리자 회원으로 나뉩니다.<br/>
+                                                        3. "일반회원"은 경매에 참여하거나 입찰을 할 수 있으며, 충전 등의 기능을 수행할 수 있습니다.<br/>
+                                                        4. "작가회원"은 자신의 작품을 등록하고 경매 신청을 할 수 있는 권한을 가지며, 작품과 경매와 관련된 기능을 수행할 수 있습니다.<br/>
+                                                        5. "관리자"는 회원 관리, 경매 관리, 작품 관리, 문의 관리를 수행할 수 있는 권한을 가집니다.<br/>
+                                                    </p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 3 조 (이용약관의 효력 및 변경)</h5>
+                                                    <p class="text-sm mt-2 mb-2">당 사이트는 이 약관의 내용을 회원이 알 수 있도록 초기 서비스 화면에 게시합니다. 약관이 변경될 경우, 적용일자와 개정사유를 명시하여 변경 7일 전부터 공지합니다.</p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 4 조(개인정보 수집 및 이용)</h5>
+                                                    <p class="text-sm mt-2 mb-2">당 사이트는 회원의 개인정보를 보호하기 위해 관련 법령에 따라 적절한 조치를 취하고 있으며, 회원의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 수집된 개인정보는 회원 관리, 서비스 제공, 경매 관련 운영 목적으로 사용됩니다.</p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 5 조(회원의 의무)</h5>
+                                                    <p class="text-sm mt-2 mb-2">회원은 자신의 계정 정보를 안전하게 관리해야 하며, 타인의 권리를 침해하지 않아야 합니다. 위반 시, 회원 자격이 박탈될 수 있습니다.</p>
+                                                </div>
+                                            </div></div>
+                                        <input type="checkbox" id="privacy" name="privacy" class="w-4 h-4" required>
+                                        <label for="privacy" class="text-base ml-2">이용 약관 및 개인정보 수집에 대한 동의(필수)</label>
+                                    </div>
+                                    <div class="copyrightCheckbox mt-4">
+                                        <span class="text-xl">저작권 법률에 대한 안내 및 동의</span>
+                                        <div class="privacy_copyright_section">
+                                            <div class="mt-4 mb-3">
+                                                <div class="text-box">
+                                                    <h5 class="text-lg mt-4 mb-2">제 1장 총칙</h5>
+                                                    <h5 class="text-base mt-4 mb-2">제 1 조 (목적)</h5>
+                                                    <p class="text-sm mt-2 mb-2">이 약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 미술품 경매 서비스 이용과 관련하여 저작권 법률의 준수 사항 및 회원의 권리, 의무를 규정함을 목적으로 합니다.</p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 2 조 (저작권의 보호)</h5>
+                                                    <p class="text-sm mt-2 mb-2">
+                                                        1. 당 사이트에서 거래되는 모든 미술품에 대한 저작권은 원작자인 작가에게 있습니다. 작가는 자신의 작품이 무단 복제되거나 도용되지 않도록 보호받을 권리가 있습니다.<br/>
+                                                        2. 회원은 당 사이트에서 제공하는 모든 미술품 및 관련 콘텐츠를 무단으로 복제, 배포, 전시, 수정, 출판하는 등의 행위를 할 수 없습니다. 이를 위반할 경우 저작권법에 따라 처벌받을 수 있습니다.<br/>
+                                                        3. 당 사이트의 디자인, 레이아웃, 로고, 이미지 등도 저작권으로 보호되며, 무단 복제 및 사용 시 법적 처벌을 받을 수 있습니다.<br/>
+                                                    </p>
+                                                    
+                                                    <h5 class="text-base mt-4 mb-2">제 3 조 (위반 시 처벌)</h5>
+                                                    <p class="text-sm mt-2 mb-2">
+                                                        1. 저작권을 침해한 회원은 민사 및 형사상의 책임을 질 수 있으며, 이에 따른 손해배상 청구 및 법적 제재를 받을 수 있습니다.<br/>
+                                                        2. 당 사이트의 저작물이나 디자인을 무단 복제하거나 사용한 경우, 당 사이트는 법적 조치를 통해 이를 중지시키고 손해배상을 청구할 수 있습니다.<br/>
+                                                    </p>
+                                                </div>
+                                                
+                                                
+                                            </div></div>
+                                        <input type="checkbox" id="copyright" name="copyright" class="w-4 h-4" required>
+                                        <label for="copyright" class="text-base ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
+                                    </div>
+                                    <button type="submit" id="agreeButton" class="btn mt-3" disabled>다음</button>
+                                </div>
+                                
+                                <form th:action="@{/member/join}" th:object="${memberForm}" class="joinPostForm" method="POST" enctype="multipart/form-data" id="joinForm" style="display:none;">
                                     <input id="hd_email" type="hidden"  name="email">
                                     <input id="hd_address" type="hidden"  name="address">
                                     
@@ -67,7 +132,7 @@
                                                            placeholder="아이디 입력" id="username" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
                                                     <button type="button" onclick="validateUsername()"
-                                                            class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
+                                                            class=" btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
                                                 <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
@@ -104,7 +169,7 @@
                                                            placeholder="인증 번호 입력" id="emailConfirm"
                                                            autocomplete="off" required>
                                                     <i class="input-icon uil uil-envelope-check"></i>
-                                                    <button type="button" class="checkBtn btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호<br>발급
+                                                    <button type="button" class=" btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호<br>발급
                                                     </button>
                                                 </div>
                                                 <div id="emailError" class="error"></div>
@@ -113,7 +178,7 @@
                                                            placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
                                                     <button type="button" onclick="validateNickname()"
-                                                            class="checkBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
+                                                            class=" btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
                                                     </button>
                                                 </div>
                                                 <div id="nicknameError" class="error"></div>

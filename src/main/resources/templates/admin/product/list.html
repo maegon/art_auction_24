@@ -1,28 +1,86 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="admContainer">
-        <!-- 회원 관리 페이지 제목 -->
-        <span class="text-xl">작품 관리 페이지</span>
+        <!-- 작품 관리 페이지 제목 -->
+        <span class="text-xl mt-3 text-3xl">작품 관리 페이지</span>
         
-        <div class="mg_container">
+        <div class="mg_container mt-3 mb-3">
             <div class="mg_menu_container">
-                <div class="mg_menu">
-                    <ul class="flex">
-                        <li><span class="pr_cd">생성 날짜</span></li>
-                        <li><span class="pr_md">수정 날짜</span></li>
-                        <li><span class="pr_pi">작품 이미지</span></li>
-                        <li><span class="pr_pn">작품명</span></li>
-                        <li><span class="pr_at">작가명</span></li>
-                        <li><span class="pr_as">경매 여부</span></li>
-                        <li><span class="pr_ss">판매 여부</span></li>
+                <div class="mg_menu flex mt-3 mr-3">
+                    <ul class="flex flex-wrap justify-between space-x-2 w-full font-semibold text-xl">
+                        <li class="flex-1 text-center"><span class="pr_cd">생성 날짜</span></li>
+                        <li class="flex-1 text-center"><span class="pr_md">수정 날짜</span></li>
+                        <li class="flex-1 text-center"><span class="pr_pi">작품 이미지</span></li>
+                        <li class="flex-1 text-center"><span class="pr_pn">작품명</span></li>
+                        <li class="flex-1 text-center"><span class="pr_at">작가명</span></li>
+                        <li class="flex-1 text-center"><span class="pr_sp">시작 가격</span></li>
+                        <li class="flex-1 text-center"><span class="pr_cb">현재 입찰가</span></li>
+                        <li class="flex-1 text-center"><span class="pr_as">경매 종료일</span></li>
+                        <li class="flex-1 text-center"><span class="pr_ac"></span></li>
                     </ul>
                 </div>
-                <div class="mb_list">
+                <div class="pr_list">
                     <ul>
+                        <li th:each="product : ${productList}" class="pr_list_each flex flex-wrap justify-between space-x-2 flex-1 text-center mt-2">
+                            <div class="pr_list_cd flex-1" th:text="${#temporals.format(product.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="pr_list_md flex-1" th:text="${#temporals.format(product.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="pr_list_pi flex-1">
+                                <img th:src="@{${product.thumbnailImg}}" alt="작품 이미지"/>
+                            </div>
+                            <div class="pr_list_pn flex-1 overflow-hidden" th:text="${product.title}"></div>
+                            <div class="pr_list_at flex-1 overflow-hidden" th:text="${product.artist.name}"></div>
+                            <div class="pr_list_sp flex-1" th:text="${#numbers.formatCurrency(product.startingPrice, 'KRW')}"></div>
+                            <div class="pr_list_cb flex-1" th:text="${product.formattedCurrentBid}"></div>
+                            <div class="pr_list_as flex-1" th:text="${#temporals.format(product.auctionEndDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="pr_action flex-1">
+                                <button type="button" class="btn_save" th:data-productid="${product.id}">저장</button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
+        <!-- 알림 메시지를 표시할 요소 -->
+        <div id="copyAlert" class="alert hidden">텍스트가 복사되었습니다!</div>
     </div>
 </div>
 </html>
+
+<script th:src="@{/js/admin/product/list.js}"></script>
+<script>
+    // 텍스트를 클립보드에 복사하는 함수
+    function copyTextToClipboard(text) {
+        // Clipboard API를 사용하여 텍스트를 복사합니다
+        navigator.clipboard.writeText(text).then(() => {
+            showAlert('텍스트가 복사되었습니다!');
+        }).catch(err => {
+            console.error('텍스트 복사 중 오류 발생: ', err);
+        });
+    }
+
+    // 알림 메시지를 표시하는 함수
+    function showAlert(message) {
+        const alertBox = document.getElementById('copyAlert');
+        alertBox.textContent = message;
+        alertBox.classList.remove('hidden');
+        alertBox.classList.add('show');
+
+        // 3초 후에 알림을 숨깁니다
+        setTimeout(() => {
+            alertBox.classList.remove('show');
+            alertBox.classList.add('hidden');
+        }, 3000);
+    }
+
+    // 각 div에 대해 더블 클릭 이벤트 리스너를 추가하여 텍스트를 복사합니다
+    document.addEventListener('DOMContentLoaded', function() {
+        const listItems = document.querySelectorAll('.pr_list ul li div');
+
+        listItems.forEach(item => {
+            item.addEventListener('dblclick', function() {
+                const textToCopy = item.textContent.trim();
+                copyTextToClipboard(textToCopy);
+            });
+        });
+    });
+</script>

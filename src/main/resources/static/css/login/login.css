@@ -1,8 +1,9 @@
-@media screen and (max-width: 1100px) {
+/* @media screen and (max-width: 1100px) {
     .container {
         flex-direction: column;
     }
 }
+*/
 
 a {
 	cursor: pointer;
@@ -89,36 +90,29 @@ input[id="saveId"] > span {
 
 .card-3d-wrap {
   position: relative;
-  width: 640px;
+  width: 100%;
   max-width: 100%;
   height: 820px;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
   margin-top: 60px;
 }
 .card-3d-wrapper {
   width: 100%;
   height: 100%;
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: all 600ms ease-out;
+  transition: opacity 600ms ease-out, visibility 600ms ease-out;
 }
 .loginPostForm,
 .joinPostForm {
   width: 100%;
   height: 100%;
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: all 600ms ease-out;
 }
-.card-front, .card-back {
+.card-front,
+.card-back {
   width: 100%;
   height: 100%;
   background-color: #FFF;
@@ -126,37 +120,31 @@ input[id="saveId"] > span {
   background-repeat: no-repeat;
   background-size: 300%;
   position: absolute;
-  border: 1px solid rgba(43, 43, 43, .2);
+  border: 1px solid rgba(43, 43, 43, 0.2);
   border-radius: 16px;
-  box-shadow: 6px 6px 5px 1px rgba(0, 0, 44, .2);
   left: 0;
   top: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms ease-out, visibility 600ms ease-out;
 }
 
-.card-back {
-    transform: rotateY(180deg);
-}
-.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
-    transform: rotateY(180deg);
-}
-.center-wrap{
-    position: absolute;
-    width: 100%;
-    padding: 0 35px;
-    top: 50%;
-    left: 0;
-    transform: translate3d(0, -50%, 35px) perspective(100px);
-    z-index: 20;
-    display: block;
+.card-front {
+  opacity: 1;
+  visibility: visible;
 }
 
+.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper .card-front {
+  opacity: 0;
+  visibility: hidden;
+}
 
+.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper .card-back {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 폼 그룹 스타일링 */
 .form-group{
     position: relative;
     display: block;
@@ -165,6 +153,7 @@ input[id="saveId"] > span {
     padding: 0;
 }
 .form-style, .inputCertificateFile {
+    margin-top: 10px; margin-bottom: 10px;
     padding: 13px 20px;
     padding-left: 55px;
     height: 48px;
@@ -375,4 +364,14 @@ input[type=file]::file-selector-button {
 }
 .success {
     color: green;
+}
+
+/* 약관 동의, 저작권 약관 */
+.privacy_copyright_section > div {
+    width: 90%;
+    height: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: scroll;
+    border: 0.5px solid rgba(0, 0, 0, .2);
 }

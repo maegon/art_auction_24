@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.auction.repository;
 
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction, Long> {
+
     // 특정 상태의 경매 중에서 종료 시간이 현재 시간보다 이전인 경매를 조회
     List<Auction> findByEndDateBeforeAndStatus(LocalDateTime endDate, AuctionStatus status);
 

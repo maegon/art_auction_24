@@ -73,11 +73,11 @@ public class HomeController {
 
     @GetMapping("/home/howToBuy")
     public String howToBuy(){
-        return  "home/howToBuy";
+        return "home/howToBuy";
     }
 
     @GetMapping("/home/howToSell")
     public String howToSell(){
-        return  "home/howToSell";
+        return "home/howToSell";
     }
 }

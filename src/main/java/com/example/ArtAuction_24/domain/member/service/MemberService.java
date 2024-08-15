@@ -47,9 +47,6 @@ public class MemberService {
         // 회원 역할 결정
         MemberRole role = "admin".equals(username) ? MemberRole.ADMIN : MemberRole.MEMBER;
 
-        // 회원가입 후 회원의 활성 여부 결정
-        String isActive = "활성";
-
         // 회원 객체 생성 및 설정
         Member member = Member.builder()
                 .providerTypeCode(providerTypeCode)
@@ -59,7 +56,7 @@ public class MemberService {
                 .nickname(nickname)
                 .phoneNumber(phoneNumber)
                 .address(address)
-                .role(MemberRole.MEMBER)
+                .role(role)
                 .isActive(true) // isActive 필드를 true로 설정 (민섭 추가)
                 .balance(0L) // 초기화된 balance 값 설정 (민섭추가)
                 .createDate(LocalDateTime.now()) // 생성일자
@@ -193,8 +190,15 @@ public class MemberService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 
     public Member save(Member member) {
         return memberRepository.save(member);
     }
+
+//    public List<Member> getArtistApplicantList() {
+//
+//    }
 }

@@ -30,7 +30,7 @@ public class ArtistController {
     private final ArtistService artistService;
     private final MemberService memberService;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/profile/{id}")
     public String getProfile(Model model, @PathVariable("id") Integer id) {
         Artist artist = artistService.getArtist(id);
