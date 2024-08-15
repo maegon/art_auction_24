@@ -7,6 +7,7 @@ import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.bid.service.BidService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.notification.service.NotificationService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
@@ -38,6 +39,7 @@ public class AuctionService {
     private final ProductService productService;
     private final BidService bidService;
     private final MemberService memberService;
+    private final NotificationService notificationService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
     public Auction create(String name, LocalDateTime startDate, LocalDateTime endDate, List<Long> productIds) {
@@ -70,6 +72,10 @@ public class AuctionService {
 
             // 경매 종료 후 최종 입찰자의 잔액 차감
             bidService.finalizeAuction(auction.getId());  // 경매 ID로 호출
+
+            // 경매 종료 결과를 알림
+            logger.info("Notifying auction results for auction ID {}.", auction.getId());
+            notificationService.notifyAuctionResults(auction);
         }
 
         // 예약된 경매를 활성화합니다.
@@ -115,6 +121,11 @@ public class AuctionService {
         // 경매 상태를 닫힘으로 설정
         auction.setStatus(AuctionStatus.CLOSED);
         auctionRepository.save(auction);
+
+        // 경매 종료 결과를 알림
+        logger.info("Notifying auction results for auction ID {}.", auction.getId());
+        notificationService.notifyAuctionResults(auction);
+
     }
 
 

@@ -193,11 +193,21 @@ public class ProductService {
         return productRepository.findAllByAuctions(auction);
 
     }
+
     // 재원 추가
     public List<Product> getProductList() {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         return productRepository.findAll();
+    }
+
+    public List<Product> getAvailableProducts() {
+        return productRepository.findByWinningBidderIsNull();
+    }
+
+    // 특정 제품에 대해 가장 최신의 경매 상품을 반환
+    public Optional<AuctionProduct> getLatestAuctionProduct(Long productId) {
+        return auctionProductRepository.findTopByProductIdOrderByAuctionCreateDateDesc(productId);
     }
 
 }

@@ -16,4 +16,7 @@ public interface AuctionProductRepository extends JpaRepository<AuctionProduct, 
 
     Optional<AuctionProduct> findByProductId(Long productId);
 
+    // 특정 제품에 대해 가장 최근 경매를 반환하는 쿼리 메서드
+    Optional<AuctionProduct> findTopByProductIdOrderByAuctionCreateDateDesc(Long productId);
+
 }

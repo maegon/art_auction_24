@@ -79,22 +79,21 @@ public class ProductController {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
 
-        AuctionProduct auctionProduct = null;
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
 
-        try {
-            auctionProduct = productService.getAuctionProduct(id); // 제품 ID로 AuctionProduct 조회
+        // 특정 제품의 가장 최신 경매 상품 조회
+        Optional<AuctionProduct> latestAuctionProduct = productService.getLatestAuctionProduct(id);
 
-            if (auctionProduct != null) {
-                Auction auction = auctionProduct.getAuction();
+        if (latestAuctionProduct.isPresent()) {
+            AuctionProduct auctionProduct = latestAuctionProduct.get();
+            Auction auction = auctionProduct.getAuction();
 
-                // 경매 상태 확인
-                if (auction != null) {
-                    auctionStatus = auction.getStatus().name();
-                }
+            if (auction != null) {
+                auctionStatus = auction.getStatus().name();
             }
+
             model.addAttribute("auctionProduct", auctionProduct);
-        } catch (RuntimeException e) {
+        } else {
             model.addAttribute("auctionProduct", null);
         }
 

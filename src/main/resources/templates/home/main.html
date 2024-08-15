@@ -32,6 +32,9 @@
                         <div class="viewAll text-black">전체보기 →</div>
                     </a>
                 </div>
+                <div th:if="${#lists.isEmpty(productList)}" class="flex justify-center items-center h-80">
+                    <p class="text-center text-gray-500 text-lg">등록된 작품이 없습니다.</p>
+                </div>
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
                         <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">

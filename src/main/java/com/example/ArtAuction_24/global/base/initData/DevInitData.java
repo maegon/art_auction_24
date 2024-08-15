@@ -46,7 +46,7 @@ public class DevInitData implements BeforeInitData {
             memberService.join("", "admin", password, "admin@test.com", "admin",
                     "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-            Member M1 = memberService.join("", "user1", password, "user1@test.com", "user1",
+            Member M1 = memberService.join("", "user1", password, "minseopkim99@gmail.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user2", password, "dlagorhs99@naver.com", "user2",
@@ -56,7 +56,7 @@ public class DevInitData implements BeforeInitData {
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
 
-            artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","Artist@naver.com","naver.com","안녕! 나 김작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
+            artistService.create("김작가", "kimArtist", "1950-06-28", "010-1234-5678","bok06023@naver.com","naver.com","안녕! 나 김작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
             artistService.create("나작가", "naArtist", "1968-12-08", "010-4567-5678","Artist@google.com","google.com","안녕! 나 나작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
             artistService.create("박작가", "parkArtist", "1999-04-03", "010-9874-5678","Artist@daum.com","daum.com","안녕! 나 박작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
             artistService.create("이작가", "leeArtist", "1985-11-02", "010-0582-5678","Artist@kakao.com","kakao.com","안녕! 나 이작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");

@@ -17,9 +17,9 @@
                             NO.<span th:text="${product.id}"></span>
                         </div>
                         <div class="flex justify-between">
-                                <span class="text-xl lg:text-3xl font-bold">
-                                    <span th:text="${product.artist.korName}"></span>
-                                </span>
+                            <span class="text-xl lg:text-3xl font-bold">
+                                <span th:text="${product.artist.korName}"></span>
+                            </span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-base lg:text-lg font-medium text-gray-600" th:text="${product.artist.engName}"></span>
@@ -48,7 +48,7 @@
                         </div>
                         <hr>
 
-                         <!-- 입찰 Form 시작 -->
+                        <!-- 입찰 Form 시작 -->
                         <form th:action="@{/auction/bid}" method="post">
                             <input type="hidden" name="productId" th:value="${product.id}"/>
                             <!-- 입찰 금액 입력 필드와 레이블을 조건부로 표시 -->
@@ -62,21 +62,22 @@
                             <button
                                     type="submit"
                                     class="bg-black border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-sky-700 hover:border-[#8c8c8c]"
-                                    th:text="${auctionStatus == 'ACTIVE'} ? '응찰하기' : '경매 전'"
+                                    th:text="${auctionStatus == 'ACTIVE' ? '응찰하기' : (product.winningBidder != null ? '경매 종료' : '경매 전')}"
                                     th:disabled="${auctionStatus != 'ACTIVE'}">
                             </button>
-
                         </form>
                         <!-- 입찰 Form 끝 -->
-                        <form  th:if="${auctionStatus == 'ACTIVE'}" th:action="@{/auction/cancelBid}" method="post">
-                            <input type="hidden" name="bidId" th:value="${product.id}"/>
+
+                        <!-- 입찰 취소 Form 시작 -->
+                        <form th:if="${auctionStatus == 'ACTIVE' && currentBid != null}" th:action="@{/auction/cancelBid}" method="post">
+                            <input type="hidden" name="bidId" th:value="${currentBid.id}"/>
                             <button
                                     type="submit"
                                     class="bg-red-500 border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-red-700 hover:border-[#8c8c8c]"
-                                    th:text="'입찰 취소'"
-                                    th:disabled="${auctionStatus != 'ACTIVE'}">
+                                    th:text="'입찰 취소'">
                             </button>
                         </form>
+                        <!-- 입찰 취소 Form 끝 -->
 
                         <div class="flex justify-center items-center mt-2 text-gray-600 text-xs lg:text-sm">
                             <i class="fa-solid fa-headset"></i>&nbsp;<a th:href="@{/question/list}">작품문의</a>
@@ -87,6 +88,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="p-4 w-full lg:w-[650px] lg:px-[100px] break-words">
                 <div class="w-full max-w-md p-6">
                     <div class="mt-4 mb-20 text-sm lg:text-base">
@@ -112,6 +114,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

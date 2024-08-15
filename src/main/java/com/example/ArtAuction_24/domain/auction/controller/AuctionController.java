@@ -63,9 +63,9 @@ public class AuctionController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
-        List<Product> allProducts = productRepository.findAll();
-        model.addAttribute("allProducts", allProducts);
-
+        // Filter products where winningBidder is null
+        List<Product> availableProducts = productRepository.findByWinningBidderIsNull();
+        model.addAttribute("allProducts", availableProducts);
         return "auction/form";
     }
 
