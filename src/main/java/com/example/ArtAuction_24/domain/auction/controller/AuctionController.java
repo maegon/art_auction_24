@@ -1,5 +1,7 @@
 package com.example.ArtAuction_24.domain.auction.controller;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.form.AuctionForm;
@@ -15,15 +17,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -33,6 +33,7 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final ArtistService artistService;
 
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
@@ -59,8 +60,7 @@ public class AuctionController {
         return "auction/scheduled";
     }
 
-
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
         List<Product> allProducts = productRepository.findAll();
@@ -69,7 +69,7 @@ public class AuctionController {
         return "auction/form";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {

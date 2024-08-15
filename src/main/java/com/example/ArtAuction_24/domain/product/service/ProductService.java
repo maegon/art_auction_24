@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -171,6 +172,7 @@ public class ProductService {
     public List<LikeProduct> getLikeProduct(Member member) {
         return likeProductRepository.findByMember(member);
     }
+
     // ID로 상품 찾기
     public Product findById(Long productId) {
         return productRepository.findById(productId)
@@ -191,4 +193,11 @@ public class ProductService {
         return productRepository.findAllByAuctions(auction);
 
     }
+    // 재원 추가
+    public List<Product> getProductList() {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        return productRepository.findAll();
+    }
+
 }

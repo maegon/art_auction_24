@@ -6,6 +6,7 @@ import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

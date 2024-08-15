@@ -20,6 +20,42 @@ document.addEventListener("DOMContentLoaded", function() {
     const emailConfirmInput = document.getElementById('emailConfirm');
     const emailError = document.getElementById('emailError');
 
+    // 약관 동의
+    const agreeButton = document.getElementById("agreeButton"); // '다음' 버튼
+    const privacyCheckbox = document.getElementById('privacy');
+    const copyrightCheckbox = document.getElementById('copyright');
+
+    // 약관 동의 체크박스 상태에 따라 버튼 활성화
+    function updateAgreeButtonState() {
+        if (privacyCheckbox.checked && copyrightCheckbox.checked) {
+            agreeButton.removeAttribute("disabled");
+        } else {
+            agreeButton.setAttribute("disabled", "true");
+        }
+    }
+
+    // 체크박스 상태가 변경될 때마다 버튼 상태 업데이트
+    privacyCheckbox.addEventListener('change', updateAgreeButtonState);
+    copyrightCheckbox.addEventListener('change', updateAgreeButtonState);
+
+    // '다음' 버튼 클릭 시 회원가입 폼 표시
+    agreeButton.addEventListener('click', function() {
+        if (!agreeButton.disabled) {
+            document.querySelector('.privacyCheckbox').style.display = 'none';
+            document.querySelector('.copyrightCheckbox').style.display = 'none';
+            document.getElementById('joinForm').style.display = 'block';
+        }
+    });
+
+    // backLink 버튼 클릭 시 동작 추가
+        const backLinkButton = document.querySelector('.backLink');
+        backLinkButton.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+            document.querySelector('.privacyCheckbox').style.display = 'block';
+            document.querySelector('.copyrightCheckbox').style.display = 'block';
+            document.getElementById('joinForm').style.display = 'none';
+        });
+
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
         let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
@@ -36,16 +72,19 @@ document.addEventListener("DOMContentLoaded", function() {
         event.target.value = formattedInput;
     });
 
-    // 이메일 도메인 선택
+    let lastSelectedDomain = "";
+
+    // 도메인 선택
     domainListEl.addEventListener('change', (event) => {
-        if (event.target.value !== "type") {
-            domainInput.value = event.target.value;
-            domainInput.disabled = true;
-        } else {
-            domainInput.value = "";
-            domainInput.disabled = false;
-        }
-    });
+    if (event.target.value !== "type") {
+        domainInput.value = event.target.value;
+        domainInput.disabled = true;
+        lastSelectedDomain = event.target.value; // 선택된 도메인 값을 저장
+    } else {
+        domainInput.value = "";
+        domainInput.disabled = false
+    }
+});
 
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {

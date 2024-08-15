@@ -21,8 +21,6 @@ public class SecurityConfig {
         http
                 .csrf().and()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(new AntPathRequestMatcher("/artist/**")).hasAuthority("ROLE_ARTIST")
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/member/login")

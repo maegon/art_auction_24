@@ -35,10 +35,13 @@
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/member/myPage}">작품 추가</a>
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_profileCreate" th:href="@{/artist/create}">프로필 제작</a>
+                        <a sec:authorize="hasAuthority('ARTIST')" class="header_applicantAuction" th:href="@{/auction/applicant}">작품 경매 신청</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/auction/create}">경매 추가</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/admin/home/admMain}">관리자 홈</a>
                         <a class="header_profile" th:href="@{/member/myPage}">프로필 수정</a>
                         <a sec:authorize="!hasAuthority('ADMIN')" class="header_qna" th:href="@{/question/list}">문의하기</a>
-                        <a sec:authorize="hasAuthority('MEMBER')" class="header_recharge" th:href="@{/recharge/recharge}">충전 하기</a>
+                        <a sec:authorize="hasAuthority('MEMBER')" class="header_recharge" th:href="@{/recharge/recharge}">충전 하기</a> <!-- 재원 수정 -->
+                        <a sec:authorize="hasAuthority('MEMBER')" class="header_artistApplicant" th:href="@{/member/applicantArtist1}">작가 신청</a> <!-- 재원 추가 -->
                         <hr>
                         <a class="header_logout" th:href="@{/member/logout}">로그아웃</a>
                     </div>

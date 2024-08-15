@@ -67,5 +67,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN p.auctions a WHERE a.status = :status")
     List<Product> findProductsByAuctionStatus(@Param("status") AuctionStatus status);
 
+
     List<Product> findAllByAuctions(Auction auction);
+
+    List<Product> findByArtistId(Long artistId);
+
 }
