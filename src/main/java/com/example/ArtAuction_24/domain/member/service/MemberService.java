@@ -31,7 +31,6 @@ import java.util.UUID;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
 
@@ -43,6 +42,8 @@ public class MemberService {
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
+
+        System.out.println(email);
 
         // 회원 역할 결정
         MemberRole role = "admin".equals(username) ? MemberRole.ADMIN : MemberRole.MEMBER;
@@ -83,6 +84,18 @@ public class MemberService {
 
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public boolean authenticate(String username, String password) {
+        Optional<Member> memberOptional = findByUsername(username);
+
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            if (passwordEncoder.matches(password, member.getPassword())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Member getCurrentMember() {

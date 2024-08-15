@@ -47,6 +47,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // backLink 버튼 클릭 시 동작 추가
+        const backLinkButton = document.querySelector('.backLink');
+        backLinkButton.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+            document.querySelector('.privacyCheckbox').style.display = 'block';
+            document.querySelector('.copyrightCheckbox').style.display = 'block';
+            document.getElementById('joinForm').style.display = 'none';
+        });
+
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
         let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
@@ -63,16 +72,19 @@ document.addEventListener("DOMContentLoaded", function() {
         event.target.value = formattedInput;
     });
 
-    // 이메일 도메인 선택
+    let lastSelectedDomain = "";
+
+    // 도메인 선택
     domainListEl.addEventListener('change', (event) => {
-        if (event.target.value !== "type") {
-            domainInput.value = event.target.value;
-            domainInput.disabled = true;
-        } else {
-            domainInput.value = "";
-            domainInput.disabled = false;
-        }
-    });
+    if (event.target.value !== "type") {
+        domainInput.value = event.target.value;
+        domainInput.disabled = true;
+        lastSelectedDomain = event.target.value; // 선택된 도메인 값을 저장
+    } else {
+        domainInput.value = "";
+        domainInput.disabled = false
+    }
+});
 
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {

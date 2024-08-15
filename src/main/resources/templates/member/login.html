@@ -1,9 +1,9 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="admContainer">
-            <div class="row full-height justify-center">
+            <div class="row justify-center">
                 <div class="col-12 text-center align-self-center">
-                    <div class="section pb-3 pt-3 pt-sm-2 text-center">
+                    <div class="section pb-3 pt-sm-2 text-center">
                         <h6 class="mb-0 pb-3">
                             <span>Log In </span>
                             <span>Join</span></h6>
@@ -11,111 +11,162 @@
                         <label for="reg-log"><i class="uis uis-arrow-up-left"></i></label>
                         <div class="card-3d-wrap mx-auto">
                             <div class="card-3d-wrapper">
-                                <form th:action="@{/member/login}" class="loginPostForm" method="POST">
+                                <form th:action="@{/member/login}" class="loginPostForm" id="loginForm" method="POST">
                                     <div class="card-front">
                                         <div class="center-wrap">
-                                            <div class="section text-center">
-                                                <div class="form-group mt-8 ml-6 mr-6">
-                                                    <input type="text" name="username" class="form-style component-input"
-                                                           placeholder="아이디 입력" id="component-input-id" autocomplete="off"
-                                                           value>
-                                                    <i class="input-icon uil uil-user"></i>
-                                                    <p id="username-error" class="error-message text-red-500">아이디가 존재하지
-                                                        않습니다.</p>
+                                            <div class="section text-center h-full">
+                                                <div class="box_section flex">
+                                                    <div class="left_box front_left_box pt-16">
+                                                        <div class="form-group">
+                                                            <input type="text" name="username" class="form-style component-input"
+                                                                   placeholder="아이디 입력" id="component-input-id" autocomplete="off"
+                                                                   value>
+                                                            <i class="input-icon uil uil-user"></i>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <i class="input-icon uil uil-lock-alt"></i>
+                                                            <input type="password" name="password"
+                                                                   class="form-style component-input" placeholder="비밀번호 입력"
+                                                                   id="component-input-password" autocomplete="off" value>
+                                                        </div>
+                                                        <div id="findAccountMessage" th:if="${findAccountMessage != null}" th:text="${findAccountMessage}" class="access"></div>
+                                                        <div id="loginMatchError" th:if="${loginMatchError != null}" th:text="${loginMatchError}" class="error"></div>
+                                                        <div class="form-group flex justify-start pt-4">
+                                                            <input style='zoom:1.4;' type="checkbox" id="saveId"
+                                                                   class="text-lg ml-4 mr-2 w-4 h-4"><span class="text-base">아이디 저장</span>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="right_box front_right_box">
+                                                        <div class="right_box_text flex">
+                                                            <div class="lineCustom"></div>
+                                                            <span class="socialLogin_text text-xl">소셜 계정으로 로그인하기</span>
+                                                            <div class="lineCustom"></div>
+                                                        </div>
+                                                        <div class="social-login-wrap mt-8">
+                                                            <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png"
+                                                                                                       alt="카카오로그인"
+                                                                                                       width="160px"></a>
+                                                            <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png"
+                                                                                                       alt="네이버로그인"
+                                                                                                       width="160px"></a>
+                                                            <a href="/oauth2/authorization/google"><img src="/image/google_logo.png"
+                                                                                                        alt="구글로그인"
+                                                                                                        width="160px"></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group mt-14 ml-6 mr-6">
-                                                    <input type="password" name="password"
-                                                           class="form-style component-input" placeholder="비밀번호 입력"
-                                                           id="component-input-password" autocomplete="off" value>
-                                                    <i class="input-icon uil uil-lock-alt"></i>
-                                                    <p id="password-error" class="error-message text-red-500">비밀번호가 일치하지
-                                                        않습니다.</p>
-                                                </div>
-                                                <div class="form-group mt-6 ml-6 mr-6 flex justify-start">
-                                                    <input style='zoom:1.4;' type="checkbox" id="saveId"
-                                                           class="text-lg mr-2"><span class="text-sm">아이디 저장</span>
-                                                </div>
+                                                
                                                 <button type="submit" class="login-submit btn mt-8"
                                                         disabled>로그인
                                                 </button>
-                                                <p class="mb-2 mt-8 text-center"><a href="/sendmail/password" class="link">비밀번호를
-                                                    잊어버리셨나요?</a></p>
-                                                <div class="social-login-wrap mt-8">
-                                                    <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png"
-                                                                                               alt="카카오로그인"
-                                                                                               width="80px"></a>
-                                                    <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png"
-                                                                                               alt="네이버로그인"
-                                                                                               width="80px"></a>
-                                                    <a href="/oauth2/authorization/google"><img src="/image/google_logo.png"
-                                                                                                alt="구글로그인"
-                                                                                                width="80px"></a>
+                                                <div class="accountRestoration_container flex w-full justify-center">
+                                                    <button type="button" id="accountRestoration" class="mb-2 mt-8 text-center text-base">계정을 잊어버리셨나요?</button>
                                                 </div>
+                                                
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </form>
                                 
-                                
-                                <div class="card-back">
-                                    <div class="privacyCheckbox mt-4">
-                                        <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
-                                        <div class="privacy_copyright_section mt-4">
-                                            <div class="mb-3">
-                                                <div class="text-box">
-                                                    <h5 class="text-lg mt-4 mb-2">제 1장 총칙</h5>
-                                                    <h5 class="text-base mt-4 mb-2">제 1 조 (목적)</h5>
-                                                    <p class="text-sm mt-2 mb-2">이 이용약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 인터넷 서비스(이하 '서비스')의 가입조건, 당 사이트와 이용자의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 2 조 (용어의 정의)</h5>
-                                                    <p class="text-sm mt-2 mb-2">
-                                                        1. "이용자"라 함은 당 사이트에 접속하여 이 약관에 따라 당 사이트가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.<br/>
-                                                        2. "회원"이라 함은 서비스를 이용하기 위하여 당 사이트에 개인정보를 제공하여 아이디(ID)와 비밀번호를 부여 받은 자를 말합니다. 회원은 일반회원, 작가회원, 관리자 회원으로 나뉩니다.<br/>
-                                                        3. "일반회원"은 경매에 참여하거나 입찰을 할 수 있으며, 충전 등의 기능을 수행할 수 있습니다.<br/>
-                                                        4. "작가회원"은 자신의 작품을 등록하고 경매 신청을 할 수 있는 권한을 가지며, 작품과 경매와 관련된 기능을 수행할 수 있습니다.<br/>
-                                                        5. "관리자"는 회원 관리, 경매 관리, 작품 관리, 문의 관리를 수행할 수 있는 권한을 가집니다.<br/>
-                                                    </p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 3 조 (이용약관의 효력 및 변경)</h5>
-                                                    <p class="text-sm mt-2 mb-2">당 사이트는 이 약관의 내용을 회원이 알 수 있도록 초기 서비스 화면에 게시합니다. 약관이 변경될 경우, 적용일자와 개정사유를 명시하여 변경 7일 전부터 공지합니다.</p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 4 조(개인정보 수집 및 이용)</h5>
-                                                    <p class="text-sm mt-2 mb-2">당 사이트는 회원의 개인정보를 보호하기 위해 관련 법령에 따라 적절한 조치를 취하고 있으며, 회원의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 수집된 개인정보는 회원 관리, 서비스 제공, 경매 관련 운영 목적으로 사용됩니다.</p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 5 조(회원의 의무)</h5>
-                                                    <p class="text-sm mt-2 mb-2">회원은 자신의 계정 정보를 안전하게 관리해야 하며, 타인의 권리를 침해하지 않아야 합니다. 위반 시, 회원 자격이 박탈될 수 있습니다.</p>
+                                <div class="accountRestoration_section flex flex-col" style="display:none;">
+                                    <button class="backLink2 text-xl inline-block mt-3"><i class="fa-solid fa-arrow-left w-8 h-8"></i> 이전</button>
+                                    <div class="flex">
+                                        <!-- 아이디 찾기 -->
+                                        <div class="usernameRestorationBox">
+                                            <h3 class="text-center text-xl mt-4 mb-4">아이디 찾기</h3>
+                                            <form id="findUsernameForm" method="POST" th:action="@{/sendmail/find-username}">
+                                                <div class="form-group ml-6 mr-6">
+                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findUsernameEmail" autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
                                                 </div>
-                                            </div></div>
-                                        <input type="checkbox" id="privacy" name="privacy" class="w-4 h-4" required>
-                                        <label for="privacy" class="text-base ml-2">이용 약관 및 개인정보 수집에 대한 동의(필수)</label>
+                                                <div id="usernameEmailError" class="error"></div>
+                                                <button type="submit" class="btn mt-3" id="findUsernameSubmit">아이디 찾기</button>
+                                            </form>
+                                        </div>
+                                        <!-- 패스워드 찾기 -->
+                                        <div class="passwordRestorationBox">
+                                            <h3 class="text-center text-xl mt-4 mb-4">패스워드 찾기</h3>
+                                            <form id="findPasswordForm" method="POST" th:action="@{/sendmail/find-password}">
+                                                <div class="form-group ml-6 mr-6">
+                                                    <input type="text" name="username" class="form-style" placeholder="아이디 입력" id="findPasswordUsername" autocomplete="off">
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group ml-6 mr-6">
+                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findPasswordEmail" autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div id="passwordEmailError" class="error"></div>
+                                                <button type="submit" class="btn mt-3" id="findPasswordSubmit">패스워드 찾기</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="copyrightCheckbox mt-4">
-                                        <span class="text-xl">저작권 법률에 대한 안내 및 동의</span>
-                                        <div class="privacy_copyright_section">
-                                            <div class="mt-4 mb-3">
-                                                <div class="text-box">
-                                                    <h5 class="text-lg mt-4 mb-2">제 1장 총칙</h5>
-                                                    <h5 class="text-base mt-4 mb-2">제 1 조 (목적)</h5>
-                                                    <p class="text-sm mt-2 mb-2">이 약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 미술품 경매 서비스 이용과 관련하여 저작권 법률의 준수 사항 및 회원의 권리, 의무를 규정함을 목적으로 합니다.</p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 2 조 (저작권의 보호)</h5>
-                                                    <p class="text-sm mt-2 mb-2">
-                                                        1. 당 사이트에서 거래되는 모든 미술품에 대한 저작권은 원작자인 작가에게 있습니다. 작가는 자신의 작품이 무단 복제되거나 도용되지 않도록 보호받을 권리가 있습니다.<br/>
-                                                        2. 회원은 당 사이트에서 제공하는 모든 미술품 및 관련 콘텐츠를 무단으로 복제, 배포, 전시, 수정, 출판하는 등의 행위를 할 수 없습니다. 이를 위반할 경우 저작권법에 따라 처벌받을 수 있습니다.<br/>
-                                                        3. 당 사이트의 디자인, 레이아웃, 로고, 이미지 등도 저작권으로 보호되며, 무단 복제 및 사용 시 법적 처벌을 받을 수 있습니다.<br/>
-                                                    </p>
-                                                    
-                                                    <h5 class="text-base mt-4 mb-2">제 3 조 (위반 시 처벌)</h5>
-                                                    <p class="text-sm mt-2 mb-2">
-                                                        1. 저작권을 침해한 회원은 민사 및 형사상의 책임을 질 수 있으며, 이에 따른 손해배상 청구 및 법적 제재를 받을 수 있습니다.<br/>
-                                                        2. 당 사이트의 저작물이나 디자인을 무단 복제하거나 사용한 경우, 당 사이트는 법적 조치를 통해 이를 중지시키고 손해배상을 청구할 수 있습니다.<br/>
-                                                    </p>
-                                                </div>
+                                </div>
+                                
+                                
+                                
+                                <div class="card-back ">
+                                    <div class="checkAgree_section flex">
+                                        <div class="privacyCheckbox mt-4">
+                                            <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
+                                            <div class="privacy_copyright_section mt-4">
+                                                <div class="mb-3">
+                                                    <div class="text-box">
+                                                        <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">이 이용약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 인터넷 서비스(이하 '서비스')의 가입조건, 당 사이트와 이용자의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 2 조 (용어의 정의)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">
+                                                            1. "이용자"라 함은 당 사이트에 접속하여 이 약관에 따라 당 사이트가 제공하는 서비스를 받는 회원 및 비회원을 말합니다.<br/>
+                                                            2. "회원"이라 함은 서비스를 이용하기 위하여 당 사이트에 개인정보를 제공하여 아이디(ID)와 비밀번호를 부여 받은 자를 말합니다. 회원은 일반회원, 작가회원, 관리자 회원으로 나뉩니다.<br/>
+                                                            3. "일반회원"은 경매에 참여하거나 입찰을 할 수 있으며, 충전 등의 기능을 수행할 수 있습니다.<br/>
+                                                            4. "작가회원"은 자신의 작품을 등록하고 경매 신청을 할 수 있는 권한을 가지며, 작품과 경매와 관련된 기능을 수행할 수 있습니다.<br/>
+                                                            5. "관리자"는 회원 관리, 경매 관리, 작품 관리, 문의 관리를 수행할 수 있는 권한을 가집니다.<br/>
+                                                        </p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 3 조 (이용약관의 효력 및 변경)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">당 사이트는 이 약관의 내용을 회원이 알 수 있도록 초기 서비스 화면에 게시합니다. 약관이 변경될 경우, 적용일자와 개정사유를 명시하여 변경 7일 전부터 공지합니다.</p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 4 조(개인정보 수집 및 이용)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">당 사이트는 회원의 개인정보를 보호하기 위해 관련 법령에 따라 적절한 조치를 취하고 있으며, 회원의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 수집된 개인정보는 회원 관리, 서비스 제공, 경매 관련 운영 목적으로 사용됩니다.</p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 5 조(회원의 의무)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-4 text-left">회원은 자신의 계정 정보를 안전하게 관리해야 하며, 타인의 권리를 침해하지 않아야 합니다. 위반 시, 회원 자격이 박탈될 수 있습니다.</p>
+                                                    </div>
+                                                </div></div>
+                                            <input type="checkbox" id="privacy" name="privacy" class="w-6 h-6" required>
+                                            <label for="privacy" class="text-2xl ml-2">이용 약관 및 개인정보 수집에 대한 동의(필수)</label>
+                                        </div>
+                                        <div class="copyrightCheckbox mt-4">
+                                            <span class="text-xl">저작권 법률에 대한 안내 및 동의</span>
+                                            <div class="privacy_copyright_section">
+                                                <div class="mt-4 mb-3">
+                                                    <div class="text-box">
+                                                        <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">이 약관은 "ArtAuction" (이하 "당 사이트")에서 제공하는 미술품 경매 서비스 이용과 관련하여 저작권 법률의 준수 사항 및 회원의 권리, 의무를 규정함을 목적으로 합니다.</p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 2 조 (저작권의 보호)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-2 text-left">
+                                                            1. 당 사이트에서 거래되는 모든 미술품에 대한 저작권은 원작자인 작가에게 있습니다. 작가는 자신의 작품이 무단 복제되거나 도용되지 않도록 보호받을 권리가 있습니다.<br/>
+                                                            2. 회원은 당 사이트에서 제공하는 모든 미술품 및 관련 콘텐츠를 무단으로 복제, 배포, 전시, 수정, 출판하는 등의 행위를 할 수 없습니다. 이를 위반할 경우 저작권법에 따라 처벌받을 수 있습니다.<br/>
+                                                            3. 당 사이트의 디자인 ml-4 mr-4, 레이아웃, 로고, 이미지 등도 저작권으로 보호되며, 무단 복제 및 사용 시 법적 처벌을 받을 수 있습니다.<br/>
+                                                        </p>
+                                                        
+                                                        <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 3 조 (위반 시 처벌)</h5>
+                                                        <p class="text-sm ml-4 mr-4 mt-2 mb-4 text-left">
+                                                            1. 저작권을 침해한 회원은 민사 및 형사상의 책임을 질 수 있으며, 이에 따른 손해배상 청구 및 법적 제재를 받을 수 있습니다.<br/>
+                                                            2. 당 사이트의 저작물이나 디자인을 무단 복제하거나 사용한 경우, 당 사이트는 법적 조치를 통해 이를 중지시키고 손해배상을 청구할 수 있습니다.<br/>
+                                                        </p>
+                                                    </div>
                                                 
                                                 
-                                            </div></div>
-                                        <input type="checkbox" id="copyright" name="copyright" class="w-4 h-4" required>
-                                        <label for="copyright" class="text-base ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
+                                                </div></div>
+                                            <input type="checkbox" id="copyright" name="copyright" class="w-6 h-6" required>
+                                            <label for="copyright" class="text-2xl ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
+                                        </div>
                                     </div>
                                     <button type="submit" id="agreeButton" class="btn mt-3" disabled>다음</button>
                                 </div>
@@ -126,87 +177,96 @@
                                     
                                     <div class="card-back">
                                         <div class="center-wrap">
+                                            <div class="backLink_section">
+                                                <button class="backLink text-xl inline-block mt-3"><i class="fa-solid fa-arrow-left w-8 h-8"></i> 이전</button>
+                                            </div>
                                             <div class="section text-center">
-                                                <div class="form-group ml-6 mr-6 inputUsernameDiv">
-                                                    <input type="text" name="username" class="form-style"
-                                                           placeholder="아이디 입력" id="username" autocomplete="off">
-                                                    <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateUsername()"
-                                                            class=" btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
-                                                    </button>
-                                                </div>
-                                                <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="password" name="password" class="form-style" maxlength="24"
-                                                           placeholder="비밀번호 입력" id="password" autocomplete="off">
-                                                    <i class="input-icon uil uil-lock-alt"></i>
-                                                </div>
-                                                <div class="form-group mt-1 ml-6 mr-6">
-                                                    <input type="password" name="password_confirm" class="form-style"
-                                                           maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm"
-                                                           autocomplete="off">
-                                                    <i class="input-icon uil uil-lock-alt"></i>
-                                                </div>
-                                                <div id="passwordMatchError" class="error"></div>
-                                                <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                    <input class="form-style box w-xm mr-2" id="email-txt" type="text"
-                                                           placeholder="이메일 입력" name="logemailT" autocomplete="off">
-                                                    <i class="input-icon uil uil-at"></i>
-                                                    @<input class="form-style box w-xm ml-2" id="domain-txt" type="text"
-                                                           placeholder="이메일 선택" name="logemail" autocomplete="off">
-                                                    <i class="input-icon uil uil-at"></i>
-                                                    <select class="box form-style ml-2" id="domain-list">
-                                                        <option value="type">직접 입력</option>
-                                                        <option value="naver.com">naver.com</option>
-                                                        <option value="gmail.com">gmail.com</option>
-                                                        <option value="hanmail.net">hanmail.net</option>
-                                                        <option value="nate.com">nate.com</option>
-                                                        <option value="daum.net">daum.net</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                    <input type="text" name="email_confirm" class="form-style box w-xm mr-1"
-                                                           placeholder="인증 번호 입력" id="emailConfirm"
-                                                           autocomplete="off" required>
-                                                    <i class="input-icon uil uil-envelope-check"></i>
-                                                    <button type="button" class=" btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호<br>발급
-                                                    </button>
-                                                </div>
-                                                <div id="emailError" class="error"></div>
-                                                <div class="form-group ml-6 mr-6 inputNicknameDiv">
-                                                    <input type="text" name="nickname" class="form-style"
-                                                           placeholder="닉네임 입력" id="nickname" autocomplete="off">
-                                                    <i class="input-icon uil uil-user"></i>
-                                                    <button type="button" onclick="validateNickname()"
-                                                            class=" btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
-                                                    </button>
-                                                </div>
-                                                <div id="nicknameError" class="error"></div>
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="tel" name="phoneNumber" class="form-style"
-                                                           placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
-                                                    <i class="input-icon uil uil-phone"></i>
-                                                </div>
-                                                <div id="phoneNumberError" class="error"></div>
-                                                <div class="form-group mt-1 ml-6 mr-6">
-                                                    <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
-                                                    <div class="address_sec_1 flex">
-                                                        <input type="text" id="sample6_postcode" class="form-style"
-                                                               placeholder="우편번호">
-                                                        <input type="button" onclick="sample6_execDaumPostcode()"
-                                                               class="btn ml-2 mt-auto mb-auto p-1 text-xs" value="우편찾기">
+                                                <div class="flex">
+                                                    <div class="left_box">
+                                                        <div class="form-group ml-6 mr-6 inputUsernameDiv">
+                                                            <input type="text" name="username" class="form-style"
+                                                                   placeholder="아이디 입력" id="username" autocomplete="off">
+                                                            <i class="input-icon uil uil-user"></i>
+                                                            <button type="button" onclick="validateUsername()"
+                                                                    class="confirmAndCheckBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
+                                                            </button>
+                                                        </div>
+                                                        <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
+                                                        <div class="form-group ml-6 mr-6">
+                                                            <input type="password" name="password" class="form-style" maxlength="24"
+                                                                   placeholder="비밀번호 입력" id="password" autocomplete="off">
+                                                            <i class="input-icon uil uil-lock-alt"></i>
+                                                        </div>
+                                                        <div class="form-group mt-1 ml-6 mr-6">
+                                                            <input type="password" name="password_confirm" class="form-style"
+                                                                   maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm"
+                                                                   autocomplete="off">
+                                                            <i class="input-icon uil uil-lock-alt"></i>
+                                                        </div>
+                                                        <div id="passwordMatchError" class="error"></div>
+                                                        <div class="form-group mt-1 ml-6 mr-6 flex">
+                                                            <input class="form-style box w-xm mr-2" id="email-txt" type="text"
+                                                                   placeholder="이메일 입력" name="logemailT" autocomplete="off">
+                                                            <i class="input-icon uil uil-at"></i>
+                                                            @<input class="form-style box w-xm ml-2" id="domain-txt" type="text"
+                                                                    placeholder="이메일 선택" name="logemail" autocomplete="off">
+                                                            <i class="input-icon uil uil-at"></i>
+                                                            <select class="box form-style ml-2" id="domain-list">
+                                                                <option value="type">직접 입력</option>
+                                                                <option value="naver.com">naver.com</option>
+                                                                <option value="gmail.com">gmail.com</option>
+                                                                <option value="hanmail.net">hanmail.net</option>
+                                                                <option value="nate.com">nate.com</option>
+                                                                <option value="daum.net">daum.net</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group mt-1 ml-6 mr-6 flex">
+                                                            <input type="text" name="email_confirm" class="form-style box w-xm mr-1"
+                                                                   placeholder="인증 번호 입력" id="emailConfirm"
+                                                                   autocomplete="off" required>
+                                                            <i class="input-icon uil uil-envelope-check"></i>
+                                                            <button type="button" class="confirmAndCheckBtn2 btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호 발급
+                                                            </button>
+                                                        </div>
+                                                        <div id="emailError" class="error"></div>
                                                     </div>
-                                                    <i class="input-icon uil uil-estate"></i>
-                                                    <input type="text" id="sample6_address"
-                                                           name="address1" class="form-style mt-1 mb-1" placeholder="주소">
-                                                    <div class="address_sec_2 flex">
-                                                        <input type="text" id="sample6_detailAddress"
-                                                               name="address2" class="form-style" placeholder="상세주소">
-                                                        <input type="text" id="sample6_extraAddress" class="form-style ml-2"
-                                                               name="address3" placeholder="참고항목">
+                                                    <div class="right_box">
+                                                        <div class="form-group ml-6 mr-6 inputNicknameDiv">
+                                                            <input type="text" name="nickname" class="form-style"
+                                                                   placeholder="닉네임 입력" id="nickname" autocomplete="off">
+                                                            <i class="input-icon uil uil-user"></i>
+                                                            <button type="button" onclick="validateNickname()"
+                                                                    class="confirmAndCheckBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
+                                                            </button>
+                                                        </div>
+                                                        <div id="nicknameError" class="error"></div>
+                                                        <div class="form-group ml-6 mr-6">
+                                                            <input type="tel" name="phoneNumber" class="form-style"
+                                                                   placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
+                                                            <i class="input-icon uil uil-phone"></i>
+                                                        </div>
+                                                        <div id="phoneNumberError" class="error"></div>
+                                                        <div class="form-group mt-1 ml-6 mr-6">
+                                                            <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
+                                                            <div class="address_sec_1 flex">
+                                                                <input type="text" id="sample6_postcode" class="form-style"
+                                                                       placeholder="우편번호">
+                                                                <input type="button" onclick="sample6_execDaumPostcode()"
+                                                                       class="confirmAndCheckBtn btn ml-2 mt-auto mb-auto p-1" value="우편찾기">
+                                                            </div>
+                                                            <i class="input-icon uil uil-estate"></i>
+                                                            <input type="text" id="sample6_address"
+                                                                   name="address1" class="form-style mt-1 mb-1" placeholder="주소">
+                                                            <div class="address_sec_2 flex">
+                                                                <input type="text" id="sample6_detailAddress"
+                                                                       name="address2" class="form-style mt-auto mb-auto" placeholder="상세주소" required>
+                                                                <input type="text" id="sample6_extraAddress" class="form-style ml-1 mt-2 mb-2"
+                                                                       name="address3" placeholder="참고항목">
+                                                            </div>
+                                                        </div>
+                                                        <div id="addressError" class="error"></div>
                                                     </div>
                                                 </div>
-                                                <div id="addressError" class="error"></div>
                                                 <button type="submit" class="join-submit btn mt-3" disabled>회원가입</button>
                                                 <div th:if="${joinError}" class="text-red-500" th:text="${joinError}"></div>
                                             </div>

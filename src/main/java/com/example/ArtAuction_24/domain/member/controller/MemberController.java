@@ -6,27 +6,28 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
+import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
+import com.example.ArtAuction_24.global.email.EmailRequestDto;
 import com.example.ArtAuction_24.global.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,11 +38,41 @@ public class MemberController {
     private final QuestionService questionService;
     private final ProductService productService;
     private final ArtistService artistService;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        // 'message' 속성에 접근
+        if (model.containsAttribute("message")) {
+            String message = (String) model.getAttribute("message");
+            System.out.println("전달된 메시지: " + message);
+
+            model.addAttribute("findAccountMessage", "계정 찾기 메시지 : " + message);
+        }
+
+        // 'message' 속성에 접근
+        if (model.containsAttribute("error")) {
+            String error = (String) model.getAttribute("error");
+            System.out.println("전달된 메시지: " + error);
+
+            model.addAttribute("findAccountMessage", "계정 찾기 메시지 : " + error);
+        }
+
         return "member/login";
+    }
+
+    @PostMapping("/member/login")
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
+        boolean loginSuccessful = memberService.authenticate(username, password);
+
+        if (!loginSuccessful) {
+            model.addAttribute("loginMatchError", "아이디 또는 비밀번호가 존재하지 않습니다.");
+            return "forward:/member/login";
+        }
+
+        return "redirect:/";
     }
 
     @GetMapping("/check-username")
@@ -65,12 +96,13 @@ public class MemberController {
     public String join(
             @ModelAttribute @Valid MemberForm memberForm,
             BindingResult bindingResult) {
-
-
-
         // 이메일 및 주소 필드 결합
         String email = memberForm.getLogemailT() + "@" + memberForm.getLogemail();
+
+        System.out.println("이메일 도메인 전송 확인 : " + memberForm.getLogemail() );
+
         memberForm.setEmail(email);
+
 
         String address = memberForm.getAddress1() + ", " + memberForm.getAddress2() + memberForm.getAddress3();
         memberForm.setAddress(address);
