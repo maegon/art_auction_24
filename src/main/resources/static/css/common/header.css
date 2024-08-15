@@ -192,7 +192,7 @@
         }
 
 
-        .nav__main.active, .nav__login.active {
+        .nav__main.header_active, .nav__login.header_active {
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -200,7 +200,7 @@
             margin: 10px;
         }
 
-        .header_nav.active{
+        .header_nav.header_active{
          height: auto;
         }
 

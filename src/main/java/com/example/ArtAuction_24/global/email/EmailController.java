@@ -66,6 +66,7 @@ public class EmailController {
         // 이메일로 인증 코드 전송 (구현 필요)
         emailService.sendConfirmCode(email, code);
 
+
         // 클라이언트로 인증 코드 전달
         Map<String, String> response = new HashMap<>();
         response.put("code", code);

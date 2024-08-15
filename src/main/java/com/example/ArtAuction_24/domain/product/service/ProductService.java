@@ -158,6 +158,7 @@ public class ProductService {
             likeProduct.setMember(member);
 
             likeProductRepository.save(likeProduct);
+
         }
     }
 

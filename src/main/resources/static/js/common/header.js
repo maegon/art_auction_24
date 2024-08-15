@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 네비게이션 메뉴 토글 함수
     function toggleNavigationMenu() {
-        document.querySelector('.nav__main').classList.toggle('active');
-        document.querySelector('.nav__login').classList.toggle('active');
-        document.querySelector('.header_nav').classList.toggle('active');
+        document.querySelector('.nav__main').classList.toggle('header_active');
+        document.querySelector('.nav__login').classList.toggle('header_active');
+        document.querySelector('.header_nav').classList.toggle('header_active');
     }
 
     // 메뉴 버튼 클릭 시 네비게이션 메뉴 토글

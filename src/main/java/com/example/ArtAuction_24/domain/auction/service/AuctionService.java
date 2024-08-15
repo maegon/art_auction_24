@@ -73,9 +73,6 @@ public class AuctionService {
             // 경매 종료 후 최종 입찰자의 잔액 차감
             bidService.finalizeAuction(auction.getId());  // 경매 ID로 호출
 
-            // 경매 종료 결과를 알림
-            logger.info("Notifying auction results for auction ID {}.", auction.getId());
-            notificationService.notifyAuctionResults(auction);
         }
 
         // 예약된 경매를 활성화합니다.
@@ -83,53 +80,8 @@ public class AuctionService {
         for (Auction auction : scheduledAuctions) {
             auction.setStatus(AuctionStatus.ACTIVE);
             auctionRepository.save(auction);
-            logger.info("Auction with ID {} has been activated.", auction.getId());
         }
     }
-
-    private void closeAuction(Auction auction) {
-        // 경매에 참여한 제품 목록 가져오기
-        List<Product> products = productService.findAllByAuction(auction);
-
-        for (Product product : products) {
-            // KeyValues 대신 List<Bid>를 직접 반환받습니다.
-            List<Bid> bids = bidService.findBidsByProduct(product); // 수정된 부분
-
-            // 가장 높은 입찰가를 찾습니다.
-            Bid winningBid = bids.stream()
-                    .max((b1, b2) -> b1.getAmount().compareTo(b2.getAmount()))
-                    .orElse(null);
-
-            if (winningBid != null) {
-                Member winningMember = winningBid.getMember();
-                BigDecimal winningAmount = winningBid.getAmount();
-
-                // 승자의 잔액 차감
-                if (winningMember.getBalance() >= winningAmount.longValue()) {
-                    winningMember.setBalance(winningMember.getBalance() - winningAmount.longValue());
-                    memberService.save(winningMember);
-
-                    // 상품의 상태 업데이트
-                    product.setWinningBidder(winningMember);
-                    productService.save(product);
-                } else {
-                    logger.warn("Insufficient balance for member with ID {}.", winningMember.getId());
-                }
-            }
-        }
-
-        // 경매 상태를 닫힘으로 설정
-        auction.setStatus(AuctionStatus.CLOSED);
-        auctionRepository.save(auction);
-
-        // 경매 종료 결과를 알림
-        logger.info("Notifying auction results for auction ID {}.", auction.getId());
-        notificationService.notifyAuctionResults(auction);
-
-    }
-
-
-
 
     public List<Auction> findAll() {
         return auctionRepository.findAll();
