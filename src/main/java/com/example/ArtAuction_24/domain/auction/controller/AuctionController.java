@@ -59,8 +59,7 @@ public class AuctionController {
         return "auction/scheduled";
     }
 
-
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
         List<Product> allProducts = productRepository.findAll();
@@ -69,7 +68,7 @@ public class AuctionController {
         return "auction/form";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
         if (bindingResult.hasErrors()) {

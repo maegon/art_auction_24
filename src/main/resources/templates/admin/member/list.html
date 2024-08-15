@@ -1,0 +1,60 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="admContainer">
+        <div class="mg_container mt-3 mb-3">
+            <div class="mg_menu_mb_container flex-col">
+                <span class="text-xl  mt-3 text-3xl">회원 권한 설정</span>
+                <div class="mg_mb_menu flex mt-3 mr-3">
+                    <ul class="flex flex-wrap justify-between space-x-2 w-full font-semibold text-xl">
+                        <li class="flex-1 text-center "><span class="mb_un">아이디</span></li>
+                        <li class="flex-1 text-center"><span class="mb_nm">닉네임</span></li>
+                        <li class="flex-1 text-center"><span class="mb_e">이메일</span></li>
+                        <li class="flex-1 text-center"><span class="mb_cd">생성 날짜</span></li>
+                        <li class="flex-1 text-center"><span class="mb_md">수정 날짜</span></li>
+                        <li class="flex-1 text-center"><span class="mb_pi">프로필사진</span></li>
+                        <li class="flex-1 text-center"><span class="mb_pnb">전화번호</span></li>
+                        <li class="flex-1 text-center"><span class="mb_ad">주소</span></li>
+                        <li class="flex-1 text-center"><span class="mb_ia">활성 여부</span></li>
+                        <li class="flex-1 text-center"><span class="mb_ptc">소셜로그인</span></li>
+                        <li class="flex-1 text-center"><span class="mb_rl">권한</span></li>
+                        <li class="flex-1 text-center"><span class="mb_ac"></span></li>
+                    </ul>
+                </div>
+                <div class="mb_mb_list">
+                    <ul>
+                        <li th:each="member : ${memberList}" class="mb_list_each flex flex-wrap justify-between space-x-2 flex-1 text-center mt-2 ">
+                            <div class="mb_list_un flex-1" th:text="${member.username}"></div>
+                            <div class="mb_list_nm flex-1" th:text="${member.nickname}"></div>
+                            <div class="mb_list_e flex-1" th:text="${member.email}"></div>
+                            <div class="mb_list_cd flex-1" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_md flex-1" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_pi flex-1">
+                                <img th:src="@{${member.image}}" alt="프로필 이미지"/>
+                            </div>
+                            <div class="mb_list_pnb flex-1" th:text="${member.phoneNumber}"></div>
+                            <div class="mb_list_ad flex-1" th:text="${member.address}"></div>
+                            <div class="mb_list_ia flex-1">
+                                <select th:value="${member.isActive}">
+                                    <option value="활성" th:selected="${member.isActive == '활성'}">활성</option>
+                                    <option value="비활성" th:selected="${member.isActive == '비활성'}">비활성</option>
+                                </select>
+                            </div>
+                            <div class="mb_list_ptc flex-1" th:text="${member.providerTypeCode}"></div>
+                            <div class="mb_list_rl flex-1">
+                                <select th:value="${member.role.value}">
+                                    <option value="USER" th:selected="${member.role.value == 'USER'}">일반</option>
+                                    <option value="ARTIST" th:selected="${member.role.value == 'ARTIST'}">작가</option>
+                                </select>
+                            </div>
+                            <div class="mb_action flex-1">
+                                <button type="button" class="btn_save" th:data-memberid="${member.id}">저장</button>
+                                <button type="button" class="btn_delete" th:data-memberid="${member.id}">삭제</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

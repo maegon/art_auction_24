@@ -1,0 +1,15 @@
+.admContainer {
+    padding: 0px 300px;
+    width: 100%;
+    margin-top: 40px;
+}
+/* 주요 항목 */
+.mg_menu_btn {
+    margin: 4px 12px;
+    height: 2rem;
+}
+
+.mg_menu_btn:hover {
+    color: black;
+}
+

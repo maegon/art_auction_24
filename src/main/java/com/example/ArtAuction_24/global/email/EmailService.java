@@ -50,7 +50,7 @@ public class EmailService {
         StringBuilder codeBuilder = new StringBuilder();
         Random random = new Random();
         String characters = "0123456789";
-        int length = 4;
+        int length = 6;
 
         for (int i = 0; i < length; i++) {
             int index = random.nextInt(characters.length());

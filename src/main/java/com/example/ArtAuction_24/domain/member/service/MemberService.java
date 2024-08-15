@@ -7,6 +7,10 @@ import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,6 +44,12 @@ public class MemberService {
             throw new IllegalStateException("Email already exists");
         }
 
+        // 회원 역할 결정
+        MemberRole role = "admin".equals(username) ? MemberRole.ADMIN : MemberRole.MEMBER;
+
+        // 회원가입 후 회원의 활성 여부 결정
+        String isActive = "활성";
+
         // 회원 객체 생성 및 설정
         Member member = Member.builder()
                 .providerTypeCode(providerTypeCode)
@@ -54,10 +66,7 @@ public class MemberService {
                 .build();
 
         return memberRepository.save(member); // 데이터베이스에 저장
-
-
     }
-
 
 
     @Transactional
@@ -69,6 +78,7 @@ public class MemberService {
         // 소셜 로그인를 통한 가입시 비번은 없다.
         return join(providerTypeCode, username, "", email, nickname, "", ""); // 최초 로그인 시 딱 한번 실행
     }
+
 
     public Optional<Member> findByUsernameAndProviderTypeCode(String username, String providerTypeCode) {
         return memberRepository.findByUsernameAndProviderTypeCode(username, providerTypeCode);
@@ -164,6 +174,18 @@ public class MemberService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         member.setBalance(member.getBalance() + amount);
         memberRepository.save(member);
+    }
+    public Page<Member> getMemberList(int page, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 8, Sort.by(sorts));
+        return memberRepository.findAllByKeyword(kw, pageable);
+    }
+
+    public List<Member> getMemberList() {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        return memberRepository.findAll();
     }
 
     public Member getMemberByUsername(String username) {

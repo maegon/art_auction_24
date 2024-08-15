@@ -49,14 +49,16 @@ public class ArtistController {
         return "artist/profile";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("artistForm", new ArtistForm());
         return "artist/artistForm";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/create")
     public String create(
             @ModelAttribute @Valid ArtistForm artistForm,
@@ -114,7 +116,8 @@ public class ArtistController {
         return "redirect:/artist/profile/" + artist.getId();
     }
 
-    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/modify/{id}")
     public String artistModify(@Valid ArtistForm artistForm, BindingResult bindingResult,
                                Principal principal, @PathVariable("id") Integer id) {
@@ -170,7 +173,8 @@ public class ArtistController {
         return "redirect:/artist/profile/" + id;
     }
 
-    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/modify/{id}")
     public String artistModify(Model model, @PathVariable("id") Integer id, Principal principal) {
         Artist artist = artistService.getArtist(id);
@@ -242,8 +246,8 @@ public class ArtistController {
         return "artist/profileForm";
     }
 
-
-    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST', 'ADMIN')")
     @GetMapping("/delete/{id}")
     public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
         Artist artist = this.artistService.getArtist(id);

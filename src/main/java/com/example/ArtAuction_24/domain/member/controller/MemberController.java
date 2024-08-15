@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.member.controller;
 
 
+import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
@@ -35,6 +36,7 @@ public class MemberController {
     private final EmailService emailService;
     private final QuestionService questionService;
     private final ProductService productService;
+    private final ArtistService artistService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
