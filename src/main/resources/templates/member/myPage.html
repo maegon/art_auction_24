@@ -1,301 +1,369 @@
 <html layout:decorate="~{layout/layout}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPage</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* 추가적인 스타일이 필요하다면 여기에 작성 */
+    </style>
+</head>
+<body>
 <div layout:fragment="content">
-    <!--    프로필카드-->
-    <div class="fixed container ml-[100px] w-[300px] h-[380px] mt-[200px] ">
-        <div class="container h-[350px] border-2 border-black">
-            <div class="py-2">
-                <div class="flex items-center justify-center py-2">
-                    <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
-                         class="myPageProfile-image"/>
-                    <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
-                         class="myPageProfile-image"/>
-                </div>
-
-                <div class="flex-1 flex items-center justify-center py-2">
-                    <h1 th:text="${member.nickname}" class=" text-left font-bold text-lg"></h1>
-                </div>
-                <hr>
-                <div class="flex items-center justify-center py-4">
-                    <ul>
-                        <li>CASH : 0</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="container h-[200px]">
-
-            <div class="py-4 flex items-center justify-center ">
-                <div class="px-2">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-                <div class="px-2">
-                    <h1 class="text-center font-bold text-2xl">MENU</h1>
-                </div>
-                <div class="px-2">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-            </div>
-
-
-            <ul>
-                <li id="info-update" class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#">정보수정</a>
-                </li>
-                <li id="wish-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#">찜</a>
-                </li>
-                <li id="alarm-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2"><a
-                        href="#">알림</a></li>
-                <li id="question-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#">문의내역</a>
-                </li>
-                <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#">입찰내역</a></li>
-            </ul>
-        </div>
-    </div>
-    <!--    메인컨테이너-->
-    <div class="container mx-auto px-4 min-h-[1500px]">
-        <div class="container py-4 ">
-            <div class="container mx-auto h-[100px] py-2 px-[270px]">
-                <h1 class="text-2xl font-bold text-center py-5">MyPage</h1>
-            </div>
-
-            <div>
-                <div class="container mx-auto py-[50px] px-[200px]">
-                    <div id="info-form" class="myPage-hidden p-4 mt-2">
-                        <h1 class="text-3xl py-4">회원 정보수정</h1>
-                        <div class="min-h-[500px] p-8 rounded-lg shadow-md">
-                            <form id="updateForm" th:action="@{/member/update}" th:object="${memberModifyForm}"
-                                  method="post" enctype="multipart/form-data" class="space-y-6">
-
-                                <!-- 아이디 -->
-                                <div class="flex items-center space-x-4">
-                                    <label for="username" class="font-semibold text-gray-700 w-32">아이디:</label>
-                                    <input type="text" id="username" th:field="*{username}" disabled
-                                           class="block w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600">
-                                </div>
-
-                                <!-- 닉네임 -->
-                                <div class="flex items-center space-x-4">
-                                    <label for="nickname" class="font-semibold text-gray-700 w-32">닉네임:</label>
-                                    <input type="text" id="nickname" th:field="*{nickname}"
-                                           class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
-                                </div>
-
-                                <!-- 비밀번호 -->
-                                <div class="flex items-center space-x-4">
-                                    <label for="password" class="font-semibold text-gray-700 w-32">비밀번호:</label>
-                                    <input type="password" id="password" th:field="*{password}" maxlength="24"
-                                           placeholder="비밀번호를 입력해주세요" autocomplete="off"
-                                           class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
-                                </div>
-
-                                <!-- 비밀번호 확인 -->
-                                <div class="flex items-center space-x-4">
-                                    <label for="passwordConfirm"
-                                           class="font-semibold text-gray-700 w-32">비밀번호확인:</label>
-                                    <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"
-                                           maxlength="24" placeholder="비밀번호를 재입력해주세요" autocomplete="off"
-                                           class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
-                                </div>
-
-                                <!-- 이메일 -->
-                                <div class="flex items-center space-x-4">
-                                    <label for="email" class="font-semibold text-gray-700 w-32">Email:</label>
-                                    <input type="email" id="email" th:field="*{email}"
-                                           class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
-                                </div>
-
-                                <!-- 프로필 이미지 -->
-                                <div class="myPage-grid-item flex items-center space-x-4">
-                                    <label for="profileImage" class="font-semibold text-gray-700 w-32">프로필 이미지:</label>
-                                    <input type="file" id="profileImage" th:field="*{multipartFile}"
-                                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-                                </div>
-
-
-                                <!-- 업데이트 버튼 -->
-                                <div class="flex items-center justify-end">
-                                    <button id="updateButton"
-                                            class="btn  text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
-                                            type="submit">업데이트
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <h1 class="text-3xl py-4">배송지 수정</h1>
-                        <div class="min-h-[300px] p-8 rounded-lg shadow-md ">
-                            <form th:action="@{/member/addressUpdate}" th:object="${memberAddressForm}" method="post"
-                                  enctype="multipart/form-data" class="space-y-6">
-                                <div class="space-y-4">
-                                    <!-- 우편 번호 -->
-                                    <div class="flex items-center space-x-4">
-                                        <input type="text" id="sample6_postcode"
-                                               class="block w-full p-2 border border-gray-300 rounded-md"
-                                               placeholder="우편번호">
-                                        <input type="button" onclick="sample6_execDaumPostcode()"
-                                               class="btn text-sm h-10 px-4 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
-                                               value="우편찾기">
-                                    </div>
-
-                                    <!-- 주소 -->
-                                    <div class="flex items-center space-x-4">
-                                        <input type="text" id="sample6_address" name="address1"
-                                               class="block w-full p-2 border border-gray-300 rounded-md"
-                                               placeholder="주소">
-                                    </div>
-
-                                    <!-- 상세주소 및 참고항목 -->
-                                    <div class="flex items-center space-x-4">
-                                        <input type="text" id="sample6_detailAddress" name="address2"
-                                               class="block w-full p-2 border border-gray-300 rounded-md"
-                                               placeholder="상세주소">
-                                        <input type="text" id="sample6_extraAddress" name="address3"
-                                               class="block w-full p-2 border border-gray-300 rounded-md ml-2"
-                                               placeholder="참고항목">
-                                    </div>
-                                </div>
-
-                                <!-- 업데이트 버튼 -->
-                                <div class="flex items-center justify-end">
-                                    <button class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
-                                            type="submit">업데이트
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex items-center justify-center py-4">
-                            <form id="deleteForm" th:action="@{/member/delete}" method="post" class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2">
-                                <button type="button" onclick="confirmDeletion()">회원 탈퇴</button>
-                            </form>
-                        </div>
-
+    <!-- 프로필카드 및 메인컨테이너 -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8 mt-12">
+            <!-- 프로필 카드 -->
+            <div class="md:w-80 flex-shrink-0 mt-12">
+                <div class="border-2 border-[black] rounded-lg overflow-hidden">
+                    <div class="flex items-center justify-center py-4">
+                        <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                             class="w-32 h-32 object-cover rounded-full"/>
+                        <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
+                             class="w-32 h-32 object-cover rounded-full"/>
                     </div>
 
-                    <div id="wish-list" class="myPage-hidden bg-white  p-4 mt-2">
-                        <h1 class="text-3xl py-4">관심 목록</h1>
-                        <div>
-                            <span>※ 찜한 작품이 경매가끝나게되면 자동으로 찜목록에서 삭제됩니다.</span>
-                            <div class="border-t-2 border-slate-600">
+                    <div class="text-center py-2">
+                        <h1 th:text="${member.nickname}" class="text-lg font-bold"></h1>
+                    </div>
+                    <hr>
+                    <div class="text-center py-4">
+                        <ul>
+                            <li>CASH : 0</li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="py-4">
+                        <div class="flex items-center justify-center py-2">
+                            <i class="fas fa-arrow-down"></i>
+                            <h1 class="text-2xl font-bold px-4">MENU</h1>
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <ul class="space-y-2">
+                            <li id="info-update" class="text-center text-neutral-400 font-bold text-xl py-2">
+                                <a href="#">정보수정</a>
+                            </li>
+                            <li id="wish-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                                <a href="#">찜</a>
+                            </li>
+                            <li id="alarm-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                                <a href="#">알림</a>
+                            </li>
+                            <li id="question-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                                <a href="#">문의내역</a>
+                            </li>
+                            <li class="text-center text-neutral-400 font-bold text-xl py-2">
+                                <a href="#">입찰내역</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 메인 컨테이너 -->
+            <div class="flex-1 min-h-screen">
+                <div class="py-8">
+                    <div class="text-center mb-8">
+                        <h1 class="text-2xl font-bold">MyPage</h1>
+                    </div>
 
-                            </div>
-                            <div class="p-4">
-                                <ul class="flex flex-wrap  justify-start space-x-4 p-4 mb-4 border-y border-gray-300 rounded-lg"
-                                    th:each="likeProduct : ${likeProductList}">
-                                    <!-- 찜한 상품 목록을 반복 -->
-                                    <li class="bg-gray-100  p-4 flex items-center space-x-4">
-                                        <!-- 이미지 -->
-                                        <img th:src="${likeProduct.product.thumbnailImg}" alt="Product Image"
-                                             class="w-32 h-32 object-cover rounded-lg">
-                                        <!-- 상품 정보 -->
-                                    </li>
-                                    <div class="flex flex-col place-items-start p-2">
-                                        <span th:text="${likeProduct.id}"
-                                              class="text-gray-700 font-medium font-bold"></span>
-                                        <span th:text="${likeProduct.product.title}"
-                                              class="text-gray-800 text-[#333333] mt-2 "></span>
-                                    </div>
-                                    <div>
+                    <div>
+                        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                            <div id="info-form" class="myPage-hidden py-4 mt-2 max-w-4xl mx-auto">
+                                <h1 class="text-3xl py-4">회원 정보수정</h1>
+                                <div class="min-h-[500px] py-8 px-4 rounded-lg shadow-md">
+                                    <form id="updateForm" th:action="@{/member/update}" th:object="${memberModifyForm}"
+                                          method="post" enctype="multipart/form-data" class="space-y-6">
+                                        <!-- 아이디 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="username" class="font-semibold text-gray-700 w-full sm:w-32">아이디:</label>
+                                            <input type="text" id="username" th:field="*{username}" disabled
+                                                   class="block w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600">
+                                        </div>
 
-                                    </div>
-                                    <div class="flex flex-1 place-items-end p-4 justify-end">
+                                        <!-- 닉네임 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="nickname" class="font-semibold text-gray-700 w-full sm:w-32">닉네임:</label>
+                                            <input type="text" id="nickname" th:field="*{nickname}"
+                                                   class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
+                                        </div>
 
-                                        <ul>
-                                            <div class="flex items-center justify-center mb-8">
-                                                <form th:action="@{/product/like}" method="post">
-                                                    <input type="hidden" name="productId" th:value="${likeProduct.product.id}" />
-                                                    <input type="hidden" name="memberId" th:value="${member.id}" />
-                                                    <button type="submit" style="background: none; border: none; cursor: pointer;">
-                                                        <i class="fa-heart"
-                                                           th:classappend="${likedProductIds.contains(likeProduct.product.id) ? 'fa-solid' : 'fa-regular'}"
-                                                           style="color: ${likedProductIds.contains(likeProduct.product.id) ? '#ff0000' : 'transparent'};"></i>
-                                                    </button>
-                                                </form>
+                                        <!-- 비밀번호 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="password" class="font-semibold text-gray-700 w-full sm:w-32">비밀번호:</label>
+                                            <input type="password" id="password" th:field="*{password}" maxlength="24"
+                                                   placeholder="비밀번호를 입력해주세요" autocomplete="off"
+                                                   class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
+                                        </div>
+
+                                        <!-- 비밀번호 확인 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="passwordConfirm"
+                                                   class="font-semibold text-gray-700 w-full sm:w-32">비밀번호확인:</label>
+                                            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"
+                                                   maxlength="24" placeholder="비밀번호를 재입력해주세요" autocomplete="off"
+                                                   class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
+                                        </div>
+
+                                        <!-- 이메일 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="email"
+                                                   class="font-semibold text-gray-700 w-full sm:w-32">Email:</label>
+                                            <input type="email" id="email" th:field="*{email}"
+                                                   class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
+                                        </div>
+
+                                        <!-- 프로필 이미지 -->
+                                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                            <label for="profileImage"
+                                                   class="font-semibold text-gray-700 w-full sm:w-32">프로필 이미지:</label>
+                                            <input type="file" id="profileImage" th:field="*{multipartFile}"
+                                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                                        </div>
+
+                                        <!-- 업데이트 버튼 -->
+                                        <div class="flex justify-end">
+                                            <button id="updateButton"
+                                                    class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
+                                                    type="submit">업데이트
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <h1 class="text-3xl py-4">배송지 수정</h1>
+                                <div class="min-h-[300px] py-8 px-4 rounded-lg shadow-md">
+                                    <form th:action="@{/member/addressUpdate}" th:object="${memberAddressForm}"
+                                          method="post"
+                                          enctype="multipart/form-data" class="space-y-6">
+                                        <div class="space-y-4">
+                                            <!-- 우편 번호 -->
+                                            <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                                <input type="text" id="sample6_postcode"
+                                                       class="block w-full p-2 border border-gray-300 rounded-md"
+                                                       placeholder="우편번호">
+                                                <input type="button" onclick="sample6_execDaumPostcode()"
+                                                       class="btn text-sm h-10 px-4 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
+                                                       value="우편찾기">
                                             </div>
-                                            <li>최소 입찰가</li>
-                                            <li class="text-red-500 text-sm">KRW 15,000</li>
+
+                                            <!-- 주소 -->
+                                            <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                                <input type="text" id="sample6_address" name="address1"
+                                                       class="block w-full p-2 border border-gray-300 rounded-md"
+                                                       placeholder="주소">
+                                            </div>
+
+                                            <!-- 상세주소 및 참고항목 -->
+                                            <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                                                <input type="text" id="sample6_detailAddress" name="address2"
+                                                       class="block w-full p-2 border border-gray-300 rounded-md"
+                                                       placeholder="상세주소">
+                                                <input type="text" id="sample6_extraAddress" name="address3"
+                                                       class="block w-full p-2 border border-gray-300 rounded-md sm:ml-2"
+                                                       placeholder="참고항목">
+                                            </div>
+                                        </div>
+
+                                        <!-- 업데이트 버튼 -->
+                                        <div class="flex justify-end">
+                                            <button class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2"
+                                                    type="submit">업데이트
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="flex justify-center py-4">
+                                    <!-- 탈퇴하기 버튼 추가 -->
+                                    <form id="deleteForm" th:action="@{/member/delete}" method="post"
+                                          class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2">
+                                        <button type="button" onclick="confirmDeletion()">회원 탈퇴</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- 관심 목록 -->
+                            <div id="wish-list" class="myPage-hidden bg-white  mt-2">
+                                <h1 class="text-3xl py-4">관심 목록</h1>
+                                <div>
+                                    <span>※ 찜한 작품이 경매가 끝나게 되면 자동으로 찜 목록에서 삭제됩니다.</span>
+                                    <div class="border-t-2 border-slate-600"></div>
+                                    <div class="p-4">
+                                        <ul class="flex-wrap gap-4 mb-4 border-y border-gray-300 rounded-lg"
+                                            th:each="likeProduct : ${likeProductList}">
+                                            <!-- 찜한 상품 목록을 반복 -->
+                                            <li class="p-4 flex rounded-lg">
+                                                <div class="flex items-center justify-center p-2">
+                                                    <form th:action="@{/product/like}" method="post">
+                                                        <input type="hidden" name="productId"
+                                                               th:value="${likeProduct.product.id}"/>
+                                                        <input type="hidden" name="memberId" th:value="${member.id}"/>
+                                                        <button type="submit"
+                                                                style="background: none; border: none; cursor: pointer;">
+                                                            <i class="fa-heart"
+                                                               th:classappend="${likedProductIds.contains(likeProduct.product.id) ? 'fa-solid' : 'fa-regular'}"
+                                                               style="color: red;"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="p-2 mb-auto mt-auto">NO.
+                                                    <span th:text="${likeProduct.id}"
+                                                          class="text-gray-700 font-bold"></span>
+                                                </div>
+
+                                                <a th:href="@{|/product/detail/${likeProduct.product.id}|}"
+                                                   class="block h-full flex items-center justify-center">
+                                                    <div class="flex bg-gray-100 w-40 h-40 items-center justify-center">
+                                                        <!-- 이미지 -->
+                                                        <img th:src="${likeProduct.product.thumbnailImg}"
+                                                             alt="Product Image"
+                                                             class="w-32 h-32 object-cover rounded-lg">
+                                                    </div>
+                                                </a>
+
+                                                <!-- 상품 정보 -->
+                                                <div class="flex flex-col items-start p-4">
+                                                    <div>
+                                                        <span th:text="${likeProduct.product.artist.korName}"
+                                                              class="text-slate-300 text-sl font-bold mt-2"></span>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{|/product/detail/${likeProduct.product.id}|}"
+                                                           th:text="${likeProduct.product.title}"
+                                                           class="text-gray-800 text-[#333333] text-xl mt-2"></a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 입찰 정보 -->
+                                                <div class="displayBlockByMobile flex flex-1 place-items-center p-4 justify-end relative">
+
+                                                    <ul>
+                                                        <li class="">최소 입찰가</li>
+                                                        <li class="text-red-500 text-sm">KRW 15,000</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="question-list" class="myPage-hidden bg-white p-4 mt-2">
-                        <h1 class="text-3xl py-4">문의내역</h1>
-                        <div>
-                            <span>※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.</span>
-                            <div class="border-t-2 border-slate-600">
-                                <ul class="flex items-center justify-center">
-                                    <li class="myPage-list-item px-4 text-2xl flex-none w-[100px]">번호</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/2">제목</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/4">날짜</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/4">상태</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div th:if="${#lists.isEmpty(questionList)}">
-                                    <div class="flex items-center justify-center pt-4">
-                                        <i class="fa-solid fa-circle-exclamation fa-2xl"></i>
-                                    </div>
-                                    <p class="text-center text-2xl mt-4 ">문의내역이 없습니다.</p>
                                 </div>
-                                <div th:if="${!#lists.isEmpty(questionList)}">
-                                    <ul class="flex items-center justify-center py-2"
-                                        th:each="question : ${questionList}">
-                                        <li class="myPage-list-item px-4 text-xl flex-none w-[100px]"
-                                            th:text="${question.id}"></li>
-                                        <li class="myPage-list-item px-4 text-xl basis-1/2">
-                                            <a class="text" th:href="@{|/question/detail/${question.id}|}"
-                                               th:text="${question.subject}"></a>
-                                        </li>
-                                        <li class="myPage-list-item px-4 text-xl basis-1/4"
-                                            th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
-                                        <li class="myPage-list-item px-4 text-2xl basis-1/4" th:text="${question.answerList.size() > 0 ? '처리완료' : '처리중'}">
+                            </div>
 
-
-                                        </li>
+                            <!-- 문의 내역 -->
+                            <div id="question-list" class="myPage-hidden bg-white p-4 mt-2 rounded-lg shadow-md">
+                                <h1 class="text-3xl py-4 font-semibold text-gray-800">문의내역</h1>
+                                <span class="block text-gray-500 text-sm mb-4">
+        ※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.
+    </span>
+                                <div class="border-t-2 border-slate-600 mb-4">
+                                    <ul class="flex flex-col text-gray-700 font-semibold mb-2">
+                                        <!-- 모바일 전용 헤더 -->
+                                        <div class="flex flex-col">
+                                            <!-- 번호 항목 -->
+                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-400">
+                                                <span class="pr-2 text-gray-900 text-lg">번호:</span>
+                                                <span class="flex-1 text-gray-700 text-sm">( 질문 고유번호 )</span>
+                                            </li>
+                                            <!-- 제목 항목 -->
+                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-300">
+                                                <span class="pr-2 text-gray-900 text-lg">제목:</span>
+                                                <span class="flex-1 text-gray-700 text-sm">( 질문 제목 )</span>
+                                            </li>
+                                            <!-- 날짜 항목 -->
+                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-400">
+                                                <span class="pr-2 text-gray-900 text-lg">날짜:</span>
+                                                <span class="flex-1 text-gray-700 text-sm">( 질문한 날짜 )</span>
+                                            </li>
+                                            <!-- 상태 항목 -->
+                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100">
+                                                <span class="pr-2 text-gray-900 text-lg">상태:</span>
+                                                <span class="flex-1 text-gray-700 text-sm">( 답변이 등록되면 처리완료 상태로 됩니다. )</span>
+                                            </li>
+                                        </div>
                                     </ul>
+                                    <p class="text-center text-gray-600 mt-2 text-sm">※ 위의 예시는 문의 내역의 양식을 나타냅니다.</p>
+                                </div>
+
+                                <div>
+                                    <!-- 문의 내역이 없는 경우 -->
+                                    <div th:if="${#lists.isEmpty(questionList)}"
+                                         class="flex flex-col items-center justify-center py-4">
+                                        <i class="fas fa-circle-exclamation fa-2xl text-gray-500"></i>
+                                        <p class="text-center text-2xl mt-4 text-gray-600">문의내역이 없습니다.</p>
+                                    </div>
+
+                                    <!-- 문의 내역이 있는 경우 -->
+                                    <div th:if="${!#lists.isEmpty(questionList)}">
+                                        <ul class="flex flex-col">
+                                            <li th:each="question : ${questionList}"
+                                                class="border-b border-gray-300 py-4 px-2">
+                                                <!-- 모바일에서 세로로 나열 -->
+                                                <div class="mb-2">
+                                                    <span class="text-base font-semibold text-gray-800">번호:</span>
+                                                    <span class="text-base text-gray-700"
+                                                          th:text="${question.id}"></span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="text-base font-semibold text-gray-800">제목:</span>
+                                                    <a class="text-blue-500 hover:underline"
+                                                       th:href="@{|/question/detail/${question.id}|}"
+                                                       th:text="${question.subject}"></a>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="text-base font-semibold text-gray-800">날짜:</span>
+                                                    <span class="text-base text-gray-700"
+                                                          th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-base font-semibold text-gray-800">상태:</span>
+                                                    <span class="text-base text-gray-700"
+                                                          th:text="${question.answerList.size() > 0 ? '처리완료' : '처리중'}"></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
 
-                    <div id="alarm-list" class="myPage-hidden bg-white  p-4 mt-2">
-                        <div>
-                            <span>※ 경매상품에 알림받기를 누르면 경매시작 1시간전, 10분전, 5분전 알림을 받게됩니다. </span>
-                            <div class="border-t-2 border-slate-600">
-                                <ul class="flex items-center justify-center">
-                                    <li class="myPage-list-item px-4 text-2xl flex-none w-[100px]">번호</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/2 ">제목</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/4 ">날짜</li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/4 ">처리상태</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <ul class="flex items-center justify-center py-2" th:each="question : ${questionList}">
-                                    <li class="myPage-list-item px-4 text-xl flex-none w-[100px] "
-                                        th:text="${question.id}"></li>
-                                    <li class="myPage-list-item px-4 text-xl basis-1/2 "
-                                        th:text="${question.subject}"></li>
-                                    <li class="myPage-list-item px-4 text-xl basis-1/4 "
-                                        th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
-                                    <li class="myPage-list-item px-4 text-2xl basis-1/4 ">
-                                        <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
-                                    </li>
-                                </ul>
+                            <!-- 알림 목록 -->
+                            <div id="alarm-list" class="myPage-hidden bg-white p-4 mt-2">
+                                <div>
+                                    <span>※ 경매상품에 알림받기를 누르면 경매시작 1시간 전, 10분 전, 5분 전 알림을 받게 됩니다.</span>
+                                    <div class="border-t-2 border-slate-600">
+                                        <ul class="flex items-center justify-center">
+                                            <li class="myPage-list-item px-4 text-2xl flex-none w-[100px]">번호</li>
+                                            <li class="myPage-list-item px-4 text-2xl basis-1/2">제목</li>
+                                            <li class="myPage-list-item px-4 text-2xl basis-1/4">날짜</li>
+                                            <li class="myPage-list-item px-4 text-2xl basis-1/4">처리상태</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul class="flex items-center justify-center py-2"
+                                            th:each="alarm : ${alarmList}">
+                                            <li class="myPage-list-item px-4 text-xl flex-none w-[100px]"
+                                                th:text="${alarm.id}"></li>
+                                            <li class="myPage-list-item px-4 text-xl basis-1/2"
+                                                th:text="${alarm.subject}"></li>
+                                            <li class="myPage-list-item px-4 text-xl basis-1/4"
+                                                th:text="${#temporals.format(alarm.createDate, 'yyyy-MM-dd')}"></li>
+                                            <li class="myPage-list-item px-4 text-2xl basis-1/4">
+                                                <a class="text" th:href="@{|/alarm/detail/${alarm.id}|}">처리중</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
+</body>
 </html>
+
 
 <script>
     // Define global JavaScript variables with Thymeleaf expressions
