@@ -59,9 +59,9 @@
             </div>
 
             <div>
-                <div class="container mx-auto py-[100px] px-[200px]">
+                <div class="container mx-auto py-[50px] px-[200px]">
                     <div id="info-form" class="myPage-hidden p-4 mt-2">
-                        <h1 class="text-xl">회원 정보수정</h1>
+                        <h1 class="text-3xl py-4">회원 정보수정</h1>
                         <div class="min-h-[500px] p-8 rounded-lg shadow-md">
                             <form id="updateForm" th:action="@{/member/update}" th:object="${memberModifyForm}"
                                   method="post" enctype="multipart/form-data" class="space-y-6">
@@ -121,10 +121,8 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
 
-                    <div id="info-form2" class="myPage-hidden p-4 mt-2">
-                        <h1 class="text-xl">배송지 수정</h1>
+                        <h1 class="text-3xl py-4">배송지 수정</h1>
                         <div class="min-h-[300px] p-8 rounded-lg shadow-md ">
                             <form th:action="@{/member/addressUpdate}" th:object="${memberAddressForm}" method="post"
                                   enctype="multipart/form-data" class="space-y-6">
@@ -165,9 +163,16 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="flex items-center justify-center py-4">
+                            <form id="deleteForm" th:action="@{/member/delete}" method="post" class="btn text-xl h-10 px-4 w-[150px] rounded-xl hover:bg-gray-800 focus:outline-none focus:ring focus:ring-amber-200 focus:ring-offset-2">
+                                <button type="button" onclick="confirmDeletion()">회원 탈퇴</button>
+                            </form>
+                        </div>
+
                     </div>
 
                     <div id="wish-list" class="myPage-hidden bg-white  p-4 mt-2">
+                        <h1 class="text-3xl py-4">관심 목록</h1>
                         <div>
                             <span>※ 찜한 작품이 경매가끝나게되면 자동으로 찜목록에서 삭제됩니다.</span>
                             <div class="border-t-2 border-slate-600">
@@ -217,6 +222,7 @@
                     </div>
 
                     <div id="question-list" class="myPage-hidden bg-white p-4 mt-2">
+                        <h1 class="text-3xl py-4">문의내역</h1>
                         <div>
                             <span>※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.</span>
                             <div class="border-t-2 border-slate-600">
@@ -245,8 +251,9 @@
                                         </li>
                                         <li class="myPage-list-item px-4 text-xl basis-1/4"
                                             th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></li>
-                                        <li class="myPage-list-item px-4 text-2xl basis-1/4">
-                                            <a class="text" th:href="@{|/question/detail/${question.id}|}">처리중</a>
+                                        <li class="myPage-list-item px-4 text-2xl basis-1/4" th:text="${question.answerList.size() > 0 ? '처리완료' : '처리중'}">
+
+
                                         </li>
                                     </ul>
                                 </div>
@@ -349,7 +356,7 @@
 
 <script>
     document.getElementById('info-update').addEventListener('click', function() {
-        toggleVisibility('info-form', 'info-form2');
+        toggleVisibility('info-form');
         setActiveState('info-update');
     });
 
@@ -379,7 +386,7 @@
     });
 
     function toggleVisibility(...elements) {
-        const allSections = ['info-form', 'info-form2', 'question-list', 'wish-list', 'alarm-list'];
+        const allSections = ['info-form', 'question-list', 'wish-list', 'alarm-list'];
         allSections.forEach(section => {
             const element = document.getElementById(section);
             if (elements.includes(section)) {
@@ -404,7 +411,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         // 마이페이지 들어오면 id info-update 인거 실행시킴 기본값인느낌
-        toggleVisibility('info-form', 'info-form2');
+        toggleVisibility('info-form');
         setActiveState('info-update');
     });
 </script>
@@ -460,4 +467,12 @@
             }
         }).open();
     }
+</script>
+
+<script>
+    function confirmDeletion() {
+    if (confirm('정말로 탈퇴하시겠습니까?')) {
+        document.getElementById('deleteForm').submit(); // 사용자가 확인을 누르면 폼 제출
+    }
+}
 </script>
