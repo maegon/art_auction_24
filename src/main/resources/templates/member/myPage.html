@@ -190,6 +190,12 @@
                                     <span>※ 찜한 작품이 경매가 끝나게 되면 자동으로 찜 목록에서 삭제됩니다.</span>
                                     <div class="border-t-2 border-slate-600"></div>
                                     <div class="p-4">
+                                        <!-- 찜한게 없는 경우 -->
+                                        <div th:if="${#lists.isEmpty(likeProductList)}"
+                                             class="flex flex-col items-center justify-center py-4">
+                                            <i class="fas fa-circle-exclamation fa-2xl text-gray-500"></i>
+                                            <p class="text-center text-2xl mt-4 text-gray-600">관심목록이 없습니다.</p>
+                                        </div>
                                         <ul class="flex-wrap gap-4 mb-4 border-y border-gray-300 rounded-lg"
                                             th:each="likeProduct : ${likeProductList}">
                                             <!-- 찜한 상품 목록을 반복 -->
@@ -236,7 +242,7 @@
                                                 </div>
 
                                                 <!-- 입찰 정보 -->
-                                                <div class="displayBlockByMobile flex flex-1 place-items-center p-4 justify-end relative">
+                                                <div class=" flex flex-1 place-items-center p-4 justify-end relative">
 
                                                     <ul>
                                                         <li class="">최소 입찰가</li>
