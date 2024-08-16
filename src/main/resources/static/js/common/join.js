@@ -326,7 +326,12 @@ document.addEventListener("DOMContentLoaded", function() {
         })
          .then(data => {
             console.log("")
-            if (data.code) {
+            if (data.exists) { // 이미 사용 중인 이메일 경우
+                emailError.innerText = "이미 인증된 이메일입니다. 다른 이메일을 입력해주세요.";
+                emailError.classList.remove("success");
+                emailError.classList.add("error");
+            }
+            else if (data.code) {
                 generatedCode = data.code;
                 emailError.innerText = "인증 메일이 발송되었습니다. 이메일을 확인하세요.";
                 emailError.classList.remove("error");

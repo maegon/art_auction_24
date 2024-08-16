@@ -68,11 +68,11 @@ public class MemberController {
 
     @PostMapping("/member/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
-        boolean loginSuccessful = memberService.authenticate(username, password);
+        boolean isAuthenticated  = memberService.authenticate(username, password);
 
-        if (!loginSuccessful) {
+        if (!isAuthenticated ) {
             model.addAttribute("loginMatchError", "아이디 또는 비밀번호가 존재하지 않습니다.");
-            return "forward:/member/login";
+            return "login";
         }
 
         return "redirect:/";
@@ -238,10 +238,10 @@ public class MemberController {
 
 
 
-    @GetMapping("/applicantArtist1")
-    public String applicantArtist1() {
+    @GetMapping("/applicantArtist")
+    public String applicantArtist() {
 
-        return "member/applicantArtist1";
+        return "member/applicantArtist";
     }
 }
 
