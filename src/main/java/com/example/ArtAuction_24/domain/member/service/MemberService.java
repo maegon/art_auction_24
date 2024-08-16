@@ -192,6 +192,7 @@ public class MemberService {
         return memberRepository.findAllByKeyword(kw, pageable);
     }
 
+
     public List<Member> getMemberList() {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
@@ -214,4 +215,9 @@ public class MemberService {
 //    public List<Member> getArtistApplicantList() {
 //
 //    }
+
+    public void delete(Member member) {
+        memberRepository.delete(member);
+    }
+
 }

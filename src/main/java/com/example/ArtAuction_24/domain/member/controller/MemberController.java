@@ -16,6 +16,9 @@ import com.example.ArtAuction_24.global.email.EmailRequestDto;
 import com.example.ArtAuction_24.global.email.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -96,6 +99,8 @@ public class MemberController {
     public String join(
             @ModelAttribute @Valid MemberForm memberForm,
             BindingResult bindingResult) {
+
+
         // 이메일 및 주소 필드 결합
         String email = memberForm.getLogemailT() + "@" + memberForm.getLogemail();
 
@@ -180,7 +185,7 @@ public class MemberController {
     @GetMapping("/myPage")
     public String myPage(Model model, Principal principal) {
         Member member = memberService.getMember(principal.getName());
-        model.addAttribute("member",member);
+        model.addAttribute("member", member);
         String username = member.getUsername();
 
         MemberModifyForm memberModifyForm = new MemberModifyForm();
@@ -196,6 +201,9 @@ public class MemberController {
 
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
+
+
+
         return "member/myPage";
     }
 
@@ -222,6 +230,12 @@ public class MemberController {
 
     }
 
+    @PostMapping("/delete")
+    public String deleteMember(Principal principal) {
+        Member member = memberService.getMember(principal.getName());
+        memberService.delete(member);
+        return "redirect:/member/logout"; // 메인 페이지로 리다이렉트 }
+    }
 
 
 
@@ -231,3 +245,4 @@ public class MemberController {
         return "member/applicantArtist1";
     }
 }
+
