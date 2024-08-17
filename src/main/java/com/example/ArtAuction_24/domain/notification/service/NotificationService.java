@@ -87,7 +87,7 @@ public class NotificationService {
                                         "<p>안녕하세요, <strong>%s님</strong>.</p>" +
                                         "<p>축하드립니다! 🎉</p>" +
                                         "<p>당신의 작품 '<strong>%s</strong>'이(가) 경매에서 성공적으로 낙찰되었습니다.</p>" +
-                                        "<p>아래는 작품의 세부 사항입니다:</p>" +
+                                        "<p>아래는 작품의 세부 사항입니다</p>" +
                                         "<h2>작품 제목: <strong>'%s'</strong></h2>" +
                                         "<p>작품에 대한 자세한 사항은 웹사이트에서 확인하실 수 있습니다. 낙찰과 관련된 추가적인 정보는 경매 플랫폼의 관리자에게 문의해 주세요.</p>" +
                                         "<p>이번 경매에 참여해 주셔서 감사드리며, 앞으로도 많은 사랑과 지원 부탁드립니다.</p>" +
@@ -119,7 +119,7 @@ public class NotificationService {
                                 "<html><body>" +
                                         "<p>안녕하세요, <strong>%s님</strong>.</p>" +
                                         "<p>안타깝게도, 이번 경매에서는 낙찰되지 않았습니다.</p>" +
-                                        "<p>아래는 경매의 상세 내용입니다:</p>" +
+                                        "<p>아래는 경매의 상세 내용입니다</p>" +
                                         "<p>경매 제목: <strong>'%s'</strong></p>" +
                                         "<p>당신의 참여와 성원에 감사드립니다. 경매에 참여해 주신 것에 대해 진심으로 감사드리며, 다음 기회에 더 좋은 결과가 있기를 기대합니다.</p>" +
                                         "<p>다음 경매에 대한 정보는 웹사이트에서 확인하실 수 있습니다. 계속해서 많은 관심과 참여 부탁드립니다.</p>" +
@@ -155,7 +155,6 @@ public class NotificationService {
         boolean isSent = true;
 
         String recipientEmail = null;
-        String imageUrl = product != null ? product.getThumbnailImg() : null; // 이미지 URL을 가져옴
         if (member != null) {
             recipientEmail = member.getEmail();
         } else if (artist != null) {

@@ -26,6 +26,7 @@ public class RechargeViewController {
     private final RechargeService rechargeService;
     private final MemberService memberService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/recharge")
     public String showRechargePage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -43,6 +44,7 @@ public class RechargeViewController {
         return "recharge/recharge";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/success")
     public String showRechargeSuccessPage(@RequestParam("amount") Long amount, Model model) {
         // 현재 로그인한 사용자의 username 가져오기
@@ -58,6 +60,7 @@ public class RechargeViewController {
 
 
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/fail")
     public String showRechargeFailPage(Model model) {
         // 실패 페이지를 위한 추가 처리 (예: 에러 메시지 처리)

@@ -16,10 +16,10 @@ $(document).ready(function(){
 /*정보 부분 fixed 기능 시작*/
 window.addEventListener('scroll', function() {
     const infoSection = document.getElementById('infoSection');
-    const container = document.getElementById('container');
+    const productDetailContainer = document.getElementById('productDetailContainer');
     const scrollPosition = window.scrollY || window.pageYOffset;
     const triggerPoint = infoSection.offsetTop;
-    const maxScrollPosition = container.offsetTop + container.offsetHeight - infoSection.offsetHeight;
+    const maxScrollPosition = productDetailContainer.offsetTop + productDetailContainer.offsetHeight - infoSection.offsetHeight;
 
     // 모바일 환경에서는 fixed-info-section 클래스를 제거
     if (window.innerWidth < 1024) {

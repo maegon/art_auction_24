@@ -90,6 +90,8 @@ public class ArtistService {
                 .orElseThrow(() -> new DataNotFoundException("artist not found"));
     }
 
+
+
     public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce,
                        List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
                        List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {

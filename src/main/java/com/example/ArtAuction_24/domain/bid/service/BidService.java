@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.bid.service;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
@@ -85,7 +86,7 @@ public class BidService {
                 logger.warn("경매에 입찰이 없습니다: 제품 ID {}", product.getId());
                 continue;
             }
-
+            System.out.println("====================== test2 ======================");
             boolean winningBidProcessed = false;
 
             for (Bid bid : bids) {
@@ -168,5 +169,10 @@ public class BidService {
 
     public Optional<Bid> findCurrentBidByProductAndMember(Long productId, Long memberId) {
         return bidRepository.findFirstByProductIdAndMemberIdOrderByBidTimeDesc(productId, memberId);
+    }
+
+
+    public Optional<Bid> findById(Long bidId) {
+        return bidRepository.findById(bidId);
     }
 }

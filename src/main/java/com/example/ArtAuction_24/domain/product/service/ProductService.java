@@ -19,13 +19,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,8 +43,8 @@ public class ProductService {
 
     public Page<Product> getProductsWithSorting(String keyword, Pageable pageable, String sortOption, Boolean auction) {
         Sort sort = switch (sortOption) {
-            case "price-asc" -> Sort.by("startingPrice").ascending();
-            case "price-desc" -> Sort.by("startingPrice").descending();
+            case "price-asc" -> Sort.by("currentBid").ascending();
+            case "price-desc" -> Sort.by("currentBid").descending();
             case "latest" -> Sort.by("createDate").descending();
             default -> Sort.by("createDate").descending();
         };
@@ -66,23 +66,49 @@ public class ProductService {
         }
     }
 
-    public void create(String title, String description, String medium, String dimensions,
-                       BigDecimal startingPrice, BigDecimal currentBid,
-                       LocalDateTime auctionStartDate, String thumbnailImg, String category, Artist artist) {
+    public Product create(String title, String description, String medium, String dimensions,
+                          BigDecimal startingPrice, LocalDateTime auctionStartDate,
+                          MultipartFile thumbnailImg, String category, Artist artist) {
+
+        // 파일 경로를 설정합니다.
+        String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
+        File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+
+        // 디렉토리 생성
+        File parentDir = thumbnailFile.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            if (!parentDir.mkdirs()) {
+                throw new RuntimeException("디렉토리를 생성할 수 없습니다: " + parentDir.getAbsolutePath());
+            }
+        }
+
+        try {
+            // MultipartFile을 파일로 저장
+            thumbnailImg.transferTo(thumbnailFile);
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 중 오류 발생", e);
+        }
+
+        // Product 객체를 생성합니다.
         Product p = Product.builder()
                 .title(title)
                 .description(description)
                 .medium(medium)
                 .dimensions(dimensions)
                 .startingPrice(startingPrice)
-                .currentBid(currentBid)  // startingPrice와 동일하게 설정
-                .auctionStartDate(auctionStartDate)
-                .thumbnailImg(thumbnailImg)
+                .currentBid(startingPrice)  // startingPrice와 동일하게 설정
+                .auctionStartDate(auctionStartDate)  // 매개변수로 받은 auctionStartDate 사용
+                .thumbnailImg(thumbnailRelPath)
                 .category(category)
                 .artist(artist)
                 .build();
+
+        // Product를 저장합니다.
         productRepository.save(p);
+
+        return p;
     }
+
 
     public Product getProduct(Long id) {
         return productRepository.findById(id)

@@ -60,6 +60,19 @@ public class AuctionController {
         return "auction/scheduled";
     }
 
+    @GetMapping("/scheduledDetail/{id}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        Auction auction = auctionService.getScheduledAuctionById(id);
+        if (auction == null) {
+            // 경매가 존재하지 않거나 스케줄 상태가 아닐 때 처리
+            return "redirect:/auction/scheduled"; // 예를 들어, 경매 목록 페이지로 리다이렉트
+        }
+        model.addAttribute("auction", auction);
+        return "auction/scheduledDetail"; // 새로운 Thymeleaf 템플릿 페이지 이름
+    }
+
+
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
@@ -88,4 +101,10 @@ public class AuctionController {
         auctionService.create(auctionForm.getName(), auctionForm.getStartDate(), auctionForm.getEndDate(), auctionForm.getProducts());
         return "redirect:/auction/list";
     }
+
+    @GetMapping("/calendar")
+    public List<Auction> getScheduledAuctions() {
+        return auctionService.getAllScheduledAuctions();
+    }
+
 }
