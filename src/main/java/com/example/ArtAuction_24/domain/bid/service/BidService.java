@@ -1,11 +1,13 @@
 package com.example.ArtAuction_24.domain.bid.service;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.notification.service.NotificationService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.bid.repository.BidRepository;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
@@ -30,6 +32,7 @@ public class BidService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
     private final AuctionRepository auctionRepository;
+    private final NotificationService notificationService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
 
@@ -83,7 +86,7 @@ public class BidService {
                 logger.warn("경매에 입찰이 없습니다: 제품 ID {}", product.getId());
                 continue;
             }
-
+            System.out.println("====================== test2 ======================");
             boolean winningBidProcessed = false;
 
             for (Bid bid : bids) {
@@ -91,6 +94,7 @@ public class BidService {
 
                 // 최종 입찰자의 잔액이 충분한지 확인
                 if (winningBidder.getBalance() >= bid.getAmount().longValue()) {
+
                     // 잔액 차감
                     winningBidder.setBalance(winningBidder.getBalance() - bid.getAmount().longValue());
                     memberRepository.save(winningBidder);
@@ -98,6 +102,9 @@ public class BidService {
                     // 제품의 낙찰자 설정
                     product.setWinningBidder(winningBidder);
                     productRepository.save(product);
+
+                    // 경매 종료 결과를 알림
+                    notificationService.notifyAuctionResults(auction);
 
                     winningBidProcessed = true;
                     break;  // 유효한 입찰자가 있으면 종료
@@ -162,5 +169,10 @@ public class BidService {
 
     public Optional<Bid> findCurrentBidByProductAndMember(Long productId, Long memberId) {
         return bidRepository.findFirstByProductIdAndMemberIdOrderByBidTimeDesc(productId, memberId);
+    }
+
+
+    public Optional<Bid> findById(Long bidId) {
+        return bidRepository.findById(bidId);
     }
 }

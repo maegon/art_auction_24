@@ -70,6 +70,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByAuctions(Auction auction);
 
+
     List<Product> findByArtistId(Long artistId);
+
+
+    List<Product> findByWinningBidderIsNull();
 
 }

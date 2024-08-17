@@ -1,9 +1,10 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <!-- 컨텐츠 영역 -->
-    <div class="auctionList-container mx-auto px-6 lg:px-[300px]">
-        <h1 class="text-2xl font-bold text-center py-5">경매 작품</h1>
-
+    <div class="auctionList-container mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <div class="bg-white" style="background-image: url('/image/경매페이지배너.png');">
+            <h1 class="text-2xl font-black text-center py-5 text-black">진행중인 경매</h1>
+        </div>
         <!-- Flexbox 컨테이너 추가 -->
         <div id="AuctionList_container" class="flex flex-col lg:flex-row">
             <!-- 왼쪽에 고정된 네비게이션 스타일의 검색 및 정렬 박스 -->
@@ -11,7 +12,7 @@
 
                 <!-- 드롭다운 부분 -->
                 <div class="relative flex-shrink-0 lg:order-2 order-1">
-                    <button id="auction-sortButton" class="border border-black text-gray-700 px-4 mt-5 py-2 flex items-center w-full justify-center">
+                    <button id="auction-sortButton" class="border border-black text-gray-700 px-4 mt-14 py-2 flex items-center w-full justify-center">
                         <span id="auction-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
                     </button>
                     <div id="auction-sortDropdown" class="absolute left-0 w-full bg-white border border-gray-300 shadow-lg hidden">
@@ -49,7 +50,7 @@
 
 
             <!-- 경매 작품 목록 -->
-            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
+            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10 py-2">
                 <li th:each="product, loop : ${paging}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item">
                     <a th:href="@{|/product/detail/${product.id}|}"
                        class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">

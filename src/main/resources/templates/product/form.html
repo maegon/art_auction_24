@@ -1,0 +1,104 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <script>
+        function triggerFileInput() {
+            document.getElementById('thumbnail').click();
+        }
+
+        function previewThumbnail(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const preview = document.getElementById('thumbnailPreview');
+                    const uploadButton = document.getElementById('uploadButton');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadButton.style.display = 'none';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="productForm-container mx-auto px-6 lg:px-[300px]">
+
+        <h1 class="text-2xl font-bold text-center py-5">작품 추가</h1>
+        <form id="productForm" th:action="@{/product/create}" method="post" th:object="${productForm}" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+            <div class="flex flex-col items-center mb-4">
+                <img id="thumbnailPreview" src="#" alt="미리보기" class="w-48 h-48 object-cover rounded-lg cursor-pointer hidden" onclick="triggerFileInput()">
+                <input type="file" id="thumbnail" th:field="*{thumbnail}" class="hidden" onchange="previewThumbnail(this)">
+                <button type="button" id="uploadButton" onclick="triggerFileInput()" class="mt-4 p-3 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300 focus:outline-none">
+                    <i class="fa-solid fa-user-plus text-xl"></i>
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">작품 제목</label>
+                <input type="text" name="title" id="title"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{title}"
+                       placeholder="작품 제목을 입력하세요">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="medium" class="block text-gray-700 text-sm font-bold mb-2">사용된 재료</label>
+                <input type="text" id="medium"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{medium}"
+                       placeholder="사용된 재료를 입력하세요">
+                <p th:if="${#fields.hasErrors('medium')}" th:errors="*{medium}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="dimensions" class="block text-gray-700 text-sm font-bold mb-2">가로 길이 X 세로 길이 cm</label>
+                <input type="text" id="dimensions"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{dimensions}"
+                       placeholder="가로와 세로 길이를 입력하세요 (cm)">
+                <p th:if="${#fields.hasErrors('dimensions')}" th:errors="*{dimensions}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="startingPrice" class="block text-gray-700 text-sm font-bold mb-2">시작가</label>
+                <input type="text" id="startingPrice"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{startingPrice}"
+                       placeholder="시작가를 입력하세요 (예: 100000)">
+                <p th:if="${#fields.hasErrors('startingPrice')}" th:errors="*{startingPrice}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
+                <input type="text" id="category"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{category}"
+                       placeholder="카테고리를 입력하세요 (예: 현대미술)">
+                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">작품 설명</label>
+                <textarea id="description" rows="4"
+                          class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          th:field="*{description}"
+                          placeholder="작품에 대한 자세한 설명을 입력하세요"></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+
+            <div class="flex items-center justify-between mt-4">
+                <button type="submit" class="w-full sm:w-auto btn font-bold py-2 px-4 focus:outline-none focus:shadow-outline">
+                    CREATE PAINT
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

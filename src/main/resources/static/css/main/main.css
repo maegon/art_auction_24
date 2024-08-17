@@ -21,6 +21,13 @@
      position: relative;
 }
 
+@media (max-width: 768px) {
+ .mainPage_margin{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+ }
+}
+
 /*common end*/
 
 
@@ -28,7 +35,7 @@
 /* Swiper 컨테이너 */
 .mySwiper {
     width: 100%;
-    height: 600px; /* 기본 높이를 조정하여 모바일과 데스크탑에 맞게 설정 */
+    height: 700px; /* 기본 높이를 조정하여 모바일과 데스크탑에 맞게 설정 */
 }
 
 /* 슬라이드 스타일 */
@@ -51,17 +58,19 @@
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-    .mySwiper {
-        height: 300px; /* 작은 화면에서 높이 조정 */
-    }
+        .mySwiper {
+          width: 100%;
+          height: 200px !important;
+        }
+        .mySwiper > .swiper-wrapper > .swiper-slide > img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
 
-    .swiper-slide {
-        padding: 0 5px; /* 모바일 화면에서 슬라이드 여백 조정 */
-    }
-
-    .banner-img {
-        height: auto; /* 작은 화면에서도 이미지 비율 유지 */
-    }
+        .gBanner{
+          object-position: left;
+        }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -136,9 +145,10 @@ border-radius: 10px;
 }
 
 .ongoing-info-artistName{
-    font-size: 17px;
-    color: gray;
-    margin-top: 10px;
+       font-size: 14px;
+       color: black;
+       margin-top: 10px;
+       margin-bottom: 10px;
 }
 
 .ongoing-info-currentBid{
@@ -326,12 +336,12 @@ border-radius: 10px;
 
 ::-webkit-scrollbar-thumb {
   background: #000;
-  border-radius: 10px;
+
 }
 
 ::-webkit-scrollbar-track {
   background: #ddd;
-  border-radius: 10px;
+
 }
 
 /*scroll bar end*/

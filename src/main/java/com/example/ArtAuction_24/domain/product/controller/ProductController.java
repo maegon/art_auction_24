@@ -1,6 +1,8 @@
 package com.example.ArtAuction_24.domain.product.controller;
 
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
@@ -10,20 +12,25 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
+import com.example.ArtAuction_24.domain.product.form.ProductForm;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -41,7 +48,27 @@ public class ProductController {
     private final ProductService productService;
     private final MemberService memberService;
     private final BidService bidService;
+    private final ArtistService artistService;
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create")
+    public String create(ProductForm productForm){
+        return "product/form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
+    public String create(@Valid ProductForm productForm, BindingResult bindingResult, Principal principal)
+    {
+        if(bindingResult.hasErrors()){
+            return "product/form";
+        }
+
+        /*Artist artist = artistService.getArtist();
+        this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getDimensions(), productForm.getStartingPrice(),
+                  LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);*/
+        return "redirect:/product/list";
+    }
 
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
@@ -79,22 +106,21 @@ public class ProductController {
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
 
-        AuctionProduct auctionProduct = null;
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
 
-        try {
-            auctionProduct = productService.getAuctionProduct(id); // 제품 ID로 AuctionProduct 조회
+        // 특정 제품의 가장 최신 경매 상품 조회
+        Optional<AuctionProduct> latestAuctionProduct = productService.getLatestAuctionProduct(id);
 
-            if (auctionProduct != null) {
-                Auction auction = auctionProduct.getAuction();
+        if (latestAuctionProduct.isPresent()) {
+            AuctionProduct auctionProduct = latestAuctionProduct.get();
+            Auction auction = auctionProduct.getAuction();
 
-                // 경매 상태 확인
-                if (auction != null) {
-                    auctionStatus = auction.getStatus().name();
-                }
+            if (auction != null) {
+                auctionStatus = auction.getStatus().name();
             }
+
             model.addAttribute("auctionProduct", auctionProduct);
-        } catch (RuntimeException e) {
+        } else {
             model.addAttribute("auctionProduct", null);
         }
 
@@ -123,6 +149,8 @@ public class ProductController {
 
         return "product/detail";
     }
+
+
 
 
     @PostMapping("/like")

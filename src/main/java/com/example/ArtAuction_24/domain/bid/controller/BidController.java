@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.bid.controller;
 
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.bid.service.BidService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
@@ -77,16 +78,29 @@ public class BidController {
             Optional<Member> optionalMember = memberService.findByUsername(principal.getName());
             if (optionalMember.isPresent()) {
                 Member member = optionalMember.get();
-                // 현재 사용자의 입찰을 취소할 수 있도록 확인
-                bidService.cancelBid(bidId, member.getId());
-                redirectAttributes.addFlashAttribute("message", "입찰이 성공적으로 취소되었습니다.");
+                // 입찰 정보를 가져와 제품 ID를 추출
+                Optional<Bid> optionalBid = bidService.findById(bidId);
+                if (optionalBid.isPresent()) {
+                    Bid bid = optionalBid.get();
+                    Long productId = bid.getProduct().getId(); // 제품 ID 가져오기
+
+                    // 현재 사용자의 입찰을 취소할 수 있도록 확인
+                    bidService.cancelBid(bidId, member.getId());
+                    redirectAttributes.addFlashAttribute("message", "입찰이 성공적으로 취소되었습니다.");
+
+                    // 해당 제품의 상세 페이지로 리다이렉트
+                    return "redirect:/product/detail/" + productId;
+                } else {
+                    redirectAttributes.addFlashAttribute("errorMessage", "입찰 정보를 찾을 수 없습니다.");
+                }
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "회원 정보를 찾을 수 없습니다.");
             }
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "입찰 취소에 실패했습니다.");
         }
-        return "redirect:/product/detail/" + bidId; // 적절히 리다이렉트 URL을 수정
+        return "redirect:/"; // 실패 시 홈으로 리다이렉트 (필요에 따라 URL 수정)
     }
+
 
 }

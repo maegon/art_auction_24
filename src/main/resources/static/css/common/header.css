@@ -156,6 +156,7 @@
 
 
 @media screen and (max-width: 770px) {
+
        .header_nav {
             flex-direction: column;
             padding: 0; /* 모바일에서는 패딩 제거 */
@@ -171,6 +172,12 @@
             order: 3;
             display: none;
        }
+
+       .nav__main li {
+        padding : 0px;
+              }
+
+
 
        .nav__login {
             order: 4;
@@ -192,15 +199,24 @@
         }
 
 
-        .nav__main.active, .nav__login.active {
+        .nav__login.header_active {
             display: flex;
             flex-direction: column;
             width: 100%;
-
             margin: 10px;
         }
 
-        .header_nav.active{
+        .nav__main.header_active{
+            display: flex;
+                    flex-direction: row;
+                    width: 100%;
+                    margin: 10px;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    margin-left: 25px;
+        }
+
+        .header_nav.header_active{
          height: auto;
         }
 
@@ -216,6 +232,10 @@
 
         #profileDropdown::after {
             display: none;
+        }
+
+        .nav__logo{
+            margin-top: 10px;
         }
 }
 /*반응형 처리 끝*/

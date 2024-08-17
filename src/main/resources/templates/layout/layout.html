@@ -37,7 +37,13 @@
     <!--guide-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.0/assets/owl.carousel.min.css">
 
-    <!-- 각 페이지 css 연결 -->
+    <!--calendar-->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.min.css' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+
+
+<!-- 각 페이지 css 연결 -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/base.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/footer.css}">
@@ -55,6 +61,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/login/login.css}">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/product/detail.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auction/scheduled.css}">
     
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/admMain.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/member/list.css}">
@@ -92,10 +100,13 @@
 
     <!--auction JS-->
     <script th:src="@{/js/auction/list.js}"></script>
+    <script th:src="@{/js/auction/scheduled.js}"></script>
+    <script th:src="@{/js/auction/calendar.js}"></script>
 
     <!--bid JS-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:src="@{/js/bid/bid.js}"></script>
+
     <!--자바스크립트 끝-->
 
     <!-- 고정 footer -->

@@ -19,8 +19,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().and()
+                .csrf().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                        .requestMatchers(new AntPathRequestMatcher("/recharge/**")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/member/login")
@@ -31,6 +33,8 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
+                .csrf((csrf) -> csrf //이상한 경로로 들어오는것을 막아줌
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/**")));
         ;
 
         return http.build();

@@ -1,25 +1,25 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="container mx-auto px-6 lg:px-[220px]">
-        <div id="container" class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="productDetailContainer mx-auto px-6 lg:px-[300px] min-h-[900px]">
+        <div id="productDetailContainer" class="bg-white shadow-md rounded-lg overflow-hidden">
 
             <div class="p-4 flex flex-col lg:flex-row">
                 <!-- 이미지 부분 -->
-                <div class="w-full lg:w-[700px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
+                <div class="w-[500px] lg:w-[900px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
                     <img class="w-full max-w-[300px] border auctionProductTarget"
                          th:src="@{${product.thumbnailImg}}" alt="상품이미지">
                 </div>
 
                 <!-- 정보 부분 -->
-                <div id="infoSection" class="w-full lg:w-[350px] p-4">
+                <div id="infoSection" class="w-[500px] lg:w-[338px] p-4">
                     <div class="text-sm lg:text-base">
                         <div class="py-2">
                             NO.<span th:text="${product.id}"></span>
                         </div>
                         <div class="flex justify-between">
-                                <span class="text-xl lg:text-3xl font-bold">
-                                    <span th:text="${product.artist.korName}"></span>
-                                </span>
+                            <span class="text-xl lg:text-3xl font-bold">
+                                <span th:text="${product.artist.korName}"></span>
+                            </span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-base lg:text-lg font-medium text-gray-600" th:text="${product.artist.engName}"></span>
@@ -48,35 +48,39 @@
                         </div>
                         <hr>
 
-                         <!-- 입찰 Form 시작 -->
-                        <form th:action="@{/auction/bid}" method="post">
+                        <!-- 입찰 Form 시작 -->
+                        <form sec:authorize="isAuthenticated()" th:action="@{/auction/bid}" method="post">
                             <input type="hidden" name="productId" th:value="${product.id}"/>
                             <!-- 입찰 금액 입력 필드와 레이블을 조건부로 표시 -->
                             <div th:if="${auctionStatus == 'ACTIVE'}" class="mt-3">
                                 <label for="bidAmount" class="block text-xs lg:text-sm font-medium text-gray-700">
                                     입찰 금액
                                 </label>
-                                <input type="number" name="bidAmount" id="bidAmount" class="block w-full mt-1 text-sm lg:text-base border-gray-300 rounded-md"
+                                <input type="number" name="bidAmount" id="bidAmount" class="block w-full mt-1 text-sm lg:text-base border-b border-gray-300 focus:outline-none"
                                        placeholder="입찰 금액을 입력하세요." required>
                             </div>
                             <button
                                     type="submit"
                                     class="bg-black border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-sky-700 hover:border-[#8c8c8c]"
-                                    th:text="${auctionStatus == 'ACTIVE'} ? '응찰하기' : '경매 전'"
+                                    th:text="${auctionStatus == 'ACTIVE' ? '응찰하기' : (product.winningBidder != null ? '경매 종료' : '경매 전')}"
                                     th:disabled="${auctionStatus != 'ACTIVE'}">
                             </button>
-
                         </form>
+                        <div sec:authorize="isAnonymous()" class="flex justify-center items-center">
+                            <a th:href="@{/member/login}">로그인</a> 후 이용해주세요.
+                        </div>
                         <!-- 입찰 Form 끝 -->
-                        <form  th:if="${auctionStatus == 'ACTIVE'}" th:action="@{/auction/cancelBid}" method="post">
-                            <input type="hidden" name="bidId" th:value="${product.id}"/>
+
+                        <!-- 입찰 취소 Form 시작 -->
+                        <form sec:authorize="isAuthenticated()" th:if="${auctionStatus == 'ACTIVE' && currentBid != null}" th:action="@{/auction/cancelBid}" method="post">
+                            <input type="hidden" name="bidId" th:value="${currentBid.id}"/>
                             <button
                                     type="submit"
                                     class="bg-red-500 border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-red-700 hover:border-[#8c8c8c]"
-                                    th:text="'입찰 취소'"
-                                    th:disabled="${auctionStatus != 'ACTIVE'}">
+                                    th:text="'입찰 취소'">
                             </button>
                         </form>
+                        <!-- 입찰 취소 Form 끝 -->
 
                         <div class="flex justify-center items-center mt-2 text-gray-600 text-xs lg:text-sm">
                             <i class="fa-solid fa-headset"></i>&nbsp;<a th:href="@{/question/list}">작품문의</a>
@@ -87,6 +91,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="p-4 w-full lg:w-[650px] lg:px-[100px] break-words">
                 <div class="w-full max-w-md p-6">
                     <div class="mt-4 mb-20 text-sm lg:text-base">
@@ -112,6 +117,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

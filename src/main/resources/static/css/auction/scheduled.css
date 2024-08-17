@@ -1,0 +1,163 @@
+.scheduled-container
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.scheduled-content h2{ font-size:19px;}
+
+.scheduled-box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: black;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgb(23, 32, 90);
+  border: 2px solid #2a3cad;
+  color: white;
+  padding: 20px;
+}
+
+.scheduled-box:before{
+  content: '';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background: rgba(255,255,255,0.1);
+  transition:0.5s;
+  pointer-events: none;
+}
+
+.scheduled-box:hover:before{
+  left:-50%;
+  transform: skewX(-5deg);
+}
+
+.scheduled-box .scheduled-content{
+  position:absolute;
+  top:15px;
+  left:15px;
+  right:15px;
+  bottom:15px;
+  border:2px solid white;
+  padding:20px;
+  text-align:center;
+  box-shadow: 0 5px 10px rgba(9,0,0,0.5);
+
+}
+
+.scheduled-box span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  box-sizing: border-box;
+
+}
+
+.scheduled-box span:nth-child(1)
+{
+  transform:rotate(0deg);
+}
+
+.scheduled-box span:nth-child(2)
+{
+  transform:rotate(90deg);
+}
+
+.scheduled-box span:nth-child(3)
+{
+  transform:rotate(180deg);
+}
+
+.scheduled-box span:nth-child(4)
+{
+  transform:rotate(270deg);
+}
+
+.scheduled-box span:before
+{
+  content: '';
+  position: absolute;
+  width:100%;
+  height: 2px;
+  background: white;
+  animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+  transform:scaleX(0);
+  transform-origin: left;
+  }
+  50%
+  {
+    transform:scaleX(1);
+  transform-origin: left;
+  }
+  50.1%
+  {
+    transform:scaleX(1);
+  transform-origin: right;
+
+  }
+
+  100%
+  {
+    transform:scaleX(0);
+  transform-origin: right;
+
+  }
+
+
+}
+
+/*calendar css start*/
+ .fc-button {
+            background-color: #000; /* 기본 배경색 검정 */
+            color: #fff; /* 텍스트 색깔 흰색 */
+            border: 1px solid #fff; /* 버튼 경계 흰색 */
+        }
+
+        /* 버튼 호버 시 배경색 */
+        .fc-button:hover {
+            background-color: #333; /* 호버 시 배경색 */
+        }
+
+        /* 비활성화된 버튼 색상 */
+        .fc-button:disabled {
+            background-color: #555; /* 비활성화된 버튼 배경색 */
+            color: #888; /* 비활성화된 버튼 텍스트 색상 */
+        }
+
+        /* 각 버튼 클래스별 색상 */
+        .fc-prev-button, .fc-next-button, .fc-today-button,
+        .fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button {
+            background-color: #000; /* 배경색 검정 */
+            color: #fff; /* 텍스트 색깔 흰색 */
+        }
+
+        /* 활성화된 버튼 색상 */
+        .fc-button-active {
+            background-color: #333; /* 활성화된 버튼 배경색 */
+            color: #fff; /* 활성화된 버튼 텍스트 색상 */
+        }
+
+        /* 캘린더 제목 스타일 */
+        .fc-toolbar-title {
+            font-weight: bold; /* 제목 굵게 */
+            font-size: 1.2em; /* 제목 크기 조정 */
+        }
+        .fc .fc-button-primary{
+            background-color: black;
+            border-color: black;
+        }
+/*calendar css end*/

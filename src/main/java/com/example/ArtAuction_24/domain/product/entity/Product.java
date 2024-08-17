@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.domain.product.entity;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 
 import com.example.ArtAuction_24.domain.review.entity.Review;
@@ -53,6 +54,8 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<LikeProduct> likeProductList;
 
+    @OneToMany(mappedBy = "product")
+    private List<Bid> bids;
 
 
 

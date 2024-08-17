@@ -4,7 +4,7 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img class="banner-img" th:src="@{/image/갤러리배너.jpg}" alt="이미지 1">
+                <img class="banner-img gBanner" th:src="@{/image/갤러리배너.jpg}" alt="이미지 1">
             </div>
             <div class="swiper-slide">
                 <img class="banner-img" th:src="@{/image/협업배너.png}" alt="이미지 2">
@@ -19,19 +19,20 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <div class="mx-2 md:mx-0">
+    <div class="mainPage_margin">
 
     <div class="main-container">
 
         <div class="ongoing-container">
 
-            <div th:if="${#lists.isEmpty(activeAuctionProducts)}">
+            <div th:if="${#lists.isEmpty(activeAuctionProducts) && not #lists.isEmpty(productList)}">
                 <div class="aucTitle">
                     <div style="margin-bottom: 5px;">등록된 작품</div>
                     <a th:href="@{/product/list}">
                         <div class="viewAll text-black">전체보기 →</div>
                     </a>
                 </div>
+
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
                         <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
@@ -45,9 +46,8 @@
                                 <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
                                 <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
                                 <hr>
-                                <span style="font-size: 14px; color: gray;">현재가</span>
-                                <br>
-                                <span style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
+                                <div style="font-size: 14px; color: gray; margin-top : 10px; margin-bottom : 10px;">현재가</div>
+                                <div style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></div>
 
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                     <div class="swiper-pagination ongoing-pagination"></div>
                 </div>
             </div>
-            <div th:if="${not #lists.isEmpty(activeAuctionProducts)}">
+            <div th:if="${not #lists.isEmpty(activeAuctionProducts) && not #lists.isEmpty(productList)}">
                 <div class="aucTitle">
                     <div style="margin-bottom: 5px;">진행중인 경매</div>
                     <a th:href="@{/auction/list}">
@@ -75,14 +75,24 @@
                                 <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
                                 <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
                                 <hr>
-                                    <span style="font-size: 14px; color: gray;">현재가</span>
-                                    <br>
-                                    <span style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></span>
+                                    <div style="font-size: 14px; color: gray; margin-top : 10px; margin-bottom : 10px;">현재가</div>
+                                    <div style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></div>
                             </div>
                         </div>
                     </div>
                     <div class="swiper-pagination ongoing-pagination"></div>
                 </div>
+            </div>
+            <div th:if="${#lists.isEmpty(productList)}">
+                <div class="aucTitle">
+                    <div style="margin-bottom: 5px;">등록된 작품</div>
+                    <a th:href="@{/product/list}">
+                        <div class="viewAll text-black">전체보기 →</div>
+                    </a>
+                </div>
+            <div  class="flex justify-center items-center h-80">
+                <p class="text-center text-gray-500 text-lg">등록된 작품이 없습니다.</p>
+            </div>
             </div>
         </div>
 
@@ -108,7 +118,6 @@
                     <!-- 텍스트 크기 조정 -->
                     <div class="text-xl font-semibold mb-2" th:text="${scheduledAuc.name}"></div>
                     <div class="mt-2">시작일</div><div class="text-base text-gray-600 mb-2" th:text="${#temporals.format(scheduledAuc.startDate, 'yyyy-MM-dd HH:mm')}"></div>
-                    <div class="mt-2">마감일</div><div class="text-base text-gray-500" th:text="${#temporals.format(scheduledAuc.endDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
         </div>
@@ -169,18 +178,26 @@
         <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-4" th:each="topProduct : ${topProduct}">
             <div class="artist-container flex flex-col md:flex-row items-center justify-between mb-5">
                 <div class="artist-info flex-1 text-white p-1 max-w-full md:max-w-xl">
-                    <div class="text-2xl md:text-4xl text-white font-bold mb-2 flex flex-wrap">
+                    <div class="text-3xl md:text-4xl text-white font-bold mb-2">
                         <div class="bestArtist-info-artistName" th:text="${topProduct.artist.korName}">
                             작가 이름
                         </div>
-                        (<div class="bestArtist-info-title ml-1" th:text="${topProduct.title}">작품 이름</div>)
+                        <div class="bestArtist-info-title text-2xl ml-1 mb-2" th:text="${topProduct.title}">작품 이름</div>
                     </div>
-                    <div class="bestArtist-info-description text-base md:text-xl text-white mb-2" th:text="${topProduct.description}">작품 설명</div>
-                    <div class="bestArtist-info-endTime text-xs md:text-sm text-white" th:text="${#temporals.format(topProduct.auctionStartDate, 'yyyy-MM-dd HH:mm')}">예정 07-24 3:00 PM</div>
+                    <div class="bestArtist-info-medium md:text-xl text-white " th:text="${topProduct.medium}">사용 재료</div>
+                    <div class="bestArtist-info-dimensions md:text-xl text-white " th:text="${topProduct.dimensions}">크기</div>
+                    <div class="bestArtist-info-endTime text-xs md:text-sm text-white mb-2" th:text="${#temporals.format(topProduct.auctionStartDate, 'yyyy-MM-dd HH:mm')}">예정 07-24 3:00 PM</div>
+                    <hr>
+                    <div class="bestArtist-info-description md:text-xl text-white mt-2 hidden sm:block" th:text="${topProduct.description}">설명</div>
                 </div>
                 <a th:href="@{|/product/detail/${topProduct.id}|}" class="artist-image w-full max-w-xs md:max-w-xs rounded-lg">
                     <img th:src="@{${topProduct.thumbnailImg}}" alt="이미지 1" class="w-full rounded-lg">
                 </a>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(productList)}">
+            <div  class="flex justify-center items-center h-80">
+                <p class="text-center text-gray-500 text-lg">추천작가가 없습니다.</p>
             </div>
         </div>
     </div>
@@ -193,18 +210,18 @@
         </div>
         <div class="guide-section flex flex-col gap-4 md:flex-row justify-between items-center mt-4">
             <div class="guide-section-left relative bg-gradient-to-l from-gray-200 to-indigo-200 w-full md:w-1/2 p-4">
-                <div class="text-overlay absolute bottom-10 right-4 p-2">
-                    <div class="how-to-buy-title text-lg font-bold">구매 방법</div>
-                    <div class="how-to-buy-body text-sm text-gray-600">어렵지 않게 경매에 참여해보세요!!</div>
-                    <a href="/home/howToBuy"><div class="text-blue-600 mt-1">더 알아보기 &gt;</div></a>
+                <div class="text-overlay absolute bottom-10 right-4 p-2 md:bottom-14 md:right-20 md:p-4">
+                    <div class="how-to-buy-title text-lg md:text-xl font-bold">구매 방법</div>
+                    <div class="how-to-buy-body text-sm md:text-lg text-gray-600">간편하게 경매에 참여해보세요</div>
+                    <a href="/home/howToBuy"><div class="text-blue-600 md:text-lg mt-1">더 알아보기 &gt;</div></a>
                 </div>
                 <img src="/image/구매.png" alt="구매 이미지" class="w-32 h-32 md:w-48 md:h-48">
             </div>
             <div class="guide-section-right relative bg-gradient-to-l from-gray-300 to-yellow-200 w-full md:w-1/2 p-4">
-                <div class="text-overlay absolute bottom-10 right-4 p-2">
-                    <div class="how-to-sell-title text-lg font-bold">판매 방법</div>
-                    <div class="how-to-sell-body text-sm text-gray-600">작가가 되어 그림을 올려보세요</div>
-                    <a href="/home/howToSell"><div class="text-blue-600 mt-1">더 알아보기 &gt;</div></a>
+                <div class="text-overlay absolute bottom-10 right-4 p-2 md:bottom-14 md:right-20 md:p-4">
+                    <div class="how-to-sell-title text-lg md:text-xl font-bold">판매 방법</div>
+                    <div class="how-to-sell-body text-sm md:text-lg text-gray-600">작가가 되어 작품을 올려보세요</div>
+                    <a href="/home/howToSell"><div class="text-blue-600 md:text-lg mt-1">더 알아보기 &gt;</div></a>
                 </div>
                 <img src="/image/판매.png" alt="판매 이미지" class="w-32 h-32 md:w-48 md:h-48">
             </div>
