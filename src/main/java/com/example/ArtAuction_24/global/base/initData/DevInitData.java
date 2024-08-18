@@ -73,7 +73,6 @@ public class DevInitData implements BeforeInitData {
             artistService.create("한작가", "hanArtist", "2001-09-17", "010-5678-0123", "Artist@hotmail.com", "hotmail.com", "안녕! 나 한작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
             artistService.create("어작가", "uhArtist", "1999-09-17", "010-5678-0123", "Artist@hotmail.com", "hotmail.com", "안녕! 나 어작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원");
 
-
             Artist kim = artistService.getArtistByKorName("김작가");
             Artist na = artistService.getArtistByKorName("나작가");
             Artist park = artistService.getArtistByKorName("박작가");
