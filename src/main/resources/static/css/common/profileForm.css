@@ -12,29 +12,14 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
-<<<<<<< HEAD
-<<<<<<< HEAD
     /*border: 1px solid #9E9E9E;*/
-=======
-    border: 1px solid #9E9E9E;
->>>>>>> 9898e55 (aa)
-=======
-    /*border: 1px solid #9E9E9E;*/
->>>>>>> 5d92445 (profile 80%)
     /*justify-content: center;*/
     align-items: center;
 }
 .artistImgModify {
     display: inline;
     margin-top: 50px;
-<<<<<<< HEAD
-<<<<<<< HEAD
     margin-bottom:10px;
-=======
->>>>>>> 9898e55 (aa)
-=======
-    margin-bottom:10px;
->>>>>>> 5d92445 (profile 80%)
 }
 .artist-img-Modify {
     width: 200px;
@@ -45,27 +30,12 @@
 .engName {
     display: inline;
     font-size: 20px;
-<<<<<<< HEAD
-<<<<<<< HEAD
     margin-bottom: 8px;
 }
 .korNameModify {
     display: flex;
     flex-direction: row;
     font-size: 23px;
-=======
-}
-.korName {
-    font-size: 25px;
->>>>>>> 9898e55 (aa)
-=======
-    margin-bottom: 8px;
-}
-.korNameModify {
-    display: flex;
-    flex-direction: row;
-    font-size: 23px;
->>>>>>> 5d92445 (profile 80%)
 }
 .line {
     border-left: 2px solid #333;
@@ -79,41 +49,17 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .birthDateNumModify {
     font-size: 18px;
     margin-bottom: 10px;
-=======
-.birthDateNum {
-    font-size: 18px;
-    margin-bottom: 5px;
->>>>>>> 9898e55 (aa)
-=======
-.birthDateNumModify {
-    font-size: 18px;
-    margin-bottom: 10px;
->>>>>>> 5d92445 (profile 80%)
 }
 .add {
     font-size: 18px;
     margin-bottom: 5px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .telNumModify {
     font-size: 18px;
     margin-bottom: 10px;
-=======
-.telNum {
-    font-size: 18px;
-    margin-bottom: 5px;
->>>>>>> 9898e55 (aa)
-=======
-.telNumModify {
-    font-size: 18px;
-    margin-bottom: 10px;
->>>>>>> 5d92445 (profile 80%)
 }
 .mail-group-modify {
     display: flex;
@@ -126,51 +72,21 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    /*border: 1px solid #9E9E9E;*/
-=======
     border: 1px solid #9E9E9E;
->>>>>>> 9898e55 (aa)
-=======
-    /*border: 1px solid #9E9E9E;*/
->>>>>>> 5d92445 (profile 80%)
     justify-content: center;
     align-items: center;
 }
 .textAdd {
-<<<<<<< HEAD
-<<<<<<< HEAD
     margin-top: 50px;
     height: 560px;
     width: 80%;
     /*border: 1px solid #9E9E9E;*/
-=======
-    margin-top: 70px;
-    height: 560px;
-    width: 80%;
-    border: 1px solid #9E9E9E;
->>>>>>> 9898e55 (aa)
-=======
-    margin-top: 50px;
-    height: 560px;
-    width: 80%;
-    /*border: 1px solid #9E9E9E;*/
->>>>>>> 5d92445 (profile 80%)
 }
 .textTileForm {
     height: auto;
     width: 100%;
     margin-bottom: 30px;
-<<<<<<< HEAD
-<<<<<<< HEAD
    /* border: 1px solid #9E9E9E;*/
-=======
-    border: 1px solid #9E9E9E;
->>>>>>> 9898e55 (aa)
-=======
-   /* border: 1px solid #9E9E9E;*/
->>>>>>> 5d92445 (profile 80%)
 }
 .title {
     font-size: 25px;
@@ -189,6 +105,12 @@
     flex: 1;
     margin-right: 5px;
 }
+<<<<<<< HEAD
+=======
+.field-group {
+    margin-bottom: 20px;
+}
+>>>>>>> f9c642e (aa)
 .textTileForm .title {
     font-weight: bold;
     margin-bottom: 5px;
@@ -197,6 +119,10 @@
     margin-top: 20px;
 }
 .form-control {
+<<<<<<< HEAD
+=======
+    margin-bottom: 7px;
+>>>>>>> f9c642e (aa)
     max-width: 400px;
 }
 .titleAdd {
@@ -212,6 +138,7 @@
     margin-top: 3px;
 }
 .remove-button {
+<<<<<<< HEAD
     color: #828282; /* 텍스트 색을 흰색으로 설정 */
     border-color: black; /* 테두리 제거 */
     cursor: pointer; /* 마우스 커서를 포인터로 변경 */
@@ -234,6 +161,19 @@
 /*.plusBnt:hover{
     background-color: green;
 }*/
+=======
+    background-color: #f00; /* 배경색을 빨간색으로 설정 */
+    color: #fff; /* 텍스트 색을 흰색으로 설정 */
+    border: none; /* 테두리 제거 */
+    padding : 10px; /* 패딩 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+    align-items : center;
+}
+
+>>>>>>> f9c642e (aa)
 .contentAdd span {
     display: inline;
     margin-top: 6px;
@@ -243,6 +183,7 @@
     margin-left: 5px;
     margin-top: 3px;
 }
+<<<<<<< HEAD
 
 .contentAdd_3 {
     display: flex;
@@ -267,4 +208,14 @@
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+=======
+.plusBnt {
+    background-color: green; /* 배경색을 빨간색으로 설정 */
+    color: #fff; /* 텍스트 색을 흰색으로 설정 */
+    border: none; /* 테두리 제거 */
+    padding : 10px; /* 패딩 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    height: 30px;
+    font-size: 20px;
+>>>>>>> f9c642e (aa)
 }
