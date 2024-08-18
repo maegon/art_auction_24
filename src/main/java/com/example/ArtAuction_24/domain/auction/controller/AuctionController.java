@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,7 @@ public class AuctionController {
     public String scheduledAuctions(Model model) {
         List<Auction> scheduledAuctions = auctionService.getScheduledAuctions();
         model.addAttribute("scheduledAuctions", scheduledAuctions);
+
         return "auction/scheduled";
     }
 
@@ -68,6 +70,11 @@ public class AuctionController {
             return "redirect:/auction/scheduled"; // 예를 들어, 경매 목록 페이지로 리다이렉트
         }
         model.addAttribute("auction", auction);
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        String startDateStr = auction.getStartDate().format(formatter);
+        model.addAttribute("startDate", startDateStr.toString());
         return "auction/scheduledDetail"; // 새로운 Thymeleaf 템플릿 페이지 이름
     }
 
@@ -76,7 +83,7 @@ public class AuctionController {
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
         // Filter products where winningBidder is null
-        List<Product> availableProducts = productRepository.findByWinningBidderIsNull();
+        List<Product> availableProducts = auctionService.getAvailableProducts();
         model.addAttribute("allProducts", availableProducts);
         return "auction/form";
     }

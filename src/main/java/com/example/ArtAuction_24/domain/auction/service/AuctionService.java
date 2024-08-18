@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -134,5 +131,12 @@ public class AuctionService {
         // AuctionStatus.SCHEDULED 상태의 경매를 가져옴
         return auctionRepository.findByStatus(AuctionStatus.SCHEDULED);
     }
+
+    public List<Product> getAvailableProducts() {
+        return productRepository.findAvailableProducts();
+    }
+
+
+
 }
 
