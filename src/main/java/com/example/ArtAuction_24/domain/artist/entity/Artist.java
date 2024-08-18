@@ -1,6 +1,9 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
+<<<<<<< HEAD
 import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
+=======
+>>>>>>> a44a506 (aa)
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -60,6 +63,7 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+<<<<<<< HEAD
     private List<TitleContentAdd> titleContentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -81,6 +85,13 @@ public class Artist {
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<TechniqueContentAdd> techniqueContentAdds;
+=======
+    private List<IntroduceContentAdd> introduceContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<MajorWorkContentAdd> majorWorkContentAdds;
+>>>>>>> a44a506 (aa)
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

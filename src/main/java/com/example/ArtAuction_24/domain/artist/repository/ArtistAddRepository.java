@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface ArtistAddRepository extends JpaRepository<ArtistAdd, Integer> {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     void deleteAllByArtist(Artist artist);
 =======
 
@@ -16,4 +17,7 @@ public interface ArtistAddRepository extends JpaRepository<ArtistAdd, Integer> {
 >>>>>>> 345c4c2 (aa)
     void deleteByArtist(Artist artist);
 >>>>>>> 15f227a (aa)
+=======
+    void deleteAllByArtist(Artist artist);
+>>>>>>> a44a506 (aa)
 }

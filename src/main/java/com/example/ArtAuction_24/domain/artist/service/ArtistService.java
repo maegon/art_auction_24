@@ -21,6 +21,7 @@ import java.util.UUID;
 @Service
 public class ArtistService {
     private final ArtistRepository artistRepository;
+<<<<<<< HEAD
     private final ArtistAddRepository artistAddRepository;
     private final TitleAddRepository titleAddRepository;
     private final ContentAddRepository contentAddRepository;
@@ -30,6 +31,13 @@ public class ArtistService {
     private final HeightContentAddRepository heightContentAddRepository;
     private final UnitContentAddRepository unitContentAddRepository;
     private final TechniqueContentAddRepository techniqueContentAddRepository;
+=======
+    private final ArtistAddRepository artistAddRepository; // 추가
+    private final TitleAddRepository titleAddRepository;  // 추가
+    private final ContentAddRepository contentAddRepository;  // 추가
+    private final IntroduceContentAddRepository introduceContentAddRepository;
+    private final MajorWorkContentAddRepository majorWorkContentAddRepository;
+>>>>>>> a44a506 (aa)
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
@@ -93,10 +101,18 @@ public class ArtistService {
 
 
 
+<<<<<<< HEAD
     public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce,
                        List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
                        List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {
 
+=======
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType,
+                       List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
+                       List<String> introduceContentAdds, List<String> majorWorkContentAdds) {
+
+        // 이미지 파일 업데이트 처리
+>>>>>>> a44a506 (aa)
         if (thumbnail != null && !thumbnail.isEmpty()) {
             String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
@@ -109,12 +125,17 @@ public class ArtistService {
             }
         }
 
+<<<<<<< HEAD
+=======
+        // 기본 정보 업데이트
+>>>>>>> a44a506 (aa)
         artist.setKorName(korName);
         artist.setEngName(engName);
         artist.setBirthDate(birthDate);
         artist.setTel(tel);
         artist.setMail(mail);
         artist.setMailType(mailType);
+<<<<<<< HEAD
         artist.setIntroduce(introduce);
 
         updateArtistAdds(artist, artistAdds);
@@ -126,11 +147,25 @@ public class ArtistService {
         updateHeightContentAdds(artist, heightContentAdds);
         updateUnitContentAdds(artist, unitContentAdds);
         updateTechniqueContentAdds(artist, techniqueContentAdds);
+=======
+>>>>>>> a44a506 (aa)
 
+        // 연관된 엔티티 업데이트
+        updateArtistAdds(artist, artistAdds);
+        updateTitleAdds(artist, titleAdds);
+        updateContentAdds(artist, contentAdds);
+        updateIntroduceContentAdds(artist, introduceContentAdds);
+        updateMajorWorkContentAdds(artist, majorWorkContentAdds);
+
+        // 엔티티 저장
         artistRepository.save(artist);
     }
 
     private void updateArtistAdds(Artist artist, List<String> artistAdds) {
+<<<<<<< HEAD
+=======
+        // 새 ArtistAdd 추가
+>>>>>>> a44a506 (aa)
         if (artistAdds != null) {
             List<ArtistAdd> artistAddList = new ArrayList<>();
             for (String content : artistAdds) {
@@ -146,6 +181,10 @@ public class ArtistService {
     }
 
     private void updateTitleAdds(Artist artist, List<String> titleAdds) {
+<<<<<<< HEAD
+=======
+        // 새 TitleAdd 추가
+>>>>>>> a44a506 (aa)
         if (titleAdds != null) {
             List<TitleAdd> titleAddList = new ArrayList<>();
             for (String content : titleAdds) {
@@ -161,6 +200,10 @@ public class ArtistService {
     }
 
     private void updateContentAdds(Artist artist, List<String> contentAdds) {
+<<<<<<< HEAD
+=======
+        // 새 ContentAdd 추가
+>>>>>>> a44a506 (aa)
         if (contentAdds != null) {
             List<ContentAdd> contentAddList = new ArrayList<>();
             for (String content : contentAdds) {
@@ -175,6 +218,7 @@ public class ArtistService {
         }
     }
 
+<<<<<<< HEAD
     private void updateTitleContentAdds(Artist artist, List<String> titleContentAdds) {
         if (titleContentAdds != null) {
             List<TitleContentAdd> titleContentAddList = new ArrayList<>();
@@ -264,6 +308,40 @@ public class ArtistService {
             techniqueContentAddRepository.saveAll(techniqueContentAddList);
         }
     }
+=======
+    private void updateIntroduceContentAdds(Artist artist, List<String> introduceContentAdds) {
+        // 새 IntroduceContentAdd 추가
+        if (introduceContentAdds != null) {
+            List<IntroduceContentAdd> introduceContentAddList = new ArrayList<>();
+            for (String content : introduceContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    IntroduceContentAdd introduceContentAdd = new IntroduceContentAdd();
+                    introduceContentAdd.setContent(content);
+                    introduceContentAdd.setArtist(artist);
+                    introduceContentAddList.add(introduceContentAdd);
+                }
+            }
+            introduceContentAddRepository.saveAll(introduceContentAddList);
+        }
+    }
+
+    private void updateMajorWorkContentAdds(Artist artist, List<String> majorWorkContentAdds) {
+        // 새 MajorWorkContentAdd 추가
+        if (majorWorkContentAdds != null) {
+            List<MajorWorkContentAdd> majorWorkContentAddList = new ArrayList<>();
+            for (String content : majorWorkContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    MajorWorkContentAdd majorWorkContentAdd = new MajorWorkContentAdd();
+                    majorWorkContentAdd.setContent(content);
+                    majorWorkContentAdd.setArtist(artist);
+                    majorWorkContentAddList.add(majorWorkContentAdd);
+                }
+            }
+            majorWorkContentAddRepository.saveAll(majorWorkContentAddList);
+        }
+    }
+
+>>>>>>> a44a506 (aa)
 
     public void delete(Artist artist) {
         artistRepository.delete(artist);
@@ -302,6 +380,7 @@ public class ArtistService {
         return artist;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 <<<<<<< HEAD
 =======
@@ -311,3 +390,8 @@ public class ArtistService {
 =======
 }
 >>>>>>> d631b46 (aa)
+=======
+
+
+}
+>>>>>>> a44a506 (aa)

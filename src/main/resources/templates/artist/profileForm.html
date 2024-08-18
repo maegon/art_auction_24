@@ -73,21 +73,31 @@
             // 기존 artistAdds 필드 값 추가
             const artistAddsValues = /*[[${artistForm.artistAdds}]]*/ [];
             artistAddsValues.forEach(value => {
-                addInputField('artistAddsContainer', 'artistAdds', value);
+                addSimpleInputField('artistAddsContainer', 'artistAdds', value);
+            });
+
+            // 기존 introduceContentAdds 필드 값 추가
+            const introduceContentAddsValues = /*[[${artistForm.introduceContentAdds}]]*/ [];
+            introduceContentAddsValues.forEach(value => {
+                addSimpleInputField('contentAddsContainer_1', 'introduceContentAdds', value);
+            });
+
+            // 기존 majorWorkContentAdds 필드 값 추가
+            const majorWorkContentAddsValues = /*[[${artistForm.majorWorkContentAdds}]]*/ [];
+            majorWorkContentAddsValues.forEach(value => {
+                addComplexInputField('contentAddsContainer_2', 'majorWorkContentAdds', value);
             });
 
             // 기존 contentAdds 필드 값 추가
             const contentAddsValues = /*[[${artistForm.contentAdds}]]*/ [];
             contentAddsValues.forEach(value => {
-                addInputField('contentAddsContainer_1', 'contentAdds', value);
-                addInputField('contentAddsContainer_2', 'contentAdds', value);
-                addInputField('contentAddsContainer_3', 'contentAdds', value);
+                addSimpleInputField('contentAddsContainer_3', 'contentAdds', value);
             });
 
             // 기존 titleAdds 필드 값 추가
             const titleAddsValues = /*[[${artistForm.titleAdds}]]*/ [];
             titleAddsValues.forEach(value => {
-                addInputField('titleAddsContainer', 'titleAdds', value);
+                addSimpleInputField('titleAddsContainer', 'titleAdds', value);
             });
 
 >>>>>>> 2f1c221 (aa)
@@ -97,8 +107,14 @@
             } else {
                 thumbnailPreview.style.display = 'none';
             }
+
+            // Add a default input field on load if no majorWorkContentAdds values are provided
+            if (majorWorkContentAddsValues.length === 0) {
+                addComplexInputField('contentAddsContainer_2', 'majorWorkContentAdds');
+            }
         });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         function addInputField(containerId, inputName, initialButton = null) {
             const container = document.getElementById(containerId);
@@ -160,6 +176,9 @@
             const input = document.createElement("input");
 =======
         function addInputField(containerId, name, value = '') {
+=======
+        function addSimpleInputField(containerId, name, value = '') {
+>>>>>>> a44a506 (aa)
             const container = document.getElementById(containerId);
             const inputGroup = document.createElement('div');
             inputGroup.className = "input-group";
@@ -190,8 +209,64 @@
 >>>>>>> 2f1c221 (aa)
         }
 
+<<<<<<< HEAD
         function handleFieldRemoval(containerId, inputName) {
             const container = document.getElementById(containerId);
+=======
+        function addComplexInputField(containerId, name, value = {title: '', year: '', size: '', technique: ''}) {
+            const container = document.getElementById(containerId);
+            const inputGroup = document.createElement('div');
+            inputGroup.className = "input-group";
+
+            const titleInput = document.createElement('input');
+            const yearInput = document.createElement('input');
+            const sizeInput = document.createElement('input');
+            const techniqueInput = document.createElement('input');
+            const removeButton = document.createElement('button');
+
+            titleInput.type = "text";
+            titleInput.name = `${name}Title`;
+            titleInput.placeholder = "제목";
+            titleInput.value = value.title || '';
+            titleInput.className = "form-control";
+
+            yearInput.type = "text";
+            yearInput.name = `${name}Year`;
+            yearInput.placeholder = "제작년도";
+            yearInput.value = value.year || '';
+            yearInput.className = "form-control";
+
+            sizeInput.type = "text";
+            sizeInput.name = `${name}Size`;
+            sizeInput.placeholder = "크기";
+            sizeInput.value = value.size || '';
+            sizeInput.className = "form-control";
+
+            techniqueInput.type = "text";
+            techniqueInput.name = `${name}Technique`;
+            techniqueInput.placeholder = "기법";
+            techniqueInput.value = value.technique || '';
+            techniqueInput.className = "form-control";
+
+            removeButton.type = "button";
+            removeButton.textContent = "-";
+            removeButton.className = "remove-button";
+            removeButton.onclick = function() {
+                container.removeChild(inputGroup);
+            };
+
+            inputGroup.appendChild(titleInput);
+            inputGroup.appendChild(yearInput);
+            inputGroup.appendChild(sizeInput);
+            inputGroup.appendChild(techniqueInput);
+            inputGroup.appendChild(removeButton);
+            container.appendChild(inputGroup);
+        }
+
+        function handleMailTypeChange(selectElement) {
+            const inputElement = document.getElementById('mailTypeInput');
+            const selectElementDiv = document.getElementById('mailTypeDiv');
+>>>>>>> a44a506 (aa)
 
 <<<<<<< HEAD
             if (container.children.length === 0) {
@@ -509,11 +584,12 @@
                         <span>추가 내용:</span>
                         <div th:if="\${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}"></div>
                         <input type="text" name="contentAdds" class="form-control" />
-                        <button type="button" class="plusBnt" onclick="addContentField(this)">+</button>
+                        <button type="button" class="plusBnt" onclick="addSimpleInputField(this)">+</button>
                         <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
                     </div>
                 `;
                 formContainer.appendChild(newFieldGroup);
+<<<<<<< HEAD
 
                 if (fieldGroupCount >= 2) {
                     document.getElementById('addFieldGroupButton').style.display = 'none';
@@ -596,21 +672,51 @@
 >>>>>>> 2f1c221 (aa)
         }
 
-        function removeFieldGroup(button) {
-            const fieldGroup = button.closest('.field-group');
-            fieldGroup.parentNode.removeChild(fieldGroup);
-            fieldGroupCount--;
-
-            if (fieldGroupCount < 2) {
-                document.getElementById('addFieldGroupButton').style.display = 'inline-block';
+=======
+            } else {
+                alert("추가 필드는 최대 2개까지 생성할 수 있습니다.");
             }
         }
 
-        function removeContentField(button) {
-            const contentField = button.parentNode;
-            contentField.parentNode.removeChild(contentField);
+>>>>>>> a44a506 (aa)
+        function removeFieldGroup(button) {
+            const fieldGroup = button.closest('.field-group');
+            fieldGroup.remove();
+            fieldGroupCount--; // 필드 그룹 수 감소
         }
 
+        function addSimpleInputField(button) {
+            const contentAddDiv = button.closest('.contentAdd');
+            const newInput = document.createElement('div');
+            newInput.classList.add('input-group');
+            newInput.innerHTML = `
+                <input type="text" name="contentAdds" class="form-control" />
+                <button type="button" class="remove-button" onclick="removeInputField(this)">-</button>
+            `;
+            contentAddDiv.appendChild(newInput);
+        }
+
+        function removeInputField(button) {
+            const inputGroup = button.closest('.input-group');
+            inputGroup.remove();
+        }
+
+        function addContentField() {
+            const container = document.getElementById('contentContainer');
+            const newContentDiv = document.createElement('div');
+            newContentDiv.className = 'form-group';
+            newContentDiv.innerHTML = `
+                <label for="additionalContent">추가 내용:</label>
+                <input type="text" name="additionalContent" class="form-control">
+                <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
+            `;
+            container.appendChild(newContentDiv);
+        }
+
+        function removeContentField(button) {
+            const contentDiv = button.closest('.form-group');
+            contentDiv.remove();
+        }
     </script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -741,20 +847,20 @@
                     <div class="textTileForm">
                         <span class="title">INTRODUCE</span>
                         <div class="contentAdd" id="contentAddsContainer_1">
-                            <textarea type="text" name="contentAdds" class="form-control" ></textarea>
-                            <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
+                            <textarea type="text" name="introduceContentAdds" class="form-control" ></textarea>
+                            <div th:if="${#fields.hasErrors('introduceContentAdds')}" th:errors="*{introduceContentAdds}">Incorrect content</div>
                         </div>
                     </div>
                     <div class="textTileForm">
                         <span class="title">MAJOR WORK</span>
-                        <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+<!--                        <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">-->
+<!--                            <i class="fa-solid fa-arrow-right"></i>-->
+<!--                        </a>-->
                         <div class="contentAdd" id="contentAddsContainer_2">
                             <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
-                            <div th:if="${#fields.hasErrors('contentAdds')}" th:errors="*{contentAdds}">Incorrect content</div>
+                            <div th:if="${#fields.hasErrors('introduceContentAdds')}" th:errors="*{majorWorkContentAdds}">Incorrect content</div>
                         </div>
-                        <button type="button" class="plusBnt" onclick="addInputField('contentAddsContainer_2', 'contentAdds')">+</button>
+                        <button type="button" class="plusBnt" onclick="addInputField('contentAddsContainer_2', 'majorWorkContentAdds')">+</button>
                     </div>
                     <div class="textTileForm" id="formContainer">
                         <!-- 초기에는 제목과 내용 필드가 없는 상태로 시작 -->
