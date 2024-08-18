@@ -66,6 +66,7 @@
                 <div class="textTileForm">
                     <span class="title">INTRODUCE</span>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <span id="introduce" th:text="${artist.introduce}"></span>
                 </div>
                 <div class="textTileForm">
@@ -108,6 +109,35 @@
                     <div class="contentAdd" th:each="add : ${artist.majorWorkContentAdds}">
                         <span th:text="${add.content}"></span>
 >>>>>>> a44a506 (aa)
+=======
+                    <span id="introduce" th:text="${artist.introduce}"></span>
+                </div>
+                <div class="textTileForm">
+                    <span class="title">MAJOR WORK</span>
+                    <!-- 서버에서 전달된 데이터 출력 -->
+                    <div class="contentAddContainer">
+                        <div class="input-group">
+                            <div class="contentAdd" th:each="add : ${artist.titleContentAdds}">
+                                &lt;<span th:text="${add.content}"></span>&gt;
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.yearContentAdds}">
+                                (<span th:text="${add.content}"></span>):
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.widthContentAdds}">
+                                각 <span th:text="${add.content}"></span>
+                            </div>
+<!--                            <span>X</span>-->
+                            <div class="contentAdd" th:each="add : ${artist.heightContentAdds}">
+                                <span th:text="${add.content}"></span>
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.unitContentAdds}">
+                                <span th:text="${add.content}"></span>,
+                            </div>
+                            <div class="contentAdd" th:each="add : ${artist.techniqueContentAdds}">
+                                <span th:text="${add.content}"></span>
+                            </div>
+                        </div>
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
                     </div>
                 </div>
                 <div class="textTileForm">

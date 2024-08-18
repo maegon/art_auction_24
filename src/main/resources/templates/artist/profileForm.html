@@ -42,6 +42,7 @@
             korNameInput.addEventListener('input', updateName);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             // Load existing data
             const artistAddsValues = /*[[${artistForm.artistAdds}]]*/ [];
             artistAddsValues.forEach(value => {
@@ -71,49 +72,48 @@
 
 =======
             // 기존 artistAdds 필드 값 추가
+=======
+            // Load existing data
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             const artistAddsValues = /*[[${artistForm.artistAdds}]]*/ [];
             artistAddsValues.forEach(value => {
                 addSimpleInputField('artistAddsContainer', 'artistAdds', value);
             });
 
-            // 기존 introduceContentAdds 필드 값 추가
-            const introduceContentAddsValues = /*[[${artistForm.introduceContentAdds}]]*/ [];
-            introduceContentAddsValues.forEach(value => {
-                addSimpleInputField('contentAddsContainer_1', 'introduceContentAdds', value);
-            });
-
-            // 기존 majorWorkContentAdds 필드 값 추가
-            const majorWorkContentAddsValues = /*[[${artistForm.majorWorkContentAdds}]]*/ [];
-            majorWorkContentAddsValues.forEach(value => {
-                addComplexInputField('contentAddsContainer_2', 'majorWorkContentAdds', value);
-            });
-
-            // 기존 contentAdds 필드 값 추가
             const contentAddsValues = /*[[${artistForm.contentAdds}]]*/ [];
             contentAddsValues.forEach(value => {
                 addSimpleInputField('contentAddsContainer_3', 'contentAdds', value);
             });
 
-            // 기존 titleAdds 필드 값 추가
             const titleAddsValues = /*[[${artistForm.titleAdds}]]*/ [];
             titleAddsValues.forEach(value => {
                 addSimpleInputField('titleAddsContainer', 'titleAdds', value);
             });
 
+<<<<<<< HEAD
 >>>>>>> 2f1c221 (aa)
+=======
+            const titleContentAddsValues = /*[[${artistForm.titleContentAdds}]]*/ [];
+            const yearContentAddsValues = /*[[${artistForm.yearContentAdds}]]*/ [];
+            const widthContentAddsValues = /*[[${artistForm.widthContentAdds}]]*/ [];
+            const heightContentAddsValues = /*[[${artistForm.heightContentAdds}]]*/ [];
+            const unitContentAddsValues = /*[[${artistForm.unitContentAdds}]]*/ [];
+            const techniqueContentAddsValues = /*[[${artistForm.techniqueContentAdds}]]*/ [];
+
+            // Call the function to add input fields with existing values
+            addInputFieldsWithValues('contentAddsContainer_2', titleContentAddsValues, yearContentAddsValues, widthContentAddsValues, heightContentAddsValues, unitContentAddsValues, techniqueContentAddsValues);
+
+
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             // Initial image preview setup
             if (thumbnailPreview.src) {
                 thumbnailPreview.style.display = 'block';
             } else {
                 thumbnailPreview.style.display = 'none';
             }
-
-            // Add a default input field on load if no majorWorkContentAdds values are provided
-            if (majorWorkContentAddsValues.length === 0) {
-                addComplexInputField('contentAddsContainer_2', 'majorWorkContentAdds');
-            }
         });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         function addInputField(containerId, inputName, initialButton = null) {
@@ -179,11 +179,38 @@
 =======
         function addSimpleInputField(containerId, name, value = '') {
 >>>>>>> a44a506 (aa)
+=======
+        function addInputField(containerId, inputName, initialButton = null) {
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             const container = document.getElementById(containerId);
+            if (!container) {
+                console.error('Specified container not found');
+                return;
+            }
+
+            // Remove the initial '+' button if it exists
+            if (initialButton) {
+                initialButton.remove();
+            }
+
+            // Remove '+' button from the last input group if it exists
+            const existingPlusButton = container.querySelector('.plusBnt');
+            if (existingPlusButton) {
+                existingPlusButton.parentElement.removeChild(existingPlusButton);
+            }
+
             const inputGroup = document.createElement('div');
-            inputGroup.className = "input-group";
+            inputGroup.className = 'input-group';
+
             const input = document.createElement('input');
+            input.type = 'text';
+            input.name = inputName;
+            input.className = 'form-control';
+            input.placeholder = '추가 입력';
+
+            // Create remove button
             const removeButton = document.createElement('button');
+<<<<<<< HEAD
 
 >>>>>>> 2f1c221 (aa)
             input.type = "text";
@@ -199,13 +226,23 @@
             removeButton.type = "button";
             removeButton.textContent = "-";
             removeButton.className = "remove-button";
+=======
+            removeButton.type = 'button';
+            removeButton.className = 'remove-button';
+            removeButton.textContent = '-';
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             removeButton.onclick = function() {
                 container.removeChild(inputGroup);
+                handleFieldRemoval(containerId, inputName);
             };
 
+            // Append input and remove button to input group
             inputGroup.appendChild(input);
             inputGroup.appendChild(removeButton);
+
+            // Append input group to the container
             container.appendChild(inputGroup);
+<<<<<<< HEAD
 >>>>>>> 2f1c221 (aa)
         }
 
@@ -253,21 +290,176 @@
             removeButton.className = "remove-button";
             removeButton.onclick = function() {
                 container.removeChild(inputGroup);
+=======
+
+            // Create and append the '+' button to the last input group
+            const plusButton = document.createElement('button');
+            plusButton.type = 'button';
+            plusButton.className = 'plusBnt';
+            plusButton.textContent = '+';
+            plusButton.onclick = function() {
+                addInputField(containerId, inputName);
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             };
 
+            inputGroup.appendChild(plusButton);
+        }
+
+        function handleFieldRemoval(containerId, inputName) {
+            const container = document.getElementById(containerId);
+
+            if (container.children.length === 0) {
+                // If no more fields, show the initial + button
+                const initialButton = document.createElement('button');
+                initialButton.type = 'button';
+                initialButton.className = 'plusBnt';
+                initialButton.textContent = '+';
+                initialButton.onclick = function() {
+                    addInputField(containerId, inputName, initialButton);
+                };
+                container.parentElement.appendChild(initialButton);
+            } else {
+                // Ensure only the last field has a + button
+                const lastInputGroup = container.lastElementChild;
+                if (!lastInputGroup.querySelector('.plusBnt')) {
+                    const plusButton = document.createElement('button');
+                    plusButton.type = 'button';
+                    plusButton.className = 'plusBnt';
+                    plusButton.textContent = '+';
+                    plusButton.onclick = function() {
+                        addInputField(containerId, inputName);
+                    };
+                    lastInputGroup.appendChild(plusButton);
+                }
+            }
+        }
+
+
+        function addInputFields(initialButton = null) {
+            const container = document.getElementById('contentAddsContainer_2');
+
+            // Remove the initial '+' button if it exists
+            if (initialButton) {
+                initialButton.remove();
+            }
+
+            // Remove '+' button from the last input group if it exists
+            const existingPlusButton = container.querySelector('.plusBnt');
+            if (existingPlusButton) {
+                existingPlusButton.parentElement.removeChild(existingPlusButton);
+            }
+
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group-mw';
+
+            const titleInput = document.createElement('input');
+            titleInput.type = 'text';
+            titleInput.name = 'titleContentAdds';
+            titleInput.className = 'MWContentAdds';
+            titleInput.placeholder = '제목';
             inputGroup.appendChild(titleInput);
+
+            const yearInput = document.createElement('input');
+            yearInput.type = 'text';
+            yearInput.name = 'yearContentAdds';
+            yearInput.className = 'MWContentAdds';
+            yearInput.placeholder = '제작년도';
             inputGroup.appendChild(yearInput);
-            inputGroup.appendChild(sizeInput);
+
+            const widthInput = document.createElement('input');
+            widthInput.type = 'text';
+            widthInput.name = 'widthContentAdds';
+            widthInput.className = 'MWContentAdds';
+            widthInput.placeholder = '가로 길이';
+            inputGroup.appendChild(widthInput);
+
+            const spanX = document.createElement('span');
+            spanX.textContent = 'X';
+            spanX.className = 'spanX'
+            inputGroup.appendChild(spanX);
+
+            const heightInput = document.createElement('input');
+            heightInput.type = 'text';
+            heightInput.name = 'heightContentAdds';
+            heightInput.className = 'MWContentAdds';
+            heightInput.placeholder = '세로 길이';
+            inputGroup.appendChild(heightInput);
+
+            const unitInput = document.createElement('input');
+            unitInput.type = 'text';
+            unitInput.name = 'unitContentAdds';
+            unitInput.className = 'MWContentAdds';
+            unitInput.placeholder = '길이 단위';
+            inputGroup.appendChild(unitInput);
+
+            const techniqueInput = document.createElement('input');
+            techniqueInput.type = 'text';
+            techniqueInput.name = 'techniqueContentAdds';
+            techniqueInput.className = 'MWContentAdds';
+            techniqueInput.placeholder = '제작 기법';
             inputGroup.appendChild(techniqueInput);
+
+            // Create remove button
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'remove-button';
+            removeButton.textContent = '-';
+            removeButton.onclick = function() {
+                container.removeChild(inputGroup);
+                handleFieldRemoval();
+            };
             inputGroup.appendChild(removeButton);
+
+            // Create and append the '+' button to the last input group
+            const plusButton = document.createElement('button');
+            plusButton.type = 'button';
+            plusButton.className = 'plusBnt';
+            plusButton.textContent = '+';
+            plusButton.onclick = function() {
+                addInputFields();
+            };
+            inputGroup.appendChild(plusButton);
+
             container.appendChild(inputGroup);
         }
 
-        function handleMailTypeChange(selectElement) {
+        function handleFieldRemoval() {
+            const container = document.getElementById('contentAddsContainer_2');
+
+            if (container.children.length === 0) {
+                // If no more fields, show the initial + button
+                const initialButton = document.createElement('button');
+                initialButton.type = 'button';
+                initialButton.className = 'plusBnt';
+                initialButton.textContent = '+';
+                initialButton.onclick = function() {
+                    addInputFields(initialButton);
+                };
+                container.parentElement.appendChild(initialButton);
+            } else {
+                // Ensure only the last field has a + button
+                const lastInputGroup = container.lastElementChild;
+                if (!lastInputGroup.querySelector('.plusBnt')) {
+                    const plusButton = document.createElement('button');
+                    plusButton.type = 'button';
+                    plusButton.className = 'plusBnt';
+                    plusButton.textContent = '+';
+                    plusButton.onclick = function() {
+                        addInputFields();
+                    };
+                    lastInputGroup.appendChild(plusButton);
+                }
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('mailType');
             const inputElement = document.getElementById('mailTypeInput');
             const selectElementDiv = document.getElementById('mailTypeDiv');
 >>>>>>> a44a506 (aa)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             if (container.children.length === 0) {
                 // If no more fields, show the initial + button
@@ -436,6 +628,8 @@
             const inputElement = document.getElementById('mailTypeInput');
             const selectElementDiv = document.getElementById('mailTypeDiv');
 
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             // 초기 페이지 로드 시 메일 타입에 따라 입력 필드 상태 설정
             function setupMailTypeField() {
                 if (selectElement.value === 'self') {
@@ -446,6 +640,7 @@
                 } else if (selectElement.value !== '') {
                     selectElementDiv.style.display = 'block';
                     inputElement.style.display = 'none';
+<<<<<<< HEAD
                     selectElement.name = "mailType";
                 } else {
                     selectElementDiv.style.display = 'block';
@@ -503,6 +698,48 @@
                     this.name = "";
                     selectElement.name = "mailType";
 >>>>>>> 2f1c221 (aa)
+=======
+                    selectElement.name = "mailType";
+                } else {
+                    selectElementDiv.style.display = 'block';
+                    inputElement.style.display = 'none';
+                    inputElement.name = "";
+                }
+            }
+
+            // 초기 설정을 로드
+            setupMailTypeField();
+
+            // 메일 타입 선택 변경 시 동작
+            selectElement.addEventListener('change', function() {
+                if (this.value === 'self') {
+                    selectElementDiv.style.display = 'none';
+                    inputElement.style.display = 'inline-block';
+                    inputElement.name = "mailType";
+                    inputElement.focus();
+                } else {
+                    inputElement.style.display = 'none';
+                    inputElement.value = ''; // 자동 입력 필드를 비우고 숨김
+                    inputElement.name = "";
+                    selectElement.name = "mailType";
+                    selectElementDiv.style.display = 'block';
+                }
+            });
+
+            // 메일 입력 필드에서 포커스를 잃었을 때
+            inputElement.addEventListener('blur', function() {
+                if (this.value === 'self') {
+                    selectElementDiv.style.display = 'none';
+                    inputElement.style.display = 'inline-block';
+                    inputElement.name = "mailType";
+                    inputElement.focus();
+                } else {
+                    inputElement.style.display = 'none';
+                    inputElement.value = ''; // 자동 입력 필드를 비우고 숨김
+                    inputElement.name = "";
+                    selectElement.name = "mailType";
+                    selectElementDiv.style.display = 'block';
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
                 }
             });
         });
@@ -536,6 +773,7 @@
             // 초기 '+' 버튼을 누르면 사라지도록 설정
             if (initialButton) {
                 initialButton.remove();
+<<<<<<< HEAD
             }
 
             const newFieldGroup = document.createElement('div');
@@ -675,50 +913,103 @@
 =======
             } else {
                 alert("추가 필드는 최대 2개까지 생성할 수 있습니다.");
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
             }
+
+            const newFieldGroup = document.createElement('div');
+            newFieldGroup.classList.add('field-group');
+
+            newFieldGroup.innerHTML = `
+                <div class="titleAdd input-group">
+                    <input type="text" name="titleAdds" class="form-control" placeholder="추가 제목" />
+                    <button type="button" class="remove-button" onclick="removeFieldGroup(this)">-</button>
+                </div>
+                <div class="contentAdd">
+                    <div class="input-group">
+                        <input type="text" name="contentAdds" class="form-control" placeholder="추가 내용" />
+                        <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
+                        <button type="button" class="plusBnt" onclick="addContentField(this)">+</button>
+                    </div>
+                </div>
+            `;
+            formContainer.appendChild(newFieldGroup);
+
+            fieldGroupCount++;
+
+            // 두 번째 필드 그룹 이후에는 addFieldGroupButton을 숨김
+            if (fieldGroupCount >= 2) {
+                document.getElementById('addFieldGroupButton').style.display = 'none';
+            }
+        }
+
+        function addContentField(button) {
+            const contentContainer = button.closest('.contentAdd');
+            const newContentField = document.createElement('div');
+            newContentField.className = 'input-group';
+            newContentField.innerHTML = `
+                <input type="text" name="contentAdds" class="form-control" placeholder="추가 내용" />
+                <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
+            `;
+
+            // 기존 마지막 필드의 '+' 버튼 제거
+            const existingPlusButton = contentContainer.querySelector('.plusBnt');
+            if (existingPlusButton) {
+                existingPlusButton.remove();
+            }
+
+            // 새로운 필드를 추가하고, 새로운 필드에 '+' 버튼 추가
+            contentContainer.appendChild(newContentField);
+            addPlusButtonToLastContentAdd(contentContainer.closest('.field-group'));
         }
 
 >>>>>>> a44a506 (aa)
         function removeFieldGroup(button) {
             const fieldGroup = button.closest('.field-group');
-            fieldGroup.remove();
-            fieldGroupCount--; // 필드 그룹 수 감소
-        }
+            fieldGroup.parentNode.removeChild(fieldGroup);
+            fieldGroupCount--;
 
-        function addSimpleInputField(button) {
-            const contentAddDiv = button.closest('.contentAdd');
-            const newInput = document.createElement('div');
-            newInput.classList.add('input-group');
-            newInput.innerHTML = `
-                <input type="text" name="contentAdds" class="form-control" />
-                <button type="button" class="remove-button" onclick="removeInputField(this)">-</button>
-            `;
-            contentAddDiv.appendChild(newInput);
-        }
+            const formContainer = document.getElementById('formContainer');
 
-        function removeInputField(button) {
-            const inputGroup = button.closest('.input-group');
-            inputGroup.remove();
-        }
+            // 두 번째 필드 그룹이 줄어들면 초기 '+' 버튼 다시 표시
+            if (fieldGroupCount < 2) {
+                document.getElementById('addFieldGroupButton').style.display = 'inline-block';
+            }
 
-        function addContentField() {
-            const container = document.getElementById('contentContainer');
-            const newContentDiv = document.createElement('div');
-            newContentDiv.className = 'form-group';
-            newContentDiv.innerHTML = `
-                <label for="additionalContent">추가 내용:</label>
-                <input type="text" name="additionalContent" class="form-control">
-                <button type="button" class="remove-button" onclick="removeContentField(this)">-</button>
-            `;
-            container.appendChild(newContentDiv);
+            // 마지막 필드 그룹의 마지막 contentAdd 필드에 '+' 버튼 추가
+            addPlusButtonToLastContentAdd(formContainer.lastElementChild);
         }
 
         function removeContentField(button) {
-            const contentDiv = button.closest('.form-group');
-            contentDiv.remove();
+            const contentField = button.parentNode;
+            const contentContainer = contentField.parentNode;
+            contentField.parentNode.removeChild(contentField);
+
+            // 마지막 필드에 '+' 버튼 추가
+            addPlusButtonToLastContentAdd(contentContainer.closest('.field-group'));
+        }
+
+        function addPlusButtonToLastContentAdd(fieldGroup) {
+            if (!fieldGroup) return;
+            const contentAdds = fieldGroup.querySelectorAll('.contentAdd .input-group, .contentAdd');
+            if (contentAdds.length > 0) {
+                const lastContentAdd = contentAdds[contentAdds.length - 1];
+                const plusButton = document.createElement('button');
+                plusButton.type = 'button';
+                plusButton.className = 'plusBnt';
+                plusButton.textContent = '+';
+                plusButton.onclick = function() {
+                    addContentField(plusButton);
+                };
+                lastContentAdd.appendChild(plusButton);
+            }
+        }
+
+        function removeAllPlusButtons() {
+            const plusButtons = document.querySelectorAll('.plusBnt');
+            plusButtons.forEach(button => button.remove());
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div layout:fragment="content">
@@ -756,6 +1047,7 @@
                             <div class="artistAdd">
                                 <div id="artistAddsContainer">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <!-- 입력 필드와 버튼이 추가될 위치 -->
                                 </div>
                                 <!-- 초기 '+' 버튼 -->
@@ -764,10 +1056,18 @@
 
 =======
                                     <!-- 여기서 기존 artistAdds 값들을 스크립트로 추가 -->
+=======
+                                    <!-- 입력 필드와 버튼이 추가될 위치 -->
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
                                 </div>
-                                <button type="button" class="plusBnt" onclick="addInputField('artistAddsContainer', 'artistAdds')">+</button>
+                                <!-- 초기 '+' 버튼 -->
+                                <button type="button" class="plusBnt" onclick="addInputField('artistAddsContainer', 'artistAdds', this)">+</button>
                             </div>
+<<<<<<< HEAD
 >>>>>>> 2f1c221 (aa)
+=======
+
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
                             <div class="telNumModify">
                                 <input type="text" id="tel" class="form-control" th:field="*{tel}">
                                 <div th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">Incorrect telephone</div>
@@ -846,27 +1146,28 @@
                 <div class="textAdd">
                     <div class="textTileForm">
                         <span class="title">INTRODUCE</span>
-                        <div class="contentAdd" id="contentAddsContainer_1">
-                            <textarea type="text" name="introduceContentAdds" class="form-control" ></textarea>
-                            <div th:if="${#fields.hasErrors('introduceContentAdds')}" th:errors="*{introduceContentAdds}">Incorrect content</div>
+                        <div class="contentAdd">
+                            <textarea type="text" id="introduce" class="form-control" ></textarea>
+                            <div th:if="${#fields.hasErrors('introduce')}" th:errors="*{introduce}">Incorrect content</div>
                         </div>
                     </div>
                     <div class="textTileForm">
                         <span class="title">MAJOR WORK</span>
-<!--                        <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">-->
-<!--                            <i class="fa-solid fa-arrow-right"></i>-->
-<!--                        </a>-->
-                        <div class="contentAdd" id="contentAddsContainer_2">
+                        <!--
+                        <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        -->
+                        <div class="contentAddContainer" id="contentAddsContainer_2">
                             <!-- 여기서 기존 contentAdds 값들을 스크립트로 추가 -->
-                            <div th:if="${#fields.hasErrors('introduceContentAdds')}" th:errors="*{majorWorkContentAdds}">Incorrect content</div>
                         </div>
-                        <button type="button" class="plusBnt" onclick="addInputField('contentAddsContainer_2', 'majorWorkContentAdds')">+</button>
+                        <!-- 초기 + 버튼 -->
+                        <button type="button" class="plusBnt" onclick="addInputFields(this)">+</button>
                     </div>
                     <div class="textTileForm" id="formContainer">
-                        <!-- 초기에는 제목과 내용 필드가 없는 상태로 시작 -->
+                        <!-- 필드 그룹이 추가되는 컨테이너 -->
                     </div>
-                    <button type="button" id="addFieldGroupButton" onclick="addFieldGroup()" class="plusBnt">+</button>
-                </div>
+                    <button type="button" id="addFieldGroupButton" class="plusBnt" onclick="addFieldGroup()">+</button>
                 <div class="button">
                     <input type="submit" value="저장하기">
                 </div>
