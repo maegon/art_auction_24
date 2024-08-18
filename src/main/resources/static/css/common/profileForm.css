@@ -13,10 +13,14 @@
     height: 700px;
     width: 50%;
 <<<<<<< HEAD
+<<<<<<< HEAD
     /*border: 1px solid #9E9E9E;*/
 =======
     border: 1px solid #9E9E9E;
 >>>>>>> 9898e55 (aa)
+=======
+    /*border: 1px solid #9E9E9E;*/
+>>>>>>> 5d92445 (profile 80%)
     /*justify-content: center;*/
     align-items: center;
 }
@@ -24,9 +28,13 @@
     display: inline;
     margin-top: 50px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     margin-bottom:10px;
 =======
 >>>>>>> 9898e55 (aa)
+=======
+    margin-bottom:10px;
+>>>>>>> 5d92445 (profile 80%)
 }
 .artist-img-Modify {
     width: 200px;
@@ -37,6 +45,7 @@
 .engName {
     display: inline;
     font-size: 20px;
+<<<<<<< HEAD
 <<<<<<< HEAD
     margin-bottom: 8px;
 }
@@ -49,6 +58,14 @@
 .korName {
     font-size: 25px;
 >>>>>>> 9898e55 (aa)
+=======
+    margin-bottom: 8px;
+}
+.korNameModify {
+    display: flex;
+    flex-direction: row;
+    font-size: 23px;
+>>>>>>> 5d92445 (profile 80%)
 }
 .line {
     border-left: 2px solid #333;
@@ -63,6 +80,7 @@
     margin-bottom: 5px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .birthDateNumModify {
     font-size: 18px;
     margin-bottom: 10px;
@@ -71,11 +89,17 @@
     font-size: 18px;
     margin-bottom: 5px;
 >>>>>>> 9898e55 (aa)
+=======
+.birthDateNumModify {
+    font-size: 18px;
+    margin-bottom: 10px;
+>>>>>>> 5d92445 (profile 80%)
 }
 .add {
     font-size: 18px;
     margin-bottom: 5px;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .telNumModify {
     font-size: 18px;
@@ -85,6 +109,11 @@
     font-size: 18px;
     margin-bottom: 5px;
 >>>>>>> 9898e55 (aa)
+=======
+.telNumModify {
+    font-size: 18px;
+    margin-bottom: 10px;
+>>>>>>> 5d92445 (profile 80%)
 }
 .mail-group-modify {
     display: flex;
@@ -98,14 +127,19 @@
     height: 700px;
     width: 50%;
 <<<<<<< HEAD
+<<<<<<< HEAD
     /*border: 1px solid #9E9E9E;*/
 =======
     border: 1px solid #9E9E9E;
 >>>>>>> 9898e55 (aa)
+=======
+    /*border: 1px solid #9E9E9E;*/
+>>>>>>> 5d92445 (profile 80%)
     justify-content: center;
     align-items: center;
 }
 .textAdd {
+<<<<<<< HEAD
 <<<<<<< HEAD
     margin-top: 50px;
     height: 560px;
@@ -117,16 +151,26 @@
     width: 80%;
     border: 1px solid #9E9E9E;
 >>>>>>> 9898e55 (aa)
+=======
+    margin-top: 50px;
+    height: 560px;
+    width: 80%;
+    /*border: 1px solid #9E9E9E;*/
+>>>>>>> 5d92445 (profile 80%)
 }
 .textTileForm {
     height: auto;
     width: 100%;
     margin-bottom: 30px;
 <<<<<<< HEAD
+<<<<<<< HEAD
    /* border: 1px solid #9E9E9E;*/
 =======
     border: 1px solid #9E9E9E;
 >>>>>>> 9898e55 (aa)
+=======
+   /* border: 1px solid #9E9E9E;*/
+>>>>>>> 5d92445 (profile 80%)
 }
 .title {
     font-size: 25px;
