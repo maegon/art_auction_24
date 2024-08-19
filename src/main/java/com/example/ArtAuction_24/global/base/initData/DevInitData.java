@@ -52,7 +52,6 @@ public class DevInitData implements BeforeInitData {
             Member M1 = memberService.join("", "user1", password, "minseopkim99@gmail.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-
             memberService.join("", "user2", password, "dlagorhs99@naver.com", "user2",
                     "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 

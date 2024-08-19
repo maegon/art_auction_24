@@ -44,6 +44,8 @@ public class MemberService {
         }
         System.out.println(email);
 
+        System.out.println(email);
+
         // 회원 역할 결정
         MemberRole role = "admin".equals(username) ? MemberRole.ADMIN : MemberRole.MEMBER;
 

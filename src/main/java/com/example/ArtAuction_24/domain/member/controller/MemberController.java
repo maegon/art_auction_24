@@ -100,7 +100,6 @@ public class MemberController {
             @ModelAttribute @Valid MemberForm memberForm,
             BindingResult bindingResult) {
 
-
         // 이메일 및 주소 필드 결합
         String email = memberForm.getLogemailT() + "@" + memberForm.getLogemail();
 
