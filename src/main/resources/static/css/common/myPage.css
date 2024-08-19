@@ -1,6 +1,7 @@
 .myPage-hidden {
     display: none;
 }
+
 .myPage-active::after {
     content: '';
     display: block;
@@ -9,83 +10,135 @@
     padding-top: 15px;
     border-bottom: 2px solid black;
     bottom: -10px;
+}
 
-}
 .myPage-grid-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .myPage-grid-item > input {
-        height: 40px;
-        margin-left: 5px;
+    height: 40px;
+    margin-left: 5px;
 }
+
 .myPage-grid-item > label {
-        font-weight: bold;
+    font-weight: bold;
 }
+
 .myPage-list-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-basis: 1/6;
-        text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 1/6;
+    text-align: center;
 }
-.myPageProfile-image{
+
+.myPageProfile-image {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     object-fit: cover;
-
 }
 
-  #wish-list {
+#wish-list {
     /* 기존 스타일 유지 */
-  }
+}
 
-  /* 모바일 환경에서 적용할 스타일 */
-  @media screen and (max-width: 768px) {
+.mobile-header {
+      margin-top: 12px;
+}
+
+/* 모바일 환경에서 적용할 스타일 */
+@media screen and (max-width: 768px) {
     #wish-list ul {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-
     #wish-list li {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid #d1d5db;
-      padding: 1rem;
-      border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #d1d5db;
+        padding: 1rem;
+        border-radius: 0.5rem;
     }
 
     #wish-list a {
-      width: 100%;
+        width: 100%;
     }
 
     #wish-list div {
-      margin-top: 1rem;
+        margin-top: 1rem;
     }
 
     #wish-list img {
-      width: 8rem;
-      height: 8rem;
+        width: 8rem;
+        height: 8rem;
     }
 
     #wish-list .product-info {
-      margin-top: 1rem;
-      text-align: center;
+        margin-top: 1rem;
+        text-align: center;
     }
 
     #wish-list .action-buttons {
-      margin-top: 1rem;
-      text-align: center;
-      justify-content: center;
+        margin-top: 1rem;
+        text-align: center;
+        justify-content: center;
     }
 
+    .mobile-header {
+              top: 0;
+              left: 0;
+              width: 100%;
+              z-index: 1000;
+              margin-top: 0;
+              background-color: white;
+          }
 
-    }
+          .profile-section {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 0.5rem 1rem;
+          }
 
-  }
+          .profile-img {
+              width: 60px !important;
+              height: 60px !important;
+          }
 
+          .nickname {
+              font-size: 1rem;
+          }
+
+          .cash-section, .menu-section hr, .menu-section > div {
+
+                 font-size: 0.75rem !important;
+                 padding: 0.3rem !important;
+
+          }
+
+          .menu-section ul {
+              display: flex;
+              justify-content: space-around;
+              padding: 0 0.5rem;
+          }
+
+          .menu-section ul li {
+              padding: 0.5rem 0;
+              flex: 1;
+          }
+
+          .menu-section ul li a {
+              font-size: 0.75rem;
+          }
+
+
+
+
+}

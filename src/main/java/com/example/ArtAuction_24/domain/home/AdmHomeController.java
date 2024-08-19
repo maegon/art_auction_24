@@ -92,4 +92,18 @@ public class AdmHomeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         });
     }
+
+    @GetMapping("/question/manage")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String showQuestionManage(Model model) {
+        return "admin/question/manage";
+    }
+
+    @GetMapping("/question/write")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String showQuestionWrite(Model model) {
+        return "admin/question/write";
+    }
+
+
 }
