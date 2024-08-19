@@ -8,6 +8,7 @@ import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.notification.service.NotificationService;
+import com.example.ArtAuction_24.domain.order.service.OrderService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.bid.repository.BidRepository;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
@@ -33,6 +34,7 @@ public class BidService {
     private final MemberRepository memberRepository;
     private final AuctionRepository auctionRepository;
     private final NotificationService notificationService;
+    private final OrderService orderService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
 
@@ -86,7 +88,7 @@ public class BidService {
                 logger.warn("경매에 입찰이 없습니다: 제품 ID {}", product.getId());
                 continue;
             }
-            System.out.println("====================== test2 ======================");
+
             boolean winningBidProcessed = false;
 
             for (Bid bid : bids) {
@@ -105,6 +107,10 @@ public class BidService {
 
                     // 경매 종료 결과를 알림
                     notificationService.notifyAuctionResults(auction);
+
+                    // 주문 생성
+                    orderService.createOrderForAuction(auction);
+
 
                     winningBidProcessed = true;
                     break;  // 유효한 입찰자가 있으면 종료

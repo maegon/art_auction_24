@@ -8,7 +8,10 @@ import com.example.ArtAuction_24.domain.member.form.MemberForm;
 import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.order.entity.Order;
+import com.example.ArtAuction_24.domain.order.service.OrderService;
 import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
+import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
@@ -30,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.text.NumberFormat;
 import java.util.*;
 
 @Controller
@@ -43,6 +47,7 @@ public class MemberController {
     private final ArtistService artistService;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final OrderService orderService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -201,6 +206,10 @@ public class MemberController {
         List<Question> questionList = questionService.findAll();
         model.addAttribute("questionList", questionList);
 
+        // 주문 목록 추가
+        List<Order> orderList = orderService.getOrdersByMemberId(member.getId());
+        model.addAttribute("orderList", orderList);
+
 
 
         return "member/myPage";
@@ -242,6 +251,29 @@ public class MemberController {
     public String applicantArtist() {
 
         return "member/applicantArtist";
+    }
+
+    @GetMapping("/orderDetail/{id}")
+    public String orderDetail(@PathVariable("id") Long id, Model model) {
+        Order order = orderService.getOrderById(id);
+        model.addAttribute("order", order);
+
+        // 제품 정보 가져오기
+        Product product = order.getProduct();
+        model.addAttribute("product", product);
+
+        // 가격을 통화 형식으로 변환
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("ko", "KR"));
+        String formattedPrice = currencyFormat.format(order.getProductPrice());
+
+        // 모델에 가격 정보 추가
+        model.addAttribute("formattedPrice", formattedPrice);
+
+        // 주문 상태의 한글 설명을 모델에 추가
+        model.addAttribute("orderStatusDescription", order.getStatus().getDescription());
+
+
+        return "member/orderDetail";
     }
 }
 

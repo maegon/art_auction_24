@@ -1,0 +1,78 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <div class="bg-white rounded-lg">
+            <!-- 제목 -->
+            <h1 class="text-2xl font-black text-center py-5 text-black">주문 상세</h1>
+
+            <!-- 상품 및 주문 정보 -->
+            <div class="flex flex-col md:flex-row md:space-x-4 mb-4">
+                <!-- 주문 정보 섹션 -->
+                <div class="flex-1  p-4  mb-4 md:mb-0">
+                    <div class="flex text-sm">
+                        <!-- 주문 번호 -->
+                        <div class=" mb-2 md:mb-0">
+                            <span class="font-medium text-gray-700">주문 번호 :</span>
+                            <span class="text-gray-500" th:text="${order.id}">749</span>
+                        </div>
+                        <!-- 송장 번호 -->
+                        <div class="ml-2 mb-2 md:mb-0">
+                            <span class="font-medium text-gray-700 ml-4">주문 날짜 :</span>
+                            <span class="text-gray-500" th:text="${#temporals.format(order.createDate, 'yyyy-MM-dd HH:mm')}">2024-08-19</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="my-4">
+                        <img th:src="@{${product.thumbnailImg}}" alt="상품 이미지" class="w-full h-auto max-w-xs mx-auto rounded-lg">
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- 나머지 주문 정보 -->
+            <div class=" p-4  mb-4">
+                <h2 class="text-xl font-semibold mb-4 border-b border-black">주문 정보</h2>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">상품 제목</span>
+                    <span class="text-black ml-4" th:text="${product.title}">Africa</span>
+                </div>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">상품 가격</span>
+                    <span class="text-black ml-4"  th:text="${formattedPrice}">110,000원</span>
+                </div>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">송장 번호</span>
+                    <span class="text-black ml-4" th:text="${order.trackingNumber}">123456789</span>
+
+                </div>
+            </div>
+
+            <!-- 낙찰자 정보 섹션 -->
+            <div class=" p-4  mb-4">
+                <h2 class="text-xl font-semibold mb-4 border-b border-black">배송지 정보</h2>
+
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">이름</span>
+                    <span class="text-black ml-4" th:text="${order.bidderName}"></span>
+                </div>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">주소</span>
+                    <span class="text-black ml-4" th:text="${order.bidderAddress}"></span>
+                </div>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">번호</span>
+                    <span class="text-black ml-4" th:text="${order.bidderPhone}"></span>
+                </div>
+            </div>
+
+            <!-- 주문 상태 섹션 -->
+            <div class="p-4 my-4">
+                <h2 class="text-xl font-semibold mb-4 border-b border-black">주문 상태</h2>
+                <p class="text-black" th:text="${orderStatusDescription}"></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

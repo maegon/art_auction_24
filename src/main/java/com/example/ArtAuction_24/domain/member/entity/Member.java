@@ -6,7 +6,7 @@ import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.notification.entity.Notification;
-import com.example.ArtAuction_24.domain.review.entity.Review;
+
 import com.example.ArtAuction_24.recharge.entity.Recharge;
 import jakarta.persistence.*;
 import lombok.*;
@@ -64,8 +64,6 @@ public class Member extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "member")
     private List<Bid> bidList;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Review> reviewList; // 리뷰 목록
 
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.REMOVE)
     private List<Notification> notifications; // 회원이 수신한 알림 목록
