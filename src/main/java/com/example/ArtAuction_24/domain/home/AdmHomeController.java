@@ -1,10 +1,13 @@
 package com.example.ArtAuction_24.domain.home;
 
+import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
+import com.example.ArtAuction_24.domain.question.service.QuestionService;
+import com.example.ArtAuction_24.global.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +21,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdmHomeController {
     private final MemberService memberService;
     private final ProductService productService;
+    private final EmailService emailService;
+    private final QuestionService questionService;
+    private final ArtistService artistService;
     @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String index() {

@@ -42,7 +42,6 @@ public class MemberService {
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
-
         System.out.println(email);
 
         // 회원 역할 결정
@@ -191,7 +190,6 @@ public class MemberService {
         Pageable pageable = PageRequest.of(page, 8, Sort.by(sorts));
         return memberRepository.findAllByKeyword(kw, pageable);
     }
-
 
     public List<Member> getMemberList() {
         List<Sort.Order> sorts = new ArrayList<>();

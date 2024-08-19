@@ -72,7 +72,6 @@ public class AuctionController {
     }
 
 
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/create")
     public String create(AuctionForm auctionForm, Model model) {
