@@ -11,11 +11,15 @@ import com.example.ArtAuction_24.recharge.entity.Recharge;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.management.relation.Role;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -25,7 +29,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member extends BaseEntity {
+public class Member extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String username; // 회원 아이디
 
@@ -90,5 +94,43 @@ public class Member extends BaseEntity {
         } else {
             throw new IllegalArgumentException("잔액이 부족합니다.");
         }
+    }
+
+
+    // 관리자가 회원의 isActive, Role 수정 시 필요함
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // SimpleGrantedAuthority는 권한을 나타내며, role 필드를 사용하여 권한을 부여합니다.
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;  // Spring Security가 인증 시 사용하는 비밀번호
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;  // Spring Security가 인증 시 사용하는 사용자 이름
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;  // 계정이 만료되지 않음
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;  // 계정이 잠기지 않음
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;  // 자격 증명이 만료되지 않음
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.isActive;  // 계정 활성화 여부
     }
 }

@@ -7,42 +7,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = this.value.toLowerCase();
 
         memberListItems.forEach(item => {
-            const username = item.querySelector('.mb_list_un').textContent.toLowerCase();
-            const nickname = item.querySelector('.mb_list_nm').textContent.toLowerCase();
-            const email = item.querySelector('.mb_list_e').textContent.toLowerCase();
-            const createDate = item.querySelector('.mb_list_cd').textContent.toLowerCase();
-            const modifyDate = item.querySelector('.mb_list_md').textContent.toLowerCase();
-            const phoneNumber = item.querySelector('.mb_list_pnb').textContent.toLowerCase();
-            const address = item.querySelector('.mb_list_ad').textContent.toLowerCase();
-            const isActive = item.querySelector('.mb_list_ia select').value.toLowerCase();
-            const providerType = item.querySelector('.mb_list_ptc').textContent.toLowerCase();
-            const role = item.querySelector('.mb_list_rl select').value.toLowerCase();
+            const fields = [
+                '.mb_list_un', '.mb_list_nm', '.mb_list_e',
+                '.mb_list_cd', '.mb_list_md', '.mb_list_pnb',
+                '.mb_list_ad', '.mb_list_ia select',
+                '.mb_list_ptc', '.mb_list_rl select'
+            ];
 
-            // 검색어와 일치하는 항목이 있는지 확인
-            const isMatch =
-                username.includes(searchTerm) ||
-                nickname.includes(searchTerm) ||
-                email.includes(searchTerm) ||
-                createDate.includes(searchTerm) ||
-                modifyDate.includes(searchTerm) ||
-                phoneNumber.includes(searchTerm) ||
-                address.includes(searchTerm) ||
-                isActive.includes(searchTerm) ||
-                providerType.includes(searchTerm) ||
-                role.includes(searchTerm);
+            const isMatch = fields.some(selector =>
+                item.querySelector(selector).textContent.toLowerCase().includes(searchTerm)
+            );
 
-            // 일치하는 항목이 있으면 보여주고, 아니면 숨김
-            if (isMatch) {
-                item.style.display = 'flex'; // 일치하면 보이도록 설정
-            } else {
-                item.style.display = 'none'; // 일치하지 않으면 숨김
-            }
+            item.style.display = isMatch ? 'flex' : 'none';
         });
     });
 
-
-
-
+    // 상태나 역할 변경 시 저장 버튼 활성화
+    document.querySelectorAll('.isActive, .role').forEach(selectElement => {
+        selectElement.addEventListener('change', function() {
+            const parent = this.closest('li');
+            const saveButton = parent.querySelector('.btn_save');
+            saveButton.disabled = false; // 변경이 감지되면 저장 버튼 활성화
+        });
+    });
 
     // 저장 버튼
     document.querySelectorAll('.btn_save').forEach(button => {
@@ -55,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const newStatus = isActiveSelect.value === 'true';
             const newRole = roleSelect.value;
 
-            if (confirm(`변경사항을 저장하시겠습니까?\n활성 상태: ${newStatus ? '활성화' : '비활성화'}\n역할: ${newRole}`)) {
+            if (confirm(`변경사항을 저장하시겠습니까?\n활성 상태: ${newStatus ? 'true' : 'false'}\n역할: ${newRole}`)) {
                 fetch(`/admin/member/${memberId}`, {
                     method: 'PUT',
                     headers: {
@@ -85,10 +72,36 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('회원 정보 업데이트 중 오류가 발생했습니다.');
                 });
             } else {
-                // 사용자가 취소를 누른 경우 기본값으로 복원
-                isActiveSelect.value = 'true'; // isActive를 '활성화'로 설정
-                roleSelect.value = 'USER'; // role을 '일반'으로 설정
+                // 사용자가 취소를 누른 경우 버튼을 비활성화하고 기본 상태로 유지
+                isActiveSelect.value = isActiveSelect.getAttribute('data-original-value');
+                roleSelect.value = roleSelect.getAttribute('data-original-value');
+                this.disabled = true; // 저장 버튼 비활성화
             }
         });
+    });
+
+    // 페이지가 로드될 때 저장 버튼을 비활성화하고 초기 값을 저장
+    document.querySelectorAll('.mb_list_each').forEach(item => {
+        const isActiveSelect = item.querySelector('.isActive');
+        const roleSelect = item.querySelector('.role');
+        const saveButton = item.querySelector('.btn_save');
+
+        // 초기 값 저장
+        isActiveSelect.setAttribute('data-original-value', isActiveSelect.value);
+        roleSelect.setAttribute('data-original-value', roleSelect.value);
+
+        // 저장 버튼 비활성화
+        saveButton.disabled = true;
+    });
+
+    // 페이지 이탈 시 변경 사항 확인
+    window.addEventListener('beforeunload', function (e) {
+        const unsavedChanges = Array.from(document.querySelectorAll('.btn_save'))
+            .some(button => !button.disabled);
+
+        if (unsavedChanges) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
     });
 });
