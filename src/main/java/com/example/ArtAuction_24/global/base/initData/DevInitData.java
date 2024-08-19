@@ -57,11 +57,6 @@ public class DevInitData implements BeforeInitData {
 
             memberService.join("", "user3", password, "bok06023@naver.com", "user3",
                     "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
-            memberService.join("", "user2", password, "user2@test.com", "user2",
-                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
-
-            memberService.join("", "user3", password, "user3@test.com", "user3",
-                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user4", password, "user4@test.com", "user4",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
@@ -71,7 +66,6 @@ public class DevInitData implements BeforeInitData {
 
             memberService.join("", "artist2", password, "artist2@test.com", "artist2",
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
-
 
             memberService.join("", "artist3", password, "artist3@test.com", "artist3",
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
