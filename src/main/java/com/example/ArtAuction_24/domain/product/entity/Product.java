@@ -6,7 +6,7 @@ import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 
-import com.example.ArtAuction_24.domain.review.entity.Review;
+
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,8 +47,6 @@ public class Product extends BaseEntity {
     @ManyToMany(mappedBy = "products")
     private Set<Auction> auctions = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private List<Review> reviewList;
 
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)

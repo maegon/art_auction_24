@@ -2,7 +2,7 @@ package com.example.ArtAuction_24.domain.product.entity;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
-import com.example.ArtAuction_24.domain.review.entity.Review;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -33,6 +33,4 @@ public class ExhibitionProduct extends BaseEntity {
     @ManyToOne
     private Artist artist;
 
-    @OneToMany(mappedBy = "exhibitionProduct", cascade = CascadeType.REMOVE)
-    private List<Review> reviewList;
 }

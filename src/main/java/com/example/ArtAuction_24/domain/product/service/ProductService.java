@@ -72,10 +72,10 @@ public class ProductService {
 
     public Product create(String title, String description, String medium, String dimensions,
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
-                          MultipartFile thumbnailImg, String category, Artist artist) {
+                          String thumbnailImg, String category, Artist artist) {
 
         // 파일 경로를 설정합니다.
-        String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "image/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
         // 디렉토리 생성
@@ -84,13 +84,6 @@ public class ProductService {
             if (!parentDir.mkdirs()) {
                 throw new RuntimeException("디렉토리를 생성할 수 없습니다: " + parentDir.getAbsolutePath());
             }
-        }
-
-        try {
-            // MultipartFile을 파일로 저장
-            thumbnailImg.transferTo(thumbnailFile);
-        } catch (IOException e) {
-            throw new RuntimeException("파일 저장 중 오류 발생", e);
         }
 
         // Product 객체를 생성합니다.
@@ -102,7 +95,7 @@ public class ProductService {
                 .startingPrice(startingPrice)
                 .currentBid(startingPrice)  // startingPrice와 동일하게 설정
                 .auctionStartDate(auctionStartDate)  // 매개변수로 받은 auctionStartDate 사용
-                .thumbnailImg(thumbnailRelPath)
+                .thumbnailImg(thumbnailImg)
                 .category(category)
                 .artist(artist)
                 .build();

@@ -1,15 +1,21 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class=" mx-auto px-6 lg:px-[300px] min-h-[600px]" th:each="auction : ${auction}">
-        <div class="bg-black">
-            <h1 class="text-2xl text-center py-20 text-white">PREVIEW</h1>
+    <div class=" mx-auto px-6 lg:px-[300px] min-h-[700px]" th:each="auction : ${auction}">
+        <div class="bg-white" style="background-image: url('/image/예정경매프리뷰배너.png');">
+            <h1 class="text-2xl font-black text-center py-5 text-black">PREVIEW</h1>
+
         </div>
 
-        <a th:href="@{/auction/scheduled}" class="absolute top-20 left-4 text-xl mt-56 md:mt-0">
-            <i class="fa-solid fa-arrow-left"></i>돌아가기
+        <a th:href="@{/auction/scheduled}" class="absolute top-20 left-4 text-xl mt-30 md:mt-0">
+            <i class="fa-solid fa-arrow-left"></i>
         </a>
 
-        <section>
+        <section class="mb-24">
+            <div id="countdown" class="countdown-timer w-full md:w-1/6 flex items-center justify-center border border-black p-4 bg-black text-white text-4xl font-bold mx-auto mt-4">
+                <span id="countdown-text"></span>
+            </div>
+
+
             <div class="scheduledDetail-container flex items-center justify-between pt-4 pb-2">
                 <div class="scheduled-background-img">
                     <div class="scheduled-box mt-40 md:mt-0">
@@ -29,6 +35,46 @@
         </section>
 
     </div>
+    <script th:inline="javascript">
 
+    function updateCountdown(startDate) {
+    const now = new Date();
+    const auctionDate = new Date(startDate);
+
+    // 시간을 0으로 초기화하여 날짜만 비교하도록 함
+    now.setHours(0, 0, 0, 0);
+    auctionDate.setHours(0, 0, 0, 0);
+
+    // 두 날짜의 차이 계산 (밀리초 단위)
+    const distance = auctionDate - now;
+
+    if (distance >= 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        let countdownText = '';
+
+        if (days > 0) {
+            countdownText += `D - ${days}`;
+        } else {
+            countdownText = 'D-Day';
+        }
+
+        $('#countdown').text(countdownText);
+    } else {
+        $('#countdown').text(`경매가 이미 시작되었습니다!`);
+    }
+}
+
+
+let startDate = /*[[${startDate}]]*/ '';
+updateCountdown(startDate);
+setInterval(function() {
+    updateCountdown(startDate);
+}, 10000);
+
+
+
+    </script>
 </div>
+
 </html>

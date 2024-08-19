@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +70,7 @@ public class AuctionService {
 
             // 경매 종료 후 최종 입찰자의 잔액 차감
             bidService.finalizeAuction(auction.getId());  // 경매 ID로 호출
-            System.out.println("====================== test ======================");
+
         }
 
         // 예약된 경매를 활성화합니다.
@@ -134,5 +131,12 @@ public class AuctionService {
         // AuctionStatus.SCHEDULED 상태의 경매를 가져옴
         return auctionRepository.findByStatus(AuctionStatus.SCHEDULED);
     }
+
+    public List<Product> getAvailableProducts() {
+        return productRepository.findAvailableProducts();
+    }
+
+
+
 }
 

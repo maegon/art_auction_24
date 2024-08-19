@@ -7,9 +7,9 @@
 .scheduled-content h2{ font-size:19px;}
 
 .scheduled-box{
-  position: absolute;
-  top: 50%;
-  left: 50%;
+      position: relative;
+      top: 200px;
+      left: 640px;
   transform: translate(-50%, -50%);
   width: 300px;
   height: 300px;
@@ -93,6 +93,15 @@
   animation: animate 4s linear infinite;
 }
 
+@media (max-width: 768px) {
+        .scheduled-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 중앙 정렬 */
+        }
+    }
+
 @keyframes animate {
   0% {
   transform:scaleX(0);
@@ -119,6 +128,14 @@
 
 
 }
+
+
+
+
+
+/*scheduledDetail slide start*/
+
+/*scheduledDetail slide end*/
 
 /*calendar css start*/
  .fc-button {
@@ -160,4 +177,30 @@
             background-color: black;
             border-color: black;
         }
+        /* FullCalendar 헤더 반응형 설정 */
+        .fc-header-toolbar {
+            flex-wrap: wrap; /* 헤더 툴바를 줄 바꿈 */
+        }
+
+        .fc-toolbar-chunk {
+            flex: 1 1 100%; /* 모든 툴바 섹션을 100% 너비로 설정 */
+            text-align: center; /* 가운데 정렬 */
+            margin-bottom: 0.5rem; /* 각 섹션 간격 추가 */
+        }
+
+        @media (min-width: 768px) {
+            .fc-toolbar-chunk {
+                flex: 0 1 auto; /* 중간 화면 이상에서는 원래 크기로 설정 */
+                margin-bottom: 0; /* 중간 화면 이상에서는 간격 제거 */
+            }
+
+            .fc-toolbar-chunk:first-child {
+                text-align: left; /* 첫 번째 섹션은 왼쪽 정렬 */
+            }
+
+            .fc-toolbar-chunk:last-child {
+                text-align: right; /* 마지막 섹션은 오른쪽 정렬 */
+            }
+        }
+
 /*calendar css end*/

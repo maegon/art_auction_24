@@ -76,4 +76,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByWinningBidderIsNull();
 
+    @Query("""
+    SELECT p FROM Product p
+    LEFT JOIN p.auctions a
+    WHERE p.winningBidder IS NULL AND
+          (a IS NULL OR a.status NOT IN ('ACTIVE', 'SCHEDULED'))
+    """)
+    List<Product> findAvailableProducts();
+    // 관리자가 경매 제품을 선택할때 낙찰자가 존재하는 제품과 이미 경매에 올라가 있는 제품 제외
 }

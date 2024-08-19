@@ -5,21 +5,21 @@
 
             <div class="p-4 flex flex-col lg:flex-row">
                 <!-- 이미지 부분 -->
-                <div class="w-[500px] lg:w-[900px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
+                <div class="w-full lg:w-[900px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
                     <img class="w-full max-w-[300px] border auctionProductTarget"
                          th:src="@{${product.thumbnailImg}}" alt="상품이미지">
                 </div>
 
                 <!-- 정보 부분 -->
-                <div id="infoSection" class="w-[500px] lg:w-[338px] p-4">
+                <div id="infoSection" class="w-full lg:w-[338px] px-4 pb-4">
                     <div class="text-sm lg:text-base">
                         <div class="py-2">
                             NO.<span th:text="${product.id}"></span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-xl lg:text-3xl font-bold">
-                                <span th:text="${product.artist.korName}"></span>
-                            </span>
+                <span class="text-xl lg:text-3xl font-bold">
+                    <span th:text="${product.artist.korName}"></span>
+                </span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-base lg:text-lg font-medium text-gray-600" th:text="${product.artist.engName}"></span>
