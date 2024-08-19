@@ -15,45 +15,45 @@
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8 mt-12">
             <!-- 프로필 카드 -->
-            <div class="md:w-80 flex-shrink-0 mt-12">
-                <div class="border-2 border-[black] rounded-lg overflow-hidden">
-                    <div class="flex items-center justify-center py-4">
+            <div class="md:w-80 flex-shrink-0 mt-12 mobile-header ">
+                <div class="border-2 border-gray-300 rounded-lg overflow-hidden ">
+                    <div class="profile-section flex items-center justify-center py-4 bg-gradient-to-b from-slate-50">
                         <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
-                             class="w-32 h-32 object-cover rounded-full"/>
+                             class="profile-img w-32 h-32 object-cover rounded-full border-2 border-gray-300"/>
                         <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
-                             class="w-32 h-32 object-cover rounded-full"/>
+                             class="profile-img w-32 h-32 object-cover rounded-full border-2 border-gray-300"/>
                     </div>
 
-                    <div class="text-center py-2">
-                        <h1 th:text="${member.nickname}" class="text-lg font-bold"></h1>
+                    <div class="text-center py-4  border-b border-gray-200">
+                        <h1 th:text="${member.nickname}" class="nickname text-xl font-semibold text-gray-800"></h1>
                     </div>
-                    <hr>
-                    <div class="text-center py-4">
+
+                    <div class="text-center py-4  border-b border-gray-200">
                         <ul>
-                            <li>CASH : 0</li>
+                            <li class="text-lg font-medium text-gray-700">CASH : 0</li>
                         </ul>
                     </div>
-                    <hr>
-                    <div class="py-4">
+
+                    <div class="menu-section py-4">
                         <div class="flex items-center justify-center py-2">
-                            <i class="fas fa-arrow-down"></i>
-                            <h1 class="text-2xl font-bold px-4">MENU</h1>
-                            <i class="fas fa-arrow-down"></i>
+                            <i class="fas fa-arrow-down text-gray-500"></i>
+                            <h1 class="text-xl font-bold px-4 text-gray-800">MENU</h1>
+                            <i class="fas fa-arrow-down text-gray-500"></i>
                         </div>
                         <ul class="space-y-2">
-                            <li id="info-update" class="text-center text-neutral-400 font-bold text-xl py-2">
+                            <li id="info-update" class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">정보수정</a>
                             </li>
-                            <li id="wish-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                            <li id="wish-list-toggle" class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">찜</a>
                             </li>
-                            <li id="alarm-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                            <li id="alarm-list-toggle" class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">알림</a>
                             </li>
-                            <li id="question-list-toggle" class="text-center text-neutral-400 font-bold text-xl py-2">
+                            <li id="question-list-toggle" class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">문의내역</a>
                             </li>
-                            <li class="text-center text-neutral-400 font-bold text-xl py-2">
+                            <li class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">입찰내역</a>
                             </li>
                         </ul>
