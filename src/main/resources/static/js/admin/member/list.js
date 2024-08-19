@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(error => {
                     console.error('네트워크 오류 또는 서버 오류 발생:', error);
-                    alert('회원 정보 업데이트 중 오류가 발생했습니다.');
+                    alert('회원 정보 업데이트 중 오류가 발생했습니다.' + error.message);
                 });
             } else {
                 // 사용자가 취소를 누른 경우 버튼을 비활성화하고 기본 상태로 유지

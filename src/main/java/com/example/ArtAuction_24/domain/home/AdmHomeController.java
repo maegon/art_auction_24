@@ -60,9 +60,7 @@ public class AdmHomeController {
 
     @GetMapping("/member/list")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String showMember(
-            Model model
-    ) {
+    public String showMember(Model model) {
         List<Member> memberList = memberService.getMemberList();
         model.addAttribute("memberList", memberList);
         return "admin/member/list";
