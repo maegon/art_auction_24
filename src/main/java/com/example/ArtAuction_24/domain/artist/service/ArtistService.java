@@ -21,6 +21,10 @@ import java.util.UUID;
 @Service
 public class ArtistService {
     private final ArtistRepository artistRepository;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
     private final ArtistAddRepository artistAddRepository;
     private final TitleAddRepository titleAddRepository;
     private final ContentAddRepository contentAddRepository;
@@ -30,6 +34,16 @@ public class ArtistService {
     private final HeightContentAddRepository heightContentAddRepository;
     private final UnitContentAddRepository unitContentAddRepository;
     private final TechniqueContentAddRepository techniqueContentAddRepository;
+<<<<<<< HEAD
+=======
+    private final ArtistAddRepository artistAddRepository; // 추가
+    private final TitleAddRepository titleAddRepository;  // 추가
+    private final ContentAddRepository contentAddRepository;  // 추가
+    private final IntroduceContentAddRepository introduceContentAddRepository;
+    private final MajorWorkContentAddRepository majorWorkContentAddRepository;
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
@@ -90,12 +104,27 @@ public class ArtistService {
                 .orElseThrow(() -> new DataNotFoundException("artist not found"));
     }
 
+<<<<<<< HEAD
 
 
+<<<<<<< HEAD
     public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce,
                        List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
                        List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {
 
+=======
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType,
+=======
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce,
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
+                       List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
+                       List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {
+
+<<<<<<< HEAD
+        // 이미지 파일 업데이트 처리
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         if (thumbnail != null && !thumbnail.isEmpty()) {
             String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
@@ -108,13 +137,37 @@ public class ArtistService {
             }
         }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // 기본 정보 업데이트
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         artist.setKorName(korName);
         artist.setEngName(engName);
         artist.setBirthDate(birthDate);
         artist.setTel(tel);
         artist.setMail(mail);
         artist.setMailType(mailType);
+<<<<<<< HEAD
+<<<<<<< HEAD
         artist.setIntroduce(introduce);
+
+        updateArtistAdds(artist, artistAdds);
+        updateTitleAdds(artist, titleAdds);
+        updateContentAdds(artist, contentAdds);
+        updateTitleContentAdds(artist, titleContentAdds);
+        updateYearContentAdds(artist, yearContentAdds);
+        updateWidthContentAdds(artist, widthContentAdds);
+        updateHeightContentAdds(artist, heightContentAdds);
+        updateUnitContentAdds(artist, unitContentAdds);
+        updateTechniqueContentAdds(artist, techniqueContentAdds);
+=======
+>>>>>>> a44a506 (aa)
+=======
+        artist.setIntroduce(introduce);
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
         updateArtistAdds(artist, artistAdds);
         updateTitleAdds(artist, titleAdds);
@@ -130,6 +183,13 @@ public class ArtistService {
     }
 
     private void updateArtistAdds(Artist artist, List<String> artistAdds) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // 새 ArtistAdd 추가
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         if (artistAdds != null) {
             List<ArtistAdd> artistAddList = new ArrayList<>();
             for (String content : artistAdds) {
@@ -145,6 +205,13 @@ public class ArtistService {
     }
 
     private void updateTitleAdds(Artist artist, List<String> titleAdds) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // 새 TitleAdd 추가
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         if (titleAdds != null) {
             List<TitleAdd> titleAddList = new ArrayList<>();
             for (String content : titleAdds) {
@@ -160,6 +227,13 @@ public class ArtistService {
     }
 
     private void updateContentAdds(Artist artist, List<String> contentAdds) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // 새 ContentAdd 추가
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         if (contentAdds != null) {
             List<ContentAdd> contentAddList = new ArrayList<>();
             for (String content : contentAdds) {
@@ -174,10 +248,15 @@ public class ArtistService {
         }
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
     private void updateTitleContentAdds(Artist artist, List<String> titleContentAdds) {
         if (titleContentAdds != null) {
             List<TitleContentAdd> titleContentAddList = new ArrayList<>();
             for (String content : titleContentAdds) {
+<<<<<<< HEAD
                 if (content != null && !content.trim().isEmpty()) {
                     TitleContentAdd titleContentAdd = new TitleContentAdd();
                     titleContentAdd.setContent(content);
@@ -263,6 +342,103 @@ public class ArtistService {
             techniqueContentAddRepository.saveAll(techniqueContentAddList);
         }
     }
+=======
+    private void updateIntroduceContentAdds(Artist artist, List<String> introduceContentAdds) {
+        // 새 IntroduceContentAdd 추가
+        if (introduceContentAdds != null) {
+            List<IntroduceContentAdd> introduceContentAddList = new ArrayList<>();
+            for (String content : introduceContentAdds) {
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
+                if (content != null && !content.trim().isEmpty()) {
+                    TitleContentAdd titleContentAdd = new TitleContentAdd();
+                    titleContentAdd.setContent(content);
+                    titleContentAdd.setArtist(artist);
+                    titleContentAddList.add(titleContentAdd);
+                }
+            }
+            titleContentAddRepository.saveAll(titleContentAddList);
+        }
+    }
+
+    private void updateYearContentAdds(Artist artist, List<String> yearContentAdds) {
+        if (yearContentAdds != null) {
+            List<YearContentAdd> yearContentAddList = new ArrayList<>();
+            for (String content : yearContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    YearContentAdd yearContentAdd = new YearContentAdd();
+                    yearContentAdd.setContent(content);
+                    yearContentAdd.setArtist(artist);
+                    yearContentAddList.add(yearContentAdd);
+                }
+            }
+            yearContentAddRepository.saveAll(yearContentAddList);
+        }
+    }
+
+<<<<<<< HEAD
+>>>>>>> a44a506 (aa)
+=======
+    private void updateWidthContentAdds(Artist artist, List<String> widthContentAdds) {
+        if (widthContentAdds != null) {
+            List<WidthContentAdd> widthContentAddList = new ArrayList<>();
+            for (String content : widthContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    WidthContentAdd widthContentAdd = new WidthContentAdd();
+                    widthContentAdd.setContent(content);
+                    widthContentAdd.setArtist(artist);
+                    widthContentAddList.add(widthContentAdd);
+                }
+            }
+            widthContentAddRepository.saveAll(widthContentAddList);
+        }
+    }
+
+    private void updateHeightContentAdds(Artist artist, List<String> heightContentAdds) {
+        if (heightContentAdds != null) {
+            List<HeightContentAdd> heightContentAddList = new ArrayList<>();
+            for (String content : heightContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    HeightContentAdd heightContentAdd = new HeightContentAdd();
+                    heightContentAdd.setContent(content);
+                    heightContentAdd.setArtist(artist);
+                    heightContentAddList.add(heightContentAdd);
+                }
+            }
+            heightContentAddRepository.saveAll(heightContentAddList);
+        }
+    }
+
+    private void updateUnitContentAdds(Artist artist, List<String> unitContentAdds) {
+        if (unitContentAdds != null) {
+            List<UnitContentAdd> unitContentAddList = new ArrayList<>();
+            for (String content : unitContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    UnitContentAdd unitContentAdd = new UnitContentAdd();
+                    unitContentAdd.setContent(content);
+                    unitContentAdd.setArtist(artist);
+                    unitContentAddList.add(unitContentAdd);
+                }
+            }
+            unitContentAddRepository.saveAll(unitContentAddList);
+        }
+    }
+
+    private void updateTechniqueContentAdds(Artist artist, List<String> techniqueContentAdds) {
+        if (techniqueContentAdds != null) {
+            List<TechniqueContentAdd> techniqueContentAddList = new ArrayList<>();
+            for (String content : techniqueContentAdds) {
+                if (content != null && !content.trim().isEmpty()) {
+                    TechniqueContentAdd techniqueContentAdd = new TechniqueContentAdd();
+                    techniqueContentAdd.setContent(content);
+                    techniqueContentAdd.setArtist(artist);
+                    techniqueContentAddList.add(techniqueContentAdd);
+                }
+            }
+            techniqueContentAddRepository.saveAll(techniqueContentAddList);
+        }
+    }
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
     public void delete(Artist artist) {
         artistRepository.delete(artist);
@@ -300,4 +476,23 @@ public class ArtistService {
 
         return artist;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 15f227a (aa)
+=======
+}
+>>>>>>> d631b46 (aa)
+=======
+
+
+}
+>>>>>>> a44a506 (aa)
+=======
+}
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)

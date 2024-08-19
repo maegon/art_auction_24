@@ -30,7 +30,11 @@ public class ArtistController {
     private final ArtistService artistService;
     private final MemberService memberService;
 
+<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ARTIST')")
+=======
+    @PreAuthorize("isAuthenticated()")
+>>>>>>> a44a506 (aa)
     @GetMapping("/profile/{id}")
     public String getProfile(Model model, @PathVariable("id") Integer id) {
         Artist artist = artistService.getArtist(id);
@@ -140,6 +144,8 @@ public class ArtistController {
                 artistForm.getTel(),
                 artistForm.getMail(),
                 artistForm.getMailType(),
+<<<<<<< HEAD
+<<<<<<< HEAD
                 artistForm.getIntroduce(),
                 artistForm.getArtistAdds(),
                 artistForm.getTitleAdds(),
@@ -150,6 +156,25 @@ public class ArtistController {
                 artistForm.getHeightContentAdds(),
                 artistForm.getUnitContentAdds(),
                 artistForm.getTechniqueContentAdds()
+=======
+                artistForm.getArtistAdds(),
+                artistForm.getTitleAdds(),
+                artistForm.getContentAdds(),
+                artistForm.getIntroduceContentAdds(),
+                artistForm.getMajorWorkContentAdds()
+>>>>>>> a44a506 (aa)
+=======
+                artistForm.getIntroduce(),
+                artistForm.getArtistAdds(),
+                artistForm.getTitleAdds(),
+                artistForm.getContentAdds(),
+                artistForm.getTitleContentAdds(),
+                artistForm.getYearContentAdds(),
+                artistForm.getWidthContentAdds(),
+                artistForm.getHeightContentAdds(),
+                artistForm.getUnitContentAdds(),
+                artistForm.getTechniqueContentAdds()
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         );
 
         System.out.println("getThumbnail:" + artistForm.getThumbnail());
@@ -159,6 +184,8 @@ public class ArtistController {
         System.out.println("getTel:" + artistForm.getTel());
         System.out.println("getMail:" + artistForm.getMail());
         System.out.println("getMailType:" + artistForm.getMailType());
+<<<<<<< HEAD
+<<<<<<< HEAD
         System.out.println("getIntroduce:" + artistForm.getIntroduce());
         System.out.println("getArtistAdds:" + artistForm.getArtistAdds());
         System.out.println("getTitleAdds:" + artistForm.getTitleAdds());
@@ -169,6 +196,25 @@ public class ArtistController {
         System.out.println("getHeightContentAdds:" + artistForm.getHeightContentAdds());
         System.out.println("getUnitContentAdds:" + artistForm.getUnitContentAdds());
         System.out.println("getTechniqueContentAdds:" + artistForm.getTechniqueContentAdds());
+=======
+        System.out.println("getArtistAdds:" + artistForm.getArtistAdds());
+        System.out.println("getTitleAdds:" + artistForm.getTitleAdds());
+        System.out.println("getContentAdds:" + artistForm.getContentAdds());
+        System.out.println("getIntroduceContentAdds:" + artistForm.getIntroduceContentAdds());
+        System.out.println("getMajorWorkContentAdds:" + artistForm.getMajorWorkContentAdds());
+>>>>>>> a44a506 (aa)
+=======
+        System.out.println("getIntroduce:" + artistForm.getIntroduce());
+        System.out.println("getArtistAdds:" + artistForm.getArtistAdds());
+        System.out.println("getTitleAdds:" + artistForm.getTitleAdds());
+        System.out.println("getContentAdds:" + artistForm.getContentAdds());
+        System.out.println("getTitleContentAdds:" + artistForm.getTitleContentAdds());
+        System.out.println("getYearContentAdds:" + artistForm.getYearContentAdds());
+        System.out.println("getWidthContentAdds:" + artistForm.getWidthContentAdds());
+        System.out.println("getHeightContentAdds:" + artistForm.getHeightContentAdds());
+        System.out.println("getUnitContentAdds:" + artistForm.getUnitContentAdds());
+        System.out.println("getTechniqueContentAdds:" + artistForm.getTechniqueContentAdds());
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
         return "redirect:/artist/profile/" + id;
     }
@@ -190,7 +236,14 @@ public class ArtistController {
         artistForm.setTel(artist.getTel());
         artistForm.setMail(artist.getMail());
         artistForm.setMailType(artist.getMailType());
+<<<<<<< HEAD
+<<<<<<< HEAD
         artistForm.setIntroduce(artist.getIntroduce());
+=======
+>>>>>>> a44a506 (aa)
+=======
+        artistForm.setIntroduce(artist.getIntroduce());
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
         artistForm.setExistingThumbnailUrl(artist.getThumbnailImg());
 
         // 기존의 관련 데이터 설정
@@ -203,6 +256,8 @@ public class ArtistController {
         artistForm.setContentAdds(artist.getContentAdds().stream()
                 .map(ContentAdd::getContent)
                 .collect(Collectors.toList()));
+<<<<<<< HEAD
+<<<<<<< HEAD
         artistForm.setTitleContentAdds(artist.getTitleContentAdds().stream()
                 .map(TitleContentAdd::getContent)
                 .collect(Collectors.toList()));
@@ -239,6 +294,51 @@ public class ArtistController {
         System.out.println("getHeightContentAdds:" + artistForm.getHeightContentAdds());
         System.out.println("getUnitContentAdds:" + artistForm.getUnitContentAdds());
         System.out.println("getTechniqueContentAdds:" + artistForm.getTechniqueContentAdds());
+=======
+        artistForm.setIntroduceContentAdds(artist.getIntroduceContentAdds().stream()
+                .map(IntroduceContentAdd::getContent)
+=======
+        artistForm.setTitleContentAdds(artist.getTitleContentAdds().stream()
+                .map(TitleContentAdd::getContent)
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
+                .collect(Collectors.toList()));
+        artistForm.setYearContentAdds(artist.getYearContentAdds().stream()
+                .map(YearContentAdd::getContent)
+                .collect(Collectors.toList()));
+<<<<<<< HEAD
+>>>>>>> a44a506 (aa)
+=======
+        artistForm.setWidthContentAdds(artist.getWidthContentAdds().stream()
+                .map(WidthContentAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setHeightContentAdds(artist.getHeightContentAdds().stream()
+                .map(HeightContentAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setUnitContentAdds(artist.getUnitContentAdds().stream()
+                .map(UnitContentAdd::getContent)
+                .collect(Collectors.toList()));
+        artistForm.setTechniqueContentAdds(artist.getTechniqueContentAdds().stream()
+                .map(TechniqueContentAdd::getContent)
+                .collect(Collectors.toList()));
+
+        System.out.println("getThumbnail:" + artistForm.getThumbnail());
+        System.out.println("getKorName:" + artistForm.getKorName());
+        System.out.println("getEngName:" + artistForm.getEngName());
+        System.out.println("getBirthDate:" + artistForm.getBirthDate());
+        System.out.println("getTel:" + artistForm.getTel());
+        System.out.println("getMail:" + artistForm.getMail());
+        System.out.println("getMailType:" + artistForm.getMailType());
+        System.out.println("getIntroduce:" + artistForm.getIntroduce());
+        System.out.println("getArtistAdds:" + artistForm.getArtistAdds());
+        System.out.println("getTitleAdds:" + artistForm.getTitleAdds());
+        System.out.println("getContentAdds:" + artistForm.getContentAdds());
+        System.out.println("getTitleContentAdds:" + artistForm.getTitleContentAdds());
+        System.out.println("getYearContentAdds:" + artistForm.getYearContentAdds());
+        System.out.println("getWidthContentAdds:" + artistForm.getWidthContentAdds());
+        System.out.println("getHeightContentAdds:" + artistForm.getHeightContentAdds());
+        System.out.println("getUnitContentAdds:" + artistForm.getUnitContentAdds());
+        System.out.println("getTechniqueContentAdds:" + artistForm.getTechniqueContentAdds());
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
         model.addAttribute("artistForm", artistForm);
         model.addAttribute("artist", artist);
@@ -246,8 +346,13 @@ public class ArtistController {
         return "artist/profileForm";
     }
 
+<<<<<<< HEAD
     // @PreAuthorize("isAuthenticated()")
     @PreAuthorize("hasAuthority('ARTIST', 'ADMIN')")
+=======
+
+    @PreAuthorize("isAuthenticated()")
+>>>>>>> a44a506 (aa)
     @GetMapping("/delete/{id}")
     public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
         Artist artist = this.artistService.getArtist(id);

@@ -1,6 +1,13 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
+=======
+>>>>>>> a44a506 (aa)
+=======
+import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -60,6 +67,8 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+<<<<<<< HEAD
+<<<<<<< HEAD
     private List<TitleContentAdd> titleContentAdds;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -81,6 +90,36 @@ public class Artist {
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<TechniqueContentAdd> techniqueContentAdds;
+=======
+    private List<IntroduceContentAdd> introduceContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<MajorWorkContentAdd> majorWorkContentAdds;
+>>>>>>> a44a506 (aa)
+=======
+    private List<TitleContentAdd> titleContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<YearContentAdd> yearContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<WidthContentAdd> widthContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<HeightContentAdd> heightContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<UnitContentAdd> unitContentAdds;
+
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<TechniqueContentAdd> techniqueContentAdds;
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

@@ -46,10 +46,21 @@ public class ArtistForm {
     private List<String> artistAdds = new ArrayList<>();
     private List<String> contentAdds = new ArrayList<>();
     private List<String> titleAdds = new ArrayList<>();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
     private List<String> titleContentAdds = new ArrayList<>();
     private List<String> yearContentAdds = new ArrayList<>();
     private List<String> widthContentAdds = new ArrayList<>();
     private List<String> heightContentAdds = new ArrayList<>();
     private List<String> unitContentAdds = new ArrayList<>();
     private List<String> techniqueContentAdds = new ArrayList<>();
+<<<<<<< HEAD
+=======
+    private List<String> introduceContentAdds = new ArrayList<>();
+    private List<String> majorWorkContentAdds = new ArrayList<>();
+>>>>>>> a44a506 (aa)
+=======
+>>>>>>> 6924dd2 (작가프로필 95% 작품부분 70%)
 }
