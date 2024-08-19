@@ -22,7 +22,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByUsernameAndEmail(String username, String email);
 
-    Optional<Object> findByEmail(String email);
+    Page<Member> findAll(Pageable pageable);
+
+    Optional<Member> findByEmail(String email);
 
     @Query("SELECT m FROM Member m WHERE m.username LIKE %:keyword% OR m.email LIKE %:keyword%")
     Page<Member> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);

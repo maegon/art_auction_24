@@ -210,8 +210,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // 유효하지 않은 닉네임을 검사하는 정규식
         const validNicknameRegex = /^(?!.*(admin|관리자|운영자|fuck|shit|bitch|cunt|sex|porn|xxx|rape|asshole|slut|whore|nigger|chink|gook|spic|beaner|faggot|cocksucker|motherfucker|bastard|idiot|stupid|retard|dumb|jew|nazi|fascist|terrorist|prick|dick|cunt|ass|pussy|clit|femdom|gay|lesbian|homosexual|transgender|sexist|misogynist|racist|hate|bigot|xenophobe|bully|harass|abuse|정신병|미친|병신|년|개새끼|후리|놈|걸레|창녀|쓰레기|짱깨|좆|빡대가리|대가리|찌질이|천민|한남|패륜|불륜|강간|성폭력|토착왜구|매국노|일베|새끼|지랄|까발리|씨발|걸레|핵쓰레기|개돼지|쪽발이|찌질이|강간범|성희롱|성추행|성폭행|성희롱범|좆|좆같은|섹스)).*[a-zA-Z0-9가-힣]+$/;
 
-        if (nickname.length < 4 || nickname.length > 24) {
-            nicknameError.innerText = "닉네임은 최소 4자리 ~ 최대 24자리여야 합니다.";
+        if (nickname.length < 2 || nickname.length > 10) {
+            nicknameError.innerText = "닉네임은 최소 2자리 ~ 최대 10자리여야 합니다.";
             nicknameError.classList.remove("success");
             nicknameError.classList.add("error");
             nicknameCheckButton.disabled = true;
@@ -326,7 +326,12 @@ document.addEventListener("DOMContentLoaded", function() {
         })
          .then(data => {
             console.log("")
-            if (data.code) {
+            if (data.exists) { // 이미 사용 중인 이메일 경우
+                emailError.innerText = "이미 인증된 이메일입니다. 다른 이메일을 입력해주세요.";
+                emailError.classList.remove("success");
+                emailError.classList.add("error");
+            }
+            else if (data.code) {
                 generatedCode = data.code;
                 emailError.innerText = "인증 메일이 발송되었습니다. 이메일을 확인하세요.";
                 emailError.classList.remove("error");

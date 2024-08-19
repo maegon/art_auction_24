@@ -42,6 +42,7 @@ public class MemberService {
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalStateException("Email already exists");
         }
+        System.out.println(email);
 
         System.out.println(email);
 
@@ -192,7 +193,6 @@ public class MemberService {
         return memberRepository.findAllByKeyword(kw, pageable);
     }
 
-
     public List<Member> getMemberList() {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
@@ -219,5 +219,4 @@ public class MemberService {
     public void delete(Member member) {
         memberRepository.delete(member);
     }
-
 }

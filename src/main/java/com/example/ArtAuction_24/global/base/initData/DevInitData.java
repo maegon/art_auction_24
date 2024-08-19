@@ -52,14 +52,32 @@ public class DevInitData implements BeforeInitData {
             Member M1 = memberService.join("", "user1", password, "minseopkim99@gmail.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-
-            memberService.join("", "user2", password, "dlagorhs99@naver.com", "user2",
+            memberService.join("", "dlagorhs99", password, "dlagorhs99@naver.com", "나다",
                     "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user3", password, "bok06023@naver.com", "user3",
                     "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
+            memberService.join("", "user4", password, "user4@test.com", "user4",
+                    "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
             memberService.join("", "artist", password, "artist1@test.com", "artist1",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
+            memberService.join("", "artist2", password, "artist2@test.com", "artist2",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
+            memberService.join("", "artist3", password, "artist3@test.com", "artist3",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
+
+            memberService.join("", "artist4", password, "artist4@test.com", "artist4",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
+            memberService.join("", "artist5", password, "artist5@test.com", "artist5",
+                    "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
+
+            memberService.join("", "artist6", password, "artist6@test.com", "artist6",
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
 

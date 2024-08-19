@@ -58,6 +58,37 @@ public class EmailController {
         }
     }
 
+    @PostMapping("/find-username")
+    public String sendUsernameMail(@RequestParam("email") String email,
+                                   RedirectAttributes redirectAttributes) {
+        // 입력된 이메일로 사용자 찾기
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+
+            // 이메일 본문 작성
+            String body = String.format(
+                    "안녕하세요<br><br>" +
+                            "Art Auction 아이디 찾기 안내입니다.<br><br>" +
+                            "회원님의 아이디는 <b>%s</b> 입니다.<br><br>" +
+                            "<br><br>" +
+                            "Art Auction 드림.",
+                    member.getUsername()
+            );
+
+            // 이메일 발송
+            emailService.send(email, "[Art Auction] 아이디 찾기 안내", body);
+
+            // 성공 메시지 설정
+            redirectAttributes.addFlashAttribute("message", "아이디가 이메일로 발송되었습니다.");
+            return "redirect:/member/login";
+        } else {
+            // 이메일이 일치하지 않을 때 예외 처리
+            redirectAttributes.addFlashAttribute("error", "해당 이메일을 가진 회원을 찾을 수 없습니다.");
+            return "redirect:/member/login";
+        }
+    }
+
     @PostMapping("/confirmCode")
     public ResponseEntity<Map<String, String>> sendConfirmationCode(@RequestBody Map<String, String> request) {
         String email = request.get("email");
