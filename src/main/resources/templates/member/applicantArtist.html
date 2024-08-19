@@ -1,19 +1,81 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="artist_consentForm">
-        <div class="backLink_section"><a href="/" class="backLink">← 뒤로가기</a></div>
+    <div class="admContainer">
         <form class="consentForm">
-            <div class="consentText">
-                <span>작가 등록 약관 동의</span>
+            <div class="consentText text-center">
+                <span class="text-3xl mt-6 font-bold">작가 신청 약관 동의</span>
             </div>
-            <div class="consentCheckbox">
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">작가 등록에 필요한 약관에 동의합니다. <a href="/terms">약관 보기</a></label>
+            <div class="consentCheckbox mt-6">
+                <div class="consentTextBox border p-6 rounded overflow-y-scroll h-96">
+                    <h3 class="text-xl font-semibold mb-2">1. 서문</h3>
+                    <p class="text-base mb-4">'Art Auction'에서 '작가'란 그림 작품을 창작하고 이를 경매를 통해 이용자에게 제공하는 아티스트를 의미합니다.</p>
+                    <p class="text-base mb-4">일반 회원일 때 충전된 소지금은 작가 전환 후 작가의 계좌번호로 입금됩니다.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">2. 작가 신청 자격</h3>
+                    <p class="text-base mb-4">자격 조건: 학력은 중요한 평가 기준이 아니며, 자신의 예술 활동을 효과적으로 어필할 수 있는 사람이어야 합니다.</p>
+                    <p class="text-base mb-4">필수 제출 서류: 예술활동증명서(미술 부문), 신분증</p>
+                    <p class="text-base mb-4">선택 제출 서류: 경력 증명서, 포트폴리오</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">3. 작가의 권리와 의무</h3>
+                    <p class="text-base mb-4">작품 등록: 작가는 자신의 작품을 사이트에 등록할 수 있으며, 작품을 경매에 등록하기 위해 관리자에게 신청할 수 있는 권리가 있습니다.</p>
+                    <p class="text-base mb-4">작품 설명과 가격 책정: 작가는 자신의 작품에 대한 설명을 작성하고, 작품의 시작가를 설정할 수 있는 권리를 가집니다.</p>
+                    <p class="text-base mb-4">경매 신청: 경매는 관리자가 등록하므로 별도의 경매 신청이 필요하며 경매 신청 시 작품에 대한 설명과 작품의 시작가를 명확히 명시해야 합니다.</p>
+                    <p class="text-base mb-4">저작권: 작품에 대한 저작권은 작가에게 있으며, 사이트는 이를 보호하기 위해 최선을 다합니다. 저작권 관련 조항을 명확히 명시합니다.</p>
+                    <p class="text-base mb-4">작품 판매: 경매가 성사되었을 경우, 작가는 판매금액의 95%를 수령할 수 있습니다. 경매 후에는 작품 이전 업체가 작가로부터 작품을 수령한 뒤, 이를 마지막 낙찰자에게 이전하는 절차를 진행합니다.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">4. 사이트의 권리와 의무</h3>
+                    <p class="text-base mb-4">작품 검토: 사이트는 제출된 작품을 검토하여 등록 여부를 결정할 권리를 가집니다.</p>
+                    <p class="text-base mb-4">작품 홍보: 사이트는 작품을 홍보하고 경매를 촉진하기 위한 다양한 마케팅 활동을 할 수 있습니다.</p>
+                    <p class="text-base mb-4">판매 수수료: 경매가 성사될 경우, 사이트가 수취하는 수수료에 대해 판매 금액의 5%를 수령합니다.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">5. 작가 활동의 제한</h3>
+                    <p class="text-base mb-4">위반 시 제재: 약관 위반 시 작가 자격이 박탈될 수 있으며, 이 경우 발생할 수 있는 법적 책임과 제재에 대해 설명합니다.</p>
+                    <p class="text-base mb-4">허위 정보: 작품에 대한 허위 정보 제공 시 발생할 수 있는 문제와 이에 따른 조치도 포함되어야 합니다.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">6. 개인정보 보호</h3>
+                    <p class="text-base mb-4">개인정보 수집 및 이용: 사이트에서 작가의 개인정보를 어떻게 수집하고 이용하는지 설명합니다.</p>
+                    <p class="text-base mb-4">개인정보의 제3자 제공: 개인정보가 제3자에게 제공될 수 있는 경우에 대한 동의 조항을 포함합니다.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-2">7. 기타 조항</h3>
+                    <p class="text-base mb-4">약관의 변경: 사이트는 필요에 따라 약관을 변경할 수 있으며, 변경 시 사전 공지하는 절차를 명시합니다.</p>
+                    <p class="text-base mb-4">분쟁 해결: 발생할 수 있는 분쟁을 어떻게 해결할 것인지, 예를 들어 중재 조항 또는 관할 법원을 명시합니다.</p>
+                </div>
+                
+                
+                <!-- 동의 날짜 -->
+                <div id="signature-date-display" class="mt-4 text-lg font-semibold"></div>
+                
+                <div class="flex items-center mt-4">
+                    <input type="checkbox" id="terms" name="terms" class="w-6 h-6" required>
+                    <label for="terms" class="text-2xl ml-2">작가 등록에 필요한 약관에 동의합니다.</label>
+                </div>
             </div>
-            <div>
-                <button type="submit">등록하기</button>
+            
+                
+            <!-- 여기부터 제출 서류(hwp, png) 받기 -->
+            
+            
+            <div class="flex justify-center mt-6 mb-6">
+                <button type="submit" class="btn"><a href="#">다음</a></button>
             </div>
         </form>
+        
     </div>
 </div>
+
+<script>
+    // 현재 날짜 및 시간 설정
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var day = ('0' + date.getDate()).slice(-2);
+        var hours = ('0' + date.getHours()).slice(-2);
+        var minutes = ('0' + date.getMinutes()).slice(-2);
+        return year + '년 ' + month + '월 ' + day + '일 ' + hours + ':' + minutes;
+    }
+    
+    document.getElementById('signature-date-display').textContent = '동의 날짜: ' + formatDate(new Date());
+
+    
+</script>
 </html>

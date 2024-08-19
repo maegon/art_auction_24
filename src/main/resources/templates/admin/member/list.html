@@ -1,67 +1,95 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="admContainer">
-        <div class="mg_container mt-3 mb-3">
-            <div class="mg_menu_mb_container flex-col">
-                <div class="mg_menu_section flex justify-between">
-                    <span class="text-xl mt-2 mb-1 text-3xl">회원 권한 설정</span>
+    <div class="admContainer responsive-wrapper py-6">
+        <div class="mg_container mb-6">
+            <div class="mg_menu_mb_container flex flex-col">
+                <div class="mg_menu_section flex justify-between items-center mb-4">
+                    <span class="text-3xl font-semibold text-gray-800">회원 권한 설정</span>
                     
                     <!-- 검색란 -->
-                    <div class="search-container mt-2 mb-1">
-                        <input type="text" name="kw" id="memberSearch" placeholder="회원 검색" class="search-input w-full">
+                    <div class="search-container w-full max-w-xs">
+                        <input type="text" name="kw" id="memberSearch" placeholder="회원 검색" class="search-input w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 transition duration-150">
                     </div>
                 </div>
                 
-                
                 <!-- 메뉴 -->
-                <div class="mg_mb_menu flex mt-3 mr-3">
-                    <ul class="flex flex-wrap justify-between space-x-2 w-full font-semibold text-xl">
-                        <li class="mb_un flex-1 text-center">아이디</li>
-                        <li class="mb_nm flex-1 text-center">닉네임</li>
-                        <li class="mb_e flex-1 text-center">이메일</li>
-                        <li class="mb_cd flex-1 text-center">생성 날짜</li>
-                        <li class="mb_md flex-1 text-center">수정 날짜</li>
-                        <li class="mb_pi flex-1 text-center">프로필사진</li>
-                        <li class="mb_pnb flex-1 text-center">전화번호</li>
-                        <li class="mb_ad flex-1 text-center">주소</li>
-                        <li class="mb_ia flex-1 text-center">활성 여부</li>
-                        <li class="mb_ptc flex-1 text-center">소셜로그인</li>
-                        <li class="mb_rl flex-1 text-center">권한</li>
-                        <li class="mb_ac flex-1 text-center"></li>
+                <div class="mg_mb_menu flex mt-4">
+                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
+                        <li class="flex-1 flex items-center justify-center text-center">아이디</li>
+                        <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
+                        <li class="flex-1 flex items-center justify-center text-center">이메일</li>
+                        <li class="flex-1 flex items-center justify-center text-center">생성 날짜</li>
+                        <li class="flex-1 flex items-center justify-center text-center">수정 날짜</li>
+                        <li class="flex-1 flex items-center justify-center text-center">프로필 사진</li>
+                        <li class="flex-1 flex items-center justify-center text-center">전화번호</li>
+                        <li class="flex-1 flex items-center justify-center text-center">주소</li>
+                        <li class="flex-1 flex items-center justify-center text-center">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span>활성 여부</span>
+                                <div class="inline-flex flex-col space-y-1">
+                                    <div id="filter-active" class="cursor-pointer p-1 rounded hover:bg-gray-200 transition">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-green-500">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                                        </svg>
+                                    </div>
+                                    <div id="filter-inactive" class="cursor-pointer p-1 rounded hover:bg-gray-200 transition">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-500">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="flex-1 flex items-center justify-center text-center">소셜 로그인</li>
+                        <li class="flex-1 flex items-center justify-center text-center">
+                            <div class="flex items-center justify-center space-x-2">
+                                <div id="filter-admin" class="cursor-pointer p-1 rounded hover:bg-gray-200 transition">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div id="filter-artist" class="cursor-pointer p-1 rounded hover:bg-gray-200 transition">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </div>
+                                <div id="filter-user" class="cursor-pointer p-1 rounded hover:bg-gray-200 transition">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="flex-1 flex items-center justify-center text-center">작업</li>
                     </ul>
                 </div>
-                
+
                 
                 <!-- 목록 -->
-                <div class="mb_mb_list">
-                    <ul>
-                        <li th:each="member : ${memberList}" class="mb_list_each flex flex-wrap justify-between space-x-2 flex-1 text-center">
-                            <div class="mb_list_un mb_un flex-1 overflow-hidden content-center" th:text="${member.username}"></div>
-                            <div class="mb_list_nm mb_nm flex-1 overflow-hidden content-center" th:text="${member.nickname}"></div>
-                            <div class="mb_list_e mb_e flex-1 overflow-hidden content-center" th:text="${member.email}"></div>
-                            <div class="mb_list_cd mb_cd flex-1 overflow-hidden content-center" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
-                            <div class="mb_list_md mb_md flex-1 overflow-hidden content-center" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
-                            <div class="mb_list_pi mb_pi flex-1 content-center">
-                                <img th:src="@{${member.image}}" alt="프로필 이미지"/>
+                <div class="mb_mb_list mt-4">
+                    <ul id="memberList">
+                        <li th:each="member : ${memberList}" class="mb_list_each flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
+                            <div class="mb_list_un flex-1 text-center truncate" th:text="${member.username}"></div>
+                            <div class="mb_list_nm flex-1 text-center truncate" th:text="${member.nickname}"></div>
+                            <div class="mb_list_e flex-1 text-center truncate" th:text="${member.email}"></div>
+                            <div class="mb_list_cd flex-1 text-center truncate" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_md flex-1 text-center truncate" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_pi flex-1 text-center">
+                                <img th:src="@{${member.image}}" alt="프로필 이미지" class="w-10 h-10 rounded-full object-cover mx-auto">
                             </div>
-                            <div class="mb_list_pnb mb_pnb flex-1 overflow-hidden content-center" th:text="${member.phoneNumber}"></div>
-                            <div class="mb_list_ad mb_ad flex-1 overflow-hidden content-center" th:text="${member.address}"></div>
-                            <div class="mb_list_ia mb_ia flex-1 content-center">
-                                <select th:value="${member.isActive}" class="isActive">
+                            <div class="mb_list_pnb flex-1 text-center truncate" th:text="${member.phoneNumber}"></div>
+                            <div class="mb_list_ad flex-1 text-center truncate" th:text="${member.address}"></div>
+                            <div class="mb_list_ia flex-1 text-center" th:data-is-active="${member.isActive}">
+                                <select th:value="${member.isActive}" class="isActive border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
                                     <option value="true" th:selected="${member.isActive}">활성</option>
                                     <option value="false" th:selected="!${member.isActive}">비활성</option>
                                 </select>
                             </div>
-                            <div class="mb_list_ptc mb_ptc flex-1 content-center" th:text="${member.providerTypeCode}"></div>
-                            <div class="mb_list_rl mb_rl flex-1 content-center">
-                                <select th:value="${member.role}" class="role">
-                                    <option value="USER" th:selected="${member.role == 'USER'}">일반</option>
+                            <div class="mb_list_ptc flex-1 text-center truncate" th:text="${member.providerTypeCode}"></div>
+                            <div class="mb_list_rl flex-1 text-center" th:data-role="${member.role}">
+                                <select th:value="${member.role}" class="role border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
+                                    <option value="USER" th:selected="${member.role == 'MEMBER'}">일반</option>
                                     <option value="ARTIST" th:selected="${member.role == 'ARTIST'}">작가</option>
                                     <option value="ADMIN" th:selected="${member.role == 'ADMIN'}">관리자</option>
                                 </select>
                             </div>
-                            <div class="mb_action mb_ac flex-1 content-center">
-                                <button type="button" class="btn_save" data-memberid="${member.id}">저장</button>
+                            <div class="mb_action flex-1 text-center">
+                                <button type="button" class="btn_save bg-black text-white rounded-lg px-4 py-2 transition duration-150" data-memberid="${member.id}">저장</button>
                             </div>
                         </li>
                     </ul>
@@ -69,7 +97,7 @@
             </div>
         </div>
         <!-- 알림 메시지를 표시할 요소 -->
-        <div id="copyAlert" class="alert hidden">텍스트가 복사되었습니다!</div>
+        <div id="copyAlert" class="alert fixed bottom-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg hidden">텍스트가 복사되었습니다!</div>
     </div>
 </div>
 </html>
@@ -99,11 +127,54 @@
         }, 3000);
     }
 
-    // 각 div에 대해 더블 클릭 이벤트 리스너를 추가하여 텍스트를 복사합니다
+    // 필터링 기능 구현
     document.addEventListener('DOMContentLoaded', function() {
-        const listItems = document.querySelectorAll('.mb_mb_list ul li div');
+        const listItems = document.querySelectorAll('.mb_mb_list ul li');
+        
+        // 활성화된 사용자 필터
+        document.getElementById('filter-active').addEventListener('click', function() {
+            listItems.forEach(item => {
+                const isActive = item.querySelector('.mb_list_ia').getAttribute('data-is-active');
+                item.style.display = (isActive === 'true') ? '' : 'none';
+            });
+        });
 
-        listItems.forEach(item => {
+        // 비활성화된 사용자 필터
+        document.getElementById('filter-inactive').addEventListener('click', function() {
+            listItems.forEach(item => {
+                const isActive = item.querySelector('.mb_list_ia').getAttribute('data-is-active');
+                item.style.display = (isActive === 'false') ? '' : 'none';
+            });
+        });
+
+        // 관리자 필터
+        document.getElementById('filter-admin').addEventListener('click', function() {
+            listItems.forEach(item => {
+                const role = item.querySelector('.mb_list_rl').getAttribute('data-role');
+                item.style.display = (role === 'ADMIN') ? '' : 'none';
+            });
+        });
+
+        // 작가 필터
+        document.getElementById('filter-artist').addEventListener('click', function() {
+            listItems.forEach(item => {
+                const role = item.querySelector('.mb_list_rl').getAttribute('data-role');
+                item.style.display = (role === 'ARTIST') ? '' : 'none';
+            });
+        });
+
+        // 일반 사용자 필터
+        document.getElementById('filter-user').addEventListener('click', function() {
+            listItems.forEach(item => {
+                const role = item.querySelector('.mb_list_rl').getAttribute('data-role');
+                item.style.display = (role === 'MEMBER') ? '' : 'none';
+            });
+        });
+
+        // 더블 클릭 이벤트 리스너 추가
+        const listDivs = document.querySelectorAll('.mb_mb_list ul li div');
+
+        listDivs.forEach(item => {
             item.addEventListener('dblclick', function() {
                 const textToCopy = item.textContent.trim();
                 copyTextToClipboard(textToCopy);

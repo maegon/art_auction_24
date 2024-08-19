@@ -27,31 +27,31 @@ import java.util.List;
 @AllArgsConstructor
 public class Member extends BaseEntity {
     @Column(unique = true)
-    private String username;
+    private String username; // 회원 아이디
 
-    private String password;
-
-    @Column(unique = true)
-    private String email;
+    private String password; // 회원 비밀번호
 
     @Column(unique = true)
-    private String nickname;
+    private String email; // 이메일
 
-    private String phoneNumber;
-    private String address;
-    private String providerTypeCode;
+    @Column(unique = true)
+    private String nickname; // 닉네임
+
+    private String phoneNumber; // 전화번호
+    private String address;  // 주소
+    private String providerTypeCode; //소셜 로그인인지 확인, 소셜로그인 할 경우 사용됨
 
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    private MemberRole role; // 회원 권한
 
     @Column(unique = false)
     private String image; // 이미지 파일 이름을 저장
 
     @Column(nullable = false)
-    private Boolean isActive = true; // Boolean으로 변경하고 기본값을 true로 설정
+    private Boolean isActive = true; // Boolean으로 변경하고 기본값을 true로 설정, 사이트 활동 여부
 
     @Column(nullable = false)
-    private Long balance = 0L; // 기본값을 0으로 설정
+    private Long balance = 0L; // 기본값을 0으로 설정, 회원이 가지고 있는 소지금
 
     @OneToMany(mappedBy = "member")
     private List<Recharge> rechargeList;
