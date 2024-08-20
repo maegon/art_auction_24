@@ -33,7 +33,7 @@
 
                     <!-- 드롭다운 메뉴 -->
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
-                        <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/member/myPage}">작품 추가</a>
+                        <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/product/create}">작품 추가</a>
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_profileCreate" th:href="@{/artist/create}">프로필 제작</a>
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_applicantAuction" th:href="@{/auction/applicant}">작품 경매 신청</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/auction/create}">경매 추가</a>
