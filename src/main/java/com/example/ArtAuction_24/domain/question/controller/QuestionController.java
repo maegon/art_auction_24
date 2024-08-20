@@ -6,6 +6,8 @@ import com.example.ArtAuction_24.domain.answer.entity.Answer;
 import com.example.ArtAuction_24.domain.answer.service.AnswerService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.post.entity.Post;
+import com.example.ArtAuction_24.domain.post.service.PostService;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
@@ -29,11 +31,12 @@ public class QuestionController {
     private final QuestionService questionService;
     private final MemberService memberService;
     private final AnswerService answerService;
+    private final PostService postService;
 
     @GetMapping("/list")
     public String questionList(Model model){
-        List<Question> questionList = questionService.findAll();
-        model.addAttribute("questionList", questionList);
+        List<Post> postList = postService.findAll();
+        model.addAttribute("postList", postList);
 
         return "question/list";
 

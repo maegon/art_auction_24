@@ -40,6 +40,10 @@ public class Question extends BaseEntity {
     @ManyToOne
     private Member member;
 
+    @Column(name = "answered")
+    private boolean answered;
+
+
 
 
 }

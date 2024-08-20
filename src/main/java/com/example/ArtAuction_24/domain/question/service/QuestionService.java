@@ -7,11 +7,15 @@ import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import com.example.ArtAuction_24.domain.question.repository.QuestionRepository;
 import com.example.ArtAuction_24.global.DataNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -84,6 +88,23 @@ public class QuestionService {
     public Page<Question> getAllQuestions(Pageable pageable) {
         return questionRepository.findAll(pageable);
     }
+
+    public Page<Question> findAll(Pageable pageable) {
+        // 처리 완료 여부를 기준으로 정렬 조건을 설정
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Order.asc("answered"), Sort.Order.desc("id")));
+        return questionRepository.findAll(sortedPageable);
+    }
+
+    @Transactional
+    public void markQuestionAsAnswered(Long questionId) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new EntityNotFoundException("Question not found"));
+
+        question.setAnswered(true);
+        questionRepository.save(question);
+    }
+
 
 
 }
