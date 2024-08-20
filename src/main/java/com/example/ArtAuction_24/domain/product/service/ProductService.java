@@ -41,7 +41,7 @@ public class ProductService {
     private final LikeProductRepository likeProductRepository;
 
     @Value("${custom.genFileDirPath}")
-    private String genFileDirPath;
+    private String fileDirPath;
 
 
 
@@ -74,18 +74,24 @@ public class ProductService {
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
                           MultipartFile thumbnailImg, String category, Artist artist) {
 
+        // 경로를 수정하여 ProductImages 디렉토리에 저장하도록 합니다.
         String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
-        File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+        File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
-        File parentDir = thumbnailFile.getParentFile();
-        if (!parentDir.exists()) {
-            parentDir.mkdirs();
+        File dir = new File(fileDirPath + "/image/product");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
+            }
         }
 
         try {
             thumbnailImg.transferTo(thumbnailFile);
+            if (!thumbnailFile.exists()) {
+                throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
         }
 
         // Product 객체를 생성합니다.
