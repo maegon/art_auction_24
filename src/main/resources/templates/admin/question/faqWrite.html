@@ -1,0 +1,32 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="container mx-auto px-4 min-h-[1200px] ">
+        <h1>faq 작성페이지</h1>
+        <form class="" th:action="@{/admin/question/faqWrite}" th:object="${postForm}" method="post">
+            <div class="mb-3">
+                <label class="">제목</label>
+                <input type="text" name="subject">
+            </div>
+            <div class="mb-3">
+                <label class="">내용</label>
+                <textarea  rows="3" name="content"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="">내용</label>
+                <select name="postType" id="PostType">
+                    <option value="" disabled selected>유형을 선택해주세요</option>
+                    <option value="ARTWORK">작품</option>
+                    <option value="ARTIST">작가</option>
+                    <option value="PURCHASE">구매</option>
+                    <option value="SERVICE">SERVICE</option>
+                    <option value="DELIVERY">배송</option>
+                    <option value="RETURN">환불</option>
+                    <option value="OTHER">기타</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</html>

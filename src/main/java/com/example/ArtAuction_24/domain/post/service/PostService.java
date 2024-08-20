@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +25,9 @@ public class PostService {
         p.setCreateDate(LocalDateTime.now());
         p.setMember(member);
         return this.postRepository.save(p);
+    }
+
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 }

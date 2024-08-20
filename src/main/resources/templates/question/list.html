@@ -31,9 +31,9 @@
                         <i class="fa-solid fa-palette fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 작품 및 작가</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'} or ${question.questionType.name() == 'ARTWORK'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'ARTIST'} or ${post.postType.name() == 'ARTWORK'}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
+                        <li  th:text="${post.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -41,9 +41,9 @@
                         <i class="fa-solid fa-credit-card fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 작품구매</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'PURCHASE'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'PURCHASE'}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
+                        <li  th:text="${post.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -51,9 +51,9 @@
                         <i class="fa-brands fa-servicestack fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2">SERVICE</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'SERVICE'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'SERVICE'}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
+                        <li  th:text="${post.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -61,9 +61,9 @@
                         <i class="fa-solid fa-truck fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 배송</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'DELIVERY'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'DELIVERY'}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
+                        <li  th:text="${post.content}"></li>
                     </ul>
                 </div>
                 <div class="mx-20 mt-20">
@@ -71,9 +71,9 @@
                         <i class="fa-solid fa-rotate-left fa-xl" style="color: #f561d5;"></i>
                         <span class="font-bold text-3xl ml-2"> 환불</span>
                     </div>
-                    <ul class="ml-32 my-4" th:each="question : ${questionList}" th:if="${question.questionType.name() == 'ARTIST'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${question.subject}"></li>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'ARTIST'}">
+                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
+                        <li  th:text="${post.content}"></li>
                     </ul>
                 </div>
             </div>
@@ -83,24 +83,22 @@
 </html>
 
 <script>
-       document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
 
-           document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-               anchor.addEventListener('click', function (e) {
-                   e.preventDefault();
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
 
-                   const targetId = this.getAttribute('href').substring(1);
-                   const targetElement = document.getElementById(targetId);
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
 
-                   if (targetElement) {
-                       window.scrollTo({
-                           top: targetElement.offsetTop - 400,
-                           behavior: 'smooth'
-                       });
-                   }
-               });
-           });
-       });
-</script>
-
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 400,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
 </script>
