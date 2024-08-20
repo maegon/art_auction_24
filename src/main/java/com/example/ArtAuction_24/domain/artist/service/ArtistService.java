@@ -59,6 +59,7 @@ public class ArtistService {
                 .engName(engName)
                 .birthDate(birthDate)
                 .author(member)
+                .balance(0L)
                 .build();
         artistRepository.save(artist);
 
@@ -72,6 +73,7 @@ public class ArtistService {
                 .birthDate(birthDate)
                 .introduce(introduce)
                 .majorWork(majorWork)
+                .balance(0L)
                 .build();
         artistRepository.save(artist);
 

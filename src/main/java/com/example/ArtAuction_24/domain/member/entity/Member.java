@@ -65,7 +65,6 @@ public class Member extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "member")
     private List<Bid> bidList;
 
-
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.REMOVE)
     private List<Notification> notifications; // 회원이 수신한 알림 목록
 
@@ -82,6 +81,8 @@ public class Member extends BaseEntity implements UserDetails {
     private List<Post> postList; // 포스트목록
 
     private transient String formattedbalance;
+
+
 
 
     @PostLoad
@@ -135,4 +136,5 @@ public class Member extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return this.isActive;  // 계정 활성화 여부
     }
+
 }

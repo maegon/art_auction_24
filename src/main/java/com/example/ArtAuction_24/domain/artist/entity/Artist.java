@@ -1,6 +1,6 @@
 package com.example.ArtAuction_24.domain.artist.entity;
 
-import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
+
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -36,6 +36,9 @@ public class Artist extends BaseEntity {
 
     private String introduce;
     private String majorWork;
+
+    @Column(nullable = false)
+    private Long balance = 0L; // 기본값을 0으로 설정, 가지고 있는 소지금
 
     @ManyToOne
     @JoinColumn(name = "author_id")
