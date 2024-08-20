@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout/layout}">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/artList.css}">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var masonry = new Masonry('.grid', {

@@ -25,10 +25,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-
+@Profile({"dev", "prod"})
 @Configuration
 @RequiredArgsConstructor
-@Profile("dev", "prod")
 public class DevInitData implements BeforeInitData {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -119,7 +118,7 @@ public class DevInitData implements BeforeInitData {
 
 
 
-                    //FAQ 테스트 데이터
+            //FAQ 테스트 데이터
             postService.create(new PostForm("작가의 주된 작품 스타일은 무엇인가요?", "작가는 주로 추상 미술과 표현주의 스타일을 사용하며, 감정과 내면의 상태를 형상화하는 데 집중합니다.", PostType.ARTIST), M1);
 
             postService.create(new PostForm("미술품 경매를 할수있는 작가의 기준은무엇인가요?", "저희 사이트에서 작가 기준은 예술활동 증명서를 바탕으로 검토를하여 작가자격심사가 이루어집니다.", PostType.ARTIST), M1);
