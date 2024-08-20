@@ -1,5 +1,6 @@
 <html layout:decorate="~{/layout/layout}">
 <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/artList.css}">
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var masonry = new Masonry('.grid', {
@@ -17,23 +18,20 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <!-- list.html 부분 -->
     <div class="section-1-loading">
         <section class="section-1">
             <div class="container mx-auto masonry-grid">
                 <div class="grid">
                     <div class="grid-sizer"></div>
-                    <div class="grid-item" th:if="${!list.isEmpty()}" th:each="art : ${list}">
-                        <a th:href="@{/art/detail/{id}(id=${art.id})}">
-                            <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
-                        </a>
+                    <div class="grid-item" th:each="art : ${list}">
+                        <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
                     </div>
                 </div>
             </div>
         </section>
     </div>
-</div>
-
-<div layout:fragment="content">
+    <!-- detail.html 부분 -->
     <div class="artDetailContainer_1">
         <div class="artDetailContainer_2">
             <div class="leftContainer">
@@ -70,7 +68,7 @@
                     <a th:href="@{|/art/modify/${art.id}|}" sec:authorize="isAuthenticated()" th:if="${art.author != null and #authentication.getPrincipal().getUsername() == art.author.username}" class="button-modify">
                         수정
                     </a>
-                    <span>/</span>
+                    <span sec:authorize="isAuthenticated()" th:if="${art.author != null and #authentication.getPrincipal().getUsername() == art.author.username}">/</span>
                     <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/art/delete/${art.id}|}" sec:authorize="isAuthenticated()" th:if="${art.author != null and (#authentication.getPrincipal().getUsername() == art.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}" class="button-delete">
                         삭제
                     </a>

@@ -48,11 +48,17 @@ public class ArtController {
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
+        // 단일 Art 객체를 가져와서 모델에 추가
         Art a = this.artService.getArt(id);
         model.addAttribute("art", a);
 
-        return "art/artDetail";
+        // Art 객체의 리스트를 가져와서 모델에 추가
+        List<Art> list = this.artService.getList();  // 모든 Art 객체의 리스트를 가져온다고 가정
+        model.addAttribute("list", list);
+
+        return "art/artDetail";  // artDetail.html로 리턴
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
