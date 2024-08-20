@@ -2,8 +2,10 @@ package com.example.ArtAuction_24.domain.notification.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.notification.entity.Notification;
 import com.example.ArtAuction_24.domain.notification.repository.NotificationRepository;
 import com.example.ArtAuction_24.domain.product.entity.Product;
@@ -17,13 +19,21 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +42,9 @@ public class NotificationService {
 
     private final EmailService emailService;
     private final NotificationRepository notificationRepository;
+    private final AuctionRepository auctionRepository;
+    private final MemberRepository memberRepository;
+    private final TaskScheduler taskScheduler;
     private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
     // 경매 종료시 알림 발송
@@ -197,6 +210,90 @@ public class NotificationService {
             } else {
                 logger.warn("Notification failed and saved for recipient: {}", recipientEmail);
             }
+        }
+    }
+
+    @Transactional
+    public void scheduleAuctionNotification(Long auctionId, String username) {
+        Auction auction = auctionRepository.findById(auctionId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid auction ID"));
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member username"));
+
+        LocalDateTime notificationTime = auction.getStartDate().minusHours(1);
+
+        // 알림 메시지에 경매 제품 목록 포함
+        StringBuilder productListBuilder = new StringBuilder("경매 제품 목록:\n");
+        Set<Product> products = auction.getProducts();
+        for (Product product : products) {
+            productListBuilder.append("- ").append(product.getTitle()).append("\n");
+        }
+
+        String message = String.format(
+                "<html>" +
+                        "<body style='font-family: Arial, sans-serif;'>" +
+                        "<div style='background-color: #f4f4f4; padding: 20px; border-radius: 8px;'>" +
+                        "<h2 style='color: #333;'>경매 시작 알림</h2>" +
+                        "<p style='font-size: 16px;'>안녕하세요, <strong>%s님</strong>,</p>" +
+                        "<p style='font-size: 16px;'>경매가 곧 시작됩니다! 아래는 알림설정된 제품입니다</p>" +
+                        "<ul style='list-style-type: square; margin-left: 20px;'>%s</ul>" +
+                        "<p style='font-size: 16px;'>경매 시작 시간: <strong>%s</strong></p>" +
+                        "<p style='font-size: 16px;'>경매에 대한 더 많은 정보는 웹사이트에서 확인하세요.</p>" +
+                        "<p style='font-size: 16px;'>감사합니다!</p>" +
+                        "<p style='font-size: 16px;'>귀하의 경매 플랫폼 ARTAUCTION</p>" +
+                        "</div>" +
+                        "</body>" +
+                        "</html>",
+                member.getUsername(),
+                productListBuilder.toString(),
+                auction.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        );
+
+
+        Notification notification = Notification.builder()
+                .message(message)
+                .recipient(member.getEmail())
+                .subject("경매 시작 1시간 전 알림")
+                .isSent(false)
+                .sentAt(notificationTime)
+                .type(Notification.NotificationType.EMAIL)
+                .member(member)
+                .build();
+
+        notificationRepository.save(notification);
+
+        // 알림 예약 (1시간 전)
+        scheduleEmailNotification(notification);
+    }
+
+    private void scheduleEmailNotification(Notification notification) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime notificationTime = notification.getSentAt();
+
+        // 지연 시간 계산
+        Duration delay = Duration.between(now, notificationTime);
+
+        taskScheduler.schedule(() -> sendEmailNotification(notification),
+                notificationTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    private void sendEmailNotification(Notification notification) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            mimeMessageHelper.setTo(notification.getRecipient());
+            mimeMessageHelper.setSubject(notification.getSubject());
+            mimeMessageHelper.setFrom("99gorhs@gmail.com");
+            mimeMessageHelper.setText(notification.getMessage(), true); // HTML로 설정
+
+            javaMailSender.send(mimeMessage);
+
+            notification.setSent(true);
+            notification.setSentAt(LocalDateTime.now());
+            notificationRepository.save(notification);
+        } catch (Exception e) {
+            logger.error("Failed to send notification: {}", e.getMessage());
         }
     }
 }

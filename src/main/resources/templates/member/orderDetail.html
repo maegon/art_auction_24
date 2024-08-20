@@ -31,40 +31,52 @@
             </div>
 
             <!-- 나머지 주문 정보 -->
-            <div class=" p-4  mb-4">
+            <div class="p-4 mb-4">
                 <h2 class="text-xl font-semibold mb-4 border-b border-black">주문 정보</h2>
                 <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">상품 제목</span>
-                    <span class="text-black ml-4" th:text="${product.title}">Africa</span>
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-12 block lg:inline text-center sm:text-left">상품 제목</span>
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline" th:text="${product.title}">Africa</span>
                 </div>
                 <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">상품 가격</span>
-                    <span class="text-black ml-4"  th:text="${formattedPrice}">110,000원</span>
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-12 block lg:inline text-center sm:text-left">상품 가격</span>
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline" th:text="${formattedPrice}">110,000원</span>
                 </div>
                 <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-12">송장 번호</span>
-                    <span class="text-black ml-4" th:text="${order.trackingNumber}">123456789</span>
-
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-12 block lg:inline text-center sm:text-left">송장 번호</span>
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline" th:text="${order.trackingNumber}">123456789</span>
                 </div>
             </div>
 
             <!-- 낙찰자 정보 섹션 -->
-            <div class=" p-4  mb-4">
+            <div class="p-4 mb-4">
                 <h2 class="text-xl font-semibold mb-4 border-b border-black">배송지 정보</h2>
+                <div class="mb-4">
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-20 block lg:inline text-center sm:text-left">이름</span>
 
-                <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">이름</span>
-                    <span class="text-black ml-4" th:text="${order.bidderName}"></span>
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline sm:mt-2" th:text="${order.bidderName}"></span>
                 </div>
                 <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">주소</span>
-                    <span class="text-black ml-4" th:text="${order.bidderAddress}"></span>
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-20 block lg:inline text-center sm:text-left">주소</span>
+
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline sm:mt-2" th:text="${order.bidderAddress}"></span>
                 </div>
                 <div class="mb-4">
-                    <span class="font-medium text-black bg-gray-200 py-4 pl-6 pr-20">번호</span>
-                    <span class="text-black ml-4" th:text="${order.bidderPhone}"></span>
+                    <span class="font-medium text-black bg-gray-200 py-4 px-6 sm:py-0 sm:px-0 lg:py-4 lg:px-6 lg:pr-20 block lg:inline text-center sm:text-left">번호</span>
+
+                    <hr class="block sm:hidden border-t border-gray-300 my-2">
+
+                    <span class="text-black ml-0 md:ml-4 break-words block lg:inline sm:mt-2" th:text="${order.bidderPhone}"></span>
                 </div>
             </div>
+
+
 
             <!-- 주문 상태 섹션 -->
             <div class="p-4 my-4">

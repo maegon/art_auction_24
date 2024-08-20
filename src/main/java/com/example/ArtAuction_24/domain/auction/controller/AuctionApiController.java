@@ -2,15 +2,14 @@ package com.example.ArtAuction_24.domain.auction.controller;
 
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
+import com.example.ArtAuction_24.domain.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,7 @@ import java.util.stream.IntStream;
 public class AuctionApiController {
 
     private final AuctionService auctionService;
+    private final NotificationService notificationService;
 
 
     @GetMapping("/calendar")
@@ -49,6 +49,13 @@ public class AuctionApiController {
                     return event;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/{auctionId}/set-notification")
+    public ResponseEntity<Void> setAuctionNotification(@PathVariable("auctionId") Long auctionId, Principal principal) {
+        String username = principal.getName();  // 현재 로그인한 유저의 이름
+        notificationService.scheduleAuctionNotification(auctionId, username);
+        return ResponseEntity.ok().build();
     }
 
 }
