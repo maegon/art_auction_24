@@ -170,8 +170,6 @@ public class NotificationService {
         String recipientEmail = null;
         if (member != null) {
             recipientEmail = member.getEmail();
-        } else if (artist != null) {
-            recipientEmail = artist.getMail();
         }
 
         if (recipientEmail != null) {

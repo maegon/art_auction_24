@@ -4,9 +4,9 @@ import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.repository.*;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class ArtistService {
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
 
-    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, Member member) {
+    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member) {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
@@ -59,9 +58,6 @@ public class ArtistService {
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
-                .tel(tel)
-                .mail(mail)
-                .mailType(mailType)
                 .author(member)
                 .build();
         artistRepository.save(artist);
@@ -69,14 +65,11 @@ public class ArtistService {
         return artist;
     }
 
-    public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce, String majorWork) {
+    public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork) {
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
-                .tel(tel)
-                .mail(mail)
-                .mailType(mailType)
                 .introduce(introduce)
                 .majorWork(majorWork)
                 .build();
@@ -90,9 +83,7 @@ public class ArtistService {
                 .orElseThrow(() -> new DataNotFoundException("artist not found"));
     }
 
-
-
-    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce,
+    public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String introduce,
                        List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
                        List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {
 
@@ -111,9 +102,6 @@ public class ArtistService {
         artist.setKorName(korName);
         artist.setEngName(engName);
         artist.setBirthDate(birthDate);
-        artist.setTel(tel);
-        artist.setMail(mail);
-        artist.setMailType(mailType);
         artist.setIntroduce(introduce);
 
         updateArtistAdds(artist, artistAdds);
@@ -282,18 +270,22 @@ public class ArtistService {
     }
 
     public Artist getArtistByKorName(String korName) {
-        return artistRepository.findByKorName(korName)
-                .orElseThrow(() -> new DataNotFoundException("Artist not found with korName: " + korName));
+        List<Artist> artists = artistRepository.findAllByKorName(korName);
+        if (artists.size() > 1) {
+            // 첫 번째 결과를 반환하거나 로그를 남기고 중복을 처리
+            return artists.get(0);
+        } else if (artists.size() == 1) {
+            return artists.get(0);
+        } else {
+            throw new DataNotFoundException("Artist not found with korName: " + korName);
+        }
     }
 
-    public Artist create(String korName, String engName, String birthDate, String tel, String mail, String mailType, String introduce) {
+    public Artist create(String korName, String engName, String birthDate, String introduce) {
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
                 .birthDate(birthDate)
-                .tel(tel)
-                .mail(mail)
-                .mailType(mailType)
                 .introduce(introduce)
                 .build();
         artistRepository.save(artist);

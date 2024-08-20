@@ -1,16 +1,44 @@
-.artListContainer {
-    width: 100%;
-    max-height: auto; /* 원하는 높이로 설정 */
-    overflow-y: auto; /* 세로 스크롤바 추가 */
-    overflow-x: hidden; /* 가로 스크롤은 필요 없으므로 숨김 */
-    padding-right: 15px; /* 스크롤바에 의해 내용이 잘리지 않도록 패딩 추가 */
-    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
-    background-color: #f5f5f5;
-}
-.artList {
-    display: flex;
+.img-null {
+    display:flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    height: 740px;
-    width: 40%;
-    border: 1px solid #9E9E9E;
+    margin-top: 300px;
+}
+.img-null > p {
+    font-size: 30px;
+}
+.img-null > div > a {
+    font-size: 25px;
+    background-color: #D3D3D3;
+}
+.section-1 {
+    display: flex;
+    flex-wrap: wrap; /* 화면 크기에 맞춰 줄바꿈 */
+    justify-content: flex-start; /* 아이템을 왼쪽 정렬 */
+    gap: 10px; /* 그리드 아이템 사이의 간격 */
+    max-height: 80vh; /* 섹션의 최대 높이 설정 */
+    min-height: 720px;
+    overflow-y: auto; /* 세로 스크롤을 가능하게 함 */
+    padding: 30px;
+}
+.grid {
+    width: calc(300px * 3 + 30px * 2); /* 3열을 가정하여 너비 계산 */
+    margin: 0 auto;
+}
+
+.grid-sizer {
+    width: 300px; /* 열 너비를 설정 */
+}
+
+.grid-item {
+    width: 300px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.grid-item img {
+    display: block;
+    width: 100%;
+    height: auto;
 }

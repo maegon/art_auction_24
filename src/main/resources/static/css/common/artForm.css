@@ -1,20 +1,34 @@
 .artCreateContainer {
     display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    width: 100%;
+    max-height: auto; /* 원하는 높이로 설정 */
+    overflow-y: auto; /* 세로 스크롤바 추가 */
+    overflow-x: hidden; /* 가로 스크롤은 필요 없으므로 숨김 */
+    padding-right: 15px; /* 스크롤바에 의해 내용이 잘리지 않도록 패딩 추가 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
     background-color: #f5f5f5;
 }
 .artContainer {
     display: flex;
     flex-direction: column;
-    height: 740px;
-    width: 40%;
+    height: auto;
+    width: 550px;
     background-color: white;
-    border-radius: 20px;
-    border: 1px solid #9E9E9E;
-    align-items: center;
+    /*border-radius: 20px;
+    border: 1px solid #9E9E9E;*/
+    padding: 30px;
+}
+.artThumbnail {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
     justify-content: center;
+
+}
+.thumbnailPreview {
+    width: 150px;  /* 동일한 크기 설정 */
+    height: 150px;
 }
 .thumbnail-art {
     width: 150px;  /* 동일한 크기 설정 */
@@ -36,56 +50,59 @@
     font-size: 55px;
     margin-top: 20px;
 }
-.form-groupArt {
-    margin-bottom: 3px;
-    margin-right:35px;
+.form-groupArt_1 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 }
 .form-groupArt-wh {
-    margin-right: 27px;
-    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.form-groupArt-wh_2 {
+    display: flex;
+    flex-direction: row;
 }
 .form-control-art {
-    max-width: 130px;
+    width: 237px;
     height: 35px;
     border: 1px solid #ced4da;
     border-radius: 5px;
+    margin-left: 5px;
 }
 .spanX {
-    margin-left: 5px;
+    margin-left: 8px;
     margin-right: 5px;
+    margin-top: 5px;
 }
 .form-groupArt-u {
-    margin-left: 3px;
-    margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: 10px;
 }
 .form-groupArt-t {
-    margin-right: 27px;
-    margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: 10px;
 }
 .form-groupArt-pr {
-    margin-right: 10px;
-    margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: 10px;
 }
 .form-groupArt-pl {
-    margin-right: 8px;
-    margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: 10px;
 }
 .form-groupArt-ai {
-    margin-right: 60px;
-    margin-top: 12px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-top: 10px;
 }
-.form-labelArt {
-    margin-top: 7px;
+.form-labelArt_1 {
+    margin-left: 15px;
 }
 .form-controlArt {
     max-width: 500px;
@@ -103,10 +120,29 @@
 }
 .btn-art {
     font-size: 20px;
-    margin-top: 15px;
+    margin-top: 25px;
     background-color: #cfcfcf;
     border-radius: 5px;
-    height: 40px;
-    width: 80px;
+    height: 45px;
+    width: 140px;
 }
-
+.btn-art_1 {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+}
+.form-groupArt-pr_1 {
+    display: flex;
+    flex-direction: row;
+}
+.form-controlArt_1 {
+    width: 460px;
+    height: 35px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.artForm-span {
+    margin-top: 4px;
+    margin-left: 7px;
+}

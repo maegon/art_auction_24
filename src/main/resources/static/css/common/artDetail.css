@@ -1,0 +1,70 @@
+.artDetailContainer_1 {
+    width: 100%;
+    height: 720px; /* 원하는 높이로 설정 */
+    overflow-y: auto; /* 세로 스크롤바 추가 */
+    overflow-x: hidden; /* 가로 스크롤은 필요 없으므로 숨김 */
+    padding-right: 15px; /* 스크롤바에 의해 내용이 잘리지 않도록 패딩 추가 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+}
+.artDetailContainer_2 {
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    width: 50%;
+    background-color : rgb(255,255,255,0.5);
+    border-radius: 20px;
+}
+.leftContainer {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+    width: 50%;
+    /*border: 1px solid #9E9E9E;*/
+}
+.detail_img-thumbnail {
+    width: auto;
+    height: 360px;
+}
+.rightContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    /*border: 1px solid #9E9E9E;*/
+    align-items: center;
+    margin-top: 70px;
+}
+.detailButton {
+    display: flex;
+    flex-direction: row;
+    margin-left: 230px;
+    margin-top: 10px;
+
+}
+.artDetail_name_1 {
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+}
+.artDetail_name_2 {
+    font-size: 15px;
+}
+.rightContainer1_1 {
+    margin-top: 30px;
+    font-size: 20px;
+}
+.r_c_i {
+    margin-top: 20px;
+    display: inline-block;
+    width: 300px;
+    min-height: 160px;
+    border: 1px solid #9E9E9E;
+}
+.w_h_u , .r_c {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+}

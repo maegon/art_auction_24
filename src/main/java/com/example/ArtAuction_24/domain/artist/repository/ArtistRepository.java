@@ -17,5 +17,9 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer> {
     @Query("SELECT a FROM Artist a WHERE LOWER(a.korName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Artist> findByKeyword(@Param("keyword") String keyword);
 
-    Optional<Artist> findByKorName(String korName);
+    Artist findFirstByKorName(String korName);
+
+    List<Artist> findByKorName(String korName);
+
+    List<Artist> findAllByKorName(String korName);
 }

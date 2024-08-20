@@ -10,16 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class ArtForm {
     private MultipartFile thumbnail;
+
     private String existingThumbnailUrl;
+
     @NotBlank(message = "작품명은 필수입니다.")
     @Size(max = 200)
     private String korTitle;
     @NotBlank(message = "작품명은 필수입니다.")
     @Size(max = 200)
     private String engTitle;
-    @NotBlank(message = "작가명은 필수입니다.")
-    @Size(max = 50)
-    private String artist;
     @NotBlank(message = "길이는 필수입니다.")
     @Size(max = 200)
     private String width;
