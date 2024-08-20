@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+<head>
+    <title>배송 조회</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="delivery-container">
+        <h1>배송 조회</h1>
+        <p class="delivery-date">
+            <strong>7/04(목) 17~19시</strong>에 상품 배송 예정입니다.
+        </p>
+
+        <div class="delivery-status">
+            <div class="status-step">
+                <div class="step-icon step-completed">
+                    <img src="/path/to/icon1.png" alt="배송 대기">
+                </div>
+                <p>배송대기</p>
+            </div>
+            <div class="status-step">
+                <div class="step-icon step-current">
+                    <img src="/path/to/icon2.png" alt="배송 중">
+                </div>
+                <p>배송중</p>
+            </div>
+            <div class="status-step">
+                <div class="step-icon">
+                    <img src="/path/to/icon3.png" alt="배송 완료">
+                </div>
+                <p>배송완료</p>
+            </div>
+        </div>
+
+        <div class="delivery-details">
+            <div class="product-info">
+                <img src="/path/to/product-image.jpg" alt="작품 이미지" class="product-thumbnail">
+                <div>
+                    <h2>차은우 작가 - <span>초상화</span></h2>
+                    <p>운송장 번호 12345678945613 <span class="delivery-info">조회</span></p>
+                </div>
+            </div>
+
+            <div class="delivery-tracking">
+                <div class="tracking-step">
+                    <div class="circle complete"></div>
+                    <div class="tracking-info">
+                        <strong>대전대덕 배송출발</strong> (배달예정시간: 17~19시)<br>
+                        07/04(목) 14:30
+                    </div>
+                </div>
+                <div class="tracking-step">
+                    <div class="circle complete"></div>
+                    <div class="tracking-info">
+                        대덕 | 간선하차<br>
+                        07/04(목) 12:30
+                    </div>
+                </div>
+                <div class="tracking-step">
+                    <div class="circle complete"></div>
+                    <div class="tracking-info">
+                        대덕 | 간선하차<br>
+                        07/04(목) 02:14
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

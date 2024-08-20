@@ -2,85 +2,60 @@ package com.example.ArtAuction_24.domain.art.service;
 
 import com.example.ArtAuction_24.domain.art.entity.Art;
 import com.example.ArtAuction_24.domain.art.repository.ArtRepository;
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.global.DataNotFoundException;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class ArtService {
+
     private final ArtRepository artRepository;
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
 
-    public Page<Art> getList(int page, String kw) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
-
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-
-        if (kw == null || kw.trim().length() == 0) {
-            return artRepository.findAll(pageable);
-        }
-        Specification<Art> spec = search(kw);
-        return artRepository.findAll(spec, pageable);
+    public List<Art> getList() {
+        return artRepository.findAll();
     }
 
-    private Specification<Art> search(String kw) {
-        return new Specification<>() {
-            @Override
-            public Predicate toPredicate(Root<Art> r, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);  // 중복을 제거
-                Join<Art, Member> u1 = r.join("author", JoinType.LEFT);
-                return cb.or(cb.like(r.get("title"), "%" + kw + "%"), // 제목
-                        cb.like(r.get("content"), "%" + kw + "%"),      // 내용
-                        cb.like(u1.get("username"), "%" + kw + "%"));    // 질문 작성자
-            }
-        };
-    }
-
-    public Art getArt(Integer id) {
-        Optional<Art> of = artRepository.findById(id);
-        if (of.isEmpty()) throw new DataNotFoundException("friend not found");
-        return of.get();
-    }
-
-    // 생성자 주입
-    public ArtService(ArtRepository artRepository) {
-        this.artRepository = artRepository;
-    }
-
-    public Art create(MultipartFile thumbnail, String korTitle, String engTitle, String artist, String width, String height, String unit, String technique, String price, String place, String artIntroduction, Member member) {
+    public Art create(MultipartFile thumbnail, String korTitle, String engTitle, String width, String height, String unit, String technique, String price, String place, String artIntroduction, Member member, Artist artist) {
+        // 파일 저장 경로 설정
         String thumbnailRelPath = "image/art/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
-        try {
-            thumbnail.transferTo(thumbnailFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        // 디렉토리 생성 및 파일 업로드 처리
+        File dir = new File(fileDirPath + "/image/art");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
+            }
         }
 
+        try {
+            thumbnail.transferTo(thumbnailFile);
+            if (!thumbnailFile.exists()) {
+                throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
+        }
+
+        // Art 객체 생성
         Art art = Art.builder()
                 .thumbnailImg(thumbnailRelPath)
                 .korTitle(korTitle)
                 .engTitle(engTitle)
-                .artist(artist)
                 .width(width)
                 .height(height)
                 .unit(unit)
@@ -89,10 +64,55 @@ public class ArtService {
                 .place(place)
                 .artIntroduction(artIntroduction)
                 .author(member)
+                .artist(String.valueOf(artist))
                 .build();
 
-        artRepository.save(art);  // 주입된 인스턴스를 사용하여 save 호출
-
+        // 데이터베이스에 Art 객체 저장
+        artRepository.save(art);
         return art;
+    }
+
+
+    public Art getArt(Integer id) {
+        Optional<Art> of = artRepository.findById(id);
+        if (of.isEmpty()) throw new DataNotFoundException("friend not found");
+        return of.get();
+    }
+
+    public Optional<Art> getArtsByMember(Member currentMember) {
+        return artRepository.findByAuthor(currentMember);
+    }
+
+    public void deleteAllByArtist(Artist artist) {
+    }
+
+    public void modify(Art art, MultipartFile thumbnail, String korTitle, String engTitle, String width, String height, String unit, String technique, String price, String place, String artIntroduction) {
+
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            String thumbnailRelPath = "image/art/" + UUID.randomUUID().toString() + ".jpg";
+            File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
+
+            try {
+                thumbnail.transferTo(thumbnailFile);
+                art.setThumbnail(thumbnailRelPath);
+            } catch (IOException e) {
+                throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
+            }
+        }
+
+        art.setKorTitle(korTitle);
+        art.setEngTitle(engTitle);
+        art.setWidth(width);
+        art.setHeight(height);
+        art.setUnit(unit);
+        art.setTechnique(technique);
+        art.setPrice(price);
+        art.setPlace(place);
+        art.setArtIntroduction(artIntroduction);
+        artRepository.save(art);
+    }
+
+    public void delete(Art art) {
+        artRepository.delete(art);
     }
 }

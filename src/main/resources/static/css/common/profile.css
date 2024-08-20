@@ -9,6 +9,7 @@
     flex-direction: column;
     height: 700px;
     width: 50%;
+    margin-left: 40px;
     /*border: 1px solid #9E9E9E;*/
     /*justify-content: center;*/
     align-items: center;
@@ -59,25 +60,26 @@
     display: flex;
     flex-direction: column;
     height: 700px;
-    width: 50%;
+    width: 40%;
+    margin-left: 50px;
     /*border: 1px solid #9E9E9E;*/
     /*justify-content: center;*/
-    align-items: center;
+    /*align-items: center;*/
 }
-.textAdd {
-    margin-top: 70px;
+.textAdd_2 {
+    margin-top: 130px;
     height: 560px;
     width: 80%;
     /*border: 1px solid #9E9E9E;*/
 }
-.textTileForm {
+.textTileForm_test {
     height: auto;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     /*border: 1px solid #9E9E9E;*/
 }
 .title {
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .button {
@@ -90,4 +92,17 @@
 }
 .button-majorWorkForm: hover {
     color: gray;
+}
+.input-group-MW {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    margin-left: 15px;
+    margin-bottom:10px;
+}
+.input-group-MW > div {
+    margin: 0px;
+}
+.textTileForm_test .contentAdd {
+    font-size: 18px;
 }

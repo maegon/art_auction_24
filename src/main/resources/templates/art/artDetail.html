@@ -1,10 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{/layout/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var masonry = new Masonry('.grid', {
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true,
+                gutter: 20
+            });
+
+            imagesLoaded('.grid').on('progress', function () {
+                masonry.layout();
+            });
+        });
+    </script>
 </head>
 <body>
+<div layout:fragment="content">
+    <div class="section-1-loading">
+        <section class="section-1">
+            <div class="container mx-auto masonry-grid">
+                <div class="grid">
+                    <div class="grid-sizer"></div>
+                    <div class="grid-item" th:if="${!list.isEmpty()}" th:each="art : ${list}">
+                        <a th:href="@{/art/detail/{id}(id=${art.id})}">
+                            <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
+<div layout:fragment="content">
+    <div class="artDetailContainer_1">
+        <div class="artDetailContainer_2">
+            <div class="leftContainer">
+                <div th:if="${art.thumbnailImg != null}" class="thumbnail-detail_container">
+                    <img th:src="@{|/file/${art.thumbnailImg}|}" alt="thumbnail" class="detail_img-thumbnail">
+                </div>
+            </div>
+            <div class="rightContainer">
+                <div class="artDetail_name_1">
+                    &lt;<span th:text="${art.korTitle}"></span>&gt;
+                </div>
+                <div class="artDetail_name_2">
+                    <span th:text="${art.engTitle}"></span>
+                </div>
+                <div class="rightContainer1_1">
+                    <div class="w_h_u">
+                        <span th:text="${art.width}"></span>
+                        <span>X</span>
+                        <span th:text="${art.height}"></span>
+                        <span th:text="${art.unit}"></span>,
+                        <span th:text="${art.technique}"></span>
+                    </div>
+                    <div class="r_c" th:if="${art.price != null}">
+                        낙찰가:<span th:text="${art.price}"></span>원
+                    </div>
+                    <div class="r_c" th:if="${art.place != null}">
+                        소장지:<span th:text="${art.place}"></span>
+                    </div>
+                    <div class="r_c_i">
+                        <span th:text="${art.artIntroduction}"></span>
+                    </div>
+                </div>
+                <div class="detailButton">
+                    <a th:href="@{|/art/modify/${art.id}|}" sec:authorize="isAuthenticated()" th:if="${art.author != null and #authentication.getPrincipal().getUsername() == art.author.username}" class="button-modify">
+                        수정
+                    </a>
+                    <span>/</span>
+                    <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/art/delete/${art.id}|}" sec:authorize="isAuthenticated()" th:if="${art.author != null and (#authentication.getPrincipal().getUsername() == art.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}" class="button-delete">
+                        삭제
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

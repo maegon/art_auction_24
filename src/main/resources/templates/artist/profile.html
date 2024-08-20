@@ -1,27 +1,63 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout}">
+<html layout:decorate="~{/layout/layout}">
+
 <head>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const birthDateElement = document.getElementById('birthDate');
-            const telElement = document.getElementById('tel');
-            if (birthDateElement) {
-                let birthDate = birthDateElement.textContent.trim();
-                if (birthDate.length === 8) {
-                    birthDateElement.textContent = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
-                }
+          const titles = document.querySelectorAll('.contentAdd.title span');
+          const years = document.querySelectorAll('.contentAdd.year span');
+          const widths = document.querySelectorAll('.contentAdd.width span');
+          const heights = document.querySelectorAll('.contentAdd.height span');
+          const units = document.querySelectorAll('.contentAdd.unit span');
+          const techniques = document.querySelectorAll('.contentAdd.technique span');
+
+          const sortedContainer = document.createElement('div');
+          sortedContainer.className = 'sorted-contentAddContainer';
+
+          for (let i = 0; i < titles.length; i++) {
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group-MW';
+
+            newGroup.innerHTML = `
+              <div class="contentAdd">&lt;${titles[i]?.textContent || ''}&gt;</div>
+              <div class="contentAdd">(${years[i]?.textContent || ''}):</div>
+              <div class="contentAdd">각 ${widths[i]?.textContent || ''}</div>
+              ${widths[i] && heights[i] ? '<span class="span-wh">X</span>' : ''}
+              <div class="contentAdd">${heights[i]?.textContent || ''}</div>
+              <div class="contentAdd">${units[i]?.textContent || ''},</div>
+              <div class="contentAdd">${techniques[i]?.textContent || ''}</div>
+            `;
+
+            sortedContainer.appendChild(newGroup);
+          }
+
+          const originalContainer = document.querySelector('.contentAddContainer');
+          if (originalContainer) {
+            originalContainer.parentNode.replaceChild(sortedContainer, originalContainer);
+          }
+
+          const birthDateElement = document.getElementById('birthDate');
+          const telElement = document.getElementById('tel');
+
+          if (birthDateElement) {
+            let birthDate = birthDateElement.textContent.trim();
+            if (birthDate.length === 8) {
+              birthDateElement.textContent = birthDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
             }
-            if (telElement) {
-                let tel = telElement.textContent.trim();
-                if (tel.length === 11) {
-                    telElement.textContent = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-                } else if (tel.length === 10) {
-                    telElement.textContent = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-                }
+          }
+
+          if (telElement) {
+            let tel = telElement.textContent.trim();
+            if (tel.length === 11) {
+              telElement.textContent = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            } else if (tel.length === 10) {
+              telElement.textContent = tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
             }
+          }
         });
     </script>
 </head>
+
 <body>
 <div layout:fragment="content">
     <div class="artistProfileContainer">
@@ -50,52 +86,51 @@
                             <span th:text="${add.content}"></span>
                         </div>
                         <div class="telNum">
-                            Tel.<span id="tel" th:text="${artist.tel}"></span>
+                            Tel.<span id="phoneNumber" th:text="${phoneNumber}"></span>
                         </div>
                         <div class="mail-group">
-                            E-mail.<span th:text="${artist.mail}"></span>
-                            <span>@</span>
-                            <span th:text="${artist.mailType}"></span>
+                            E-mail.<span th:text="${email}"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="textArtistProfile">
-            <div class="textAdd">
-                <div class="textTileForm">
+            <div class="textAdd_2">
+                <div class="textTileForm_test">
                     <span class="title">INTRODUCE</span>
-                    <span id="introduce" th:text="${artist.introduce}"></span>
+                    <span class="contentAdd" id="introduce" th:text="${artist.introduce}"></span>
                 </div>
-                <div class="textTileForm">
+                <div class="textTileForm_test">
                     <span class="title">MAJOR WORK</span>
-                    <!-- 서버에서 전달된 데이터 출력 -->
+                    <a th:href="@{|/art/list/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                     <div class="contentAddContainer">
-                        <div class="input-group">
-                            <div class="contentAdd" th:each="add : ${artist.titleContentAdds}">
+                        <div class="input-group-MW">
+                            <div class="contentAdd title" th:each="add : ${artist.titleContentAdds}">
                                 &lt;<span th:text="${add.content}"></span>&gt;
                             </div>
-                            <div class="contentAdd" th:each="add : ${artist.yearContentAdds}">
+                            <div class="contentAdd year" th:each="add : ${artist.yearContentAdds}">
                                 (<span th:text="${add.content}"></span>):
                             </div>
-                            <div class="contentAdd" th:each="add : ${artist.widthContentAdds}">
+                            <div class="contentAdd width" th:each="add : ${artist.widthContentAdds}">
                                 각 <span th:text="${add.content}"></span>
                             </div>
-<!--                            <span>X</span>-->
-                            <div class="contentAdd" th:each="add : ${artist.heightContentAdds}">
+                            <div class="contentAdd height" th:each="add : ${artist.heightContentAdds}">
                                 <span th:text="${add.content}"></span>
                             </div>
-                            <div class="contentAdd" th:each="add : ${artist.unitContentAdds}">
+                            <div class="contentAdd unit" th:each="add : ${artist.unitContentAdds}">
                                 <span th:text="${add.content}"></span>,
                             </div>
-                            <div class="contentAdd" th:each="add : ${artist.techniqueContentAdds}">
+                            <div class="contentAdd technique" th:each="add : ${artist.techniqueContentAdds}">
                                 <span th:text="${add.content}"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="textTileForm">
-                    <div class="titleAdd" th:each="add : ${artist.titleAdds}">
+                <div class="textTileForm_test">
+                    <div class="title" th:each="add : ${artist.titleAdds}">
                         <span th:text="${add.content}"></span>
                     </div>
                     <div class="contentAdd" th:each="add : ${artist.contentAdds}">
@@ -104,17 +139,11 @@
                 </div>
             </div>
             <div class="button">
-                <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()"
-                   th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}"
-                   class="button-modify">
+                <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-modify">
                     수정
                 </a>
                 <span>/</span>
-                <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');"
-                   th:href="@{|/artist/delete/${artist.id}|}"
-                   sec:authorize="isAuthenticated()"
-                   th:if="${artist.author != null and (#authentication.getPrincipal().getUsername() == artist.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}"
-                   class="button-delete">
+                <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/artist/delete/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and (#authentication.getPrincipal().getUsername() == artist.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}" class="button-delete">
                     삭제
                 </a>
             </div>
@@ -122,4 +151,5 @@
     </div>
 </div>
 </body>
+
 </html>

@@ -1,17 +1,47 @@
+<!DOCTYPE html>
 <html layout:decorate="~{layout/layout}">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var masonry = new Masonry('.grid', {
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true,
+                gutter: 20
+            });
 
+            imagesLoaded('.grid').on('progress', function () {
+                masonry.layout();
+            });
+        });
     </script>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="artListContainer">
-        <div class="artList">
-            <div class="artistListImg">
-                <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
+    <div class="section-1-loading">
+        <section class="section-1">
+            <div class="container mx-auto masonry-grid">
+                <!-- 작품이 없을 때만 표시 -->
+                <div th:if="${list.isEmpty()}" class="img-null">
+                    <p>등록한 작품이 없습니다.</p>
+                    <div th:if="${#authentication.getPrincipal().getUsername() == currentMember.username}">
+                        <a href="/art/create">작품 등록하기</a>
+                    </div>
+                </div>
+                <!-- 작품이 있을 때 목록을 표시 -->
+                <div class="grid">
+                    <div class="grid-sizer"></div>
+                    <div class="grid-item" th:if="${!list.isEmpty()}" th:each="art : ${list}">
+                        <a th:href="@{/art/detail/{id}(id=${art.id})}">
+                            <img th:src="@{|/file/${art.thumbnailImg}|}" class="art-img" alt="Thumbnail">
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 </div>
 </body>

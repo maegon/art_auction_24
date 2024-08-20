@@ -8,19 +8,22 @@
 }
 .artistContainer {
     background-color: white;
-    padding: 40px;
+    height: auto;
+    padding: 35px;
+    width: 480px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.artistContainer > h1 {
+    font-size: 20px;
+}
 .form-groupArt {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     margin: 10px;
 }
 .form-label {
     width: auto;
-    margin-right: 10px; /* 레이블과 입력 필드 사이 간격 설정 */
 }
 .form-control {
     flex: 1; /* 나머지 공간을 차지하도록 설정 */
@@ -29,9 +32,16 @@
     margin: 10px;
 }
 .thumbnail {
+    display: flex;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    margin-top: 15px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    /*border: 2px solid #ddd;*/
 }
 
 .thumbnail img, thumbnail button.iconBT {
@@ -73,6 +83,7 @@
     cursor: pointer;
     display: flex;
     margin: 0 auto;
+    margin-top: 15px;
 }
 
 .btn-primary-art:hover {
@@ -105,3 +116,44 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+.checkText {
+    font-size: 13px;
+    margin-top: 5px;
+    color: #4682B4;
+}
+.fa-check {
+    color: #4682B4;
+}
+.add-form-label {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 35px;
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.add-btn {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.add-btn:last-child {
+    display: inline-block;
+}
+.add-form-control {
+    height: 40px;
+    width: 365px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+}
+

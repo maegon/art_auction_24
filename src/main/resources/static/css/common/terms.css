@@ -1,0 +1,102 @@
+.termsContainer_1 {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 720px;
+}
+
+.termsContainer_2 {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    height: 600px;
+    margin-top: 50px;
+}
+
+.terms-content {
+    margin-bottom: 20px;
+
+}
+.terms-content > h1 {
+    display: flex;            /* h1 요소를 flexbox 컨테이너로 만듭니다. */
+    justify-content: center;
+    align-items: center;      /* h1 요소 내의 텍스트를 수직 가운데 정렬합니다. */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 30px;          /* h1 텍스트의 크기를 20px로 설정합니다. */
+}
+.hr {
+    border-left: 2px solid #333;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.agree-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+#agree_all_section {
+    font-size: 25px;
+    margin-top: 80px;
+}
+
+.agree-section input {
+    margin-right: 10px;
+    transform: scale(1.5);
+}
+. agree-section-container {
+    padding: 20px;
+    border: 1px solid #9E9E9E;
+}
+
+.agree-section label {
+    flex: 1;
+}
+
+.agree-section a {
+    color: #9E9E9E;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.terms-form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.btn-primary {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:disabled {
+    background-color: #ccc;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+.termsText_1 {
+    padding-left: 15px;
+}
+.termsText_2 {
+    color: #9E9E9E;
+}
+.termsLine {
+    margin-top: 20px;
+}
+.agree-section-container {
+    padding-left: 15px;
+}

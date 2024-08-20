@@ -27,17 +27,6 @@ public class ArtistForm {
     @Size(max = 8, message = "생년월일 8자리를 입력하세요")
     private String birthDate;
 
-    @NotBlank(message = "전화번호는 필수입니다.")
-    @Size(max = 11, message = "전화번호 11자리를 입력하세요")
-    private String tel;
-
-    @NotBlank(message = "이메일은 필수입니다.")
-    @Size(max = 30, message = "이메일을 입력해주세요.")
-    private String mail;
-
-    @NotBlank(message = "이메일 타입은 필수입니다.")
-    private String mailType;
-
     @Size(max = 500, message = "자기소개 입력해주세요.")
     private String introduce;
 

@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.artist.entity;
 
 import com.example.ArtAuction_24.domain.artist.repository.UnitContentAddRepository;
 import com.example.ArtAuction_24.domain.product.entity.Product;
+import com.example.ArtAuction_24.global.base.entity.BaseEntity;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import lombok.*;
@@ -16,11 +17,11 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Artist {
+public class Artist extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
     @Setter
     @Getter
@@ -31,15 +32,6 @@ public class Artist {
     @Setter
     @Getter
     private String birthDate;
-    @Setter
-    @Getter
-    private String tel;
-    @Setter
-    @Getter
-    private String mail;
-    @Setter
-    @Getter
-    private String mailType;
     private String thumbnailImg;
 
     private String introduce;

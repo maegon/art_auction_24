@@ -36,4 +36,8 @@ public class Art {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Member author; // 변경된 필드
+
+    public void setThumbnail(String thumbnailRelPath) {
+        this.thumbnailImg = thumbnailRelPath;
+    }
 }
