@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 
 @Configuration
 @RequiredArgsConstructor
-@Profile("dev")
+@Profile("dev", "prod")
 public class DevInitData implements BeforeInitData {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
