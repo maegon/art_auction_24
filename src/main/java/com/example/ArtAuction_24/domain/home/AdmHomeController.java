@@ -5,18 +5,28 @@ import com.example.ArtAuction_24.domain.member.dto.AdmUpdateMemberRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.post.form.PostForm;
+import com.example.ArtAuction_24.domain.post.service.PostService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
+import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.global.email.EmailService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +46,7 @@ public class AdmHomeController {
     private final EmailService emailService;
     private final QuestionService questionService;
     private final ArtistService artistService;
+    private final PostService postService;
     @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String index() {
@@ -95,15 +106,44 @@ public class AdmHomeController {
 
     @GetMapping("/question/manage")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String showQuestionManage(Model model) {
+    public String showQuestionManage(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                                     @RequestParam(value = "size", defaultValue = "15") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("answered"), Sort.Order.desc("id")));
+        Page<Question> questionPage = questionService.findAll(pageable);
+        model.addAttribute("questionPage", questionPage);
         return "admin/question/manage";
     }
 
-    @GetMapping("/question/write")
+
+
+
+    @GetMapping("/question/faqManage")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String showFaqList(Model model) {
+        return "admin/question/faqManage";
+    }
+
+    @GetMapping("/question/faqWrite")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String showQuestionWrite(Model model) {
-        return "admin/question/write";
+        return "admin/question/faqWrite";
     }
+
+    @PostMapping("/question/faqWrite")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String QuestionWrite(@Valid PostForm postForm, BindingResult bindingResult, Principal principal) {
+        Member member = memberService.getMember(principal.getName());
+
+        if (bindingResult.hasErrors()) {
+            return "admin/question/faqWrite";
+        }
+        postService.create(postForm, member);
+
+
+        return "admin/question/faqManage";
+    }
+
+
 
 
 }

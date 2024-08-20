@@ -30,6 +30,8 @@ public class AnswerController {
         Member member = memberService.getMember(principal.getName());
         Question question = this.questionService.getQuestion(id);
         this.answerService.create(question, content, member);
-        return String.format("redirect:/question/detail/%s", id);
+
+        this.questionService.markQuestionAsAnswered(id);
+        return String.format("redirect:/admin/question/manage");
     }
 }
