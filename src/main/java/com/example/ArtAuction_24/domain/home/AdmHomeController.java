@@ -6,6 +6,7 @@ import com.example.ArtAuction_24.domain.member.dto.MemberUpdateRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
+import com.example.ArtAuction_24.domain.post.entity.Post;
 import com.example.ArtAuction_24.domain.post.form.PostForm;
 import com.example.ArtAuction_24.domain.post.service.PostService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
@@ -19,12 +20,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -136,6 +139,8 @@ public class AdmHomeController {
     @GetMapping("/question/faqManage")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String showFaqList(Model model) {
+        List<Post> postList = postService.findAll();
+        model.addAttribute("postList",postList);
         return "admin/question/faqManage";
     }
 
@@ -156,7 +161,18 @@ public class AdmHomeController {
         postService.create(postForm, member);
 
 
-        return "admin/question/faqManage";
+        return "redirect:/admin/question/faqManage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/question/faqManage/delete/{id}")
+    public String questionDelete(Principal principal, @PathVariable("id") Long id) {
+        Post post = this.postService.getPost(id);
+        if (!post.getMember().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        this.postService.delete(post);
+        return "redirect:/";
     }
 
 

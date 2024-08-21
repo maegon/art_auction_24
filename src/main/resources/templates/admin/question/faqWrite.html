@@ -1,20 +1,38 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="container mx-auto px-4 min-h-[1200px] ">
-        <h1>faq 작성페이지</h1>
-        <form class="" th:action="@{/admin/question/faqWrite}" th:object="${postForm}" method="post">
-            <div class="mb-3">
-                <label class="">제목</label>
-                <input type="text" name="subject">
-            </div>
-            <div class="mb-3">
-                <label class="">내용</label>
-                <textarea  rows="3" name="content"></textarea>
-            </div>
+    <!-- 모바일 메뉴 토글 버튼 -->
+    <div class="question-manage-menu-toggle-btn "><i class="fa-solid fa-user-tie"></i></div>
 
-            <div class="mb-3">
-                <label class="">내용</label>
-                <select name="postType" id="PostType">
+    <div class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-16 pb-4 pl-0 lg:pr-4 z-10 question-manage-sidebar h-auto lg:h-80 flex flex-col lg:flex-col">
+        <ul>
+            <li class="flex flex-col mb-6">
+                <span class="menu-header">작품 관리</span>
+                <a th:href="@{/admin/product/list}" class="mg_menu_btn">작품 목록</a>
+            </li>
+            <li class="flex flex-col mb-6">
+                <span class="menu-header">경매 관리</span>
+                <a th:href="@{/admin/auction/list}" class="mg_menu_btn">경매 목록</a>
+                <a th:href="@{/admin/auction/needAddAuction}" class="mg_menu_btn">신청된 경매 작품 확인</a>
+                <a th:href="@{/auction/create}" class="mg_menu_btn">새 경매 추가</a>
+            </li>
+            <li class="flex flex-col">
+                <span class="menu-header">회원 관리</span>
+                <a th:href="@{/admin/member/list}" class="mg_menu_btn">회원 권한 설정</a>
+                <a th:href="@{/admin/member/artistApplicantList}" class="mg_menu_btn">작가 신청자 확인</a>
+                <a th:href="@{/admin/question/manage}" class="mg_menu_btn">문의 관리</a>
+                <a th:href="@{/admin/question/faqManage}" class="mg_menu_btn">FAQ 관리</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mx-auto px-6 lg:px-[300px] min-h-[1000px]">
+        <div class="text-center">
+            <h1 class="text-2xl font-black text-center py-5 text-black">FAQ 작성 페이지</h1>
+        </div>
+        <form class="text-center mb-8" th:action="@{/admin/question/faqWrite}" th:object="${postForm}" method="post">
+            <div class="flex">
+                <div class=" p-2">
+                <label class="block text-gray-700 text-lg mb-2" for="postType"></label>
+                <select id="postType" name="postType" class="w-full p-2 border border-gray-300 rounded" required>
                     <option value="" disabled selected>유형을 선택해주세요</option>
                     <option value="ARTWORK">작품</option>
                     <option value="ARTIST">작가</option>
@@ -25,8 +43,30 @@
                     <option value="OTHER">기타</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+                <div class=" w-full p-2">
+                    <label class="block text-gray-700 text-lg mb-2" for="subject"></label>
+                    <input type="text" id="subject" name="subject" class="w-full p-2 border border-gray-300 rounded" placeholder="제목을 입력해주세요." required>
+                </div>
+            </div>
+
+            <div class=" p-2">
+                <label class="block text-gray-700 text-lg mb-2" for="content"></label>
+                <textarea id="content" name="content" rows="20" class="w-full p-2 border border-gray-300 rounded"  placeholder="내용을 입력해주세요." required></textarea>
+            </div>
+
+            <button type="submit" class="inline-block px-6 py-3 text-white bg-green-600 hover:bg-green-700 rounded-lg font-medium transition ease-in-out duration-150">작성 완료</button>
         </form>
     </div>
 </div>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggleBtn = document.querySelector(".question-manage-menu-toggle-btn");
+        const sidebar = document.querySelector(".question-manage-sidebar");
+
+        menuToggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+    });
+</script>
