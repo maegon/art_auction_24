@@ -330,73 +330,68 @@
                             </div>
 
                             <div id="bid-list" class="myPage-hidden bg-white p-4 mt-2 rounded-lg shadow-md">
-                                <h1 class="text-3xl py-4 font-semibold text-gray-800">문의내역</h1>
-                                <span class="block text-gray-500 text-sm mb-4">
-        ※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.
-    </span>
-                                <div class="border-t-2 border-slate-600 mb-4">
-                                    <ul class="flex flex-col text-gray-700 font-semibold mb-2">
-                                        <!-- 모바일 전용 헤더 -->
-                                        <div class="flex flex-col">
-                                            <!-- 번호 항목 -->
-                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-400">
-                                                <span class="pr-2 text-gray-900 text-lg">번호:</span>
-                                                <span class="flex-1 text-gray-700 text-sm">( 질문 고유번호 )</span>
-                                            </li>
-                                            <!-- 제목 항목 -->
-                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-300">
-                                                <span class="pr-2 text-gray-900 text-lg">제목:</span>
-                                                <span class="flex-1 text-gray-700 text-sm">( 질문 제목 )</span>
-                                            </li>
-                                            <!-- 날짜 항목 -->
-                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100 border-b border-gray-400">
-                                                <span class="pr-2 text-gray-900 text-lg">날짜:</span>
-                                                <span class="flex-1 text-gray-700 text-sm">( 질문한 날짜 )</span>
-                                            </li>
-                                            <!-- 상태 항목 -->
-                                            <li class="flex items-center px-4 py-3  font-semibold bg-gray-100">
-                                                <span class="pr-2 text-gray-900 text-lg">상태:</span>
-                                                <span class="flex-1 text-gray-700 text-sm">( 답변이 등록되면 처리완료 상태로 됩니다. )</span>
-                                            </li>
-                                        </div>
-                                    </ul>
-                                    <p class="text-center text-gray-600 mt-2 text-sm">※ 위의 예시는 문의 내역의 양식을 나타냅니다.</p>
-                                </div>
-
+                                <h1 class="text-3xl py-4 font-semibold text-gray-800">입찰 내역</h1>
                                 <div>
-                                    <!-- 문의 내역이 없는 경우 -->
-                                    <div th:if="${#lists.isEmpty(questionList)}"
-                                         class="flex flex-col items-center justify-center py-4">
-                                        <i class="fas fa-circle-exclamation fa-2xl text-gray-500"></i>
-                                        <p class="text-center text-2xl mt-4 text-gray-600">문의내역이 없습니다.</p>
-                                    </div>
+                                    <span>※ 경매가 끝난시점에 낙찰받지못하게되면 내역에서 사라지게됩니다. </span>
+                                    <div class="border-t-2 border-slate-600"></div>
+                                    <div class="p-4">
+                                        <!-- 찜한게 없는 경우 -->
+                                        <div th:if="${#lists.isEmpty(orderList)}"
+                                             class="flex flex-col items-center justify-center py-4">
+                                            <i class="fas fa-circle-exclamation fa-2xl text-gray-500"></i>
+                                            <p class="text-center text-2xl mt-4 text-gray-600">입찰 내역이 없습니다.</p>
+                                        </div>
+                                        <ul class="flex-wrap gap-4 mb-4 border-y border-gray-300 rounded-lg"
+                                            th:each="order : ${orderList}">
+                                            <!-- 찜한 상품 목록을 반복 -->
+                                            <li class="p-4 flex rounded-lg">
+                                                <div class="flex items-center justify-center p-2">
 
-                                    <!-- 문의 내역이 있는 경우 -->
-                                    <div th:if="${!#lists.isEmpty(questionList)}">
-                                        <ul class="flex flex-col">
-                                            <li th:each="question : ${questionList}"
-                                                class="border-b border-gray-300 py-4 px-2">
-                                                <!-- 모바일에서 세로로 나열 -->
-                                                <div class="mb-2">
-                                                    <span class="text-base font-semibold text-gray-800">번호:</span>
-                                                    <span class="text-base text-gray-700"
-                                                          th:text="${question.id}"></span>
                                                 </div>
-                                                <div class="mb-2">
-                                                    <span class="text-base font-semibold text-gray-800">제목:</span>
-                                                    <a class="text-blue-500 hover:underline"
-                                                       th:href="@{|/question/detail/${question.id}|}"
-                                                       th:text="${question.subject}"></a>
+                                                <div class="p-2 mb-auto mt-auto">NO.
+                                                    <span th:text="${order.id}"
+                                                          class="text-gray-700 font-bold"></span>
                                                 </div>
-                                                <div class="mb-2">
-                                                    <span class="text-base font-semibold text-gray-800">날짜:</span>
-                                                    <span class="text-base text-gray-700"
-                                                          th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+
+                                                <a th:href="@{|/product/detail/${order.product.id}|}"
+                                                   class="block h-full flex items-center justify-center">
+                                                    <div class="flex bg-gray-100 w-40 h-40 items-center justify-center">
+                                                        <!-- 이미지 -->
+                                                        <img th:src="${order.product.thumbnailImg}"
+                                                             alt="Product Image"
+                                                             class="w-32 h-32 object-cover rounded-lg">
+                                                    </div>
+                                                </a>
+
+                                                <!-- 경매 정보 -->
+                                                <div class="flex flex-col items-start p-4">
+                                                    <div>
+                                                        <span th:text="${order.product.artist.korName}"
+                                                              class="text-slate-300 text-sl font-bold mt-2"></span>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{|/product/detail/${order.product.id}|}"
+                                                           th:text="${order.product.title}"
+                                                           class="text-gray-800 text-[#333333] text-xl mt-2"></a>
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    <span class="text-base font-semibold text-gray-800">상태:</span>
-                                                    <span class="text-base text-gray-700"
-                                                          th:text="${question.answerList.size() > 0 ? '처리완료' : '처리중'}"></span>
+                                                    <ul>
+                                                        <li>경매 종료일</li>
+                                                        <li th:text="${order.product}"></li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- 입찰 정보 -->
+                                                <div class=" flex flex-1 place-items-center p-4 justify-end relative">
+
+                                                    <ul>
+                                                        <li class="">현재 입찰가</li>
+                                                        <li class="text-red-500 text-sm" th:text="${order.productPrice}"></li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <h1>경매중</h1>
                                                 </div>
                                             </li>
                                         </ul>
