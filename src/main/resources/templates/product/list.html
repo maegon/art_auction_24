@@ -37,24 +37,28 @@
                 <a th:href="@{|/product/detail/${product.id}|}"
                    class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
 
-                    <div sec:authorize="isAuthenticated()">
-                        <form th:action="@{/product/like}" method="post">
-                            <input type="hidden" name="productId" th:value="${product.id}" />
-                            <input type="hidden" name="memberId" th:value="${member.id}" />
-                            <button type="submit" style="background: none; border: none; cursor: pointer;">
-                                <i class="fa-heart"
-                                   th:classappend="${likedProductIds.contains(product.id) ? 'fa-solid' : 'fa-regular'}"
-                                   style="color: red;"></i>
-                            </button>
-                        </form>
-                    </div>
+
                     <img class="object-contain object-center w-full h-full transition-transform duration-500"
                          th:src="@{|/${product.thumbnailImg}|}"
                          alt="이미지가 존재하지 않습니다.">
                 </a>
                 <div class="p-4 flex flex-col flex-grow">
-                    <span th:text="${product.artist.korName}" class="text-left font-bold text-lg"></span>
-                    <span th:text="${product.title}" class="text-left text-md mt-1"></span>
+                    <div sec:authorize="isAuthenticated()" class="flex  items-center  justify-between">
+                        <span th:text="${product.artist.korName}" class="text-left font-bold text-lg"></span>
+                        <form th:action="@{/product/like}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}" />
+                            <input type="hidden" name="memberId" th:value="${member.id}" />
+                            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                                <i class="fa-heart mr-4"
+                                   th:classappend="${likedProductIds.contains(product.id) ? 'fa-solid' : 'fa-regular'}"
+                                   style="color: red;"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <span th:text="${product.title}" class="text-left text-md mt-1 "></span>
+
+
                     <span class="flex text-xs mt-3">
                         <span th:text="${product.dimensions}" class="text-gray-500"></span>
                         <span class="text-gray-500 mx-1">|</span>
