@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.member.entity;
 
 import com.example.ArtAuction_24.domain.answer.entity.Answer;
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.post.entity.Post;
 import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
 import com.example.ArtAuction_24.domain.question.entity.Question;
@@ -79,6 +80,9 @@ public class Member extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Post> postList; // 포스트목록
+
+    @OneToMany(mappedBy = "author")
+    private List<Artist> artist;
 
     private transient String formattedbalance;
 

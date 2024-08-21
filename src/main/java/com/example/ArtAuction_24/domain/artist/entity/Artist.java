@@ -42,7 +42,7 @@ public class Artist extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private Member author; // 변경된 필드
+    private Member author;
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)

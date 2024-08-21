@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -66,7 +67,7 @@ public class ArtistService {
         return artist;
     }
 
-    public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork) {
+    public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork, Member member) {
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
@@ -74,6 +75,7 @@ public class ArtistService {
                 .introduce(introduce)
                 .majorWork(majorWork)
                 .balance(0L)
+                .author(member)
                 .build();
         artistRepository.save(artist);
 
@@ -267,6 +269,8 @@ public class ArtistService {
                 .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
     }
 
+
+
     public List<Artist> findByKeyword(String keyword) {
         return artistRepository.findByKeyword(keyword);
     }
@@ -294,4 +298,6 @@ public class ArtistService {
 
         return artist;
     }
+
+
 }

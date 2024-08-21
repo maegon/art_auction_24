@@ -1,71 +1,76 @@
-<!DOCTYPE html>
 <html layout:decorate="~{layout/layout}">
-<head>
-    <title>배송 조회</title>
-</head>
-<body>
 <div layout:fragment="content">
-    <div class="delivery-container">
-        <h1>배송 조회</h1>
-        <p class="delivery-date">
+    <div class="delivery-container mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <h1 class="text-2xl font-bold text-center py-5">배송 내역</h1>
+
+        <p class="mt-6 text-lg text-gray-700 text-center font-bold">
             <strong>7/04(목) 17~19시</strong>에 상품 배송 예정입니다.
         </p>
 
-        <div class="delivery-status">
-            <div class="status-step">
-                <div class="step-icon step-completed">
-                    <img src="/path/to/icon1.png" alt="배송 대기">
+        <!-- 배송 상태 -->
+        <div class="delivery-status flex justify-around items-center mt-8">
+            <!-- 배송 대기 -->
+            <div class="status-step text-center">
+                <div class="step-icon step-completed w-16 h-16 bg-green-200 rounded-full flex items-center justify-center">
+                    <img src="/path/to/icon1.png" alt="배송 대기" class="w-10 h-10">
                 </div>
-                <p>배송대기</p>
+                <p class="mt-2 text-sm font-medium text-gray-700">배송대기</p>
             </div>
-            <div class="status-step">
-                <div class="step-icon step-current">
-                    <img src="/path/to/icon2.png" alt="배송 중">
+            <!-- 배송 중 -->
+            <div class="status-step text-center">
+                <div class="step-icon step-current w-16 h-16 bg-yellow-200 rounded-full flex items-center justify-center">
+                    <img src="/path/to/icon2.png" alt="배송 중" class="w-10 h-10">
                 </div>
-                <p>배송중</p>
+                <p class="mt-2 text-sm font-medium text-gray-700">배송중</p>
             </div>
-            <div class="status-step">
-                <div class="step-icon">
-                    <img src="/path/to/icon3.png" alt="배송 완료">
+            <!-- 배송 완료 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                    <img src="/path/to/icon3.png" alt="배송 완료" class="w-10 h-10">
                 </div>
-                <p>배송완료</p>
+                <p class="mt-2 text-sm font-medium text-gray-700">배송완료</p>
             </div>
         </div>
 
-        <div class="delivery-details">
-            <div class="product-info">
-                <img src="/path/to/product-image.jpg" alt="작품 이미지" class="product-thumbnail">
-                <div>
-                    <h2>차은우 작가 - <span>초상화</span></h2>
-                    <p>운송장 번호 12345678945613 <span class="delivery-info">조회</span></p>
+        <!-- 배송 상세 -->
+        <div class="delivery-details mt-8 space-y-6">
+            <div class="product-info flex items-center space-x-4">
+                <!-- 작품 이미지 -->
+                <img src="/path/to/product-image.jpg" alt="작품 이미지"
+                     class="w-24 h-24 object-cover rounded-lg">
+                <!-- 제품 정보 -->
+                <div class="text-gray-800">
+                    <h2 class="text-lg font-semibold">차은우 작가 - <span>초상화</span></h2>
+                    <p class="text-sm mt-1">운송장 번호: 12345678945613 <a href="#" class="text-blue-500 hover:underline">조회</a></p>
                 </div>
             </div>
 
-            <div class="delivery-tracking">
-                <div class="tracking-step">
-                    <div class="circle complete"></div>
+            <!-- 배송 추적 정보 -->
+            <div class="delivery-tracking space-y-4">
+                <!-- 배송 단계 -->
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
                     <div class="tracking-info">
                         <strong>대전대덕 배송출발</strong> (배달예정시간: 17~19시)<br>
-                        07/04(목) 14:30
+                        <span class="text-sm text-gray-600">07/04(목) 14:30</span>
                     </div>
                 </div>
-                <div class="tracking-step">
-                    <div class="circle complete"></div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
                     <div class="tracking-info">
                         대덕 | 간선하차<br>
-                        07/04(목) 12:30
+                        <span class="text-sm text-gray-600">07/04(목) 12:30</span>
                     </div>
                 </div>
-                <div class="tracking-step">
-                    <div class="circle complete"></div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
                     <div class="tracking-info">
                         대덕 | 간선하차<br>
-                        07/04(목) 02:14
+                        <span class="text-sm text-gray-600">07/04(목) 02:14</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</body>
 </html>

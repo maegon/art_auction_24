@@ -62,6 +62,7 @@ public class MemberService {
                 .isActive(true) // isActive 필드를 true로 설정 (민섭 추가)
                 .balance(0L) // 초기화된 balance 값 설정 (민섭추가)
                 .createDate(LocalDateTime.now()) // 생성일자
+                .artist(null)
                 .build();
 
         return memberRepository.save(member); // 데이터베이스에 저장
