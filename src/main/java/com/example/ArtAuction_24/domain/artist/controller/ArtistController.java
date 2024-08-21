@@ -8,6 +8,7 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -34,16 +35,27 @@ public class ArtistController {
     public String getProfile(Model model, @PathVariable("id") Integer id) {
         Artist artist = artistService.getArtist(id);
         Member currentMember = memberService.getCurrentMember();
+        System.out.println("Current Member: " + currentMember);
+        // 현재 로그인한 사용자의 이메일과 전화번호를 모델에 추가합니다.
         model.addAttribute("email", currentMember.getEmail());
         model.addAttribute("phoneNumber", currentMember.getPhoneNumber());
+        Optional<Artist> artistOpt = Optional.ofNullable(artistService.findByMember(currentMember));
 
-        model.addAttribute("artist", artist);
+        if (artistOpt.isEmpty()) {
+            System.out.println("아티스트 정보를 찾을 수 없습니다.");
+            model.addAttribute("errorMessage", "아티스트 정보를 찾을 수 없습니다.");
+            return "error/artistNotFound";
+        }
+
+        System.out.println("Artist: " + artistOpt.get());
+        model.addAttribute("artist", artistOpt.get());
         return "artist/profile";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/terms")
     public String showTermsForm(Model model) {
+        // 약관 동의 폼을 위한 모델 추가
         return "artist/termsForm";
     }
 
@@ -53,16 +65,19 @@ public class ArtistController {
             @RequestParam(name = "agree_personal_info", required = false, defaultValue = "false") boolean agreePersonalInfo,
             @RequestParam(name = "agree_service", required = false, defaultValue = "false") boolean agreeService,
             @RequestParam(name = "agree_age", required = false, defaultValue = "false") boolean agreeAge,
-            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation,
+            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
+        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
             model.addAttribute("errorMessage", "필수 항목에 동의하셔야 합니다.");
             return "artist/termsForm";
         }
 
+        // 모든 필수 항목이 동의된 경우
         return "redirect:/artist/create";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
