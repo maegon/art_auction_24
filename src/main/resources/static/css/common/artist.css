@@ -4,14 +4,28 @@
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding-right: 300px;
+    padding-left: 300px;
+}
+.artist-cc {
+    width: 90%;
+    height: 99%;
+    /*border: 1px solid #9E9E9E;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .artistContainer {
     background-color: white;
     height: auto;
     padding: 35px;
     width: 480px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /*border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+}
+.line {
+    width: auto;
+    color: #333333;
 }
 .artistContainer > h1 {
     font-size: 20px;
@@ -155,4 +169,3 @@
     padding: 10px;
     margin-left: 10px;
 }
-

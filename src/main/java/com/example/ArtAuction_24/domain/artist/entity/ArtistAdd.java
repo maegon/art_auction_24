@@ -28,4 +28,11 @@ public class ArtistAdd {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
+    // 생성자 추가
+    public ArtistAdd(Artist artist, String content) {
+        this.artist = artist;
+        this.content = content;
+    }
+
+
 }

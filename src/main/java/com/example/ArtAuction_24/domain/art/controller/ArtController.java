@@ -131,6 +131,7 @@ public class ArtController {
     @PostMapping("/modify/{id}")
     public String artModify( @Valid ArtForm artForm,
                              @PathVariable("id") Integer id,
+                             @RequestParam("thumbnail") MultipartFile thumbnail,
                              BindingResult bindingResult,
                              Principal principal) {
         if (bindingResult.hasErrors()) {
@@ -146,7 +147,7 @@ public class ArtController {
 
         artService.modify(
                 art,
-                artForm.getThumbnail(),
+                thumbnail,
                 artForm.getKorTitle(),
                 artForm.getEngTitle(),
                 artForm.getWidth(),
@@ -172,7 +173,7 @@ public class ArtController {
 
         artForm.setKorTitle(art.getKorTitle());
         artForm.setEngTitle(art.getEngTitle());
-        artForm.setWidth(artForm.getWidth());
+        artForm.setWidth(art.getWidth());
         artForm.setHeight(art.getHeight());
         artForm.setUnit(art.getUnit());
         artForm.setTechnique(art.getTechnique());

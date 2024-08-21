@@ -8,7 +8,7 @@
 
             const input = document.createElement("input");
             input.type = "text";
-            input.name = "artistAdds"; // name 배열로 설정
+            input.name = "artistAdds[]"; // name을 배열로 설정
             input.className = "add-form-control";
             input.maxLength = 365; // 각 필드에 따라 적절한 길이 설정
 
@@ -40,7 +40,6 @@
             });
         });
 
-
         function triggerFileInput() {
             document.getElementById('thumbnail').click();
         }
@@ -65,42 +64,45 @@
 <body>
 <div layout:fragment="content">
     <div class="artistCreateContainer">
-        <form id="artistForm" th:action="@{/artist/create}" method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
-            <h1>작가 기본 프로필 정보</h1>
-            <div class="termsText_1">
-                <span class="checkText"><i class="fa-solid fa-check"></i> 전체 항목 필수 입력 사항입니다.</span>
-            </div>
-            <div class="thumbnail">
-                <img id="thumbnailPreview" src="#" alt="미리보기" style="display: none;" onclick="triggerFileInput()">
-                <input type="file" id="thumbnail" th:field="*{thumbnail}" class="form-control" style="display: none;" onchange="previewThumbnail(this)">
-                <button type="button" id="uploadButton" onclick="triggerFileInput()" class="iconBT">
-                    <i class="fa-solid fa-user-plus" style="margin-left: 15px;"></i>
-                </button>
-            </div>
-            <div class="form-groupArt">
-                <label for="engName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;영문 이름</label>
-                <input type="text" id="engName" class="form-control"  th:field="*{engName}">
-                <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="korName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;한글 이름</label>
-                <input type="text" id="korName" class="form-control" th:field="*{korName}">
-                <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
-            </div>
-            <div class="form-groupArt">
-                <label for="birthDate" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;생년월일</label>
-                <input type="text" id="birthDate" class="form-control" placeholder="생년월일 8자리를 입력하세요" th:field="*{birthDate}">
-                <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
-            </div>
-            <label for="artistAddsContainer" class="add-form-label">추가 입력</label>
-            <div id="artistAddsContainer" class="input-group">
-                <div class="input-wrapper">
-                    <input type="text" name="artistAdds" class="add-form-control">
-                    <button type="button" class="add-btn" onclick="addInputField()">+</button>
+        <div class="artist-cc">
+            <form id="artistForm" th:action="@{/artist/create}" method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
+                <h1>작가 기본 프로필 정보</h1>
+                <div class="termsText_1">
+                    <span class="checkText"><i class="fa-solid fa-check"></i> 전체 항목 필수 입력 사항입니다.</span>
                 </div>
-            </div>
-            <button type="submit" class="btn-primary-art">등록</button>
-        </form>
+                <div class="thumbnail">
+                    <img id="thumbnailPreview" src="#" alt="미리보기" style="display: none;" onclick="triggerFileInput()">
+                    <input type="file" id="thumbnail" th:field="*{thumbnail}" class="form-control" style="display: none;" onchange="previewThumbnail(this)">
+                    <button type="button" id="uploadButton" onclick="triggerFileInput()" class="iconBT">
+                        <i class="fa-solid fa-user-plus" style="margin-left: 15px;"></i>
+                    </button>
+                </div>
+                <div class="form-groupArt">
+                    <label for="engName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;영문 이름</label>
+                    <input type="text" id="engName" class="form-control" th:field="*{engName}">
+                    <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
+                </div>
+                <div class="form-groupArt">
+                    <label for="korName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;한글 이름</label>
+                    <input type="text" id="korName" class="form-control" th:field="*{korName}">
+                    <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
+                </div>
+                <div class="form-groupArt">
+                    <label for="birthDate" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;생년월일</label>
+                    <input type="text" id="birthDate" class="form-control" placeholder="생년월일 8자리를 입력하세요" th:field="*{birthDate}">
+                    <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
+                </div>
+                <label for="artistAddsContainer" class="add-form-label">추가 입력</label>
+                <div id="artistAddsContainer" class="input-group">
+                    <div class="input-wrapper">
+                        <input type="text" name="artistAdds[]" class="add-form-control"> <!-- name을 배열로 설정 -->
+                        <button type="button" class="add-btn" onclick="addInputField()">+</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-art">등록</button>
+            </form>
+            <br>
+        </div>
     </div>
 </div>
 </body>

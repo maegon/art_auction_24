@@ -1,23 +1,24 @@
 package com.example.ArtAuction_24.domain.artist.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.*;
+import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.repository.*;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class ArtistService {
     private final ArtistRepository artistRepository;
@@ -34,7 +35,7 @@ public class ArtistService {
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
 
-    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member) {
+    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds) {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
@@ -60,26 +61,28 @@ public class ArtistService {
                 .engName(engName)
                 .birthDate(birthDate)
                 .author(member)
-                .balance(0L)
                 .build();
         artistRepository.save(artist);
+
+        // artistAdds만 추가
+        addArtistAdditionalInfo(artist, artistAdds);
 
         return artist;
     }
 
-    public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork, Member member) {
-        Artist artist = Artist.builder()
-                .korName(korName)
-                .engName(engName)
-                .birthDate(birthDate)
-                .introduce(introduce)
-                .majorWork(majorWork)
-                .balance(0L)
-                .author(member)
-                .build();
-        artistRepository.save(artist);
-
-        return artist;
+    private void addArtistAdditionalInfo(Artist artist, List<String> artistAdds) {
+        if (artistAdds != null && !artistAdds.isEmpty()) {
+            List<ArtistAdd> artistAddList = artistAdds.stream()
+                    .filter(add -> add != null && !add.trim().isEmpty()) // 빈 문자열 필터링
+                    .map(add -> {
+                        ArtistAdd artistAdd = new ArtistAdd();
+                        artistAdd.setArtist(artist);
+                        artistAdd.setContent(add);
+                        return artistAdd;
+                    })
+                    .collect(Collectors.toList());
+            artistAddRepository.saveAll(artistAddList);
+        }
     }
 
     public Artist getArtist(Integer id) {
@@ -87,9 +90,12 @@ public class ArtistService {
                 .orElseThrow(() -> new DataNotFoundException("artist not found"));
     }
 
+    @Transactional
     public void modify(Artist artist, MultipartFile thumbnail, String korName, String engName, String birthDate, String introduce,
                        List<String> artistAdds, List<String> titleAdds, List<String> contentAdds,
-                       List<String> titleContentAdds, List<String> yearContentAdds, List<String> widthContentAdds, List<String> heightContentAdds, List<String> unitContentAdds, List<String> techniqueContentAdds) {
+                       List<String> titleContentAdds, List<String> yearContentAdds,
+                       List<String> widthContentAdds, List<String> heightContentAdds,
+                       List<String> unitContentAdds, List<String> techniqueContentAdds) {
 
         if (thumbnail != null && !thumbnail.isEmpty()) {
             String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
@@ -108,154 +114,218 @@ public class ArtistService {
         artist.setBirthDate(birthDate);
         artist.setIntroduce(introduce);
 
-        updateArtistAdds(artist, artistAdds);
-        updateTitleAdds(artist, titleAdds);
-        updateContentAdds(artist, contentAdds);
-        updateTitleContentAdds(artist, titleContentAdds);
-        updateYearContentAdds(artist, yearContentAdds);
-        updateWidthContentAdds(artist, widthContentAdds);
-        updateHeightContentAdds(artist, heightContentAdds);
-        updateUnitContentAdds(artist, unitContentAdds);
-        updateTechniqueContentAdds(artist, techniqueContentAdds);
+        // 각 리스트들을 처리하고 저장
+        updateArtistAdds(artist, convertToArtistAddList(artistAdds, artist));
+        updateTitleAdds(artist, convertToTitleAddList(titleAdds, artist));
+        updateContentAdds(artist, convertToContentAddList(contentAdds, artist));
+        updateTitleContentAdds(artist, convertToTitleContentAddList(titleContentAdds, artist));
+        updateYearContentAdds(artist, convertToYearContentAddList(yearContentAdds, artist));
+        updateWidthContentAdds(artist, convertToWidthContentAddList(widthContentAdds, artist));
+        updateHeightContentAdds(artist, convertToHeightContentAddList(heightContentAdds, artist));
+        updateUnitContentAdds(artist, convertToUnitContentAddList(unitContentAdds, artist));
+        updateTechniqueContentAdds(artist, convertToTechniqueContentAddList(techniqueContentAdds, artist));
+
+
+        // 그룹화된 데이터를 각각 저장
+        for (int i = 0; i < titleContentAdds.size(); i++) {
+            TitleContentAdd titleContentAdd = new TitleContentAdd();
+            titleContentAdd.setContent(titleContentAdds.get(i));
+            titleContentAdd.setArtist(artist);
+
+            // 로그 추가
+            System.out.println("Saving TitleContentAdd: " + titleContentAdd.getContent());
+
+            titleContentAddRepository.save(titleContentAdd);
+
+            YearContentAdd yearContentAdd = new YearContentAdd();
+            yearContentAdd.setContent(yearContentAdds.get(i));
+            yearContentAdd.setArtist(artist);
+
+            WidthContentAdd widthContentAdd = new WidthContentAdd();
+            widthContentAdd.setContent(widthContentAdds.get(i));
+            widthContentAdd.setArtist(artist);
+
+            HeightContentAdd heightContentAdd = new HeightContentAdd();
+            heightContentAdd.setContent(heightContentAdds.get(i));
+            heightContentAdd.setArtist(artist);
+
+            UnitContentAdd unitContentAdd = new UnitContentAdd();
+            unitContentAdd.setContent(unitContentAdds.get(i));
+            unitContentAdd.setArtist(artist);
+
+            TechniqueContentAdd techniqueContentAdd = new TechniqueContentAdd();
+            techniqueContentAdd.setContent(techniqueContentAdds.get(i));
+            techniqueContentAdd.setArtist(artist);
+
+            // 각각의 엔티티를 저장
+            titleContentAddRepository.save(titleContentAdd);
+            yearContentAddRepository.save(yearContentAdd);
+            widthContentAddRepository.save(widthContentAdd);
+            heightContentAddRepository.save(heightContentAdd);
+            unitContentAddRepository.save(unitContentAdd);
+            techniqueContentAddRepository.save(techniqueContentAdd);
+        }
 
         artistRepository.save(artist);
     }
 
-    private void updateArtistAdds(Artist artist, List<String> artistAdds) {
+    // 각 리스트를 변환하는 유틸리티 메서드
+    private List<ArtistAdd> convertToArtistAddList(List<String> artistAdds, Artist artist) {
+        return artistAdds.stream().map(content -> {
+            ArtistAdd artistAdd = new ArtistAdd();
+            artistAdd.setContent(content);
+            artistAdd.setArtist(artist);
+            return artistAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<TitleAdd> convertToTitleAddList(List<String> titleAdds, Artist artist) {
+        return titleAdds.stream().map(content -> {
+            TitleAdd titleAdd = new TitleAdd();
+            titleAdd.setContent(content);
+            titleAdd.setArtist(artist);
+            return titleAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<ContentAdd> convertToContentAddList(List<String> contentAdds, Artist artist) {
+        return contentAdds.stream().map(content -> {
+            ContentAdd contentAdd = new ContentAdd();
+            contentAdd.setContent(content);
+            contentAdd.setArtist(artist);
+            return contentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<TitleContentAdd> convertToTitleContentAddList(List<String> titleContentAdds, Artist artist) {
+        return titleContentAdds.stream().map(content -> {
+            TitleContentAdd titleContentAdd = new TitleContentAdd();
+            titleContentAdd.setContent(content);
+            titleContentAdd.setArtist(artist);
+            return titleContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<YearContentAdd> convertToYearContentAddList(List<String> yearContentAdds, Artist artist) {
+        return yearContentAdds.stream().map(content -> {
+            YearContentAdd yearContentAdd = new YearContentAdd();
+            yearContentAdd.setContent(content);
+            yearContentAdd.setArtist(artist);
+            return yearContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<WidthContentAdd> convertToWidthContentAddList(List<String> widthContentAdds, Artist artist) {
+        return widthContentAdds.stream().map(content -> {
+            WidthContentAdd widthContentAdd = new WidthContentAdd();
+            widthContentAdd.setContent(content);
+            widthContentAdd.setArtist(artist);
+            return widthContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<HeightContentAdd> convertToHeightContentAddList(List<String> heightContentAdds, Artist artist) {
+        return heightContentAdds.stream().map(content -> {
+            HeightContentAdd heightContentAdd = new HeightContentAdd();
+            heightContentAdd.setContent(content);
+            heightContentAdd.setArtist(artist);
+            return heightContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<UnitContentAdd> convertToUnitContentAddList(List<String> unitContentAdds, Artist artist) {
+        return unitContentAdds.stream().map(content -> {
+            UnitContentAdd unitContentAdd = new UnitContentAdd();
+            unitContentAdd.setContent(content);
+            unitContentAdd.setArtist(artist);
+            return unitContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+    private List<TechniqueContentAdd> convertToTechniqueContentAddList(List<String> techniqueContentAdds, Artist artist) {
+        return techniqueContentAdds.stream().map(content -> {
+            TechniqueContentAdd techniqueContentAdd = new TechniqueContentAdd();
+            techniqueContentAdd.setContent(content);
+            techniqueContentAdd.setArtist(artist);
+            return techniqueContentAdd;
+        }).collect(Collectors.toList());
+    }
+
+
+
+    private void updateArtistAdds(Artist artist, List<ArtistAdd> artistAdds) {
         if (artistAdds != null) {
-            List<ArtistAdd> artistAddList = new ArrayList<>();
-            for (String content : artistAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    ArtistAdd artistAdd = new ArtistAdd();
-                    artistAdd.setContent(content);
-                    artistAdd.setArtist(artist);
-                    artistAddList.add(artistAdd);
-                }
-            }
-            artistAddRepository.saveAll(artistAddList);
+            artistAddRepository.deleteAllByArtist(artist); // 기존 데이터 삭제
+            artistAdds.forEach(add -> add.setArtist(artist)); // 새 데이터에 아티스트 연결
+            artistAddRepository.saveAll(artistAdds); // 새 데이터 저장
         }
     }
 
-    private void updateTitleAdds(Artist artist, List<String> titleAdds) {
+    private void updateTitleAdds(Artist artist, List<TitleAdd> titleAdds) {
         if (titleAdds != null) {
-            List<TitleAdd> titleAddList = new ArrayList<>();
-            for (String content : titleAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    TitleAdd titleAdd = new TitleAdd();
-                    titleAdd.setContent(content);
-                    titleAdd.setArtist(artist);
-                    titleAddList.add(titleAdd);
-                }
-            }
-            titleAddRepository.saveAll(titleAddList);
+            titleAddRepository.deleteAllByArtist(artist);
+            titleAdds.forEach(add -> add.setArtist(artist));
+            titleAddRepository.saveAll(titleAdds);
         }
     }
 
-    private void updateContentAdds(Artist artist, List<String> contentAdds) {
+    private void updateContentAdds(Artist artist, List<ContentAdd> contentAdds) {
         if (contentAdds != null) {
-            List<ContentAdd> contentAddList = new ArrayList<>();
-            for (String content : contentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    ContentAdd contentAdd = new ContentAdd();
-                    contentAdd.setContent(content);
-                    contentAdd.setArtist(artist);
-                    contentAddList.add(contentAdd);
-                }
-            }
-            contentAddRepository.saveAll(contentAddList);
+            contentAddRepository.deleteAllByArtist(artist);
+            contentAdds.forEach(add -> add.setArtist(artist));
+            contentAddRepository.saveAll(contentAdds);
         }
     }
 
-    private void updateTitleContentAdds(Artist artist, List<String> titleContentAdds) {
+    private void updateTitleContentAdds(Artist artist, List<TitleContentAdd> titleContentAdds) {
         if (titleContentAdds != null) {
-            List<TitleContentAdd> titleContentAddList = new ArrayList<>();
-            for (String content : titleContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    TitleContentAdd titleContentAdd = new TitleContentAdd();
-                    titleContentAdd.setContent(content);
-                    titleContentAdd.setArtist(artist);
-                    titleContentAddList.add(titleContentAdd);
-                }
-            }
-            titleContentAddRepository.saveAll(titleContentAddList);
+            titleContentAddRepository.deleteAllByArtist(artist);
+            titleContentAdds.forEach(add -> add.setArtist(artist));
+            titleContentAddRepository.saveAll(titleContentAdds);
         }
     }
 
-    private void updateYearContentAdds(Artist artist, List<String> yearContentAdds) {
+    private void updateYearContentAdds(Artist artist, List<YearContentAdd> yearContentAdds) {
         if (yearContentAdds != null) {
-            List<YearContentAdd> yearContentAddList = new ArrayList<>();
-            for (String content : yearContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    YearContentAdd yearContentAdd = new YearContentAdd();
-                    yearContentAdd.setContent(content);
-                    yearContentAdd.setArtist(artist);
-                    yearContentAddList.add(yearContentAdd);
-                }
-            }
-            yearContentAddRepository.saveAll(yearContentAddList);
+            yearContentAddRepository.deleteAllByArtist(artist);
+            yearContentAdds.forEach(add -> add.setArtist(artist));
+            yearContentAddRepository.saveAll(yearContentAdds);
         }
     }
 
-    private void updateWidthContentAdds(Artist artist, List<String> widthContentAdds) {
+    private void updateWidthContentAdds(Artist artist, List<WidthContentAdd> widthContentAdds) {
         if (widthContentAdds != null) {
-            List<WidthContentAdd> widthContentAddList = new ArrayList<>();
-            for (String content : widthContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    WidthContentAdd widthContentAdd = new WidthContentAdd();
-                    widthContentAdd.setContent(content);
-                    widthContentAdd.setArtist(artist);
-                    widthContentAddList.add(widthContentAdd);
-                }
-            }
-            widthContentAddRepository.saveAll(widthContentAddList);
+            widthContentAddRepository.deleteAllByArtist(artist);
+            widthContentAdds.forEach(add -> add.setArtist(artist));
+            widthContentAddRepository.saveAll(widthContentAdds);
         }
     }
 
-    private void updateHeightContentAdds(Artist artist, List<String> heightContentAdds) {
+    private void updateHeightContentAdds(Artist artist, List<HeightContentAdd> heightContentAdds) {
         if (heightContentAdds != null) {
-            List<HeightContentAdd> heightContentAddList = new ArrayList<>();
-            for (String content : heightContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    HeightContentAdd heightContentAdd = new HeightContentAdd();
-                    heightContentAdd.setContent(content);
-                    heightContentAdd.setArtist(artist);
-                    heightContentAddList.add(heightContentAdd);
-                }
-            }
-            heightContentAddRepository.saveAll(heightContentAddList);
+            heightContentAddRepository.deleteAllByArtist(artist);
+            heightContentAdds.forEach(add -> add.setArtist(artist));
+            heightContentAddRepository.saveAll(heightContentAdds);
         }
     }
 
-    private void updateUnitContentAdds(Artist artist, List<String> unitContentAdds) {
+    private void updateUnitContentAdds(Artist artist, List<UnitContentAdd> unitContentAdds) {
         if (unitContentAdds != null) {
-            List<UnitContentAdd> unitContentAddList = new ArrayList<>();
-            for (String content : unitContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    UnitContentAdd unitContentAdd = new UnitContentAdd();
-                    unitContentAdd.setContent(content);
-                    unitContentAdd.setArtist(artist);
-                    unitContentAddList.add(unitContentAdd);
-                }
-            }
-            unitContentAddRepository.saveAll(unitContentAddList);
+            unitContentAddRepository.deleteAllByArtist(artist);
+            unitContentAdds.forEach(add -> add.setArtist(artist));
+            unitContentAddRepository.saveAll(unitContentAdds);
         }
     }
 
-    private void updateTechniqueContentAdds(Artist artist, List<String> techniqueContentAdds) {
+    private void updateTechniqueContentAdds(Artist artist, List<TechniqueContentAdd> techniqueContentAdds) {
         if (techniqueContentAdds != null) {
-            List<TechniqueContentAdd> techniqueContentAddList = new ArrayList<>();
-            for (String content : techniqueContentAdds) {
-                if (content != null && !content.trim().isEmpty()) {
-                    TechniqueContentAdd techniqueContentAdd = new TechniqueContentAdd();
-                    techniqueContentAdd.setContent(content);
-                    techniqueContentAdd.setArtist(artist);
-                    techniqueContentAddList.add(techniqueContentAdd);
-                }
-            }
-            techniqueContentAddRepository.saveAll(techniqueContentAddList);
+            techniqueContentAddRepository.deleteAllByArtist(artist);
+            techniqueContentAdds.forEach(add -> add.setArtist(artist));
+            techniqueContentAddRepository.saveAll(techniqueContentAdds);
         }
     }
 
+    @Transactional
     public void delete(Artist artist) {
         artistRepository.delete(artist);
     }
@@ -269,8 +339,6 @@ public class ArtistService {
                 .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
     }
 
-
-
     public List<Artist> findByKeyword(String keyword) {
         return artistRepository.findByKeyword(keyword);
     }
@@ -278,8 +346,7 @@ public class ArtistService {
     public Artist getArtistByKorName(String korName) {
         List<Artist> artists = artistRepository.findAllByKorName(korName);
         if (artists.size() > 1) {
-            // 첫 번째 결과를 반환하거나 로그를 남기고 중복을 처리
-            return artists.get(0);
+            return artists.get(0); // 중복이 있을 경우 첫 번째 결과를 반환
         } else if (artists.size() == 1) {
             return artists.get(0);
         } else {
@@ -287,7 +354,7 @@ public class ArtistService {
         }
     }
 
-    public Artist create(String korName, String engName, String birthDate, String introduce) {
+    public Artist Create(String korName, String engName, String birthDate, String introduce) {
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
@@ -299,5 +366,26 @@ public class ArtistService {
         return artist;
     }
 
+    public void updateArtistDetails(Artist artist, ArtistForm artistForm) {
+        // 기본 정보 업데이트
+        artist.setKorName(artistForm.getKorName());
+        artist.setEngName(artistForm.getEngName());
+        artist.setBirthDate(artistForm.getBirthDate());
+        artist.setIntroduce(artistForm.getIntroduce());
+
+        // 추가 필드 업데이트
+        updateArtistAdds(artist, convertToArtistAddList(artistForm.getArtistAdds(), artist));
+        updateTitleAdds(artist, convertToTitleAddList(artistForm.getTitleAdds(), artist));
+        updateContentAdds(artist, convertToContentAddList(artistForm.getContentAdds(), artist));
+        updateTitleContentAdds(artist, convertToTitleContentAddList(artistForm.getTitleContentAdds(), artist));
+        updateYearContentAdds(artist, convertToYearContentAddList(artistForm.getYearContentAdds(), artist));
+        updateWidthContentAdds(artist, convertToWidthContentAddList(artistForm.getWidthContentAdds(), artist));
+        updateHeightContentAdds(artist, convertToHeightContentAddList(artistForm.getHeightContentAdds(), artist));
+        updateUnitContentAdds(artist, convertToUnitContentAddList(artistForm.getUnitContentAdds(), artist));
+        updateTechniqueContentAdds(artist, convertToTechniqueContentAddList(artistForm.getTechniqueContentAdds(), artist));
+
+        // 변경된 아티스트 엔티티 저장
+        artistRepository.save(artist);
+    }
 
 }

@@ -4,6 +4,7 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -17,6 +18,8 @@ public class Art {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
+    @Setter
     private String thumbnailImg;
     @Setter
     @Getter
@@ -40,4 +43,5 @@ public class Art {
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;
     }
+
 }

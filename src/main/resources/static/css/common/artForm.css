@@ -70,6 +70,7 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     margin-left: 5px;
+    padding: 8px;
 }
 .spanX {
     margin-left: 8px;
@@ -110,6 +111,7 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     margin-left: 5px;
+    padding: 8px;
 }
 .form-labelArt-text {
     max-width: 700px;
@@ -117,6 +119,7 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     margin-left: 5px;
+    padding: 8px;
 }
 .btn-art {
     font-size: 20px;
@@ -141,6 +144,7 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     margin-left: 5px;
+    padding: 8px;
 }
 .artForm-span {
     margin-top: 4px;

@@ -36,7 +36,7 @@
 <body>
 <div layout:fragment="content">
     <div class="artCreateContainer">
-        <form id="artForm" th:action="@{/art/create}" method="post" th:object="${artForm}" enctype="multipart/form-data" class="artContainer">
+        <form id="artForm" method="post" th:object="${artForm}" enctype="multipart/form-data" class="artContainer">
             <h1>작품 등록</h1>
             <div class="termsText_1">
                 <span class="checkText"><i class="fa-solid fa-check"></i> 전체 항목 필수 입력 사항입니다.</span>
