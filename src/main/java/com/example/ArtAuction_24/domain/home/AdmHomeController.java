@@ -1,6 +1,8 @@
 package com.example.ArtAuction_24.domain.home;
 
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
+import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.dto.ApiResponse;
 import com.example.ArtAuction_24.domain.member.dto.MemberUpdateRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
@@ -40,6 +42,7 @@ public class AdmHomeController {
     private final ProductService productService;
     private final EmailService emailService;
     private final QuestionService questionService;
+    private final AuctionService auctionService;
     private final ArtistService artistService;
     private final PostService postService;
     @GetMapping("")
@@ -70,6 +73,14 @@ public class AdmHomeController {
         List<Member> memberList = memberService.getMemberList();
         model.addAttribute("memberList", memberList);
         return "admin/member/list";
+    }
+
+    @GetMapping("/auction/list")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String showAuction(Model model) {
+        List<Auction> auctionList = auctionService.getAuctionLit();
+        model.addAttribute("auctionList", auctionList);
+        return "admin/auction/list";
     }
 
     // 회원 권한 설정 저장

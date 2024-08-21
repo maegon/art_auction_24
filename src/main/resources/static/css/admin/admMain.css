@@ -1,8 +1,9 @@
-.admContainer {
-    padding: 0px 300px;
-    width: 100%;
-    margin-top: 10px;
-}
+@media (max-width: 768px) {
+ .admContainer{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+ }
+
 /* 주요 항목 */
 .mg_menu_btn {
     margin: 4px 12px;
