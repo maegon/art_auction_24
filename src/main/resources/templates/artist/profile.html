@@ -61,7 +61,7 @@
 <body>
 <div layout:fragment="content">
     <div class="artistProfileContainer">
-        <div class="basicArtistProfile">
+        <div class="basicArtistProfile_1">
             <div class="artistImg">
                 <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
             </div>
@@ -98,11 +98,11 @@
         <div class="textArtistProfile">
             <div class="textAdd_2">
                 <div class="textTileForm_test">
-                    <span class="title">INTRODUCE</span>
+                    <span class="title_1">INTRODUCE</span>
                     <span class="contentAdd" id="introduce" th:text="${artist.introduce}"></span>
                 </div>
                 <div class="textTileForm_test">
-                    <span class="title">MAJOR WORK</span>
+                    <span class="title_1">MAJOR WORK</span>
                     <a th:href="@{|/art/list/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -130,15 +130,15 @@
                     </div>
                 </div>
                 <div class="textTileForm_test">
-                    <div class="title" th:each="add : ${artist.titleAdds}">
-                        <span th:text="${add.content}"></span>
+                    <div class="title_1" th:each="add : ${artist.titleAdds}">
+                        <span th:text="${add.content}" style="margin-left: 8px;"></span>
                     </div>
                     <div class="contentAdd" th:each="add : ${artist.contentAdds}">
                         <span th:text="${add.content}"></span>
                     </div>
                 </div>
             </div>
-            <div class="button">
+            <div class="button_1">
                 <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-modify">
                     수정
                 </a>

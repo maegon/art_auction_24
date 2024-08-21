@@ -32,13 +32,33 @@ public class ArtistForm {
 
     private String existingThumbnailUrl;
 
-    private List<String> artistAdds = new ArrayList<>();
-    private List<String> contentAdds = new ArrayList<>();
-    private List<String> titleAdds = new ArrayList<>();
-    private List<String> titleContentAdds = new ArrayList<>();
-    private List<String> yearContentAdds = new ArrayList<>();
-    private List<String> widthContentAdds = new ArrayList<>();
-    private List<String> heightContentAdds = new ArrayList<>();
-    private List<String> unitContentAdds = new ArrayList<>();
-    private List<String> techniqueContentAdds = new ArrayList<>();
+    // Getters and Setters
+    @Setter
+    @Getter
+    private List<String> artistAdds;
+    @Setter
+    @Getter
+    private List<String> titleAdds;
+    @Setter
+    @Getter
+    private List<String> contentAdds;
+    @Setter
+    @Getter
+    private List<String> titleContentAdds;
+    @Setter
+    @Getter
+    private List<String> yearContentAdds;
+    @Setter
+    @Getter
+    private List<String> widthContentAdds;
+    @Setter
+    @Getter
+    private List<String> heightContentAdds;
+    @Setter
+    @Getter
+    private List<String> unitContentAdds;
+    @Setter
+    @Getter
+    private List<String> techniqueContentAdds;
+
 }

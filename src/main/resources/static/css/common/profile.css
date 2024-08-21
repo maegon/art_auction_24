@@ -2,14 +2,13 @@
     display: flex;
     height: 740px;
     width: 100%;
-    background-color: #f5f5f5;
 }
-.basicArtistProfile {
+.basicArtistProfile_1 {
     display: flex;
     flex-direction: column;
     height: 700px;
     width: 50%;
-    margin-left: 40px;
+    margin-left: 20px;
     /*border: 1px solid #9E9E9E;*/
     /*justify-content: center;*/
     align-items: center;
@@ -61,30 +60,35 @@
     flex-direction: column;
     height: 700px;
     width: 40%;
-    margin-left: 50px;
+    margin-left: 70px;
     /*border: 1px solid #9E9E9E;*/
     /*justify-content: center;*/
     /*align-items: center;*/
 }
 .textAdd_2 {
-    margin-top: 130px;
+    margin-top: 110px;
     height: 560px;
     width: 80%;
     /*border: 1px solid #9E9E9E;*/
+
 }
 .textTileForm_test {
     height: auto;
     width: 100%;
     margin-bottom: 50px;
     /*border: 1px solid #9E9E9E;*/
+    fixed: right;
 }
-.title {
+.title_1 {
     font-size: 30px;
 }
 
-.button {
-    margin-left: 500px;
+.button_1 {
+    margin-left: 300px;
     font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
 }
 .button-majorWorkForm {
     margin-left: 6px;
