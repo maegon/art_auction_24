@@ -45,12 +45,6 @@ public class AdmHomeController {
     private final AuctionService auctionService;
     private final ArtistService artistService;
     private final PostService postService;
-    @GetMapping("")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String index() {
-        return "admin/home/admMain";
-    }
-
     @GetMapping("/home/admMain")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String showMain(Model model) {
