@@ -1,6 +1,6 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="admContainer">
+    <div class="admContainer mx-auto px-6 lg:px-[300px] min-h-[600px] mb-4 mt-4">
             <div class="row justify-center">
                 <div class="col-12 text-center align-self-center">
                     <div class="section pb-3 pt-sm-2 text-center">
@@ -14,56 +14,61 @@
                                 <form th:action="@{/member/login}" class="loginPostForm" id="loginForm" method="POST">
                                     <div class="card-front">
                                         <div class="center-wrap">
-                                            <div class="section text-center h-full">
-                                                <div class="box_section flex">
-                                                    <div class="left_box front_left_box pt-16">
-                                                        <div class="form-group">
-                                                            <input type="text" name="username" class="form-style component-input"
-                                                                   placeholder="아이디 입력" id="component-input-id" autocomplete="off"
-                                                                   value>
+                                            
+                                            
+                                            <!-- 로그인 부분 반응형 -->
+                                            <div class="section text-center h-full p-1 lg:p-2">
+                                                
+                                                <div class="box_section flex flex-col lg:flex-row lg:space-x-8">
+                                                    <div class="left_box front_left_box w-full lg:w-1/2 mx-auto">
+                                                        <div class="form-group w-full">
+                                                            <input type="text" name="username" class="form-style component-input w-full"
+                                                                   placeholder="아이디 입력" id="component-input-id" autocomplete="off">
                                                             <i class="input-icon uil uil-user"></i>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group w-full mt-4">
                                                             <i class="input-icon uil uil-lock-alt"></i>
-                                                            <input type="password" name="password"
-                                                                   class="form-style component-input" placeholder="비밀번호 입력"
-                                                                   id="component-input-password" autocomplete="off" value>
+                                                            <input type="password" name="password" class="form-style component-input w-full"
+                                                                   placeholder="비밀번호 입력" id="component-input-password" autocomplete="off">
                                                         </div>
                                                         <div id="findAccountMessage" th:if="${findAccountMessage != null}" th:text="${findAccountMessage}" class="access"></div>
                                                         <div id="loginMatchError" th:if="${loginMatchError != null}" th:text="${loginMatchError}" class="error"></div>
-                                                        <div class="form-group flex justify-start pt-4">
+                                                        <div class="form-group w-full flex justify-start pt-4">
                                                             <input style='zoom:1.4;' type="checkbox" id="saveId"
                                                                    class="text-lg ml-4 mr-2 w-4 h-4"><span class="text-base">아이디 저장</span>
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="right_box front_right_box">
-                                                        <div class="right_box_text flex">
-                                                            <div class="lineCustom"></div>
-                                                            <span class="socialLogin_text text-xl">소셜 계정으로 로그인하기</span>
-                                                            <div class="lineCustom"></div>
+                                                    <div class="right_box front_right_box w-full lg:w-1/2 mt-8 lg:mt-0">
+                                                        <div class="right_box_text flex items-center justify-center">
+                                                            <div class="lineCustom flex-grow"></div>
+                                                            <span class="socialLogin_text text-xl px-4">소셜 계정으로 로그인하기</span>
+                                                            <div class="lineCustom flex-grow"></div>
                                                         </div>
-                                                        <div class="social-login-wrap mt-8">
+                                                        <div class="social-login-wrap mt-8 flex justify-around space-x-4">
                                                             <a href="/oauth2/authorization/kakao"><img src="/image/kakao_logo.png"
                                                                                                        alt="카카오로그인"
-                                                                                                       width="160px"></a>
+                                                                                                       class="w-36"></a>
                                                             <a href="/oauth2/authorization/naver"><img src="/image/naver_logo.png"
                                                                                                        alt="네이버로그인"
-                                                                                                       width="160px"></a>
+                                                                                                       class="w-36"></a>
                                                             <a href="/oauth2/authorization/google"><img src="/image/google_logo.png"
                                                                                                         alt="구글로그인"
-                                                                                                        width="160px"></a>
+                                                                                                        class="w-36"></a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="login-submit btn mt-8"
+                                                
+                                                <button type="submit" class="login-submit btn mt-8 w-full lg:w-auto"
                                                         disabled>로그인
                                                 </button>
                                                 <div class="accountRestoration_container flex w-full justify-center">
                                                     <button type="button" id="accountRestoration" class="mb-2 mt-8 text-center text-base">계정을 잊어버리셨나요?</button>
                                                 </div>
-                                                
+                                            
                                             </div>
+
+                                            
                                             
                                         </div>
                                     </div>
@@ -104,7 +109,9 @@
                                 
                                 
                                 <div class="card-back ">
-                                    <div class="checkAgree_section flex">
+                                    
+                                    <!-- 약관 동의 반응형 -->
+                                    <div class="checkAgree_section flex flex-col md:flex-row">
                                         <div class="privacyCheckbox mt-4">
                                             <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
                                             <div class="privacy_copyright_section mt-4">
@@ -166,6 +173,9 @@
                                             <label for="copyright" class="text-2xl ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
                                         </div>
                                     </div>
+                                    
+                                    
+                                    
                                     <button type="submit" id="agreeButton" class="btn mt-3" disabled>다음</button>
                                 </div>
                                 

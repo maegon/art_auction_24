@@ -26,6 +26,7 @@
                             <option value="DELIVERY">배송</option>
                             <option value="RETURN">환불</option>
                             <option value="OTHER">기타</option>
+                            <option value="APPLICANT">경매 신청</option>
                         </select>
                     </div>
 
@@ -38,12 +39,20 @@
 
 
                 <div class="border-2 border-slate-300 min-h-[700px]  my-10 px-3 py-3">
+                    
                     <textarea name="content" id="content" th:field="*{content}" class="form-control border-white resize-none" rows="15"
                               placeholder="내용을 입력해주세요
 
 
 Please feel free to submit your inquiry in your native language. For languages other than English and Korean, machine-trnaslated responses will be provided Machine-translations may not necessarily be 100% accurate. In such cases, Please submit your inquiry again we will do our best to provide the most accurate answer.
 "></textarea>
+                    <!-- 재원 추가 -->
+                    <div sec:authorize="hasAuthority('ARTIST')" class="text-green-600">
+                        <div class="text-xm">경매 신청 시 반드시 내용에</div>
+                        <div class="text-xm">경매 시작 날짜/시간 ~ 경매 마감 날짜/시간을 입력해주세요.</div>
+                        <div class="text-xm">경매에 올릴 작품 사진을 첨부해주세요.</div>
+                    </div>
+                    
                     <hr class="border-2 border-slate-300 my-3 mx-10">
                     <div class="min-h-[250px] flex flex-col justify-between">
                         <div class="">

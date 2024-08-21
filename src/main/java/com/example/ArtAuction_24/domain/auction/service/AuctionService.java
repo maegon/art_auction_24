@@ -137,6 +137,10 @@ public class AuctionService {
     }
 
 
-
+    public List<Auction> getAuctionLit() {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        return auctionRepository.findAll();
+    }
 }
 

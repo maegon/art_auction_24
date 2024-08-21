@@ -1,9 +1,6 @@
 package com.example.ArtAuction_24.domain.auction.controller;
 
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
-import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
-import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.form.AuctionForm;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
@@ -22,10 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,7 +28,6 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final ProductService productService;
     private final ProductRepository productRepository;
-    private final ArtistService artistService;
 
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
