@@ -6,20 +6,19 @@
             <div class="mg_menu_container flex flex-col w-full max-w-3xl">
                 <nav class="mg_menu flex flex-col p-4 bg-white rounded-lg shadow-lg">
                     <ul>
-                        <li class="flex flex-col mb-6">
-                            <span class="text-2xl mb-4 text-center font-semibold text-gray-800">작품 관리</span>
-                            <a th:href="@{/admin/product/list}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">작품 목록</a>
-                        </li>
+<!--                        <li class="flex flex-col mb-6">-->
+<!--                            <span class="text-2xl mb-4 text-center font-semibold text-gray-800">작품 관리</span>-->
+<!--                            <a th:href="@{/admin/product/list}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">작품 목록</a>-->
+<!--                        </li>-->
                         <li class="flex flex-col mb-6">
                             <span class="text-2xl mb-4 text-center font-semibold text-gray-800">경매 관리</span>
-                            <a th:href="@{/admin/auction/list}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">경매 목록</a>
                             <a th:href="@{/admin/auction/needAddAuction}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">신청된 경매 작품 확인</a>
                             <a th:href="@{/auction/create}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">새 경매 추가</a>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-2xl mb-4 text-center font-semibold text-gray-800">회원 관리</span>
                             <a th:href="@{/admin/member/list}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">회원 권한 설정</a>
-                            <a th:href="@{/admin/member/artistApplicantList}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">작가 신청자 확인</a>
+                            <a th:href="@{/admin/artist/applicantList}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">작가 신청자 확인</a>
                             <a th:href="@{/admin/question/manage}" class="mg_menu_btn text-lg text-right text-blue-600 font-medium hover:text-blue-800 transition ease-in-out duration-150">문의 관리</a>
                         </li>
                     </ul>
