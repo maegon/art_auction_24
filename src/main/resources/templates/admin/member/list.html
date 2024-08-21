@@ -81,9 +81,9 @@
                                 </select>
                             </div>
                             <div class="mb_list_ptc flex-1 text-center truncate" th:text="${member.providerTypeCode}"></div>
-                            <div class="mb_list_rl flex-1 text-center" th:data-role="${member.role}">
+                            <div class="mb_list_rl flex-1 text-center" th:data-role="${member.role.name()}">
                                 <select th:value="${member.role}" class="role border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
-                                    <option value="USER" th:selected="${member.role.name() == 'MEMBER'}">일반</option>
+                                    <option value="MEMBER" th:selected="${member.role.name() == 'MEMBER'}">일반</option>
                                     <option value="ARTIST" th:selected="${member.role.name() == 'ARTIST'}">작가</option>
                                     <option value="ADMIN" th:selected="${member.role.name() == 'ADMIN'}">관리자</option>
                                 </select>
@@ -180,31 +180,6 @@
         });
 
         // 저장 버튼 클릭 시 서버에 데이터 전송
-        document.querySelectorAll('.btn_save').forEach(button => {
-            button.addEventListener('click', function() {
-                const memberId = this.getAttribute('data-memberid');
-                const isActive = this.closest('li').querySelector('.isActive').value === 'true';
-                const role = this.closest('li').querySelector('.role').value;
-
-                fetch(`/admin/member/updateStatus`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        memberId: memberId,
-                        isActive: isActive,
-                        role: role
-                    })
-                }).then(response => {
-                    if (response.ok) {
-                        showAlert('회원 상태가 성공적으로 업데이트되었습니다.');
-                        location.reload();
-                    } else {
-                        showAlert('업데이트 중 오류가 발생했습니다.');
-                    }
-                });
-            });
-        });
+        
     });
 </script>

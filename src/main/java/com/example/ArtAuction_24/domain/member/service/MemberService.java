@@ -212,11 +212,17 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-//    public List<Member> getArtistApplicantList() {
-//
-//    }
-
     public void delete(Member member) {
         memberRepository.delete(member);
+    }
+
+    @Transactional
+    public void updateMemberStatusAndRole(Long memberId, boolean isActive, String role) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+
+        member.setIsActive(isActive);
+        member.setRole(MemberRole.valueOf(role));
+        memberRepository.save(member);
     }
 }

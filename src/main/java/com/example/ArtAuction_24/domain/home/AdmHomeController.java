@@ -1,7 +1,8 @@
 package com.example.ArtAuction_24.domain.home;
 
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
-import com.example.ArtAuction_24.domain.member.dto.AdmUpdateMemberRequest;
+import com.example.ArtAuction_24.domain.member.dto.ApiResponse;
+import com.example.ArtAuction_24.domain.member.dto.MemberUpdateRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,15 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -77,32 +69,56 @@ public class AdmHomeController {
         return "admin/member/list";
     }
 
+    // 회원 권한 설정 저장
     @PutMapping("/member/{memberId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<String, Object>> updateMemberVerAdmin(
-            @PathVariable("memberId") Long memberId,
-            @RequestBody Map<String, Object> updates) {
-        Map<String, Object> response = new HashMap<>();
-
-        return memberService.findById(memberId).map(member -> {
-            if (updates.containsKey("role") && updates.get("role") instanceof String) {
-                member.setRole(MemberRole.valueOf((String) updates.get("role")));
-            }
-
-            if (updates.containsKey("isActive") && updates.get("isActive") instanceof Boolean) {
-                member.setIsActive((Boolean) updates.get("isActive"));
-            }
-
-            memberService.save(member);
-            response.put("success", true);
-            response.put("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            return ResponseEntity.ok(response);
-        }).orElseGet(() -> {
-            response.put("success", false);
-            response.put("message", "회원 정보를 찾을 수 없습니다.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        });
+    public ResponseEntity<?> updateMember(@PathVariable Long memberId, @RequestBody MemberUpdateRequest request) {
+        try {
+            memberService.updateMemberStatusAndRole(memberId, request.getIsActive(), String.valueOf(MemberRole.valueOf(request.getRole())));
+            return ResponseEntity.ok().body(new ApiResponse(true, "회원 정보가 성공적으로 업데이트되었습니다."));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "업데이트 중 오류가 발생했습니다: " + e.getMessage()));
+        }
     }
+
+//    @PutMapping("/member/{memberId}")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    public ResponseEntity<Map<String, Object>> updateMemberVerAdmin(
+//            @PathVariable("memberId") Long memberId,
+//            @RequestBody Map<String, Object> updates) {
+//        Map<String, Object> response = new HashMap<>();
+//
+//        // 회원 ID로 회원 조회
+//        return memberService.findById(memberId).map(member -> {
+//            // 권한 업데이트
+//            if (updates.containsKey("role") && updates.get("role") instanceof String) {
+//                try {
+//                    member.setRole(MemberRole.valueOf((String) updates.get("role")));
+//                } catch (IllegalArgumentException e) {
+//                    response.put("success", false);
+//                    response.put("message", "잘못된 역할 값입니다.");
+//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//                }
+//            }
+//
+//            // 활성화 상태 업데이트
+//            if (updates.containsKey("isActive") && updates.get("isActive") instanceof Boolean) {
+//                member.setIsActive((Boolean) updates.get("isActive"));
+//            }
+//
+//            // 변경 사항 저장
+//            memberService.save(member);
+//
+//            response.put("success", true);
+//            response.put("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+//            return ResponseEntity.ok(response);  // 200 OK 상태 반환
+//        }).orElseGet(() -> {
+//            response.put("success", false);
+//            response.put("message", "회원 정보를 찾을 수 없습니다.");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);  // 404 상태 반환
+//        });
+//    }
+
+
 
     @GetMapping("/question/manage")
     @PreAuthorize("hasAuthority('ADMIN')")
