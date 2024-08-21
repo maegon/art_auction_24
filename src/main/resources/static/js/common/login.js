@@ -86,3 +86,22 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 약관 토글 버튼
+    const togglePrivacyBtn = document.getElementById('togglePrivacyBtn');
+    const privacyContent = document.getElementById('privacyContent');
+
+    togglePrivacyBtn.addEventListener('click', function() {
+        privacyContent.classList.toggle('hidden');
+    });
+
+    // 저작권 토글 버튼
+    const toggleCopyrightBtn = document.getElementById('toggleCopyrightBtn');
+    const copyrightContent = document.getElementById('copyrightContent');
+
+    toggleCopyrightBtn.addEventListener('click', function() {
+        copyrightContent.classList.toggle('hidden');
+    });
+});

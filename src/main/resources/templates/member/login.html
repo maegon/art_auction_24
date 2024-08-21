@@ -1,6 +1,6 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="admContainer mx-auto px-6 lg:px-[300px] min-h-[600px] mb-4 mt-4">
+    <div class="admContainer mx-auto px-6 lg:px-[300px] min-h-screen mt-4 flex flex-col">
             <div class="row justify-center">
                 <div class="col-12 text-center align-self-center">
                     <div class="section pb-3 pt-sm-2 text-center">
@@ -110,16 +110,14 @@
                                 </div>
                                 
                                 
-                                
-                                
-                                <div class="card-back ">
-                                    
-                                    <!-- 약관 동의 반응형 -->
+                                <!-- 약관 동의 반응형 -->
+                                <div class="card-back">
                                     <div class="checkAgree_section flex flex-col md:flex-row">
                                         <div class="privacyCheckbox mt-4">
                                             <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
-                                            <div class="privacy_copyright_section mt-4">
-                                                <div class="mb-3">
+                                            <button id="togglePrivacyBtn" class="mobile-only text-blue-500 underline mt-2">약관 보기/숨기기</button>
+                                            <div id="privacyContent" class="privacy_copyright_section mt-4 md:block hidden">
+                                                <div class="mb-3 w-11/12 mx-auto overflow-y-scroll border border-gray-300 h-[100px] md:h-[400px]">
                                                     <div class="text-box">
                                                         <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
                                                         <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
@@ -150,8 +148,9 @@
                                         </div>
                                         <div class="copyrightCheckbox mt-4">
                                             <span class="text-xl">저작권 법률에 대한 안내 및 동의</span>
-                                            <div class="privacy_copyright_section">
-                                                <div class="mt-4 mb-3">
+                                            <button id="toggleCopyrightBtn" class="mobile-only text-blue-500 underline mt-2">저작권 보기/숨기기</button>
+                                            <div id="copyrightContent" class="privacy_copyright_section mt-4 md:block hidden">
+                                                <div class="mb-3 w-11/12 mx-auto overflow-y-scroll border border-gray-300 h-[100px] md:h-[400px]">
                                                     <div class="text-box">
                                                         <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
                                                         <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
@@ -170,19 +169,17 @@
                                                             2. 당 사이트의 저작물이나 디자인을 무단 복제하거나 사용한 경우, 당 사이트는 법적 조치를 통해 이를 중지시키고 손해배상을 청구할 수 있습니다.<br/>
                                                         </p>
                                                     </div>
-                                                
-                                                
-                                                </div></div>
+                                                </div>
+                                            </div>
                                             <input type="checkbox" id="copyright" name="copyright" class="w-6 h-6" required>
                                             <label for="copyright" class="text-2xl ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
                                         </div>
                                     </div>
                                     
-                                    
-                                    
                                     <button type="submit" id="agreeButton" class="btn mt-3" disabled>다음</button>
                                 </div>
                                 
+                                <!-- 회원 가입 반응형 -->
                                 <form th:action="@{/member/join}" th:object="${memberForm}" class="joinPostForm" method="POST" enctype="multipart/form-data" id="joinForm" style="display:none;">
                                     <input id="hd_email" type="hidden"  name="email">
                                     <input id="hd_address" type="hidden"  name="address">
