@@ -56,6 +56,24 @@
             // 페이지 로드 시 선택된 제품 초기화
             updateSelectedProducts();
         });
+         document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchProducts');
+        const productItems = document.querySelectorAll('.product-item');
+
+        // 검색 입력 필드의 값이 변경될 때마다 필터링 실행
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
+
+            productItems.forEach(item => {
+                const title = item.querySelector('.product-title').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = '';  // 일치하는 항목은 보여줌
+                } else {
+                    item.style.display = 'none';  // 일치하지 않는 항목은 숨김
+                }
+            });
+        });
+    });
     </script>
 </head>
 <body>
@@ -83,13 +101,18 @@
                 </div>
 
                 <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Search Products</label>
+                    <input type="text" id="searchProducts" placeholder="제목이나 작가 이름을 입력해 주세요" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                </div>
+
+                <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Select Products</label>
-                    <div class="flex flex-col space-y-2">
-                        <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2">
+                    <div id="productList" class="flex flex-col space-y-2">
+                        <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2 product-item">
                             <label class="flex items-center space-x-3 cursor-pointer w-full">
                                 <input type="checkbox" name="products" th:value="${product.id}" class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-400"/>
-                                <img th:src="@{${product.thumbnailImg}}" alt="Product Image" class="w-16 h-16 object-cover"/>
-                                <span th:text="|${product.title} (${product.artist.korName})|" class="ml-2 text-gray-700 text-sm"></span>
+                                <img th:src="@{|/${product.thumbnailImg}|}" alt="Product Image" class="w-16 h-16 object-cover"/>
+                                <span th:text="|${product.title} (${product.artist.korName})|" class="ml-2 text-gray-700 text-sm product-title"></span>
                             </label>
                         </div>
                     </div>

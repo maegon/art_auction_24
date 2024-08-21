@@ -64,9 +64,11 @@ public class ProductController {
             return "product/form";
         }
 
-        /*Artist artist = artistService.getArtist();
+        Member member = this.memberService.getCurrentMember();
+
+        Artist artist = this.artistService.findByMember(member);
         this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getDimensions(), productForm.getStartingPrice(),
-                  LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);*/
+                  LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);
         return "redirect:/product/list";
     }
 

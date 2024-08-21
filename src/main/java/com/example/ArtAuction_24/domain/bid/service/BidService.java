@@ -1,6 +1,9 @@
 package com.example.ArtAuction_24.domain.bid.service;
 
+
+
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
+import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
@@ -35,6 +38,7 @@ public class BidService {
     private final AuctionRepository auctionRepository;
     private final NotificationService notificationService;
     private final OrderService orderService;
+    private final ArtistRepository artistRepository;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
 
@@ -111,6 +115,9 @@ public class BidService {
                     // 주문 생성
                     orderService.createOrderForAuction(auction);
 
+                    // 작가의 계좌에 낙찰 금액 입금
+                    product.getArtist().setBalance(product.getArtist().getBalance() + bid.getAmount().longValue());
+                    artistRepository.save(product.getArtist());
 
                     winningBidProcessed = true;
                     break;  // 유효한 입찰자가 있으면 종료

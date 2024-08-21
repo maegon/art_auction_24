@@ -41,7 +41,7 @@ public class ProductService {
     private final LikeProductRepository likeProductRepository;
 
     @Value("${custom.genFileDirPath}")
-    private String genFileDirPath;
+    private String fileDirPath;
 
 
 
@@ -70,23 +70,53 @@ public class ProductService {
         }
     }
 
-    public Product create(String title, String description, String medium, String dimensions,
+    public void create(String title, String description, String medium, String dimensions,
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
-                          String thumbnailImg, String category, Artist artist) {
+                          MultipartFile thumbnailImg, String category, Artist artist) {
 
-        // 파일 경로를 설정합니다.
-        String thumbnailRelPath = "image/" + UUID.randomUUID().toString() + ".jpg";
-        File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+        // 경로를 수정하여 ProductImages 디렉토리에 저장하도록 합니다.
+        String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
+        File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
-        // 디렉토리 생성
-        File parentDir = thumbnailFile.getParentFile();
-        if (parentDir != null && !parentDir.exists()) {
-            if (!parentDir.mkdirs()) {
-                throw new RuntimeException("디렉토리를 생성할 수 없습니다: " + parentDir.getAbsolutePath());
+        File dir = new File(fileDirPath + "/image/product");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
             }
         }
 
+        try {
+            thumbnailImg.transferTo(thumbnailFile);
+            if (!thumbnailFile.exists()) {
+                throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
+        }
+
         // Product 객체를 생성합니다.
+        Product p = Product.builder()
+                .title(title)
+                .description(description)
+                .medium(medium)
+                .dimensions(dimensions)
+                .startingPrice(startingPrice)
+                .currentBid(startingPrice)  // startingPrice와 동일하게 설정
+                .auctionStartDate(auctionStartDate)  // 매개변수로 받은 auctionStartDate 사용
+                .thumbnailImg(thumbnailRelPath)
+                .category(category)
+                .artist(artist)
+                .build();
+
+        // Product를 저장합니다.
+        productRepository.save(p);
+
+    }
+
+    public Product create(String title, String description, String medium, String dimensions,
+                          BigDecimal startingPrice, LocalDateTime auctionStartDate,
+                          String thumbnailImg, String category, Artist artist){
+
         Product p = Product.builder()
                 .title(title)
                 .description(description)
@@ -104,6 +134,7 @@ public class ProductService {
         productRepository.save(p);
 
         return p;
+
     }
 
 

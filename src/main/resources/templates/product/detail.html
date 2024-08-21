@@ -7,7 +7,7 @@
                 <!-- 이미지 부분 -->
                 <div class="w-full lg:w-[900px] lg:px-[100px] p-4 flex items-center justify-center border-b border-gray-300">
                     <img class="w-full max-w-[300px] border auctionProductTarget"
-                         th:src="@{${product.thumbnailImg}}" alt="상품이미지">
+                         th:src="@{|/${product.thumbnailImg}|}" alt="상품이미지">
                 </div>
 
                 <!-- 정보 부분 -->

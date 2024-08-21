@@ -90,17 +90,26 @@ public class AuctionController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
-    public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
+    public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model) {
         if (bindingResult.hasErrors()) {
+            // 모든 제품을 다시 모델에 추가 (이 부분이 중요)
+            List<Product> availableProducts = auctionService.getAvailableProducts();
+            model.addAttribute("allProducts", availableProducts);
+
             return "auction/form";
         }
 
-        // Fetch products based on IDs
+
         List<Product> products = productRepository.findAllById(auctionForm.getProducts());
 
+        // 찾지 못한 제품이 있으면 에러 처리
         if (products.size() != auctionForm.getProducts().size()) {
-            // Handle case where some products could not be found
             bindingResult.rejectValue("products", "error.products", "One or more products are not available.");
+
+            // 모든 제품을 다시 모델에 추가
+            List<Product> availableProducts = auctionService.getAvailableProducts();
+            model.addAttribute("allProducts", availableProducts);
+
             return "auction/form";
         }
 
