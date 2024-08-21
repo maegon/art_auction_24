@@ -5,6 +5,7 @@ import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.repository.*;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Transactional
 @Service
 public class ArtistService {
     private final ArtistRepository artistRepository;
@@ -61,6 +63,7 @@ public class ArtistService {
                 .engName(engName)
                 .birthDate(birthDate)
                 .author(member)
+                .balance(0L)
                 .build();
         artistRepository.save(artist);
 
@@ -83,6 +86,22 @@ public class ArtistService {
                     .collect(Collectors.toList());
             artistAddRepository.saveAll(artistAddList);
         }
+    }
+
+
+    public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork, Member member) {
+        Artist artist = Artist.builder()
+                .korName(korName)
+                .engName(engName)
+                .birthDate(birthDate)
+                .introduce(introduce)
+                .majorWork(majorWork)
+                .balance(0L)
+                .author(member)
+                .build();
+        artistRepository.save(artist);
+
+        return artist;
     }
 
     public Artist getArtist(Integer id) {
@@ -339,6 +358,8 @@ public class ArtistService {
                 .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
     }
 
+
+
     public List<Artist> findByKeyword(String keyword) {
         return artistRepository.findByKeyword(keyword);
     }
@@ -346,7 +367,8 @@ public class ArtistService {
     public Artist getArtistByKorName(String korName) {
         List<Artist> artists = artistRepository.findAllByKorName(korName);
         if (artists.size() > 1) {
-            return artists.get(0); // 중복이 있을 경우 첫 번째 결과를 반환
+            // 첫 번째 결과를 반환하거나 로그를 남기고 중복을 처리
+            return artists.get(0);
         } else if (artists.size() == 1) {
             return artists.get(0);
         } else {
@@ -354,7 +376,7 @@ public class ArtistService {
         }
     }
 
-    public Artist Create(String korName, String engName, String birthDate, String introduce) {
+    public Artist create(String korName, String engName, String birthDate, String introduce) {
         Artist artist = Artist.builder()
                 .korName(korName)
                 .engName(engName)
@@ -365,7 +387,6 @@ public class ArtistService {
 
         return artist;
     }
-
     public void updateArtistDetails(Artist artist, ArtistForm artistForm) {
         // 기본 정보 업데이트
         artist.setKorName(artistForm.getKorName());
