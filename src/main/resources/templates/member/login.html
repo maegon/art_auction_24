@@ -1,6 +1,6 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="admContainer mx-auto px-6 lg:px-[300px] min-h-[600px] mb-4 mt-4">
+    <div class="admContainer mx-auto px-6 lg:px-[300px] min-h-screen mt-4 flex flex-col">
             <div class="row justify-center">
                 <div class="col-12 text-center align-self-center">
                     <div class="section pb-3 pt-sm-2 text-center">
@@ -74,48 +74,50 @@
                                     </div>
                                 </form>
                                 
-                                <div class="accountRestoration_section flex flex-col" style="display:none;">
-                                    <button class="backLink2 text-xl inline-block mt-3"><i class="fa-solid fa-arrow-left w-8 h-8"></i> 이전</button>
-                                    <div class="flex">
+                                <div class="accountRestoration_section flex flex-col max-w-screen mx-auto">
+                                    <button class="backLink2 text-xl flex items-center justify-start mt-3 ml-4">
+                                        <i class="fa-solid fa-arrow-left mr-2"></i> 이전
+                                    </button>
+                                    
+                                    <div class="flex flex-col lg:flex-row justify-center items-center lg:space-x-8">
                                         <!-- 아이디 찾기 -->
-                                        <div class="usernameRestorationBox">
+                                        <div class="usernameRestorationBox w-full">
                                             <h3 class="text-center text-xl mt-4 mb-4">아이디 찾기</h3>
-                                            <form id="findUsernameForm" method="POST" th:action="@{/sendmail/find-username}">
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findUsernameEmail" autocomplete="off">
+                                            <form id="findUsernameForm" method="POST" th:action="@{/sendmail/find-username}" class="space-y-4 w-full">
+                                                <div class="form-group relative">
+                                                    <input type="email" name="email" class="form-style component-input w-full pl-12" placeholder="이메일 입력" id="findUsernameEmail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
-                                                <button type="submit" class="btn mt-3" id="findUsernameSubmit">아이디 찾기</button>
+                                                <button type="submit" class="btn mt-3 w-full bg-black text-white py-2">아이디 찾기</button>
                                             </form>
                                         </div>
                                         <!-- 패스워드 찾기 -->
-                                        <div class="passwordRestorationBox">
+                                        <div class="passwordRestorationBox w-full mt-6 lg:mt-0">
                                             <h3 class="text-center text-xl mt-4 mb-4">패스워드 찾기</h3>
-                                            <form id="findPasswordForm" method="POST" th:action="@{/sendmail/find-password}">
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="text" name="username" class="form-style" placeholder="아이디 입력" id="findPasswordUsername" autocomplete="off">
+                                            <form id="findPasswordForm" method="POST" th:action="@{/sendmail/find-password}" class="space-y-4 w-full">
+                                                <div class="form-group relative">
+                                                    <input type="text" name="username" class="form-style component-input w-full pl-12" placeholder="아이디 입력" id="findPasswordUsername" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
                                                 </div>
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findPasswordEmail" autocomplete="off">
+                                                <div class="form-group relative">
+                                                    <input type="email" name="email" class="form-style component-input w-full pl-12" placeholder="이메일 입력" id="findPasswordEmail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
-                                                <button type="submit" class="btn mt-3" id="findPasswordSubmit">패스워드 찾기</button>
+                                                <button type="submit" class="btn mt-3 w-full bg-black text-white py-2">패스워드 찾기</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 
-                                
-                                <div class="card-back ">
-                                    
-                                    <!-- 약관 동의 반응형 -->
+                                <!-- 약관 동의 반응형 -->
+                                <div class="card-back">
                                     <div class="checkAgree_section flex flex-col md:flex-row">
                                         <div class="privacyCheckbox mt-4">
                                             <span class="text-xl">이용약관 및 개인정보 수집에 대한 동의</span>
-                                            <div class="privacy_copyright_section mt-4">
-                                                <div class="mb-3">
+                                            <button id="togglePrivacyBtn" class="mobile-only text-blue-500 underline mt-2">약관 보기/숨기기</button>
+                                            <div id="privacyContent" class="privacy_copyright_section mt-4 md:block hidden">
+                                                <div class="mb-3 w-11/12 mx-auto overflow-y-scroll border border-gray-300 h-[100px] md:h-[400px]">
                                                     <div class="text-box">
                                                         <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
                                                         <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
@@ -146,8 +148,9 @@
                                         </div>
                                         <div class="copyrightCheckbox mt-4">
                                             <span class="text-xl">저작권 법률에 대한 안내 및 동의</span>
-                                            <div class="privacy_copyright_section">
-                                                <div class="mt-4 mb-3">
+                                            <button id="toggleCopyrightBtn" class="mobile-only text-blue-500 underline mt-2">저작권 보기/숨기기</button>
+                                            <div id="copyrightContent" class="privacy_copyright_section mt-4 md:block hidden">
+                                                <div class="mb-3 w-11/12 mx-auto overflow-y-scroll border border-gray-300 h-[100px] md:h-[400px]">
                                                     <div class="text-box">
                                                         <h5 class="text-lg ml-4 mr-4 mt-4 mb-2">제 1장 총칙</h5>
                                                         <h5 class="text-base ml-4 mr-4 mt-4 mb-2 text-left">제 1 조 (목적)</h5>
@@ -166,22 +169,21 @@
                                                             2. 당 사이트의 저작물이나 디자인을 무단 복제하거나 사용한 경우, 당 사이트는 법적 조치를 통해 이를 중지시키고 손해배상을 청구할 수 있습니다.<br/>
                                                         </p>
                                                     </div>
-                                                
-                                                
-                                                </div></div>
+                                                </div>
+                                            </div>
                                             <input type="checkbox" id="copyright" name="copyright" class="w-6 h-6" required>
                                             <label for="copyright" class="text-2xl ml-2">저작권 법률에 대한 안내 및 동의(필수)</label>
                                         </div>
                                     </div>
                                     
-                                    
-                                    
                                     <button type="submit" id="agreeButton" class="btn mt-3" disabled>다음</button>
                                 </div>
                                 
+                                <!-- 회원 가입 반응형 -->
+                                
                                 <form th:action="@{/member/join}" th:object="${memberForm}" class="joinPostForm" method="POST" enctype="multipart/form-data" id="joinForm" style="display:none;">
-                                    <input id="hd_email" type="hidden"  name="email">
-                                    <input id="hd_address" type="hidden"  name="address">
+                                    <input id="hd_email" type="hidden" name="email">
+                                    <input id="hd_address" type="hidden" name="address">
                                     
                                     <div class="card-back">
                                         <div class="center-wrap">
@@ -189,37 +191,31 @@
                                                 <button class="backLink text-xl inline-block mt-3"><i class="fa-solid fa-arrow-left w-8 h-8"></i> 이전</button>
                                             </div>
                                             <div class="section text-center">
-                                                <div class="flex">
-                                                    <div class="left_box">
-                                                        <div class="form-group ml-6 mr-6 inputUsernameDiv">
-                                                            <input type="text" name="username" class="form-style"
-                                                                   placeholder="아이디 입력" id="username" autocomplete="off">
+                                                <div class="flex flex-col md:flex-row items-center w-full px-4">
+                                                    <div class="left_box w-full md:w-1/2 md:pr-2">
+                                                        <div class="form-group inputUsernameDiv w-full mb-4">
+                                                            <input type="text" name="username" class="form-style w-full" placeholder="아이디 입력" id="username" autocomplete="off">
                                                             <i class="input-icon uil uil-user"></i>
-                                                            <button type="button" onclick="validateUsername()"
-                                                                    class="confirmAndCheckBtn btn ml-2 mt-1 mb-1 p-1" id="usernameCheckButton" disabled>중복확인
-                                                            </button>
+                                                            <button type="button" onclick="validateUsername()" class="confirmAndCheckBtn btn ml-4 p-1" id="usernameCheckButton" disabled>중복확인</button>
                                                         </div>
                                                         <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
-                                                        <div class="form-group ml-6 mr-6">
-                                                            <input type="password" name="password" class="form-style" maxlength="24"
-                                                                   placeholder="비밀번호 입력" id="password" autocomplete="off">
+                                                        <div class="form-group w-full mb-4">
+                                                            <input type="password" name="password" class="form-style w-full" maxlength="24" placeholder="비밀번호 입력" id="password" autocomplete="off">
                                                             <i class="input-icon uil uil-lock-alt"></i>
                                                         </div>
-                                                        <div class="form-group mt-1 ml-6 mr-6">
-                                                            <input type="password" name="password_confirm" class="form-style"
-                                                                   maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm"
-                                                                   autocomplete="off">
+                                                        <div class="form-group mt-1 w-full mb-4">
+                                                            <input type="password" name="password_confirm" class="form-style w-full" maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm" autocomplete="off">
                                                             <i class="input-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         <div id="passwordMatchError" class="error"></div>
-                                                        <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                            <input class="form-style box w-xm mr-2" id="email-txt" type="text"
-                                                                   placeholder="이메일 입력" name="logemailT" autocomplete="off">
+                                                        <div class="form-group mt-1 w-full flex items-center mb-4">
+                                                            <input class="form-style w-1/2 mr-2" id="email-txt" type="text" placeholder="이메일 입력" name="logemailT" autocomplete="off">
                                                             <i class="input-icon uil uil-at"></i>
-                                                            @<input class="form-style box w-xm ml-2" id="domain-txt" type="text"
-                                                                    placeholder="이메일 선택" name="logemail" autocomplete="off">
+                                                            @<input class="form-style w-1/2 ml-2" id="domain-txt" type="text" placeholder="도메인 입력" name="logemail" autocomplete="off">
                                                             <i class="input-icon uil uil-at"></i>
-                                                            <select class="box form-style ml-2" id="domain-list">
+                                                            <!-- select를 통해 도메인을 선택하고 나면 이메일 인증은 잘 되지만 회원가입 완료를 하게 되면 이메일이 저장되지 않기에
+                                                            select문을 지우고 싶지만 지우면 자바스크립트가 작동되지 않기에 그냥 냅두고 hidden 처리 함 -->
+                                                            <select class="box form-style ml-2 hidden" id="domain-list">
                                                                 <option value="type">직접 입력</option>
                                                                 <option value="naver.com">naver.com</option>
                                                                 <option value="gmail.com">gmail.com</option>
@@ -228,48 +224,36 @@
                                                                 <option value="daum.net">daum.net</option>
                                                             </select>
                                                         </div>
-                                                        <div class="form-group mt-1 ml-6 mr-6 flex">
-                                                            <input type="text" name="email_confirm" class="form-style box w-xm mr-1"
-                                                                   placeholder="인증 번호 입력" id="emailConfirm"
-                                                                   autocomplete="off" required>
+                                                        <div class="form-group mt-1 w-full flex items-center mb-4">
+                                                            <input type="text" name="email_confirm" class="form-style w-2/3 mr-2" placeholder="인증 번호 입력" id="emailConfirm" autocomplete="off" required>
                                                             <i class="input-icon uil uil-envelope-check"></i>
-                                                            <button type="button" class="confirmAndCheckBtn2 btn ml-1 mt-1 mb-1 p-1" id="emailCheckButton">인증번호 발급
-                                                            </button>
+                                                            <button type="button" class="confirmAndCheckBtn2 btn ml-4 p-1" id="emailCheckButton">인증번호 발급</button>
                                                         </div>
                                                         <div id="emailError" class="error"></div>
                                                     </div>
-                                                    <div class="right_box">
-                                                        <div class="form-group ml-6 mr-6 inputNicknameDiv">
-                                                            <input type="text" name="nickname" class="form-style"
-                                                                   placeholder="닉네임 입력" id="nickname" autocomplete="off">
+                                                    
+                                                    <div class="right_box w-full md:w-1/2 md:pl-2 md:mt-0">
+                                                        <div class="form-group inputNicknameDiv w-full mb-4">
+                                                            <input type="text" name="nickname" class="form-style w-full" placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                             <i class="input-icon uil uil-user"></i>
-                                                            <button type="button" onclick="validateNickname()"
-                                                                    class="confirmAndCheckBtn btn ml-2 mt-1 mb-1 p-1" id="nicknameCheckButton" disabled>중복확인
-                                                            </button>
+                                                            <button type="button" onclick="validateNickname()" class="confirmAndCheckBtn btn ml-4 p-1" id="nicknameCheckButton" disabled>중복확인</button>
                                                         </div>
                                                         <div id="nicknameError" class="error"></div>
-                                                        <div class="form-group ml-6 mr-6">
-                                                            <input type="tel" name="phoneNumber" class="form-style"
-                                                                   placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
+                                                        <div class="form-group w-full mb-4">
+                                                            <input type="tel" name="phoneNumber" class="form-style w-full" placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                             <i class="input-icon uil uil-phone"></i>
                                                         </div>
                                                         <div id="phoneNumberError" class="error"></div>
-                                                        <div class="form-group mt-1 ml-6 mr-6">
-                                                            <!-- 우편 번호 API 사용 시 주의점 : 각 필드 별 id에 정해진 id 값(sample~)이 아닌 다른 값 작성하면 작동 안됨 -->
-                                                            <div class="address_sec_1 flex">
-                                                                <input type="text" id="sample6_postcode" class="form-style"
-                                                                       placeholder="우편번호">
-                                                                <input type="button" onclick="sample6_execDaumPostcode()"
-                                                                       class="confirmAndCheckBtn btn ml-2 mt-auto mb-auto p-1" value="우편찾기">
+                                                        <div class="form-group mt-1 w-full mb-4">
+                                                            <div class="address_sec_1 flex items-center w-full mb-2">
+                                                                <input type="text" id="sample6_postcode" class="form-style" placeholder="우편번호">
+                                                                <input type="button" onclick="sample6_execDaumPostcode()" class="confirmAndCheckBtn btn ml-4 p-1" value="우편찾기">
                                                             </div>
                                                             <i class="input-icon uil uil-estate"></i>
-                                                            <input type="text" id="sample6_address"
-                                                                   name="address1" class="form-style mt-1 mb-1" placeholder="주소">
-                                                            <div class="address_sec_2 flex">
-                                                                <input type="text" id="sample6_detailAddress"
-                                                                       name="address2" class="form-style mt-auto mb-auto" placeholder="상세주소" required>
-                                                                <input type="text" id="sample6_extraAddress" class="form-style ml-1 mt-2 mb-2"
-                                                                       name="address3" placeholder="참고항목">
+                                                            <input type="text" id="sample6_address" name="address1" class="form-style w-full mt-1 mb-2" placeholder="주소">
+                                                            <div class="address_sec_2 flex items-center w-full">
+                                                                <input type="text" id="sample6_detailAddress" name="address2" class="form-style w-2/3 mr-2" placeholder="상세주소" required>
+                                                                <input type="text" id="sample6_extraAddress" class="form-style w-1/3" name="address3" placeholder="참고항목">
                                                             </div>
                                                         </div>
                                                         <div id="addressError" class="error"></div>
@@ -281,6 +265,7 @@
                                         </div>
                                     </div>
                                 </form>
+                            
                             </div>
                         </div>
                     </div>

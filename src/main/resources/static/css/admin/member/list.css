@@ -1,3 +1,9 @@
+@media (max-width: 768px) {
+ .admContainer{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+ }
+
 /* 알림 메시지 스타일 */
 .alert {
     position: fixed;

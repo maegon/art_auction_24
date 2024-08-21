@@ -1,3 +1,52 @@
+  /* 모바일 환경에서 적용될 스타일 */
+@media screen and (max-width: 390px) { /* iPhone 12 Pro의 화면 너비는 390px입니다. */
+    input::placeholder {
+        font-size: 12px; /* Placeholder 글자 크기 조정 */
+    }
+  .btn {
+    font-size: 12px; /* 모바일 환경에서 폰트 크기 줄이기 */
+    padding: 0 20px; /* 버튼 패딩 조정 */
+    height: 40px; /* 버튼 높이 조정 */
+    letter-spacing: normal; /* 글자 간격 조정 */
+  }
+    .accountRestoration_section {
+        padding: 0 15px;
+    }
+    .usernameRestorationBox h3,
+    .passwordRestorationBox h3 {
+        margin-bottom: 0;
+    }
+    .usernameRestorationBox .form-group,
+    .passwordRestorationBox .form-group {
+        width: 100%;
+    }
+
+    .checkAgree_section {
+        flex-direction: column;
+        padding: 0 12px; /* 좌우 여백을 추가하여 텍스트가 화면에 맞게 */
+    }
+
+    .privacyCheckbox, .copyrightCheckbox {
+        max-height: 70vh; /* 높이를 화면의 70%로 제한 */
+    }
+
+    .privacyCheckbox label, .copyrightCheckbox label {
+        white-space: normal; /* 텍스트가 한 줄로 나오지 않도록 설정 */
+    }
+}
+
+
+/* 모바일 환경에서만 작동하도록 하기 위해 media query 사용 */
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .section {
+        min-height: 1080px; /* 모바일 환경에서 원하는 높이로 조정 */
+    }
+}
 
 a {
 	cursor: pointer;
@@ -341,19 +390,9 @@ input[type=file]::file-selector-button {
     color: green;
 }
 
-/* 약관 동의, 저작권 약관 */
-.privacy_copyright_section > div {
-    width: 90%;
-    height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: scroll;
-    border: 0.5px solid rgba(0, 0, 0, .2);
-}
-
 /* 중복 확인, 체크 버튼 스타일링 */
 .confirmAndCheckBtn {
-    width: 100px;
+    width: 120px;
 }
 
 .confirmAndCheckBtn2 {
@@ -395,7 +434,7 @@ input[type=file]::file-selector-button {
 }
 
 .lineCustom {
-    width: 30%;
+    width: 10%;
     height: 1px;
     background-color: #88898a;
     margin: auto 0;
