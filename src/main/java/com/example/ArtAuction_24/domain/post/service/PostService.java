@@ -6,11 +6,13 @@ import com.example.ArtAuction_24.domain.post.form.PostForm;
 import com.example.ArtAuction_24.domain.post.repository.PostRepository;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
+import com.example.ArtAuction_24.global.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,22 @@ public class PostService {
         return this.postRepository.save(p);
     }
 
+    public void delete(Post post) {
+        this.postRepository.delete(post);
+    }
+
+
+
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    public Post getPost(Long id) {
+        Optional<Post> post = this.postRepository.findById(id);
+        if (post.isPresent()) {
+            return post.get();
+        } else {
+            throw new DataNotFoundException("question not found");
+        }
     }
 }

@@ -9,5 +9,6 @@ public enum QuestionType {
     SERVICE,
     DELIVERY,
     RETURN,
-    OTHER
+    OTHER,
+
 }

@@ -1,0 +1,195 @@
+/* 공통 스타일 */
+.question-manage-sidebar {
+    background-color: #ffffff;
+    padding: 16px;
+    z-index: 10;
+}
+
+.question-manage-sidebar ul {
+    padding: 0;
+}
+
+.question-manage-sidebar li {
+    margin-bottom: 24px;
+}
+
+.question-manage-sidebar .menu-header {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #4a4a4a;
+}
+
+.question-manage-sidebar .mg_menu_btn {
+    font-size: 1.125rem;
+    text-align: right;
+    color: #2563eb;
+    font-weight: 500;
+    transition: color 0.15s ease-in-out;
+}
+
+.question-manage-sidebar .mg_menu_btn:hover {
+    color: #1e40af;
+}
+
+.question-manage-content-container {
+    padding: 24px;
+    min-height: 1000px;
+}
+
+.question-manage-table-container {
+    overflow-x: auto;
+}
+
+.question-manage-table-container table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.question-manage-table-container th, .question-manage-table-container td {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+}
+
+.question-manage-pagination-container {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.question-manage-pagination-container ul {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.question-manage-pagination-container li {
+    margin-right: 4px;
+}
+
+.question-manage-pagination-container a {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #2563eb;
+}
+
+.question-manage-pagination-container a.bg-blue-500 {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+/* 모바일 스타일 */
+@media (max-width: 1024px) {
+    .question-manage-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        background-color: black;
+    }
+    .question-manage-sidebar .mg_menu_btn {
+
+        color: white;
+    }
+
+    .question-manage-sidebar.active {
+        transform: translateY(0);
+    }
+
+    .question-manage-sidebar li {
+        margin-bottom: 0;
+        margin-right: 16px;
+    }
+
+    .question-manage-sidebar .menu-header {
+        display: none;
+    }
+
+    .question-manage-content-container {
+        padding-top: 64px;
+    }
+
+    .question-manage-pagination-container ul {
+        flex-wrap: wrap;
+    }
+
+    .question-manage-pagination-container a {
+        margin-bottom: 4px;
+    }
+
+    .question-manage-menu-toggle-btn {
+        position: fixed;
+        top: 22px;
+        left: 22px;
+        z-index: 20;
+        color: black;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.25rem;
+        margin-top: 100px;
+    }
+
+    /* 모바일에서 테이블을 카드 형태로 변환 */
+    .question-manage-table-container table {
+        display: none;
+    }
+
+    .question-manage-mobile-cards {
+        display: block;
+    }
+
+    .question-manage-mobile-cards .question-manage-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        padding: 16px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-manage-mobile-cards .question-manage-card .card-header {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .question-manage-mobile-cards .question-manage-card .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .question-manage-mobile-cards .question-manage-card .card-item {
+        display: flex;
+        align-items: flex-start; /* 텍스트의 수직 정렬을 맞춥니다 */
+        margin-bottom: 8px;
+        flex-wrap: nowrap; /* 내용이 한 줄로 표시되도록 합니다 */
+    }
+
+    .question-manage-mobile-cards .question-manage-card .card-item span:first-child {
+        flex-shrink: 0; /* 첫 번째 span이 줄어들지 않도록 합니다 */
+        margin-right: 8px; /* 라벨과 값 사이의 간격 조정 */
+    }
+
+    .question-manage-mobile-cards .question-manage-card .card-item span:last-child {
+        white-space: nowrap; /* 텍스트가 줄 바꿈 없이 한 줄로 표시되도록 설정 */
+        overflow: hidden; /* 넘치는 텍스트를 숨깁니다 */
+        text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시합니다 */
+        flex-grow: 1; /* 마지막 span이 가능한 모든 너비를 차지하도록 합니다 */
+    }
+}
+
+@media (min-width: 1025px) {
+    .question-manage-mobile-cards {
+        display: none;
+    }
+    .question-manage-menu-toggle-btn {
+        display: none;
+    }
+}

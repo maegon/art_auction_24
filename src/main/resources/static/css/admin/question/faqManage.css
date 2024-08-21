@@ -1,0 +1,62 @@
+
+/* 모바일 스타일 */
+@media (max-width: 1024px) {
+    /* 사이드바 숨기기 */
+    .faqManage .sidebar {
+        display: none;
+    }
+
+    /* 모바일 카드 스타일 */
+    .faqManage .faq-cards {
+        display: block;
+    }
+
+    .faqManage .faq-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        padding: 16px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .faqManage .faq-card .card-header {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .faqManage .faq-card .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .faqManage .faq-card .card-item {
+        display: flex;
+        align-items: flex-start; /* 텍스트의 수직 정렬을 맞춥니다 */
+        margin-bottom: 8px;
+        flex-wrap: nowrap; /* 내용이 한 줄로 표시되도록 합니다 */
+    }
+
+    .faqManage .faq-card .card-item span:first-child {
+        flex-shrink: 0; /* 첫 번째 span이 줄어들지 않도록 합니다 */
+        margin-right: 8px; /* 라벨과 값 사이의 간격 조정 */
+    }
+
+    .faqManage .faq-card .card-item span:last-child {
+        white-space: nowrap; /* 텍스트가 줄 바꿈 없이 한 줄로 표시되도록 설정 */
+        overflow: hidden; /* 넘치는 텍스트를 숨깁니다 */
+        text-overflow: ellipsis; /* 넘치는 텍스트를 '...'으로 표시합니다 */
+        flex-grow: 1; /* 마지막 span이 가능한 모든 너비를 차지하도록 합니다 */
+    }
+
+    /* 테이블 숨기기 */
+    .faqManage table {
+        display: none;
+    }
+}
+
+@media (min-width: 1025px) {
+    .faqManage .faq-cards {
+        display: none;
+    }
+}
