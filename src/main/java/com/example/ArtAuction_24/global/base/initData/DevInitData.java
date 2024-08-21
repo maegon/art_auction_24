@@ -80,6 +80,7 @@ public class DevInitData implements BeforeInitData {
             memberService.join("", "artist6", password, "artist6@test.com", "artist6",
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
+
             artistService.create("김작가", "kimArtist", "1950-06-28", "안녕! 나 김작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.");
             artistService.create("나작가", "naArtist", "1968-12-08", "안녕! 나 나작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.");
             artistService.create("박작가", "parkArtist", "1999-04-03", "안녕! 나 박작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.");
@@ -90,14 +91,10 @@ public class DevInitData implements BeforeInitData {
             artistService.create("한작가", "hanArtist", "2001-09-17", "안녕! 나 한작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.");
             artistService.create("어작가", "uhArtist", "1999-09-17", "안녕! 나 어작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.");
 
-
             Artist kim = artistService.getArtistByKorName("김작가");
             Artist na = artistService.getArtistByKorName("나작가");
             Artist park = artistService.getArtistByKorName("박작가");
             Artist lee = artistService.getArtistByKorName("이작가");
-
-
-
 
 
             productService.create("토끼", "이 그림은 부드러운 색조와 섬세한 디테일로 그려진 귀여운 토끼를 담고 있습니다. 토끼의 큰 눈과 푹신한 털은 따뜻하고 아늑한 느낌을 주며, 자연 속에서 조용히 쉬고 있는 모습을 표현했습니다. 그림 속 토끼는 순수하고 순진한 매력을 지니고 있어, 보는 이로 하여금 평화롭고 행복한 감정을 느끼게 합니다. 이 작품은 자연과 동물의 아름다움을 경이롭게 담아내려는 저의 노력의 결과입니다.", "색연필", "90×128cm", new BigDecimal(10000), LocalDateTime.now(), "/image/토끼.jpg", "수채화", kim);
