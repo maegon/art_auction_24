@@ -18,9 +18,7 @@
     }
 
     .privacyCheckbox, .copyrightCheckbox {
-        overflow-y: scroll; /* 스크롤이 가능하도록 설정 */
         max-height: 70vh; /* 높이를 화면의 70%로 제한 */
-        padding-right: 16px; /* 오른쪽 여백 추가 */
     }
 
     .privacyCheckbox label, .copyrightCheckbox label {
@@ -28,6 +26,13 @@
     }
 }
 
+
+/* 모바일 환경에서만 작동하도록 하기 위해 media query 사용 */
+@media (min-width: 768px) {
+    .mobile-only {
+        display: none;
+    }
+}
 
 a {
 	cursor: pointer;
@@ -369,16 +374,6 @@ input[type=file]::file-selector-button {
 }
 .success {
     color: green;
-}
-
-/* 약관 동의, 저작권 약관 */
-.privacy_copyright_section > div {
-    width: 90%;
-    height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: scroll;
-    border: 0.5px solid rgba(0, 0, 0, .2);
 }
 
 /* 중복 확인, 체크 버튼 스타일링 */
