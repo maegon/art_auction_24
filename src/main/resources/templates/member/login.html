@@ -74,37 +74,41 @@
                                     </div>
                                 </form>
                                 
-                                <div class="accountRestoration_section flex flex-col" style="display:none;">
-                                    <button class="backLink2 text-xl inline-block mt-3"><i class="fa-solid fa-arrow-left w-8 h-8"></i> 이전</button>
-                                    <div class="flex">
+                                <div class="accountRestoration_section flex flex-col max-w-screen mx-auto">
+                                    <button class="backLink2 text-xl flex items-center justify-start mt-3 ml-4">
+                                        <i class="fa-solid fa-arrow-left mr-2"></i> 이전
+                                    </button>
+                                    
+                                    <div class="flex flex-col lg:flex-row justify-center items-center lg:space-x-8">
                                         <!-- 아이디 찾기 -->
-                                        <div class="usernameRestorationBox">
+                                        <div class="usernameRestorationBox w-full">
                                             <h3 class="text-center text-xl mt-4 mb-4">아이디 찾기</h3>
-                                            <form id="findUsernameForm" method="POST" th:action="@{/sendmail/find-username}">
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findUsernameEmail" autocomplete="off">
+                                            <form id="findUsernameForm" method="POST" th:action="@{/sendmail/find-username}" class="space-y-4 w-full">
+                                                <div class="form-group relative">
+                                                    <input type="email" name="email" class="form-style component-input w-full pl-12" placeholder="이메일 입력" id="findUsernameEmail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
-                                                <button type="submit" class="btn mt-3" id="findUsernameSubmit">아이디 찾기</button>
+                                                <button type="submit" class="btn mt-3 w-full bg-black text-white py-2">아이디 찾기</button>
                                             </form>
                                         </div>
                                         <!-- 패스워드 찾기 -->
-                                        <div class="passwordRestorationBox">
+                                        <div class="passwordRestorationBox w-full mt-6 lg:mt-0">
                                             <h3 class="text-center text-xl mt-4 mb-4">패스워드 찾기</h3>
-                                            <form id="findPasswordForm" method="POST" th:action="@{/sendmail/find-password}">
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="text" name="username" class="form-style" placeholder="아이디 입력" id="findPasswordUsername" autocomplete="off">
+                                            <form id="findPasswordForm" method="POST" th:action="@{/sendmail/find-password}" class="space-y-4 w-full">
+                                                <div class="form-group relative">
+                                                    <input type="text" name="username" class="form-style component-input w-full pl-12" placeholder="아이디 입력" id="findPasswordUsername" autocomplete="off">
                                                     <i class="input-icon uil uil-user"></i>
                                                 </div>
-                                                <div class="form-group ml-6 mr-6">
-                                                    <input type="email" name="email" class="form-style" placeholder="이메일 입력" id="findPasswordEmail" autocomplete="off">
+                                                <div class="form-group relative">
+                                                    <input type="email" name="email" class="form-style component-input w-full pl-12" placeholder="이메일 입력" id="findPasswordEmail" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
-                                                <button type="submit" class="btn mt-3" id="findPasswordSubmit">패스워드 찾기</button>
+                                                <button type="submit" class="btn mt-3 w-full bg-black text-white py-2">패스워드 찾기</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 
                                 
                                 
