@@ -26,7 +26,7 @@
                 <div th:if="${list.isEmpty()}" class="img-null">
                     <p>등록한 작품이 없습니다.</p>
                     <div th:if="${#authentication.getPrincipal().getUsername() == currentMember.username}">
-                        <a href="/art/create">작품 등록하기</a>
+                        <a href="/product/create">작품 등록하기</a>
                     </div>
                 </div>
                 <!-- 작품이 있을 때 목록을 표시 -->

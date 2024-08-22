@@ -29,9 +29,10 @@
                     </div>
 
                     <div class="text-center py-4  border-b border-gray-200">
-                        <ul>
-                            <li class="text-lg font-medium text-gray-700">CASH : 0</li>
-                        </ul>
+                        <div class="flex justify-center">
+                            <div class="text-lg font-medium text-gray-700">CASH :</div>
+                            <div class="text-lg font-medium text-gray-700" th:text="${member.formattedbalance}"></div>
+                        </div>
                     </div>
 
                     <div class="menu-section py-4">
@@ -220,7 +221,7 @@
                                                    class="block h-full flex items-center justify-center">
                                                     <div class="flex bg-gray-100 w-40 h-40 items-center justify-center">
                                                         <!-- 이미지 -->
-                                                        <img th:src="${likeProduct.product.thumbnailImg}"
+                                                        <img th:src="@{|/${likeProduct.product.thumbnailImg}|}"
                                                              alt="Product Image"
                                                              class="w-32 h-32 object-cover rounded-lg">
                                                     </div>
@@ -240,12 +241,12 @@
                                                 </div>
 
                                                 <!-- 입찰 정보 -->
-                                                <div class=" flex flex-1 place-items-center p-4 justify-end relative">
-
-                                                    <ul>
-                                                        <li class="">최소 입찰가</li>
-                                                        <li class="text-red-500 text-sm">KRW 15,000</li>
-                                                    </ul>
+                                                <div class="flex flex-col flex-1 place-items-end p-4 justify-end relative  ">
+                                                    <div class="text-left mr-2 md:mr-4">최소 입찰가</div>
+                                                    <div class="flex items-center">
+                                                        <span class="mr-1 text-red-500 text-sm">KRW</span>
+                                                        <span class="text-red-500 text-sm" th:text="${likeProduct.product.formattedCurrentBid}">15,000</span>
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>

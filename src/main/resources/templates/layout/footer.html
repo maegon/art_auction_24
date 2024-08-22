@@ -7,7 +7,7 @@
             <div class="footer-links flex justify-between items-center mb-4 md:mb-2">
                 <div class="footer-icons flex gap-3">
                     <a th:href="@{/home/introduce}" class="text-white no-underline">회사소개</a>
-                    <a th:href="@{${@environment.getProperty('custom.file.path')}}" download="Art Auction-이용약관.pdf" class="text-white no-underline">이용약관</a>
+                    <a href="/pdf/ArtAuction이용약관.pdf" download="Art Auction-이용약관.pdf" class="text-white no-underline">이용약관</a>
                 </div>
                 <div class="footer-icons flex gap-3">
                     <a th:href="@{/recharge/recharge}" class="text-white">충전하기</a>

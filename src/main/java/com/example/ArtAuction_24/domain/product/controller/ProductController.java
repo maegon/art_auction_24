@@ -149,6 +149,15 @@ public class ProductController {
             }
         }
 
+        // 현재 최고 입찰 정보 조회
+        Optional<Bid> highestBid = bidService.findHighestBidByProductId(id);
+        if (highestBid.isPresent()) {
+            Bid bid = highestBid.get();
+            model.addAttribute("highestBidder", bid.getMember()); // 최고 입찰자 추가
+        } else {
+            model.addAttribute("highestBidder", null);
+        }
+
         return "product/detail";
     }
 

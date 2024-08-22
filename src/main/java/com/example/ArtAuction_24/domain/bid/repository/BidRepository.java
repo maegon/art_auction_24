@@ -23,4 +23,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     Optional<Bid> findFirstByProductIdAndMemberIdOrderByBidTimeDesc(Long productId, Long memberId);
 
     List<Bid> findAllByProductOrderByBidTimeDesc(Product product);
+
+    Optional<Bid> findFirstByProductIdOrderByAmountDesc(Long productId);
 }
