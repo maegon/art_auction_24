@@ -5,6 +5,7 @@ import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberModifyForm;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
+import com.example.ArtAuction_24.global.customException.CustomDuplicateEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class MemberService {
 
         // 이메일 중복 확인
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
-            throw new IllegalStateException("Email already exists");
+            throw new CustomDuplicateEmailException("Email already exists");
         }
         System.out.println(email);
 
