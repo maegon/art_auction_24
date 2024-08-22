@@ -91,8 +91,8 @@ public class NotificationService {
 
                 // 작가에게 알림 전송
                 sendNotification(
+                        product.getArtist().getAuthor(),
                         null,
-                        product.getArtist(),
                         product,
                         "🎨 경매 종료 및 낙찰 알림 🎨",
                         String.format(
