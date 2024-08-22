@@ -43,7 +43,6 @@ public class MemberService {
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
             throw new CustomDuplicateEmailException("Email already exists");
         }
-        System.out.println(email);
 
         System.out.println(email);
 

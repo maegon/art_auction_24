@@ -48,13 +48,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // backLink 버튼 클릭 시 동작 추가
-        const backLinkButton = document.querySelector('.backLink');
-        backLinkButton.addEventListener('click', function(event) {
-            event.preventDefault(); // 기본 링크 동작을 막음
-            document.querySelector('.privacyCheckbox').style.display = 'block';
-            document.querySelector('.copyrightCheckbox').style.display = 'block';
-            document.getElementById('joinForm').style.display = 'none';
-        });
+    const backLinkButton = document.querySelector('.backLink');
+    backLinkButton.addEventListener('click', function(event) {
+        event.preventDefault(); // 기본 링크 동작을 막음
+        document.querySelector('.privacyCheckbox').style.display = 'block';
+        document.querySelector('.copyrightCheckbox').style.display = 'block';
+        document.getElementById('joinForm').style.display = 'none';
+    });
 
     // 전화번호 형식 자동 포맷
     phoneNumberInput.addEventListener("input", function(event) {
@@ -293,6 +293,8 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!emailTextInput.value.trim() || !domainInput.value.trim()) {
             emailError.innerText = "이메일 주소를 입력하세요.";
             emailError.classList.add("error");
+            // if() 이 부분에 중복된 이메일 있으면 다른 이메일 입력하도록 작성할 것
+
             joinButton.disabled = true;
             return;
         }
