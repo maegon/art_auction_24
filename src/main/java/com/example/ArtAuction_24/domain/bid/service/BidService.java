@@ -175,11 +175,6 @@ public class BidService {
         // 5. (잔액 회복 처리 제거)
     }
 
-
-
-
-
-
     public Optional<Bid> findCurrentBidByProductAndMember(Long productId, Long memberId) {
         return bidRepository.findFirstByProductIdAndMemberIdOrderByBidTimeDesc(productId, memberId);
     }
@@ -187,5 +182,9 @@ public class BidService {
 
     public Optional<Bid> findById(Long bidId) {
         return bidRepository.findById(bidId);
+    }
+
+    public Optional<Bid> findHighestBidByProductId(Long productId) {
+        return bidRepository.findFirstByProductIdOrderByAmountDesc(productId);
     }
 }

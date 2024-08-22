@@ -76,4 +76,4 @@ spring:
 custom:
   genFileDirPath: C:\work\ArtAuction_24\src\main\resources\static
   file:
-    path: /ArtAuction이용약관.pdf
+    path: pdf/ArtAuction이용약관.pdf
