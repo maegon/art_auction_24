@@ -30,8 +30,11 @@
                         <div class="flex justify-between">
                             <span class="text-xs lg:text-sm text-gray-600" th:text="${product.medium}"></span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-xs lg:text-sm text-gray-600 mb-3" th:text="${product.dimensions}"></span>
+                        <div class="flex text-xs lg:text-sm text-gray-600 mb-3">
+                            <div th:text="${product.width}"></div>
+                            <div>x</div>
+                            <div th:text="${product.height}"></div>
+                            <div>cm</div>
                         </div>
                         <hr>
                         <div class="py-2 flex justify-between text-xs lg:text-sm">
@@ -54,7 +57,8 @@
                         <hr>
 
                         <!-- 입찰 Form 시작 -->
-                        <form sec:authorize="isAuthenticated()" th:action="@{/auction/bid}" method="post">
+                        <form sec:authorize="isAuthenticated()" th:action="@{/auction/bid}" method="post"
+                              th:classappend="${auctionStatus == 'CLOSED' ? 'pointer-events-none opacity-50' : ''}">
                             <input type="hidden" name="productId" th:value="${product.id}"/>
                             <!-- 입찰 금액 입력 필드와 레이블을 조건부로 표시 -->
                             <div th:if="${auctionStatus == 'ACTIVE'}" class="mt-3">
@@ -67,10 +71,11 @@
                             <button
                                     type="submit"
                                     class="bg-black border border-[#b5b5b5] w-full h-[50px] text-sm lg:text-lg text-white mt-3 transition-colors duration-150 ease-in-out hover:bg-sky-700 hover:border-[#8c8c8c]"
-                                    th:text="${auctionStatus == 'ACTIVE' ? '응찰하기' : (product.winningBidder != null ? '경매 종료' : '경매 전')}"
+                                    th:text="${auctionStatus == 'ACTIVE' ? '응찰하기' : (product.winningBidder != null ? '응찰 종료' : '응찰 전')}"
                                     th:disabled="${auctionStatus != 'ACTIVE'}">
                             </button>
                         </form>
+
                         <div sec:authorize="isAnonymous()" class="flex justify-center items-center">
                             <a th:href="@{/member/login}">로그인</a> 후 이용해주세요.
                         </div>
@@ -106,7 +111,12 @@
                             <div>Product Detail</div>
                         </div>
                         <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.medium}"></p>
-                        <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.dimensions}"></p>
+                        <div class="flex text-gray-700 text-xs lg:text-sm">
+                        <p th:text="${product.width}"></p>
+                        <p>x</p>
+                        <p th:text="${product.height}"></p>
+                        <p>cm</p>
+                        </div>
                         <p class="text-gray-700 text-xs lg:text-sm" th:text="${product.category}"></p>
                         <p class="text-gray-700 mt-3 text-xs lg:text-sm" th:text="${product.description}"></p>
                     </div>

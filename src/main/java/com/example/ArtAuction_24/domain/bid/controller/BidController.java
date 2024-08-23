@@ -51,6 +51,11 @@ public class BidController {
 
         Product product = productService.findById(productId);
 
+        // 경매 상태 확인
+        if (product.isAuctionClosed()) {
+            return "redirect:/product/detail/" + productId + "?error=" + URLEncoder.encode("경매가 종료되었습니다.", StandardCharsets.UTF_8);
+        }
+
         BigDecimal memberBalance = BigDecimal.valueOf(member.getBalance());
         // 사용자의 잔액이 입찰 금액보다 부족할 경우
         if (memberBalance.compareTo(bidAmount) < 0) {

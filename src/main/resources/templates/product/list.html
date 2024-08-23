@@ -59,10 +59,15 @@
                     <span th:text="${product.title}" class="text-left text-md mt-1 "></span>
 
 
-                    <span class="flex text-xs mt-3">
-                        <span th:text="${product.dimensions}" class="text-gray-500"></span>
-                        <span class="text-gray-500 mx-1">|</span>
-                        <span th:text="${product.medium}" class="text-gray-500"></span>
+                    <span class="flex text-xs mt-3 text-gray-500">
+                        <span class="flex">
+                        <span th:text="${product.width}"></span>
+                        <span>x</span>
+                        <span th:text="${product.height}"></span>
+                        <span>cm</span>
+                        </span>
+                        <span class=" mx-1">|</span>
+                        <span th:text="${product.medium}"></span>
                     </span>
                     <hr class="my-2">
                         <span class="text-gray-500 text-sm">현재가</span>

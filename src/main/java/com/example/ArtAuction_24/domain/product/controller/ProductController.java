@@ -27,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,6 +35,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -60,6 +62,25 @@ public class ProductController {
     @PostMapping("/create")
     public String create(@Valid ProductForm productForm, BindingResult bindingResult, Principal principal)
     {
+        MultipartFile thumbnail = productForm.getThumbnail();
+
+        // 이미지 파일이 존재할 때만 검증
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            // 파일 크기 제한 (예: 5MB)
+            if (thumbnail.getSize() > 5 * 1024 * 1024) {
+                bindingResult.rejectValue("thumbnail", "error.thumbnail.size", "파일 크기는 5MB를 초과할 수 없습니다.");
+            }
+
+            // 파일 형식 제한 (예: JPEG, PNG)
+            String contentType = thumbnail.getContentType();
+            if (contentType == null || (!contentType.equals("image/jpeg") && !contentType.equals("image/png"))) {
+                bindingResult.rejectValue("thumbnail", "error.thumbnail.type", "허용되는 파일 형식은 JPEG와 PNG입니다.");
+            }
+        } else {
+            // 이미지가 선택되지 않은 경우에 대한 검증
+            bindingResult.rejectValue("thumbnail", "error.thumbnail.required", "이미지를 첨부해야 합니다.");
+        }
+
         if(bindingResult.hasErrors()){
             return "product/form";
         }
@@ -67,18 +88,9 @@ public class ProductController {
 
         Member member = this.memberService.getCurrentMember();
         Artist artist = this.artistService.findByMember(member);
-        this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getDimensions(), productForm.getStartingPrice(),
+        this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getWidth(), productForm.getHeight(), productForm.getStartingPrice(),
                   LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);
         return "redirect:/product/list";
-    }
-
-    private boolean isValidDimension(String value) {
-        try {
-            double num = Double.parseDouble(value);
-            return num > 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 
     @GetMapping("/list")

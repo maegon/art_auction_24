@@ -33,7 +33,8 @@ public class Product extends BaseEntity {
     private String title;
     private String description;
     private String medium; //사용된 재료
-    private String dimensions; //크기
+    private long width;
+    private long height;
     private BigDecimal startingPrice; //시작 가격
     private BigDecimal currentBid; // 현재 입찰가
     private LocalDateTime auctionStartDate; // 시작 일
@@ -60,8 +61,8 @@ public class Product extends BaseEntity {
 
 
 
-    private transient String formattedCurrentBid; //직렬화
-    private transient String formattedStartingPrice; //직렬화
+    private transient String formattedCurrentBid; // 단위 표시 완료 현재가
+    private transient String formattedStartingPrice; //단위 표시 완료 시작가
 
     @ManyToOne
     @JoinColumn(name = "winning_bidder_id")
@@ -72,7 +73,7 @@ public class Product extends BaseEntity {
 
 
     @PostLoad
-    private void postLoad() {
+    private void postLoad() { // 단위 표시
         DecimalFormat formatter = new DecimalFormat("#,###");
         this.formattedCurrentBid = formatter.format(this.currentBid);
         this.formattedStartingPrice = formatter.format(this.startingPrice);
@@ -115,5 +116,8 @@ public class Product extends BaseEntity {
     }
 
 
-
+    // 해당 제품과 연관된 경매 중 상태가 CLOSED인 경매가 있는지 확인
+    public boolean isAuctionClosed() {
+        return auctions.stream().anyMatch(Auction::isClosed);
+    }
 }

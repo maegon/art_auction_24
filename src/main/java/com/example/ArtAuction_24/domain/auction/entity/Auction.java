@@ -41,5 +41,7 @@ public class Auction extends BaseEntity { // 여러 제품을 경매에 올려 �
     )
     private Set<Product> products = new HashSet<>();
 
-
+    public boolean isClosed() {
+        return this.status == AuctionStatus.CLOSED;
+    }
 }

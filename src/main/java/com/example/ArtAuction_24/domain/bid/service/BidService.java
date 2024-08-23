@@ -27,7 +27,6 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class BidService {
-
     private final BidRepository bidRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
