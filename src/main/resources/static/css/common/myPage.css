@@ -52,13 +52,15 @@
 
 /* 모바일 환경에서 적용할 스타일 */
 @media screen and (max-width: 768px) {
-    #wish-list ul {
+    /* 공통 스타일: 목록을 그리드로 배치 */
+    #wish-list ul, #order-list ul {
         display: grid;
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    #wish-list li {
+    /* 공통 스타일: 목록 아이템의 레이아웃 설정 */
+    #wish-list li, #order-list li {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -67,29 +69,42 @@
         border-radius: 0.5rem;
     }
 
-    #wish-list a {
+    /* 공통 스타일: 링크의 넓이 설정 */
+    #wish-list a, #order-list a {
         width: 100%;
     }
 
-    #wish-list div {
+    /* 공통 스타일: 각 섹션의 마진 설정 */
+    #wish-list div, #order-list div {
         margin-top: 1rem;
     }
 
-    #wish-list img {
+    /* 공통 스타일: 이미지 크기 설정 */
+    #wish-list img, #order-list img {
         width: 8rem;
         height: 8rem;
     }
 
-    #wish-list .product-info {
+    /* 공통 스타일: 상품 정보의 정렬 및 여백 설정 */
+    #wish-list .product-info, #order-list .product-info {
         margin-top: 1rem;
         text-align: center;
     }
 
-    #wish-list .action-buttons {
+    /* 공통 스타일: 액션 버튼의 정렬 및 여백 설정 */
+    #wish-list .action-buttons, #order-list .action-buttons {
         margin-top: 1rem;
         text-align: center;
         justify-content: center;
     }
+
+    /* 공통 스타일: 입찰 정보의 정렬 및 여백 설정 */
+    #wish-list .bid-info, #order-list .bid-info {
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+
 
     .mobile-header {
               top: 0;

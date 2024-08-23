@@ -1,8 +1,6 @@
 package com.example.ArtAuction_24.domain.bid.service;
 
 
-
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
@@ -24,9 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -184,7 +180,35 @@ public class BidService {
         return bidRepository.findById(bidId);
     }
 
+
     public Optional<Bid> findHighestBidByProductId(Long productId) {
         return bidRepository.findFirstByProductIdOrderByAmountDesc(productId);
+
+
+    }
+
+    public List<Bid> getBidsByMemberId(Long id) {
+        return bidRepository.findByMemberId(id);
+    }
+
+    public Map<Product, Bid> findHighestBidsByProduct() {
+        // 모든 입찰 목록을 가져옴
+        List<Bid> allBids = bidRepository.findAll();
+
+        // 상품별 최고 입찰가를 저장할 Map
+        Map<Product, Bid> highestBidsByProduct = new HashMap<>();
+
+        // 모든 입찰에 대해 최고 입찰가를 찾음
+        for (Bid bid : allBids) {
+            Product product = bid.getProduct();
+            highestBidsByProduct.merge(
+                    product,
+                    bid,
+                    (existingBid, newBid) -> newBid.getAmount().compareTo(existingBid.getAmount()) > 0 ? newBid : existingBid
+            );
+        }
+
+        return highestBidsByProduct;
+
     }
 }

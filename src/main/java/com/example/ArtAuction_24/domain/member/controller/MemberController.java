@@ -2,6 +2,8 @@ package com.example.ArtAuction_24.domain.member.controller;
 
 
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
+import com.example.ArtAuction_24.domain.bid.entity.Bid;
+import com.example.ArtAuction_24.domain.bid.service.BidService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
@@ -48,6 +50,7 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final OrderService orderService;
+    private final BidService bidService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -209,6 +212,15 @@ public class MemberController {
         // 주문 목록 추가
         List<Order> orderList = orderService.getOrdersByMemberId(member.getId());
         model.addAttribute("orderList", orderList);
+
+        // 입찰 목록 추가 멤버값이랑 일치한 bid 를 리스트로가져옴
+        List<Bid> bidListByMember = bidService.getBidsByMemberId(member.getId());
+        model.addAttribute("bidListByMember", bidListByMember);
+
+        // 각 상품의 최고 입찰가를 가져오기
+        Map<Product, Bid> highestBidsByProduct = bidService.findHighestBidsByProduct();
+        model.addAttribute("highestBidsByProduct", highestBidsByProduct);
+
 
 
 
