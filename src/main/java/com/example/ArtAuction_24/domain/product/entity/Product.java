@@ -55,6 +55,9 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product")
     private List<Bid> bids;
 
+    @OneToMany(mappedBy = "product")
+    private List<AuctionProduct> auctionProductList;
+
 
 
     private transient String formattedCurrentBid; //직렬화
@@ -83,6 +86,8 @@ public class Product extends BaseEntity {
         }
     }
 
+
+    //지우지마시오 myPage 에서 쓰는중임
     public LocalDateTime getAuctionEndDate() {
         // Auction이 여러 개일 수 있으므로, 경매가 있는 경우 가장 최근의 경매를 반환
         return auctions.stream()
@@ -91,6 +96,18 @@ public class Product extends BaseEntity {
                 .max(LocalDateTime::compareTo)
                 .orElse(null);
     }
+
+    // 제일 최근의 AuctionProduct 객체를 반환하는 메소드
+    public AuctionProduct getLatestAuctionProduct() {
+        return auctionProductList.stream()
+                .filter(auctionProduct -> auctionProduct.getAuction() != null)
+                .max((a1, a2) -> a1.getId().compareTo(a2.getId()))
+                .orElse(null);
+    }
+
+
+
+
 
     // 현재 입찰가를 반환하는 메소드
     public BigDecimal getCurrentPrice() {
