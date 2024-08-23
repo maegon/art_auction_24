@@ -96,6 +96,7 @@
                                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                                             <label for="nickname" class="font-semibold text-gray-700 w-full sm:w-32">닉네임:</label>
                                             <input type="text" id="nickname" th:field="*{nickname}"
+                                                   th:placeholder="${member.nickname}"
                                                    class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
                                         </div>
 
@@ -121,6 +122,7 @@
                                             <label for="email"
                                                    class="font-semibold text-gray-700 w-full sm:w-32">Email:</label>
                                             <input type="email" id="email" th:field="*{email}"
+                                                   th:placeholder="${member.email}"
                                                    class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
                                         </div>
 
@@ -128,8 +130,8 @@
                                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                                             <label for="profileImage"
                                                    class="font-semibold text-gray-700 w-full sm:w-32">프로필 이미지:</label>
-                                            <input type="file" id="profileImage" th:field="*{multipartFile}"
-                                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                                            <input type="file" id="profileImage" th:field="*{multipartFile}" accept="image/png, image/gif, image/jpeg"
+                                                   class="block w-full text-sm text-gray-500  hover:bg-gray-100 border border-gray-300 rounded-lg font-semibold py-2 px-4">
                                         </div>
 
                                         <!-- 업데이트 버튼 -->
@@ -262,7 +264,7 @@
                                                             <span class="text-red-500 text-sm" th:text="${likeProduct.product.formattedCurrentBid}">
 
                                                             </span>
-                                                    </div>
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -370,7 +372,7 @@
                                             th:each="bidByMember : ${bidListByMember}">
                                             <!-- 입찰 상품 목록을 반복 -->
 
-<!--                                            경매중일때-->
+                                            <!--                                            경매중일때-->
                                             <li class="p-4 flex flex-col rounded-lg"
                                                 th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'ACTIVE'}">
                                                 <!-- 경매중 바 -->
@@ -429,7 +431,7 @@
                                                 </div>
                                             </li>
 
-<!--                                            경매가끝났을때-->
+                                            <!--                                            경매가끝났을때-->
                                             <li class="p-4 flex flex-col rounded-lg"
                                                 th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'CLOSED'}">
                                                 <!-- 경매중 바 -->

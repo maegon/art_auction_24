@@ -1,90 +1,103 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="container mx-auto px-4 min-h-[1200px] flex ">
-        <div class="container w-[600px] ">
-            <div class="fixed container ml-[150px] w-[300px] h-[380px] mt-[200px] bg-stone-100">
-                <div class="container mx-auto  h-[250px]">
-                    <ul>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewArtworkAndArtist">작품 및 작가</a></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewPurchase">구매</a></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewService">SERVICE</a></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewDelivery">배송</a></li>
-                        <li class="text-center text-neutral-400 font-bold text-xl py-2"><a href="#ViewReturn">환불</a></li>
-                    </ul>
+    <div class="container mx-auto px-4 lg:px-32 min-h-[1200px]">
+        <div class="h-[100px] lg:h-[150px] mt-10 flex items-center">
+            <span class="mx-auto lg:ml-80 font-bold text-3xl lg:text-5xl">FAQ</span>
+        </div>
+        <div class="flex flex-col lg:flex-row">
+            <div class="w-full lg:w-1/4 mt-5 lg:mt-0">
+                <div class="lg:fixed lg:static container mx-auto lg:ml-[150px] w-full lg:w-[320px] min-h-[400px] rounded-lg border border-gray-300">
+                    <div class="container mx-auto min-h-[250px]">
+                        <ul class="space-y-4">
+                            <li class="text-center text-gray-600 font-bold text-lg lg:text-xl py-2 hover:text-black transition duration-300">
+                                <a href="#ViewArtworkAndArtist">작품 및 작가</a>
+                            </li>
+                            <li class="text-center text-gray-600 font-bold text-lg lg:text-xl py-2 hover:text-black transition duration-300">
+                                <a href="#ViewPurchase">구매</a>
+                            </li>
+                            <li class="text-center text-gray-600 font-bold text-lg lg:text-xl py-2 hover:text-black transition duration-300">
+                                <a href="#ViewService">SERVICE</a>
+                            </li>
+                            <li class="text-center text-gray-600 font-bold text-lg lg:text-xl py-2 hover:text-black transition duration-300">
+                                <a href="#ViewDelivery">배송</a>
+                            </li>
+                            <li class="text-center text-gray-600 font-bold text-lg lg:text-xl py-2 hover:text-black transition duration-300">
+                                <a href="#ViewReturn">환불</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="border-gray-300">
+                    <div class="container mx-auto w-full lg:w-[280px] h-[150px] mt-4 text-center">
+                        <span class="text-lg my-3 block text-gray-700">답변을 못찾으셨나요?</span>
+                        <div class="bg-black text-[#D5A770] text-lg lg:text-xl h-10 px-4 my-4 mx-auto rounded-full flex items-center justify-center hover:bg-gray-800 transition duration-300">
+                            <a th:href="@{/question/create}" class="flex items-center justify-center">문의하기</a>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div class="container mx-auto w-[250px] h-[150px]">
-                    <span class="text-xl my-3 block">답변을 못찾으셨나요?</span>
-                    <div class="bg-black text-[#D5A770] text-xl h-10 px-4 my-4 ml-[100px] rounded-xl flex items-center justify-center">
-                        <a th:href="@{/question/create}">문의하기</a>
+            </div>
+            <div class="w-full lg:w-3/4 flex flex-col pb-64">
+                <div class="mt-10 lg:mt-20 w-full flex flex-col">
+                    <div class="mx-5 lg:mx-20 mt-10 lg:mt-20">
+                        <div id="ViewArtworkAndArtist" class="flex items-center">
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">- </span>
+                            <span class="font-bold text-2xl lg:text-3xl ml-2"> 작품 및 작가</span>
+                        </div>
+                        <ul class="ml-4 lg:ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'ARTIST'} or ${post.postType.name() == 'ARTWORK'}">
+                            <li class="text-[#D5A770] text-xl lg:text-2xl" th:text="${post.subject}"></li>
+                            <li th:text="${post.content}"></li>
+                        </ul>
+                    </div>
+                    <div class="mx-5 lg:mx-20 mt-10 lg:mt-20">
+                        <div id="ViewPurchase" class="flex items-center">
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">- </span>
+                            <span class="font-bold text-2xl lg:text-3xl ml-2"> 작품구매</span>
+                        </div>
+                        <ul class="ml-4 lg:ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'PURCHASE'}">
+                            <li class="text-[#D5A770] text-xl lg:text-2xl" th:text="${post.subject}"></li>
+                            <li th:text="${post.content}"></li>
+                        </ul>
+                    </div>
+                    <div class="mx-5 lg:mx-20 mt-10 lg:mt-20">
+                        <div id="ViewService" class="flex items-center">
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">- </span>
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">SERVICE</span>
+                        </div>
+                        <ul class="ml-4 lg:ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'SERVICE'}">
+                            <li class="text-[#D5A770] text-xl lg:text-2xl" th:text="${post.subject}"></li>
+                            <li th:text="${post.content}"></li>
+                        </ul>
+                    </div>
+                    <div class="mx-5 lg:mx-20 mt-10 lg:mt-20">
+                        <div id="ViewDelivery" class="flex items-center">
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">- </span>
+                            <span class="font-bold text-2xl lg:text-3xl ml-2"> 배송</span>
+                        </div>
+                        <ul class="ml-4 lg:ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'DELIVERY'}">
+                            <li class="text-[#D5A770] text-xl lg:text-2xl" th:text="${post.subject}"></li>
+                            <li th:text="${post.content}"></li>
+                        </ul>
+                    </div>
+                    <div class="mx-5 lg:mx-20 mt-10 lg:mt-20">
+                        <div id="ViewReturn" class="flex items-center">
+                            <span class="font-bold text-2xl lg:text-3xl ml-2">- </span>
+                            <span class="font-bold text-2xl lg:text-3xl ml-2"> 환불</span>
+                        </div>
+                        <ul class="ml-4 lg:ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'RETURN'}">
+                            <li class="text-[#D5A770] text-xl lg:text-2xl" th:text="${post.subject}"></li>
+                            <li th:text="${post.content}"></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="w-full flex flex-col">
-            <div class="h-[150px] mt-10 flex items-center">
-                <span class="ml-80 font-bold text-5xl">FAQ</span>
-            </div>
-            <div class="mt-20 w-full flex flex-col">
-                <div class="mx-20 mt-20">
-                    <div id="ViewArtworkAndArtist" class="ml-24 flex items-center ">
-                        <i class="fa-solid fa-palette fa-xl" style="color: #f561d5;"></i>
-                        <span class="font-bold text-3xl ml-2"> 작품 및 작가</span>
-                    </div>
-                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'ARTIST'} or ${post.postType.name() == 'ARTWORK'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
-                        <li  th:text="${post.content}"></li>
-                    </ul>
-                </div>
-                <div class="mx-20 mt-20">
-                    <div id="ViewPurchase" class="ml-24 flex items-center ">
-                        <i class="fa-solid fa-credit-card fa-xl" style="color: #f561d5;"></i>
-                        <span class="font-bold text-3xl ml-2"> 작품구매</span>
-                    </div>
-                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'PURCHASE'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
-                        <li  th:text="${post.content}"></li>
-                    </ul>
-                </div>
-                <div class="mx-20 mt-20">
-                    <div id="ViewService" class="ml-24 flex items-center ">
-                        <i class="fa-brands fa-servicestack fa-xl" style="color: #f561d5;"></i>
-                        <span class="font-bold text-3xl ml-2">SERVICE</span>
-                    </div>
-                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'SERVICE'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
-                        <li  th:text="${post.content}"></li>
-                    </ul>
-                </div>
-                <div class="mx-20 mt-20">
-                    <div id="ViewDelivery" class="ml-24 flex items-center ">
-                        <i class="fa-solid fa-truck fa-xl" style="color: #f561d5;"></i>
-                        <span class="font-bold text-3xl ml-2"> 배송</span>
-                    </div>
-                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'DELIVERY'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
-                        <li  th:text="${post.content}"></li>
-                    </ul>
-                </div>
-                <div class="mx-20 mt-20">
-                    <div id="ViewReturn" class="ml-24 flex items-center ">
-                        <i class="fa-solid fa-rotate-left fa-xl" style="color: #f561d5;"></i>
-                        <span class="font-bold text-3xl ml-2"> 환불</span>
-                    </div>
-                    <ul class="ml-32 my-4" th:each="post : ${postList}" th:if="${post.postType.name() == 'ARTIST'}">
-                        <li class="text-[#D5A770] text-2xl" th:text="${post.subject}"></li>
-                        <li  th:text="${post.content}"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
     </div>
+
 </div>
 </html>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -94,7 +107,7 @@
 
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 400,
+                        top: targetElement.offsetTop - 80,  // 모바일에서 여백
                         behavior: 'smooth'
                     });
                 }
