@@ -84,6 +84,15 @@ public class AuctionController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model) {
+        if (!auctionForm.isStartDateValid()) {
+            bindingResult.rejectValue("startDate", "error.startDate", "시작 시간은 현재 시간과 같거나 이후여야 합니다.");
+        }
+
+        if (!auctionForm.isEndDateValid()) {
+            bindingResult.rejectValue("endDate", "error.endDate", "마감 시간은 시작 시간보다 이후여야 합니다.");
+        }
+
+
         if (bindingResult.hasErrors()) {
             // 모든 제품을 다시 모델에 추가 (이 부분이 중요)
             List<Product> availableProducts = auctionService.getAvailableProducts();
