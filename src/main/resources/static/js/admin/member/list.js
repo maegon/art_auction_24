@@ -66,22 +66,40 @@ document.querySelectorAll('.btn_save').forEach(button => {
         const newStatus = isActiveSelect.value;
         const newRole = roleSelect.value;
 
+        // 기존 값과 비교
+        const originalStatus = isActiveSelect.getAttribute('data-original-value');
+        const originalRole = roleSelect.getAttribute('data-original-value');
+
+        // 변경 사항이 없으면 저장하지 않음
+        if (newStatus === originalStatus && newRole === originalRole) {
+           alert('변경된 내용이 없습니다.');
+           return;
+        }
+
+        // 변경된 데이터를 담을 객체 생성
+        let updatedData = {};
+
+        if (newStatus !== originalStatus) {
+           updatedData.isActive = newStatus;
+        }
+
+        if (newRole !== originalRole) {
+           updatedData.role = newRole;
+        }
+
         // URL 문자열 보간을 올바르게 사용
         const url = `/admin/member/${memberId}`;
 
         // confirm 대화상자 표시
-        if (confirm(`변경사항을 저장하시겠습니까?\n활성 상태: ${newStatus}\n역할: ${newRole}`)) {
-            // Fetch API를 이용한 비동기 데이터 전송
-            fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    isActive: newStatus,
-                    role: newRole
-                })
-            })
+        if (confirm(`변경사항을 저장하시겠습니까?\n활성 상태: ${updatedData.isActive || originalStatus}\n역할: ${updatedData.role || originalRole}`)) {
+           // Fetch API를 이용한 비동기 데이터 전송
+           fetch(url, {
+               method: 'PUT',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(updatedData)
+           })
             .then(response => {
                 if (!response.ok) {
                     return response.text().then(text => {
