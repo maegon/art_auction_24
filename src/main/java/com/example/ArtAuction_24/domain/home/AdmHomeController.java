@@ -79,12 +79,12 @@ public class AdmHomeController {
 
     // 회원 권한 설정 저장
     @PutMapping("/member/{memberId}")
-    public ResponseEntity<?> updateMember(@PathVariable("memberId") Long memberId, @RequestBody MemberUpdateRequest request) {
+    public ResponseEntity<?> updateMember(@PathVariable("memberId") long memberId, @RequestBody MemberUpdateRequest request) {
         try {
-            memberService.updateMemberStatusAndRole(memberId, request.getIsActive(), String.valueOf(MemberRole.valueOf(request.getRole())));
-            return ResponseEntity.ok().body(new ApiResponse(true, "회원 정보가 성공적으로 업데이트되었습니다."));
+            memberService.updateMemberStatusAndRole(memberId, request);
+            return ResponseEntity.ok().body("{\"success\": true}");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ApiResponse(false, "업데이트 중 오류가 발생했습니다: " + e.getMessage()));
+            return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
         }
     }
 

@@ -55,7 +55,7 @@
                             </div>
                         </li>
 
-                        <li class="flex-1 flex items-center justify-center text-center">작업</li>
+                        <li class="flex-1 flex items-center justify-center text-center">저장</li>
                     </ul>
                 </div>
 
@@ -70,7 +70,10 @@
                             <div class="mb_list_cd flex-1 text-center truncate" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_md flex-1 text-center truncate" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_pi flex-1 text-center">
-                                <img th:src="@{${member.image}}" alt="프로필 이미지" class="w-10 h-10 rounded-full object-cover mx-auto">
+                                <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                                     class="w-10 h-10 rounded-full object-cover mx-auto"/>
+                                <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
+                                     class="w-10 h-10 rounded-full object-cover mx-auto"/>
                             </div>
                             <div class="mb_list_pnb flex-1 text-center truncate" th:text="${member.phoneNumber}"></div>
                             <div class="mb_list_ad flex-1 text-center truncate" th:text="${member.address}"></div>
@@ -89,7 +92,7 @@
                                 </select>
                             </div>
                             <div class="mb_action flex-1 text-center">
-                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150" data-memberid="${member.id}" disabled>저장</button>
+                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150" th:data-memberid="${member.id}" disabled>저장</button>
                             </div>
                         </li>
                     </ul>

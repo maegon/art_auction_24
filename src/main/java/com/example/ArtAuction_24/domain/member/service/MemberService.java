@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.member.service;
 
+import com.example.ArtAuction_24.domain.member.dto.MemberUpdateRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
@@ -217,13 +218,12 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    @Transactional
-    public void updateMemberStatusAndRole(Long memberId, boolean isActive, String role) {
+    public void updateMemberStatusAndRole(long memberId, MemberUpdateRequest request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
 
-        member.setIsActive(isActive);
-        member.setRole(MemberRole.valueOf(role));
+        member.setIsActive(request.isActive());
+        member.setRole(MemberRole.valueOf(request.getRole()));
         memberRepository.save(member);
     }
 }

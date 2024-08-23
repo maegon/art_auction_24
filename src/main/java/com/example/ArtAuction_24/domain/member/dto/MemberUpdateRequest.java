@@ -12,11 +12,5 @@ import lombok.Setter;
 @Setter
 public class MemberUpdateRequest {
     private String role;
-    private Boolean isActive;
-
-    // 매개변수가 있는 생성자
-    public MemberUpdateRequest(boolean isActive, String role) {
-        this.isActive = isActive;
-        this.role = role;
-    }
+    private boolean isActive = true;
 }
