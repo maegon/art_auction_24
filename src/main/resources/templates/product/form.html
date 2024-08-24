@@ -20,6 +20,9 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+
+
     </script>
 </head>
 <body>
@@ -66,7 +69,7 @@
 
             <div class="mb-4">
                 <label for="startingPrice" class="block text-gray-700 text-sm font-bold mb-2">시작가</label>
-                <input type="text" id="startingPrice"
+                <input type="number" id="startingPrice"
                        class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                        th:field="*{startingPrice}"
                        placeholder="시작가를 입력하세요 (예: 100000)">

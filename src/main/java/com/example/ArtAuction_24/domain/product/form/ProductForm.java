@@ -40,9 +40,4 @@ public class ProductForm {
 
     private MultipartFile thumbnail;
 
-
-
-
-
-
 }

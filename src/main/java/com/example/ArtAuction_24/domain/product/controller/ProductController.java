@@ -64,12 +64,21 @@ public class ProductController {
             return "product/form";
         }
 
-        Member member = this.memberService.getCurrentMember();
 
+        Member member = this.memberService.getCurrentMember();
         Artist artist = this.artistService.findByMember(member);
         this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getDimensions(), productForm.getStartingPrice(),
                   LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);
         return "redirect:/product/list";
+    }
+
+    private boolean isValidDimension(String value) {
+        try {
+            double num = Double.parseDouble(value);
+            return num > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @GetMapping("/list")

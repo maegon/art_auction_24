@@ -461,4 +461,14 @@ public class ArtistService {
         artistRepository.save(artist);
     }
 
+
+
+
+    public Optional<Artist> getArtistByMember(Member member) {
+        return artistRepository.findByAuthor(member);
+    }
+
+
+
 }
+

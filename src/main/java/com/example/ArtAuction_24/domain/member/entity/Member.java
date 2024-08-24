@@ -150,4 +150,9 @@ public class Member extends BaseEntity implements UserDetails {
         return this.isActive;  // 계정 활성화 여부
     }
 
+    //회원이 아티스트랑 연결되어있는지 확인
+    public boolean isArtist() {
+        return this.artist != null && !this.artist.isEmpty();
+    }
+
 }

@@ -184,6 +184,24 @@ public class ArtistController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create")
+    public String create(Model model, Principal principal) {
+        Member currentMember = memberService.getCurrentMember();
+
+        // 현재 로그인된 사용자가 이미 작가인지 확인
+        Optional<Artist> existingArtist = artistService.getArtistByMember(currentMember);
+
+        if (existingArtist.isPresent()) {
+            // 이미 작가로 등록되어 있는 경우
+            model.addAttribute("errorMessage", "이미 작가로 등록되어 있습니다.");
+            return "artist/error"; // 또는 다른 적절한 페이지로 리디렉션
+        }
+
+        model.addAttribute("artistForm", new ArtistForm());
+        return "artist/artistForm";
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String create(
             @ModelAttribute @Valid ArtistForm artistForm,
