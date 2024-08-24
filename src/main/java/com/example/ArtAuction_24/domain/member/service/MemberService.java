@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.member.service;
 
+import com.example.ArtAuction_24.domain.member.dto.MemberUpdateRequest;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
@@ -12,7 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +40,8 @@ import java.util.UUID;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SessionRegistry sessionRegistry;
+
     @Value("${custom.genFileDirPath}")
     private String genFileDirPath;
 
@@ -43,7 +53,6 @@ public class MemberService {
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
             throw new CustomDuplicateEmailException("Email already exists");
         }
-        System.out.println(email);
 
         System.out.println(email);
 
@@ -218,13 +227,41 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    @Transactional
-    public void updateMemberStatusAndRole(Long memberId, boolean isActive, String role) {
+    public void updateMemberStatusAndRole(long memberId, MemberUpdateRequest request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
 
-        member.setIsActive(isActive);
-        member.setRole(MemberRole.valueOf(role));
+        member.setIsActive(request.isActive());
+        member.setRole(MemberRole.valueOf(request.getRole()));
         memberRepository.save(member);
+
+        // 관리자의 세션을 변경하지 않도록 주의하며, 세션 무효화 등의 추가 작업을 할 수 있음
+        invalidateUserSessions(member.getUsername());
+        updateSecurityContext(member);
+    }
+
+    private void updateSecurityContext(Member member) {
+        List<GrantedAuthority> updatedAuthorities = new ArrayList<>();
+        updatedAuthorities.add(new SimpleGrantedAuthority(member.getRole().getValue()));
+
+        // 기존 세션의 SecurityContext를 갱신
+        Authentication authentication = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword(), updatedAuthorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    private void invalidateUserSessions(String username) {
+        List<Object> principals = sessionRegistry.getAllPrincipals();
+
+        for (Object principal : principals) {
+            if (principal instanceof UserDetails) {
+                String principalUsername = ((UserDetails) principal).getUsername();
+                if (principalUsername.equals(username)) {
+                    List<SessionInformation> sessionInfoList = sessionRegistry.getAllSessions(principal, false);
+                    for (SessionInformation sessionInfo : sessionInfoList) {
+                        sessionInfo.expireNow();  // 세션 무효화
+                    }
+                }
+            }
+        }
     }
 }

@@ -109,6 +109,31 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+
+
+        // 전화번호 형식이 맞는지 추가 확인
+        const phoneNumber = phoneNumberInput.value.trim();
+        if (!/^(\d{3}-\d{3,4}-\d{4})$/.test(phoneNumber)) {
+            allFilled = false;
+        }
+
+        // 아이디 유효성 검사
+        const username = usernameInput.value.trim();
+        const validUsernameRegex = /^[a-zA-Z0-9]+$/;
+
+        if (username.length < 4 || username.length > 16 || !validUsernameRegex.test(username)) {
+            allFilled = false;
+        }
+
+        // 비밀번호 유효성 검사
+        const password = passwordInput.value.trim();
+        const validPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{6,24}$/;
+
+        if (password.length < 6 || password.length > 24 || !validPasswordRegex.test(username)) {
+            allFilled = false;
+        }
+
+
     // 입력 필드 이벤트 리스너 추가
     const inputs = [
         usernameInput,

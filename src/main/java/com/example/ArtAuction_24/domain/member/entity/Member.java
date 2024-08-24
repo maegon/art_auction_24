@@ -53,7 +53,6 @@ public class Member extends BaseEntity implements UserDetails {
     @Column(unique = false)
     private String image; // 이미지 파일 이름을 저장
 
-    @Column(nullable = false)
     private Boolean isActive = true; // Boolean으로 변경하고 기본값을 true로 설정, 사이트 활동 여부
 
     @Column(nullable = false)

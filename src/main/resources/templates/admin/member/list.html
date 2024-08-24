@@ -3,7 +3,7 @@
     <div class="admContainer responsive-wrapper mx-auto px-6 lg:px-[300px] min-h-[600px]">
         <div class="mg_container mb-6">
             <div class="mg_menu_mb_container flex flex-col">
-                <div class="mg_menu_section flex justify-between items-center mb-4">
+                <div class="mg_menu_section flex justify-between items-center mt-4">
                     <span class="text-3xl font-semibold text-gray-800">회원 권한 설정</span>
                     
                     <!-- 검색란 -->
@@ -55,7 +55,7 @@
                             </div>
                         </li>
 
-                        <li class="flex-1 flex items-center justify-center text-center">작업</li>
+                        <li class="flex-1 flex items-center justify-center text-center">저장</li>
                     </ul>
                 </div>
 
@@ -70,26 +70,29 @@
                             <div class="mb_list_cd flex-1 text-center truncate" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_md flex-1 text-center truncate" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_pi flex-1 text-center">
-                                <img th:src="@{${member.image}}" alt="프로필 이미지" class="w-10 h-10 rounded-full object-cover mx-auto">
+                                <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                                     class="w-10 h-10 rounded-full object-cover mx-auto"/>
+                                <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
+                                     class="w-10 h-10 rounded-full object-cover mx-auto"/>
                             </div>
                             <div class="mb_list_pnb flex-1 text-center truncate" th:text="${member.phoneNumber}"></div>
                             <div class="mb_list_ad flex-1 text-center truncate" th:text="${member.address}"></div>
                             <div class="mb_list_ia flex-1 text-center" th:data-is-active="${member.isActive}">
-                                <select th:value="${member.isActive}" class="isActive border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
+                                <select class="isActive border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
                                     <option value="true" th:selected="${member.isActive}">활성</option>
                                     <option value="false" th:selected="!${member.isActive}">비활성</option>
                                 </select>
                             </div>
                             <div class="mb_list_ptc flex-1 text-center truncate" th:text="${member.providerTypeCode}"></div>
                             <div class="mb_list_rl flex-1 text-center" th:data-role="${member.role.name()}">
-                                <select th:value="${member.role}" class="role border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
+                                <select class="role border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500">
                                     <option value="MEMBER" th:selected="${member.role.name() == 'MEMBER'}">일반</option>
                                     <option value="ARTIST" th:selected="${member.role.name() == 'ARTIST'}">작가</option>
                                     <option value="ADMIN" th:selected="${member.role.name() == 'ADMIN'}">관리자</option>
                                 </select>
                             </div>
                             <div class="mb_action flex-1 text-center">
-                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150" data-memberid="${member.id}" disabled>저장</button>
+                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150" th:data-memberid="${member.id}" disabled>저장</button>
                             </div>
                         </li>
                     </ul>
