@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = {"artist"})
-public class HeightContentAdd {
+public class HeightContentAdd extends ContentAddBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +26,9 @@ public class HeightContentAdd {
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
+    @Override
+    public String getContent() {
+        return content;
+    }
 }

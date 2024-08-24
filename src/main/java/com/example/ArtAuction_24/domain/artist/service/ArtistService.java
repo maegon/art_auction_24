@@ -3,39 +3,99 @@ package com.example.ArtAuction_24.domain.artist.service;
 import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.repository.*;
+import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.global.DataNotFoundException;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class ArtistService {
+    @Autowired
     private final ArtistRepository artistRepository;
+    private final MemberRepository memberRepository;
     private final ArtistAddRepository artistAddRepository;
     private final TitleAddRepository titleAddRepository;
     private final ContentAddRepository contentAddRepository;
+    @Autowired
     private final TitleContentAddRepository titleContentAddRepository;
+    @Autowired
     private final YearContentAddRepository yearContentAddRepository;
+    @Autowired
     private final WidthContentAddRepository widthContentAddRepository;
+    @Autowired
     private final HeightContentAddRepository heightContentAddRepository;
+    @Autowired
     private final UnitContentAddRepository unitContentAddRepository;
+    @Autowired
     private final TechniqueContentAddRepository techniqueContentAddRepository;
 
     @Value("${custom.genFileDirPath}")
     private String fileDirPath;
+
+    public void uploadProofFile(Member member, MultipartFile proofFile) {
+        String proofRelPath = "image/proofs/" + UUID.randomUUID().toString() + "-" + proofFile.getOriginalFilename();
+        File proofFilePath = new File(fileDirPath + "/" + proofRelPath);
+
+        File dir = new File(fileDirPath + "/image/proofs");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
+            }
+        }
+
+        try {
+            proofFile.transferTo(proofFilePath);
+            if (!proofFilePath.exists()) {
+                throw new RuntimeException("파일 저장 실패: " + proofFilePath.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
+        }
+
+        member.setProofFilePath(proofRelPath);
+        member.setProofSubmitted(true);
+        memberRepository.save(member);
+    }
+
+    public List<Member> getMembersPendingApproval() {
+        return memberRepository.findByProofSubmittedTrueAndApprovedArtistFalse();
+    }
+
+    // 승인된 멤버들을 가져오는 메서드
+    public List<Member> getMembersApproved() {
+        return memberRepository.findByProofSubmittedTrueAndApprovedArtistTrue();
+    }
+
+
+    @Transactional
+    public void approveMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new DataNotFoundException("Member not found"));
+        member.setApprovedArtist(true);
+        memberRepository.save(member);
+    }
+
+    @Transactional
+    public void rejectMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new DataNotFoundException("Member not found"));
+        member.setProofFilePath(null);
+        member.setProofSubmitted(false);
+        memberRepository.save(member);
+    }
 
     public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds) {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
@@ -57,6 +117,7 @@ public class ArtistService {
             throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
         }
 
+        // Artist 객체 생성 및 저장
         Artist artist = Artist.builder()
                 .thumbnailImg(thumbnailRelPath)
                 .korName(korName)
@@ -73,6 +134,7 @@ public class ArtistService {
         return artist;
     }
 
+
     private void addArtistAdditionalInfo(Artist artist, List<String> artistAdds) {
         if (artistAdds != null && !artistAdds.isEmpty()) {
             List<ArtistAdd> artistAddList = artistAdds.stream()
@@ -87,7 +149,6 @@ public class ArtistService {
             artistAddRepository.saveAll(artistAddList);
         }
     }
-
 
     public Artist create(String korName, String engName, String birthDate, String introduce, String majorWork, Member member) {
         Artist artist = Artist.builder()
@@ -137,53 +198,13 @@ public class ArtistService {
         updateArtistAdds(artist, convertToArtistAddList(artistAdds, artist));
         updateTitleAdds(artist, convertToTitleAddList(titleAdds, artist));
         updateContentAdds(artist, convertToContentAddList(contentAdds, artist));
-        updateTitleContentAdds(artist, convertToTitleContentAddList(titleContentAdds, artist));
-        updateYearContentAdds(artist, convertToYearContentAddList(yearContentAdds, artist));
-        updateWidthContentAdds(artist, convertToWidthContentAddList(widthContentAdds, artist));
-        updateHeightContentAdds(artist, convertToHeightContentAddList(heightContentAdds, artist));
-        updateUnitContentAdds(artist, convertToUnitContentAddList(unitContentAdds, artist));
-        updateTechniqueContentAdds(artist, convertToTechniqueContentAddList(techniqueContentAdds, artist));
+        updateOrAddTitleContentAdds(artist, convertToTitleContentAddList(titleContentAdds, artist), convertToYearContentAddList(yearContentAdds, artist),
+                convertToWidthContentAddList(widthContentAdds, artist), convertToHeightContentAddList(heightContentAdds, artist),
+                convertToUnitContentAddList(unitContentAdds, artist), convertToTechniqueContentAddList(techniqueContentAdds, artist));
 
-
-        // 그룹화된 데이터를 각각 저장
-        for (int i = 0; i < titleContentAdds.size(); i++) {
-            TitleContentAdd titleContentAdd = new TitleContentAdd();
-            titleContentAdd.setContent(titleContentAdds.get(i));
-            titleContentAdd.setArtist(artist);
-
-            // 로그 추가
-            System.out.println("Saving TitleContentAdd: " + titleContentAdd.getContent());
-
-            titleContentAddRepository.save(titleContentAdd);
-
-            YearContentAdd yearContentAdd = new YearContentAdd();
-            yearContentAdd.setContent(yearContentAdds.get(i));
-            yearContentAdd.setArtist(artist);
-
-            WidthContentAdd widthContentAdd = new WidthContentAdd();
-            widthContentAdd.setContent(widthContentAdds.get(i));
-            widthContentAdd.setArtist(artist);
-
-            HeightContentAdd heightContentAdd = new HeightContentAdd();
-            heightContentAdd.setContent(heightContentAdds.get(i));
-            heightContentAdd.setArtist(artist);
-
-            UnitContentAdd unitContentAdd = new UnitContentAdd();
-            unitContentAdd.setContent(unitContentAdds.get(i));
-            unitContentAdd.setArtist(artist);
-
-            TechniqueContentAdd techniqueContentAdd = new TechniqueContentAdd();
-            techniqueContentAdd.setContent(techniqueContentAdds.get(i));
-            techniqueContentAdd.setArtist(artist);
-
-            // 각각의 엔티티를 저장
-            titleContentAddRepository.save(titleContentAdd);
-            yearContentAddRepository.save(yearContentAdd);
-            widthContentAddRepository.save(widthContentAdd);
-            heightContentAddRepository.save(heightContentAdd);
-            unitContentAddRepository.save(unitContentAdd);
-            techniqueContentAddRepository.save(techniqueContentAdd);
-        }
+        // 중복 항목 제거
+        removeDuplicateEntries(artist);
+        artistRepository.flush();  // 변경 사항 반영
 
         artistRepository.save(artist);
     }
@@ -270,78 +291,115 @@ public class ArtistService {
         }).collect(Collectors.toList());
     }
 
-
-
-    private void updateArtistAdds(Artist artist, List<ArtistAdd> artistAdds) {
-        if (artistAdds != null) {
-            artistAddRepository.deleteAllByArtist(artist); // 기존 데이터 삭제
-            artistAdds.forEach(add -> add.setArtist(artist)); // 새 데이터에 아티스트 연결
-            artistAddRepository.saveAll(artistAdds); // 새 데이터 저장
-        }
+    // 기존 데이터와 새로운 데이터를 비교하여 업데이트 또는 추가하는 메서드들
+    private void updateArtistAdds(Artist artist, List<ArtistAdd> newArtistAdds) {
+        artistAddRepository.deleteAllByArtist(artist); // 기존 데이터 삭제
+        newArtistAdds.forEach(add -> add.setArtist(artist)); // 새 데이터에 아티스트 연결
+        artistAddRepository.saveAll(newArtistAdds); // 새 데이터 저장
     }
 
-    private void updateTitleAdds(Artist artist, List<TitleAdd> titleAdds) {
-        if (titleAdds != null) {
-            titleAddRepository.deleteAllByArtist(artist);
-            titleAdds.forEach(add -> add.setArtist(artist));
-            titleAddRepository.saveAll(titleAdds);
-        }
+    private void updateTitleAdds(Artist artist, List<TitleAdd> newTitleAdds) {
+        titleAddRepository.deleteAllByArtist(artist);
+        newTitleAdds.forEach(add -> add.setArtist(artist));
+        titleAddRepository.saveAll(newTitleAdds);
     }
 
-    private void updateContentAdds(Artist artist, List<ContentAdd> contentAdds) {
-        if (contentAdds != null) {
-            contentAddRepository.deleteAllByArtist(artist);
-            contentAdds.forEach(add -> add.setArtist(artist));
-            contentAddRepository.saveAll(contentAdds);
-        }
+    private void updateContentAdds(Artist artist, List<ContentAdd> newContentAdds) {
+        contentAddRepository.deleteAllByArtist(artist);
+        newContentAdds.forEach(add -> add.setArtist(artist));
+        contentAddRepository.saveAll(newContentAdds);
     }
 
-    private void updateTitleContentAdds(Artist artist, List<TitleContentAdd> titleContentAdds) {
-        if (titleContentAdds != null) {
-            titleContentAddRepository.deleteAllByArtist(artist);
-            titleContentAdds.forEach(add -> add.setArtist(artist));
-            titleContentAddRepository.saveAll(titleContentAdds);
+    private void updateOrAddTitleContentAdds(Artist artist, List<TitleContentAdd> newTitleContentAdds, List<YearContentAdd> newYearContentAdds,
+                                             List<WidthContentAdd> newWidthContentAdds, List<HeightContentAdd> newHeightContentAdds,
+                                             List<UnitContentAdd> newUnitContentAdds, List<TechniqueContentAdd> newTechniqueContentAdds) {
+        // 그룹화된 데이터 업데이트 로직
+        for (int i = 0; i < newTitleContentAdds.size(); i++) {
+            TitleContentAdd newTitleContentAdd = newTitleContentAdds.get(i);
+            YearContentAdd newYearContentAdd = newYearContentAdds.get(i);
+            WidthContentAdd newWidthContentAdd = newWidthContentAdds.get(i);
+            HeightContentAdd newHeightContentAdd = newHeightContentAdds.get(i);
+            UnitContentAdd newUnitContentAdd = newUnitContentAdds.get(i);
+            TechniqueContentAdd newTechniqueContentAdd = newTechniqueContentAdds.get(i);
+
+            // 중복된 데이터를 찾기 위해 현재 데이터베이스의 항목을 탐색합니다.
+            boolean exists = false;
+            for (TitleContentAdd existingTitleContentAdd : artist.getTitleContentAdds()) {
+                if (existingTitleContentAdd.getContent().equals(newTitleContentAdd.getContent())) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                // 새로운 항목을 추가합니다.
+                artist.getTitleContentAdds().add(newTitleContentAdd);
+                artist.getYearContentAdds().add(newYearContentAdd);
+                artist.getWidthContentAdds().add(newWidthContentAdd);
+                artist.getHeightContentAdds().add(newHeightContentAdd);
+                artist.getUnitContentAdds().add(newUnitContentAdd);
+                artist.getTechniqueContentAdds().add(newTechniqueContentAdd);
+            }
         }
+
+        // 기존 데이터를 삭제
+        deleteOldEntries(artist.getTitleContentAdds(), newTitleContentAdds, titleContentAddRepository);
+        deleteOldEntries(artist.getYearContentAdds(), newYearContentAdds, yearContentAddRepository);
+        deleteOldEntries(artist.getWidthContentAdds(), newWidthContentAdds, widthContentAddRepository);
+        deleteOldEntries(artist.getHeightContentAdds(), newHeightContentAdds, heightContentAddRepository);
+        deleteOldEntries(artist.getUnitContentAdds(), newUnitContentAdds, unitContentAddRepository);
+        deleteOldEntries(artist.getTechniqueContentAdds(), newTechniqueContentAdds, techniqueContentAddRepository);
     }
 
-    private void updateYearContentAdds(Artist artist, List<YearContentAdd> yearContentAdds) {
-        if (yearContentAdds != null) {
-            yearContentAddRepository.deleteAllByArtist(artist);
-            yearContentAdds.forEach(add -> add.setArtist(artist));
-            yearContentAddRepository.saveAll(yearContentAdds);
+    private <T extends ContentAddBase> void deleteOldEntries(List<T> currentEntries, List<T> newEntries, JpaRepository<T, Long> repository) {
+        Set<String> newContentSet = new HashSet<>();
+        for (T entry : newEntries) {
+            newContentSet.add(entry.getContent());
         }
+
+        List<T> entriesToDelete = new ArrayList<>();
+        for (T entry : currentEntries) {
+            if (!newContentSet.contains(entry.getContent())) {
+                entriesToDelete.add(entry);
+            }
+        }
+
+        repository.deleteAll(entriesToDelete);
     }
 
-    private void updateWidthContentAdds(Artist artist, List<WidthContentAdd> widthContentAdds) {
-        if (widthContentAdds != null) {
-            widthContentAddRepository.deleteAllByArtist(artist);
-            widthContentAdds.forEach(add -> add.setArtist(artist));
-            widthContentAddRepository.saveAll(widthContentAdds);
-        }
+    // 중복 항목 제거 메소드
+    public void removeDuplicateEntries(Artist artist) {
+        // TitleContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getTitleContentAdds(), titleContentAddRepository);
+
+        // YearContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getYearContentAdds(), yearContentAddRepository);
+
+        // WidthContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getWidthContentAdds(), widthContentAddRepository);
+
+        // HeightContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getHeightContentAdds(), heightContentAddRepository);
+
+        // UnitContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getUnitContentAdds(), unitContentAddRepository);
+
+        // TechniqueContentAdd 중복 제거
+        removeDuplicatesForContentAdd(artist.getTechniqueContentAdds(), techniqueContentAddRepository);
     }
 
-    private void updateHeightContentAdds(Artist artist, List<HeightContentAdd> heightContentAdds) {
-        if (heightContentAdds != null) {
-            heightContentAddRepository.deleteAllByArtist(artist);
-            heightContentAdds.forEach(add -> add.setArtist(artist));
-            heightContentAddRepository.saveAll(heightContentAdds);
-        }
-    }
+    // 중복된 항목을 제거하는 공통 메서드
+    private <T extends ContentAddBase> void removeDuplicatesForContentAdd(List<T> contentAdds, JpaRepository<T, Long> repository) {
+        Set<String> uniqueContent = new HashSet<>();
+        List<T> duplicates = new ArrayList<>();
 
-    private void updateUnitContentAdds(Artist artist, List<UnitContentAdd> unitContentAdds) {
-        if (unitContentAdds != null) {
-            unitContentAddRepository.deleteAllByArtist(artist);
-            unitContentAdds.forEach(add -> add.setArtist(artist));
-            unitContentAddRepository.saveAll(unitContentAdds);
+        for (T contentAdd : contentAdds) {
+            if (!uniqueContent.add(contentAdd.getContent())) {
+                duplicates.add(contentAdd);
+            }
         }
-    }
 
-    private void updateTechniqueContentAdds(Artist artist, List<TechniqueContentAdd> techniqueContentAdds) {
-        if (techniqueContentAdds != null) {
-            techniqueContentAddRepository.deleteAllByArtist(artist);
-            techniqueContentAdds.forEach(add -> add.setArtist(artist));
-            techniqueContentAddRepository.saveAll(techniqueContentAdds);
-        }
+        repository.deleteAll(duplicates);
     }
 
     @Transactional
@@ -357,8 +415,6 @@ public class ArtistService {
         return artistRepository.findByAuthor(member)
                 .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
     }
-
-
 
     public List<Artist> findByKeyword(String keyword) {
         return artistRepository.findByKeyword(keyword);
@@ -387,6 +443,7 @@ public class ArtistService {
 
         return artist;
     }
+
     public void updateArtistDetails(Artist artist, ArtistForm artistForm) {
         // 기본 정보 업데이트
         artist.setKorName(artistForm.getKorName());
@@ -395,15 +452,10 @@ public class ArtistService {
         artist.setIntroduce(artistForm.getIntroduce());
 
         // 추가 필드 업데이트
-        updateArtistAdds(artist, convertToArtistAddList(artistForm.getArtistAdds(), artist));
-        updateTitleAdds(artist, convertToTitleAddList(artistForm.getTitleAdds(), artist));
-        updateContentAdds(artist, convertToContentAddList(artistForm.getContentAdds(), artist));
-        updateTitleContentAdds(artist, convertToTitleContentAddList(artistForm.getTitleContentAdds(), artist));
-        updateYearContentAdds(artist, convertToYearContentAddList(artistForm.getYearContentAdds(), artist));
-        updateWidthContentAdds(artist, convertToWidthContentAddList(artistForm.getWidthContentAdds(), artist));
-        updateHeightContentAdds(artist, convertToHeightContentAddList(artistForm.getHeightContentAdds(), artist));
-        updateUnitContentAdds(artist, convertToUnitContentAddList(artistForm.getUnitContentAdds(), artist));
-        updateTechniqueContentAdds(artist, convertToTechniqueContentAddList(artistForm.getTechniqueContentAdds(), artist));
+        updateOrAddTitleContentAdds(artist, convertToTitleContentAddList(artistForm.getTitleContentAdds(), artist),
+                convertToYearContentAddList(artistForm.getYearContentAdds(), artist), convertToWidthContentAddList(artistForm.getWidthContentAdds(), artist),
+                convertToHeightContentAddList(artistForm.getHeightContentAdds(), artist), convertToUnitContentAddList(artistForm.getUnitContentAdds(), artist),
+                convertToTechniqueContentAddList(artistForm.getTechniqueContentAdds(), artist));
 
         // 변경된 아티스트 엔티티 저장
         artistRepository.save(artist);

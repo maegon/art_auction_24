@@ -85,7 +85,17 @@ public class Member extends BaseEntity implements UserDetails {
 
     private transient String formattedbalance;
 
-
+    private boolean agreedToTerms;
+    private boolean proofSubmitted;
+    private String proofFilePath;
+    private boolean approvedArtist;
+    private boolean agreePersonalInfo;
+    private boolean agreeService;
+    // Setter와 Getter
+    // Setter for artistApplicationStatus
+    @Setter
+    @Getter
+    private String artistApplicationStatus;
 
 
     @PostLoad

@@ -15,6 +15,8 @@ public class ArtistForm {
 
     private MultipartFile thumbnail;
 
+    private MultipartFile proofFile;
+
     @NotBlank(message = "이름은 필수입니다.")
     @Size(max = 30, message = "이름을 입력하세요. ex) 차은우")
     private String korName;

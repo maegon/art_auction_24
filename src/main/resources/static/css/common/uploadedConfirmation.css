@@ -1,0 +1,91 @@
+.uploadedConfirmation-content {
+    margin-left: 300px;
+    margin-right: 300px;
+    height: 700px; /* 원하는 높이로 설정 */
+    /*border: 1px solid #9E9E9E;*/
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    flex-direction: column;
+}
+.approvalRequest-form {
+    margin-top: 40px;
+    /*border: 1px solid #9E9E9E;*/
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.approvalRequest-text {
+    font-size: 25px;
+}
+.circle-center {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    flex-direction: row;
+    margin-top: 28px;
+}
+.canNotCreateProfile .circle-center_1:first-child .circle {
+    border-color: #0099FF; /* 활성화된 동그라미의 테두리 색상 */
+    box-shadow: 0px 0px 5px 10px #0099FF;
+}
+#circle3 {
+    border-color: #0099FF; /* 활성화된 동그라미의 테두리 색상 */
+    box-shadow: 0px 0px 5px 10px #0099FF;
+}
+.circle-center_1 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 20px;
+    /*border: 1px solid #9E9E9E;*/
+}
+
+.circle-center_1 > .circle:nth-child(1) {
+    margin-right: 20px;
+    border:
+}
+.circle-center_1 > .circle:nth-child(2) {
+    margin-right: 20px;
+}
+.circle {
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    border: 2px solid #666666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: #CCCCCC; /* 활성화된 동그라미의 테두리 색상 */
+    box-shadow: 0px 0px 5px 10px #CCCCCC;
+}
+.circle_1 {
+    font-size: 25px;
+    circle: #000000;
+}
+.dot {
+    font-size: 13px;
+    circle: #666666;
+    margin-bottom: 18px;
+}
+.circle_2 {
+    margin-left: 7px;
+}
+.circle_3 {
+    margin-left: 7px;
+    margin-right: 7px;
+}
+.circle-text {
+    margin-top: 10px;
+    margin-right: 15px;
+}
+.approvalRequest-text_1 {
+    font-size: 18px;
+    margin-top: 50px;
+}
+.approvalRequest-text_2 {
+    font-size: 18px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

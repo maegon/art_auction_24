@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = {"artist"})
-public class TechniqueContentAdd {
+public class TechniqueContentAdd extends ContentAddBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,11 @@ public class TechniqueContentAdd {
     @ManyToOne
     @JoinColumn(name = "artist_id")
     private Artist artist;
+
+    @Override
+    public String getContent() {
+        return content;
+    }
 
     public void add(TechniqueContentAdd techniqueContentAdd) {
     }

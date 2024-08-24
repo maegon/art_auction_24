@@ -1,17 +1,10 @@
 .termsContainer_1 {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    height: 720px;
+    margin-left: 300px;
+    margin-right: 300px
 }
 
 .termsContainer_2 {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    height: 600px;
-    margin-top: 50px;
+     margin-top: 70px;
 }
 
 .terms-content {
@@ -68,6 +61,7 @@
     align-items: center;
     text-align: center;
     margin-top: 60px;
+    margin-bottom: 50px;
 }
 
 .btn-primary {

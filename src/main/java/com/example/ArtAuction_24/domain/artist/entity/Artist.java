@@ -34,6 +34,8 @@ public class Artist extends BaseEntity {
     private String birthDate;
     private String thumbnailImg;
 
+    private String proofFilePath;
+
     private String introduce;
     private String majorWork;
 
@@ -43,6 +45,8 @@ public class Artist extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Member author;
+
+    private boolean isApproved;
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
