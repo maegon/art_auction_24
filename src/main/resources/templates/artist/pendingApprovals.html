@@ -1,70 +1,26 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout/layout}">
-<head>
-    <title>승인 대기 목록</title>
-    <style>
-        /* 기본적인 스타일 */
-        .container {
-            width: 80%;
-            margin: 50px auto;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
 <div layout:fragment="content">
-    <div class="pendingApprovals-content">
-        <h1 class="pa-title">승인 대기 목록</h1>
-
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>파일</th>
-                <th>승인 상태</th>
-                <th>선택</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="member : ${pendingMembers}">
-                <td th:text="${member.username}">user1</td>
-                <td th:text="${member.nickname}">홍길동</td>
-                <td th:text="${member.email}">hong@example.com</td>
-                <td th:text="${member.proofFilePath}">파일 경로</td>
-                <td th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></td>
-                <td>
-                    <div class="PA-btn">
-                        <form th:action="@{/artist/approve/{id}(id=${member.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-approve">승인</button>
-                        </form>
-                        <form th:action="@{/artist/reject/{id}(id=${member.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-reject">거절</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="admContainer responsive-wrapper mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <div class="mg_container mb-6">
+            <div class="mg_menu_mb_container flex flex-col">
+                <div class="mg_menu_section flex justify-between items-center mt-4">
+                    <span class="text-3xl font-semibold text-gray-800 mt-4">작가 신청 내역</span>
+                </div>
+                <div class="flex mt-4">
+                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
+                        <li class="flex-1 flex items-center justify-center text-center">회원 아이디</li>
+                        <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
+                        <li class="flex-1 flex items-center justify-center text-center">이메일</li>
+                        <li class="flex-1 flex items-center justify-center text-center">첨부파일</li>
+                        <li class="flex-1 flex items-center justify-center text-center">승인상태</li>
+                        <li class="flex-1 flex items-center justify-center text-center">선택</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+       
 
         <h1 class="pa-title">승인 완료 목록</h1>
 
@@ -90,5 +46,4 @@
         </table>
     </div>
 </div>
-</body>
 </html>
