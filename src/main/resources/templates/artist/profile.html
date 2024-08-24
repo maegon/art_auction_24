@@ -103,7 +103,7 @@
                 </div>
                 <div class="textTileForm_test">
                     <span class="title_1">MAJOR WORK</span>
-                    <a th:href="@{|/art/list/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                    <a th:href="@{|/product/list/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                     <div class="contentAddContainer">

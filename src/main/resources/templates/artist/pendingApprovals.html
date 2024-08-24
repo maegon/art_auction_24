@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+<head>
+    <title>승인 대기 목록</title>
+    <style>
+        /* 기본적인 스타일 */
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="pendingApprovals-content">
+        <h1 class="pa-title">승인 대기 목록</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>파일</th>
+                <th>승인 상태</th>
+                <th>선택</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${pendingMembers}">
+                <td th:text="${member.username}">user1</td>
+                <td th:text="${member.nickname}">홍길동</td>
+                <td th:text="${member.email}">hong@example.com</td>
+                <td th:text="${member.proofFilePath}">파일 경로</td>
+                <td th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></td>
+                <td>
+                    <div class="PA-btn">
+                        <form th:action="@{/artist/approve/{id}(id=${member.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-approve">승인</button>
+                        </form>
+                        <form th:action="@{/artist/reject/{id}(id=${member.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-reject">거절</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h1 class="pa-title">승인 완료 목록</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>파일</th>
+                <th>승인 상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${approvedMembers}">
+                <td th:text="${member.username}">user1</td>
+                <td th:text="${member.nickname}">홍길동</td>
+                <td th:text="${member.email}">hong@example.com</td>
+                <td th:text="${member.proofFilePath}">파일 경로</td>
+                <td th:text="${member.artistApplicationStatus}">승인 완료</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

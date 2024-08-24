@@ -1,0 +1,54 @@
+.upload-proof-content{
+    margin-left: 300px;
+    margin-right: 300px;
+    max-height: auto; /* 원하는 높이로 설정 */
+    /*border: 1px solid #9E9E9E;*/
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+    flex-direction: column;
+}
+.upload-proof-content > h1 {
+    font-size: 25px;
+    margin-top: 20px;
+}
+.upload-proof-agree-section-container {
+    display: flex;
+    flex-direction: column;
+}
+.upload-proof-agree-section {
+    /*border: 1px solid #9E9E9E;*/
+    margin-top: 30px;
+}
+.upload-proof-agree-section_2 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+.upload-proof-agree-section_3 {
+    border: 1px solid #9E9E9E;
+    padding: 10px;
+    height: auto;
+}
+.upload-proof-pad {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.upload-proof-1{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.upload-proof-file {
+    padding: 10px;
+    border: 1px solid #9E9E9E;
+    height: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.upload-proof-form-group {
+    display: flex;
+    align-items: center;   /* 수직 가운데 정렬 */
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

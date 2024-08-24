@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+<head>
+    <title>승인 상태 확인</title>
+    <script>
+
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="uploadedConfirmation-content">
+        <div class="approvalRequest-form">
+            <h1 class="approvalRequest-text" th:text="${statusMessage}"></h1>
+
+            <div class="canCreateProfile" th:if="${canCreateProfile}">
+                <div class="circle-center">
+                    <div class="circle-center_1">
+                        <div class="circle">
+                            <a class="circle_1"><i class="fa-solid fa-cloud-arrow-up"></i></a>
+                        </div>
+                        <p class="circle-text">승인 요청</p>
+                    </div>
+                    <div class="dot">
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_3"><i class="fa-solid fa-circle"></i></a>
+                    </div>
+                    <div class="circle-center_1">
+                        <div class="circle">
+                            <a class="circle_1"><i class="fa-solid fa-spinner"></i></a>
+                        </div>
+                        <p class="circle-text">처리중</p>
+                    </div>
+                    <div class="dot">
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_3"><i class="fa-solid fa-circle"></i></a>
+                    </div>
+                    <div class="circle-center_1">
+                        <div class="circle" id="circle3">
+                            <a class="circle_1"><i class="fa-solid fa-check" style="color: #000000;"></i></a>
+                        </div>
+                        <p class="circle-text">승인 완료</p>
+                    </div>
+                </div>
+                <a class="approvalRequest-text_2" href="/artist/create">작가 프로필 만들기</a>
+            </div>
+            <div class="canNotCreateProfile" th:if="${!canCreateProfile}">
+                <div class="circle-center">
+                    <div class="circle-center_1">
+                        <div class="circle">
+                            <a class="circle_1"><i class="fa-solid fa-cloud-arrow-up"></i></a>
+                        </div>
+                        <p class="circle-text">승인 요청</p>
+                    </div>
+                    <div class="dot">
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_3"><i class="fa-solid fa-circle"></i></a>
+                    </div>
+                    <div class="circle-center_1">
+                        <div class="circle">
+                            <a class="circle_1"><i class="fa-solid fa-spinner"></i></a>
+                        </div>
+                        <p class="circle-text">처리중</p>
+                    </div>
+                    <div class="dot">
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_2"><i class="fa-solid fa-circle"></i></a>
+                        <a class="circle_3"><i class="fa-solid fa-circle"></i></a>
+                    </div>
+                    <div class="circle-center_1">
+                        <div class="circle">
+                            <a class="circle_1"><i class="fa-solid fa-check" style="color: #000000;"></i></a>
+                        </div>
+                        <p class="circle-text">승인 완료</p>
+                    </div>
+                </div>
+                <p class="approvalRequest-text_1">관리자의 승인을 기다리고 있습니다. 승인이 완료되면 작가 프로필을 만들 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package com.example.ArtAuction_24.domain.artist.controller;
 
-import com.example.ArtAuction_24.domain.art.service.ArtService;
 import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
@@ -8,7 +7,7 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,36 +25,27 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 public class ArtistController {
+    @Autowired
     private final ArtistService artistService;
     private final MemberService memberService;
-    private final ArtService artService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile/{id}")
     public String getProfile(Model model, @PathVariable("id") Integer id) {
         Artist artist = artistService.getArtist(id);
         Member currentMember = memberService.getCurrentMember();
-        System.out.println("Current Member: " + currentMember);
+
         // 현재 로그인한 사용자의 이메일과 전화번호를 모델에 추가합니다.
         model.addAttribute("email", currentMember.getEmail());
         model.addAttribute("phoneNumber", currentMember.getPhoneNumber());
-        Optional<Artist> artistOpt = Optional.ofNullable(artistService.findByMember(currentMember));
+        model.addAttribute("artist", artist);
 
-        if (artistOpt.isEmpty()) {
-            System.out.println("아티스트 정보를 찾을 수 없습니다.");
-            model.addAttribute("errorMessage", "아티스트 정보를 찾을 수 없습니다.");
-            return "error/artistNotFound";
-        }
-
-        System.out.println("Artist: " + artistOpt.get());
-        model.addAttribute("artist", artistOpt.get());
         return "artist/profile";
     }
 
-    @PreAuthorize("isAuthenticated()")
+
     @GetMapping("/terms")
     public String showTermsForm(Model model) {
-        // 약관 동의 폼을 위한 모델 추가
         return "artist/termsForm";
     }
 
@@ -68,20 +58,120 @@ public class ArtistController {
             @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
-        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
-            model.addAttribute("errorMessage", "필수 항목에 동의하셔야 합니다.");
+            model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
             return "artist/termsForm";
         }
 
-        // 모든 필수 항목이 동의된 경우
-        return "redirect:/artist/create";
+        Member member = memberService.getCurrentMember();
+        member.setAgreedToTerms(true);
+        memberService.save(member);
+
+        return "redirect:/artist/upload-proof";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/upload-proof")
+    public String showProofUploadForm(Model model, Principal principal) {
+        Member member = memberService.getCurrentMember();
+
+        // 약관 동의 여부 확인
+        if (!member.isAgreedToTerms()) {
+            return "redirect:/artist/terms";
+        }
+
+        model.addAttribute("member", member);
+        return "artist/proofUploadForm";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/upload-proof")
+    public String submitProofUpload(
+            @RequestParam(name = "agree_personal_info_artist", required = false, defaultValue = "false") boolean agreePersonalInfoArtist,
+            @RequestParam(name = "agree_service_artist", required = false, defaultValue = "false") boolean agreeServiceArtist,
+            @RequestParam("proofFile") MultipartFile proofFile,
+            Principal principal,
+            Model model) {
+
+        Member member = memberService.getCurrentMember();
+
+        // 필수 약관에 동의하지 않은 경우
+        if (!agreePersonalInfoArtist || !agreeServiceArtist) {
+            model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
+            return "artist/proofUploadForm";
+        }
+
+        // 파일이 업로드되지 않은 경우
+        if (proofFile.isEmpty()) {
+            model.addAttribute("errorMessage", "파일을 선택해야 합니다.");
+            return "artist/proofUploadForm";
+        }
+
+        // 약관 동의 정보 저장
+        member.setAgreePersonalInfo(true);
+        member.setAgreeService(true);
+        memberService.save(member);
+
+        // 약관에 동의하고 파일이 정상적으로 업로드된 경우
+        artistService.uploadProofFile(member, proofFile);
+
+        return "redirect:/artist/uploaded";
     }
 
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/uploaded")
+    public String showUploadConfirmation(Model model) {
+        Member member = memberService.getCurrentMember();
+
+        if (!member.isApprovedArtist()) {
+            // 승인이 아직 이루어지지 않은 경우
+            model.addAttribute("statusMessage", "승인 요청 중입니다.");
+            model.addAttribute("canCreateProfile", false);  // 프로필 생성 버튼 숨김
+        } else {
+            // 승인이 완료된 경우
+            model.addAttribute("statusMessage", "승인 완료되었습니다.");
+            model.addAttribute("canCreateProfile", true);  // 프로필 생성 버튼 표시
+        }
+
+        return "artist/uploadedConfirmation";
+    }
+
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/pending-approval")
+    public String viewPendingApprovals(Model model) {
+        List<Member> pendingMembers = artistService.getMembersPendingApproval();
+        List<Member> approvedMembers = artistService.getMembersApproved();
+        model.addAttribute("pendingMembers", pendingMembers);
+        model.addAttribute("approvedMembers", approvedMembers);
+        return "artist/pendingApprovals";
+    }
+
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/approve/{id}")
+    public String approveProof(@PathVariable("id") Long memberId) {
+        artistService.approveMember(memberId);
+        return "redirect:/artist/pending-approval";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/reject/{id}")
+    public String rejectProof(@PathVariable("id") Long memberId) {
+        artistService.rejectMember(memberId);
+        return "redirect:/artist/pending-approval";
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String create(Model model) {
+    public String showCreateForm(Model model, Principal principal) {
+        Member member = memberService.getCurrentMember();
+
+        if (!member.isApprovedArtist()) {
+            return "redirect:/artist/uploaded";
+        }
+
         model.addAttribute("artistForm", new ArtistForm());
         return "artist/artistForm";
     }
@@ -99,11 +189,13 @@ public class ArtistController {
         }
 
         if (thumbnail.isEmpty()) {
-            System.out.println("파일이 업로드되지 않았습니다.");
             return "artist/artistForm";
         }
 
         Member member = this.memberService.getCurrentMember();
+
+        // 관리자 승인 여부를 확인하여 플래그 설정
+        boolean isApproved = member.getArtistApplicationStatus().equals("APPROVED");
 
         // Artist를 생성하고, artistAdds를 함께 처리
         Artist artist = this.artistService.create(
@@ -112,16 +204,12 @@ public class ArtistController {
                 artistForm.getEngName(),
                 artistForm.getBirthDate(),
                 member,
-                artistForm.getArtistAdds()  // 추가된 필드를 함께 전달
+                artistForm.getArtistAdds(),
+                isApproved  // 플래그 전달
         );
-
-        if (artist == null) {
-            return "artist/artistForm";
-        }
 
         return "redirect:/artist/profile/" + artist.getId();
     }
-
 
 
     @PreAuthorize("isAuthenticated()")
@@ -194,18 +282,6 @@ public class ArtistController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
-        // 줄바꿈을 기준으로 데이터를 분할하여 List로 변환
-        List<String> artistAddsList = artistForm.getArtistAdds();
-        List<String> titleAddsList = artistForm.getTitleAdds();
-        List<String> contentAddsList = artistForm.getContentAdds();
-        List<String> titleContentAddsList = artistForm.getTitleContentAdds();
-        List<String> yearContentAddsList = artistForm.getYearContentAdds();
-        List<String> widthContentAddsList = artistForm.getWidthContentAdds();
-        List<String> heightContentAddsList = artistForm.getHeightContentAdds();
-        List<String> unitContentAddsList = artistForm.getUnitContentAdds();
-        List<String> techniqueContentAddsList = artistForm.getTechniqueContentAdds();
-
-        // Service 호출
         artistService.modify(
                 artist,
                 artistForm.getThumbnail(),
@@ -213,26 +289,18 @@ public class ArtistController {
                 artistForm.getEngName(),
                 artistForm.getBirthDate(),
                 artistForm.getIntroduce(),
-                artistAddsList,
-                titleAddsList,
-                contentAddsList,
-                titleContentAddsList,
-                yearContentAddsList,
-                widthContentAddsList,
-                heightContentAddsList,
-                unitContentAddsList,
-                techniqueContentAddsList
+                artistForm.getArtistAdds(),
+                artistForm.getTitleAdds(),
+                artistForm.getContentAdds(),
+                artistForm.getTitleContentAdds(),
+                artistForm.getYearContentAdds(),
+                artistForm.getWidthContentAdds(),
+                artistForm.getHeightContentAdds(),
+                artistForm.getUnitContentAdds(),
+                artistForm.getTechniqueContentAdds()
         );
 
         return "redirect:/artist/profile/" + id;
-    }
-
-    // 줄바꿈을 기준으로 문자열을 분할하여 List로 변환하는 유틸리티 메서드
-    private List<String> convertToList(String input) {
-        if (input == null || input.trim().isEmpty()) {
-            return new ArrayList<>();
-        }
-        return Arrays.asList(input.split("\\r?\\n"));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -244,7 +312,6 @@ public class ArtistController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
 
-        this.artService.deleteAllByArtist(artist);
         this.artistService.delete(artist);
 
         return "redirect:/";

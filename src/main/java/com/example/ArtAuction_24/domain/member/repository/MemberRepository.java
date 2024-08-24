@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -30,6 +31,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m FROM Member m WHERE m.username LIKE %:keyword% OR m.email LIKE %:keyword%")
     Page<Member> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+    List<Member> findByProofSubmittedTrueAndApprovedArtistFalse();
 
-
+    // 승인된 멤버들을 가져오는 메서드
+    List<Member> findByProofSubmittedTrueAndApprovedArtistTrue();
 }

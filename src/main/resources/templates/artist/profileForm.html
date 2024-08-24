@@ -469,7 +469,7 @@
                     <div class="textTileForm">
                         <span class="title">INTRODUCE</span>
                         <div class="contentAdd">
-                            <textarea id="introduce" class="form-control" th:field="*{introduce}"></textarea>
+                            <textarea id="introduce" class="form-control-intro" th:field="*{introduce}"></textarea>
                             <div th:if="${#fields.hasErrors('introduce')}" th:errors="*{introduce}">Incorrect content</div>
                         </div>
                     </div>

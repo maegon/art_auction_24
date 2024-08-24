@@ -110,3 +110,78 @@
 .textTileForm_test .contentAdd {
     font-size: 18px;
 }
+
+@media screen and (max-width: 768px) {
+    .artistProfileContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        align-items: center;
+    }
+
+    .basicArtistProfile_1,
+    .textArtistProfile {
+        width: 100%;
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .artist-img {
+        width: 200px;
+        height: 200px;
+        margin: 20px 0;
+    }
+
+    .engName,
+    .korName {
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .engName {
+        font-size: 18px;
+    }
+
+    .korName {
+        font-size: 22px;
+    }
+
+    .textAdd_2 {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .button_1 {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .textTileForm_test {
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .title_1 {
+        font-size: 24px;
+    }
+
+    .input-group-MW {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .input-group-MW > div,
+    .input-group-MW > span {
+        margin: 2px 0;
+        text-align: center;
+        width: 100%;
+    }
+}
