@@ -20,7 +20,6 @@ public class TitleContentAdd extends ContentAddBase {
     private Long id;
 
     @Setter
-    @Getter
     private String content;
 
     @ManyToOne
