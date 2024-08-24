@@ -25,6 +25,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,44 +89,6 @@ public class AdmHomeController {
             return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
         }
     }
-
-//    @PutMapping("/member/{memberId}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public ResponseEntity<Map<String, Object>> updateMemberVerAdmin(
-//            @PathVariable("memberId") Long memberId,
-//            @RequestBody Map<String, Object> updates) {
-//        Map<String, Object> response = new HashMap<>();
-//
-//        // 회원 ID로 회원 조회
-//        return memberService.findById(memberId).map(member -> {
-//            // 권한 업데이트
-//            if (updates.containsKey("role") && updates.get("role") instanceof String) {
-//                try {
-//                    member.setRole(MemberRole.valueOf((String) updates.get("role")));
-//                } catch (IllegalArgumentException e) {
-//                    response.put("success", false);
-//                    response.put("message", "잘못된 역할 값입니다.");
-//                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//                }
-//            }
-//
-//            // 활성화 상태 업데이트
-//            if (updates.containsKey("isActive") && updates.get("isActive") instanceof Boolean) {
-//                member.setIsActive((Boolean) updates.get("isActive"));
-//            }
-//
-//            // 변경 사항 저장
-//            memberService.save(member);
-//
-//            response.put("success", true);
-//            response.put("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-//            return ResponseEntity.ok(response);  // 200 OK 상태 반환
-//        }).orElseGet(() -> {
-//            response.put("success", false);
-//            response.put("message", "회원 정보를 찾을 수 없습니다.");
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);  // 404 상태 반환
-//        });
-//    }
 
 
 

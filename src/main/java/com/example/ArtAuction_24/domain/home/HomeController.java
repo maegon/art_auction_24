@@ -1,22 +1,20 @@
 package com.example.ArtAuction_24.domain.home;
 
-import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
-import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
-import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +29,7 @@ public class HomeController {
     private final AuctionService auctionService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpServletResponse response) {
         List<Product> productList = productService.findAllProductOrderByCreateDateDesc();
         model.addAttribute("productList", productList);
 
@@ -48,6 +46,15 @@ public class HomeController {
                 model.addAttribute("profileImage", currentMember.getImage());
                 model.addAttribute("username", currentMember.getUsername());
             }
+
+            // 재원 추가
+            // 현재 인증된 사용자의 권한을 모델에 추가
+            String authority = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("UNKNOWN");
+
+            model.addAttribute("userAuthority", authority);
         }
 
         // ACTIVE 상태의 경매에 포함된 제품을 가져옵니다.
@@ -61,6 +68,11 @@ public class HomeController {
                 .collect(Collectors.toList());
         model.addAttribute("scheduledAuctions", limitedScheduledAuctions);
 
+        // 재원 추가
+        // 캐시 정보를 비활성화합니다.
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setHeader("Expires", "0"); // Proxies.
 
         return "home/main";
     }

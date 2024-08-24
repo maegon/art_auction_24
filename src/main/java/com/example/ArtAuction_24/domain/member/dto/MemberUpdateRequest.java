@@ -1,6 +1,7 @@
 package com.example.ArtAuction_24.domain.member.dto;
 
 import com.example.ArtAuction_24.domain.member.entity.MemberRole;
+import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
