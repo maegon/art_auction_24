@@ -13,9 +13,5 @@ public class DeliverController {
 
     private final OrderService orderService;
 
-    @GetMapping("/status")
-    public String viewDeliveryStatus() {
 
-        return "deliver/deliver";
-    }
 }

@@ -1,0 +1,134 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="delivery-container mx-auto px-6 lg:px-[300px] min-h-[1000px]">
+        <h1 class="text-2xl font-black text-center py-5 text-black">배송 내역</h1>
+
+        <p class="text-lg text-gray-700 text-center font-semibold">
+            <strong th:text="${#temporals.format(delivery.completedDate, 'MM/dd(EEE)')}">7/04(목) 17~19시</strong>에 상품 배송 예정입니다.
+
+        </p>
+
+        <div class="text-xl font-black pt-5 pb-2 text-black" >상품 정보</div>
+        <div class="table w-full border border-gray-300">
+            <div class="table-header-group bg-gray-100 border-b border-gray-300">
+                <div class="table-row">
+                    <div class="table-cell p-2 text-center font-semibold border-r border-gray-300">상품명</div>
+                    <div class="table-cell p-2 text-center font-semibold border-r border-gray-300">보내는 분</div>
+                    <div class="table-cell p-2 text-center font-semibold border-r border-gray-300">받는 분</div>
+                    <div class="table-cell p-2 text-center font-semibold border-r border-gray-300">상품 정보</div>
+                    <div class="table-cell p-2 text-center font-semibold">운송장 번호</div>
+                </div>
+            </div>
+            <div class="table-row-group">
+                <div class="table-row border-b border-gray-300">
+                    <div class="table-cell p-2 text-center border-r border-gray-300">
+                        <p class="text-sm" th:text="${order.product.title}">상품명</p>
+                    </div>
+                    <div class="table-cell p-2 text-center border-r border-gray-300">
+                        <p class="text-sm" th:text="${order.product.artist.korName}">보내는 분</p>
+                    </div>
+                    <div class="table-cell p-2 text-center border-r border-gray-300">
+                        <p class="text-sm" th:text="${order.bidderName}">받는 분</p>
+                    </div>
+                    <div class="table-cell p-2 text-center border-r border-gray-300">
+                        <p class="text-sm" >그림</p>
+                    </div>
+                    <div class="table-cell p-2 text-center">
+                        <p class="text-sm" th:text="${order.trackingNumber}">운송장 번호</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="text-xl font-black pt-5 pb-2 text-black">배송 상태</div>
+        <!-- 배송 상태 -->
+        <div class="delivery-status flex justify-around items-center mt-2 mb-8">
+            <!-- 상품 인수 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-yellow-200 rounded-full flex items-center justify-center">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">상품 인수</p>
+            </div>
+
+            <!-- 상품 이동 중 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">상품 이동중</p>
+            </div>
+
+            <!-- 배달지 도착 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-teal-200 rounded-full flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">배달지 도착</p>
+            </div>
+
+            <!-- 배송 중 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-green-200 rounded-full flex items-center justify-center">
+                    <i class="fas fa-truck-fast"></i>
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">배송중</p>
+            </div>
+
+            <!-- 배송 완료 -->
+            <div class="status-step text-center">
+                <div class="step-icon w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                    <i class="fas fa-hands-holding-circle"></i>
+                </div>
+                <p class="mt-2 text-sm font-medium text-gray-700">배송완료</p>
+            </div>
+        </div>
+
+
+        <!-- 배송 상세 -->
+        <div class="delivery-details mt-8 space-y-6">
+            <!-- 배송 추적 정보 -->
+            <div class="delivery-tracking space-y-4 mb-4">
+                <!-- 배송 단계 -->
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <div class="tracking-info">
+                        <strong>상품 인수</strong>
+                        <span class="text-sm text-gray-600" th:text="${#temporals.format(delivery.startDate, 'MM/dd(EEE)')}">07/04(목) 14:30</span>
+                    </div>
+                </div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <div class="tracking-info">
+                        <strong>상품 이동중</strong>
+                        <span class="text-sm text-gray-600" th:text="${#temporals.format(adjustedDate, 'MM/dd(EEE)')}">07/04(목) 14:30</span>
+                    </div>
+                </div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <div class="tracking-info">
+                        <strong>배달지 도착</strong>
+                        <span class="text-sm text-gray-600" th:text="${#temporals.format(adjustedDate2, 'MM/dd(EEE)')}">07/04(목) 14:30</span>
+                    </div>
+                </div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <div class="tracking-info">
+                        <strong>배송중</strong>
+                        <span class="text-sm text-gray-600" th:text="${#temporals.format(adjustedDate3, 'MM/dd(EEE)')}">07/04(목) 14:30</span>
+                    </div>
+                </div>
+                <div class="tracking-step flex items-start space-x-4">
+                    <div class="circle w-6 h-6 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <div class="tracking-info">
+                        <strong>배송 완료</strong>
+                        <span class="text-sm text-gray-600" th:text="${#temporals.format(adjustedDate4, 'MM/dd(EEE)')}">07/04(목) 14:30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

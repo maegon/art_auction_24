@@ -4,6 +4,8 @@ package com.example.ArtAuction_24.domain.member.controller;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.bid.service.BidService;
+import com.example.ArtAuction_24.domain.deliver.entity.Delivery;
+import com.example.ArtAuction_24.domain.deliver.service.DeliveryService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.form.MemberAddressForm;
 import com.example.ArtAuction_24.domain.member.form.MemberForm;
@@ -36,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -51,6 +54,7 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final OrderService orderService;
     private final BidService bidService;
+    private final DeliveryService deliveryService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -221,7 +225,15 @@ public class MemberController {
         Map<Product, Bid> highestBidsByProduct = bidService.findHighestBidsByProduct();
         model.addAttribute("highestBidsByProduct", highestBidsByProduct);
 
-
+        // 주문별 배송 상태 추가
+        Map<Long, Delivery> deliveryMap = new HashMap<>();
+        for (Order order : orderList) {
+            Delivery delivery = deliveryService.getDeliveryByOrder(order);
+            if (delivery != null) {
+                deliveryMap.put(order.getId(), delivery);
+            }
+        }
+        model.addAttribute("deliveryMap", deliveryMap);
 
 
         return "member/myPage";
@@ -286,6 +298,27 @@ public class MemberController {
 
 
         return "member/orderDetail";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/deliverDetail/{id}")
+    public String viewDeliveryStatus(@PathVariable("id") Long orderId, Model model) {
+        Order order = orderService.getOrderById(orderId);
+        Delivery delivery = deliveryService.getDeliveryByOrder(order);
+
+        LocalDateTime adjustedDate = delivery.getStartDate().plusDays(1).plusHours(5);
+        LocalDateTime adjustedDate2 = delivery.getStartDate().plusDays(2).plusHours(5);
+        LocalDateTime adjustedDate3 = delivery.getStartDate().plusDays(3).plusHours(5);
+        LocalDateTime adjustedDate4 = delivery.getStartDate().plusDays(5).plusHours(5);
+
+        model.addAttribute("order", order);
+        model.addAttribute("delivery", delivery);
+        model.addAttribute("adjustedDate", adjustedDate);
+        model.addAttribute("adjustedDate2", adjustedDate2);
+        model.addAttribute("adjustedDate3", adjustedDate3);
+        model.addAttribute("adjustedDate4", adjustedDate4);
+
+        return "member/deliverDetail";
     }
 }
 

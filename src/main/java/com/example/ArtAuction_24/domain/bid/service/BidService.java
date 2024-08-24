@@ -7,6 +7,7 @@ import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
+import com.example.ArtAuction_24.domain.deliver.service.DeliveryService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.notification.service.NotificationService;
 import com.example.ArtAuction_24.domain.order.service.OrderService;
@@ -34,6 +35,7 @@ public class BidService {
     private final NotificationService notificationService;
     private final OrderService orderService;
     private final ArtistRepository artistRepository;
+    private final DeliveryService deliveryService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
 
