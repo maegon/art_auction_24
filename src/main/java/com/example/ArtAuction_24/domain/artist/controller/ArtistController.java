@@ -45,7 +45,14 @@ public class ArtistController {
 
 
     @GetMapping("/terms")
-    public String showTermsForm(Model model) {
+    public String showTermsForm(Model model, Principal principal) {
+        Member member = memberService.getCurrentMember();
+
+        // 사용자가 이미 승인 요청을 했다면 /uploaded로 리다이렉트
+        if (member.isProofSubmitted()) {
+            return "redirect:/artist/uploaded";
+        }
+
         return "artist/termsForm";
     }
 
@@ -194,9 +201,6 @@ public class ArtistController {
 
         Member member = this.memberService.getCurrentMember();
 
-        // 관리자 승인 여부를 확인하여 플래그 설정
-        boolean isApproved = member.getArtistApplicationStatus().equals("APPROVED");
-
         // Artist를 생성하고, artistAdds를 함께 처리
         Artist artist = this.artistService.create(
                 thumbnail,
@@ -204,8 +208,7 @@ public class ArtistController {
                 artistForm.getEngName(),
                 artistForm.getBirthDate(),
                 member,
-                artistForm.getArtistAdds(),
-                isApproved  // 플래그 전달
+                artistForm.getArtistAdds()
         );
 
         return "redirect:/artist/profile/" + artist.getId();

@@ -97,7 +97,7 @@ public class ArtistService {
         memberRepository.save(member);
     }
 
-    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds, boolean isApproved) {
+    public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds) {
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
@@ -125,7 +125,6 @@ public class ArtistService {
                 .birthDate(birthDate)
                 .author(member)
                 .balance(0L)
-                .isApproved(isApproved)  // 관리자 승인 상태 설정
                 .build();
         artistRepository.save(artist);
 
