@@ -179,17 +179,8 @@ public class ArtistController {
             return "redirect:/artist/uploaded";
         }
 
-        model.addAttribute("artistForm", new ArtistForm());
-        return "artist/artistForm";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create")
-    public String create(Model model, Principal principal) {
-        Member currentMember = memberService.getCurrentMember();
-
         // 현재 로그인된 사용자가 이미 작가인지 확인
-        Optional<Artist> existingArtist = artistService.getArtistByMember(currentMember);
+        Optional<Artist> existingArtist = artistService.getArtistByMember(member);
 
         if (existingArtist.isPresent()) {
             // 이미 작가로 등록되어 있는 경우

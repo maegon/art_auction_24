@@ -22,11 +22,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf // CSRF 보호 활성화
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // CSRF 토큰을 쿠키에 저장
-                )
+                .csrf().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/recharge/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
@@ -34,12 +31,13 @@ public class SecurityConfig {
                         .loginPage("/member/login")
                         .defaultSuccessUrl("/"))
                 .oauth2Login(oauth2Login -> oauth2Login
-                                .loginPage("/member/login"))
+                        .loginPage("/member/login"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true)
-                );
+                        .invalidateHttpSession(true))
+                .csrf((csrf) -> csrf //이상한 경로로 들어오는것을 막아줌
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/**")));
         ;
 
         return http.build();

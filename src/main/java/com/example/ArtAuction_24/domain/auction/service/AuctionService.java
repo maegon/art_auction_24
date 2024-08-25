@@ -142,5 +142,20 @@ public class AuctionService {
         sorts.add(Sort.Order.desc("createDate"));
         return auctionRepository.findAll();
     }
+
+    public void deleteAuctionById(Long id) {
+        auctionRepository.deleteById(id);
+    }
+
+
+    public List<Auction> getAuctionListSorted() {
+        // 최신순으로 정렬된 경매 목록을 반환
+        return auctionRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate"));
+    }
+
+    public List<Auction> searchAuctionsByKeywordSorted(String keyword) {
+        // 검색어가 포함된 경매 목록을 최신순으로 정렬하여 반환
+        return auctionRepository.findByNameContainingIgnoreCase(keyword, Sort.by(Sort.Direction.ASC, "startDate"));
+    }
 }
 
