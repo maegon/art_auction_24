@@ -1,68 +1,136 @@
-<!DOCTYPE html>
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <div class="admContainer responsive-wrapper mx-auto px-6 lg:px-[300px] min-h-[600px]">
         <div class="mg_container mb-6">
             <div class="mg_menu_mb_container flex flex-col">
+                <!-- 제목 섹션 -->
                 <div class="mg_menu_section flex justify-between items-center mt-4">
-                    <span class="text-3xl font-semibold text-gray-800 mt-4">작가 신청 내역</span>
+                    <span class="text-3xl font-bold text-gray-900 mt-4 tracking-wide">작가 신청 내역</span>
                 </div>
-                <div class="flex mt-4">
-                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
-                        <li class="flex-1 flex items-center justify-center text-center">회원 아이디</li>
-                        <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
-                        <li class="flex-1 flex items-center justify-center text-center">이메일</li>
-                        <li class="flex-1 flex items-center justify-center text-center">첨부파일</li>
-                        <li class="flex-1 flex items-center justify-center text-center">승인상태</li>
-                        <li class="flex-1 flex items-center justify-center text-center">선택</li>
+                
+                <!-- 헤더 행 -->
+                <div class="hidden md:flex mt-4">
+                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700 border-b-2 border-gray-300 pb-2">
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">회원 아이디</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">닉네임</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">이메일</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">첨부파일</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">승인상태</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">선택</li>
                     </ul>
                 </div>
-                <div class=" mt-4">
+                
+                <!-- 대기 중인 회원 목록 -->
+                <div class="mt-4">
                     <ul>
-                        <li th:each="member : ${pendingMembers}" class="flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
-                            <div class=" flex-1 text-center truncate" th:text="${member.username}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.nickname}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.email}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.proofFilePath}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></div>
-                            <div class=" flex-1 text-center truncate">
+                        <li th:each="member : ${pendingMembers}" class="md:flex md:flex-wrap md:justify-between md:items-center md:border-b md:border-gray-200 md:py-4 bg-white shadow-lg rounded-lg p-4 mb-4">
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.username}"></div>
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.nickname}"></div>
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.email}"></div>
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium">
+                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                            </div>
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></div>
+                            <div class="flex-1 text-center md:mb-0 mb-2">
                                 <form th:action="@{/artist/approve/{id}(id=${member.id})}" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-approve">승인</button>
+                                    <button type="submit" class="px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-600">승인</button>
                                 </form>
                                 <form th:action="@{/artist/reject/{id}(id=${member.id})}" method="post" style="display:inline;">
-                                    <button type="submit" class="btn btn-reject">거절</button>
+                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600">거절</button>
                                 </form>
                             </div>
                         </li>
                     </ul>
                 </div>
                 
+                <!-- 승인 완료된 회원 제목 -->
                 <div class="mg_menu_section flex justify-between items-center mt-4">
-                    <span class="text-3xl font-semibold text-gray-800 mt-4">승인 완료 목록</span>
+                    <span class="text-3xl font-bold text-gray-900 mt-4 tracking-wide">승인 완료 목록</span>
                 </div>
-                <div class="flex mt-4">
-                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
-                        <li class="flex-1 flex items-center justify-center text-center">회원 아이디</li>
-                        <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
-                        <li class="flex-1 flex items-center justify-center text-center">이메일</li>
-                        <li class="flex-1 flex items-center justify-center text-center">첨부파일</li>
-                        <li class="flex-1 flex items-center justify-center text-center">승인상태</li>
+                
+                <!-- 승인 완료된 회원을 위한 헤더 행 -->
+                <div class="hidden md:flex mt-4">
+                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700 border-b-2 border-gray-300 pb-2">
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">회원 아이디</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">닉네임</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">이메일</li>
+                        <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">첨부파일</li>
                     </ul>
                 </div>
                 
-                <div class=" mt-4">
+                <!-- 승인 완료된 회원 목록 -->
+                <div class="mt-4">
                     <ul>
-                        <li th:each="member : ${approvedMembers}">}" class="flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
-                            <div class=" flex-1 text-center truncate" th:text="${member.username}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.nickname}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.email}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.proofFilePath}"></div>
-                            <div class=" flex-1 text-center truncate" th:text="${member.artistApplicationStatus}"></div>
+                        <li th:each="member : ${approvedMembers}" class="md:flex md:flex-wrap md:justify-between md:items-center md:border-b md:border-gray-200 md:py-4 bg-white shadow-lg rounded-lg p-4 mb-4">
+                            <!-- 회원 아이디 -->
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-bold text-xl" th:text="${member.username}"></div>
+                            <!-- 닉네임 -->
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg" th:text="${member.nickname}"></div>
+                            <!-- 이메일 -->
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg" th:text="${member.email}"></div>
+                            <!-- 첨부파일 -->
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg">
+                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+        
+        <!-- 알림 메시지를 표시할 요소 -->
+        <div id="copyAlert" class="alert fixed bottom-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg hidden">텍스트가 복사되었습니다!</div>
     </div>
 </div>
 </html>
+<script>
+    // 텍스트를 클립보드에 복사하는 함수
+    function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+            // 브라우저가 clipboard API를 지원하지 않는 경우
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showAlert('텍스트가 복사되었습니다!');
+            } catch (err) {
+                console.error('텍스트 복사 중 오류 발생: ', err);
+            }
+            document.body.removeChild(textarea);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(() => {
+            showAlert('텍스트가 복사되었습니다!');
+        }).catch(err => {
+            console.error('텍스트 복사 중 오류 발생: ', err);
+        });
+    }
+
+    // 알림 메시지를 표시하는 함수
+    function showAlert(message) {
+        const alertBox = document.getElementById('copyAlert');
+        alertBox.textContent = message;
+        alertBox.classList.remove('hidden');
+        alertBox.classList.add('show');
+
+        setTimeout(() => {
+            alertBox.classList.remove('show');
+            alertBox.classList.add('hidden');
+        }, 3000);
+    }
+
+    // 더블 클릭 이벤트 리스너 추가
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const listDivs = document.querySelectorAll('.mg_menu_mb_container div ul li div');
+
+        listDivs.forEach(item => {
+            item.addEventListener('dblclick', function() {
+                const textToCopy = item.textContent.trim();
+                copyTextToClipboard(textToCopy);
+            });
+        });
+    });
+</script>
