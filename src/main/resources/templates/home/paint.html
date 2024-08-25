@@ -1,0 +1,139 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content">
+    <div class="flex items-center justify-center">
+
+        <div class="mx-auto lg:px-[300px] min-h-[900px] rounded-lg bg-white  p-6">
+            <h1 class="text-2xl font-black text-center py-5 text-black">그림판</h1>
+
+            <!-- 색상 선택 버튼들 -->
+            <div class="mb-4 flex flex-wrap space-x-2 justify-center">
+                <!-- 색상 버튼들 -->
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: black;" onclick="setColor('black')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: red;" onclick="setColor('red')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: green;" onclick="setColor('green')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: blue;" onclick="setColor('blue')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: yellow;" onclick="setColor('yellow')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: gray;" onclick="setColor('gray')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: purple;" onclick="setColor('purple')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: orange;" onclick="setColor('orange')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: pink;" onclick="setColor('pink')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: brown;" onclick="setColor('brown')"></button>
+                <button class="w-8 h-8 rounded-full border border-gray-400" style="background-color: teal;" onclick="setColor('teal')"></button>
+            </div>
+
+            <!-- 캔버스와 버튼들 -->
+            <canvas id="drawingCanvas" class="w-full h-96 mb-4 border-2 border-black rounded-lg"></canvas>
+
+            <!-- 도구 및 설정 컨트롤 -->
+            <div class="mb-4 flex flex-col space-y-4">
+
+                <div class="flex items-center space-x-2">
+                    <div class="text-sm w-24">브러시 굵기</div>
+                    <input id="brushSize" type="range" min="1" max="50" value="10" class="w-full" />
+                    <div id="brushSizeLabel" class="text-sm">10px</div>
+                </div>
+
+                <!-- 지우개 버튼 -->
+
+                <div class="flex items-center space-x-2 mt-4">
+                    <div class="text-sm w-24">지우개 굵기</div>
+                    <input id="eraserSize" type="range" min="1" max="50" value="10" class="w-full" />
+                    <div id="eraserSizeValue" class="text-sm">10px</div>
+                </div>
+
+
+                <!-- 기타 버튼들 -->
+                <div class="flex space-x-4 justify-center">
+                    <button id="eraseButton" class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">지우개</button>
+                    <button id="clearButton" class="px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">삭제</button>
+                    <button id="saveButton" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const saveButton = document.getElementById('saveButton');
+    const eraseButton = document.getElementById('eraseButton');
+    const clearButton = document.getElementById('clearButton');
+    const brushSizeInput = document.getElementById('brushSize');
+    const brushSizeLabel = document.getElementById('brushSizeLabel');
+    const eraserSizeInput = document.getElementById('eraserSize');
+    const eraserSizeValue = document.getElementById('eraserSizeValue');
+
+    let isDrawing = false;
+    let isErasing = false;
+    let currentColor = 'black'; // 기본 색상
+    let brushSize = 10; // 기본 브러시 크기
+    let eraserSize = 10; // 기본 지우개 크기
+
+    // Canvas 크기 설정
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    // 그리기 시작
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    // 그리기 중
+    canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) {
+            ctx.strokeStyle = isErasing ? 'white' : currentColor;
+            ctx.lineWidth = isErasing ? eraserSize : brushSize; // 지우개일 때 굵기 설정
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    // 그리기 종료
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+        ctx.closePath();
+    });
+
+    // 브러시 굵기 조절
+    brushSizeInput.addEventListener('input', (e) => {
+        brushSize = e.target.value;
+        brushSizeLabel.textContent = `${brushSize}px`;
+    });
+
+    // 지우개 버튼 클릭 시
+    eraseButton.addEventListener('click', () => {
+        isErasing = !isErasing;
+        eraseButton.classList.toggle('bg-red-600', isErasing);
+    });
+
+    // 지우개 굵기 조절
+    eraserSizeInput.addEventListener('input', (e) => {
+        eraserSize = e.target.value;
+        eraserSizeValue.textContent = `${eraserSize}px`;
+    });
+
+    // 삭제 버튼 클릭 시
+    clearButton.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // 저장 버튼 클릭 시
+    saveButton.addEventListener('click', () => {
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'drawing.png';
+        link.click();
+    });
+
+    // 색상 선택
+    function setColor(color) {
+        currentColor = color;
+        isErasing = false; // 색상 선택 시 지우개 모드 해제
+        eraseButton.classList.remove('bg-red-600');
+    }
+
+    </script>
+</div>
+</html>
