@@ -27,7 +27,7 @@
 
                 <!-- 목록 (모바일에서만 카드 형식으로 보이게) -->
                 <div class="md:hidden mb_ac_list mt-4">
-                    <ul id="auctionList">
+                    <ul>
                         <li th:each="auction : ${auctionList}" class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
                             <div class="font-semibold text-lg mb-2" th:text="${auction.name}"></div>
                             <div class="text-gray-600 mb-2">

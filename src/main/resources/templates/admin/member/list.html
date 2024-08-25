@@ -105,7 +105,7 @@
                     </ul>
                     
                     <!-- PC 환경에서는 리스트 레이아웃 -->
-                    <ul id="memberList" class="hidden md:flex flex-col">
+                    <ul class="hidden md:flex flex-col">
                         <li th:each="member : ${memberList}" class="mb_list_each flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
                             <div class="mb_list_un flex-1 text-center truncate" th:text="${member.username}"></div>
                             <div class="mb_list_nm flex-1 text-center truncate" th:text="${member.nickname}"></div>

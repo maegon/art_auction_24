@@ -1,12 +1,28 @@
 /* list 검색 부분 시작 */
 
-$(document).ready(function () {
-    // 페이지 링크 클릭 시 페이지 번호 설정 후 폼 제출
-       $(".page-link").on("click", function () {
-           $("#page").val($(this).data("page"));
-           $("#auction-searchForm").submit();
-       });
+document.addEventListener('DOMContentLoaded', () => {
+    const auctionPageLinks = document.querySelectorAll('.auctionList-page-link');
 
+    auctionPageLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // 클릭된 링크에 'data-page'가 없는 경우 클릭 이벤트를 무시
+            const pageNumber = this.getAttribute('data-page');
+            if (pageNumber === null) return; // 링크가 비활성화된 경우 아무 동작도 하지 않음
+
+            // 모든 페이지 링크에서 active 클래스 제거
+            auctionPageLinks.forEach(l => l.classList.remove('auctionList-active', 'text-white', 'bg-black', 'border-black'));
+
+            // 클릭된 링크에 active 클래스 추가
+            this.classList.add('auctionList-active', 'text-white', 'bg-black', 'border-black');
+
+            // 현재 URL 설정 및 페이지 번호 추가
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('page', pageNumber);  // 'page' 파라미터 설정
+
+            // 새로운 URL로 이동
+            window.location.href = currentUrl.toString();     // 새로운 URL로 리다이렉트
+        });
+    });
 });
 
 /* list 검색 부분 끝 */

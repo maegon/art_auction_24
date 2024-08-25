@@ -113,8 +113,6 @@ public class ProductController {
 
         }
 
-
-
         model.addAttribute("paging", paging);
         model.addAttribute("kw", keyword);
         model.addAttribute("sort", sort);
