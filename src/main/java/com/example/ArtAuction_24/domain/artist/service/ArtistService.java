@@ -46,10 +46,10 @@ public class ArtistService {
     private String fileDirPath;
 
     public void uploadProofFile(Member member, MultipartFile proofFile) {
-        String proofRelPath = "image/proofs/" + UUID.randomUUID().toString() + "-" + proofFile.getOriginalFilename();
+        String proofRelPath = "pdf/proofs/" + proofFile.getOriginalFilename();
         File proofFilePath = new File(fileDirPath + "/" + proofRelPath);
 
-        File dir = new File(fileDirPath + "/image/proofs");
+        File dir = new File(fileDirPath + "/pdf/proofs");
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());

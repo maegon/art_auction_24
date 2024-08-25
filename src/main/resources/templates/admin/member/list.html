@@ -4,7 +4,7 @@
         <div class="mg_container mb-6">
             <div class="mg_menu_mb_container flex flex-col">
                 <div class="mg_menu_section flex justify-between items-center mt-4">
-                    <span class="text-3xl font-semibold text-gray-800">회원 권한 설정</span>
+                    <span class="text-2xl md:text-3xl font-semibold text-gray-800">회원 권한 설정</span>
                     
                     <!-- 검색란 -->
                     <div class="search-container w-full max-w-xs">
@@ -14,7 +14,7 @@
                 
                 <!-- 메뉴 -->
                 <div class="mg_mb_menu flex mt-4">
-                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
+                    <ul class="hidden md:flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
                         <li class="flex-1 flex items-center justify-center text-center">아이디</li>
                         <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
                         <li class="flex-1 flex items-center justify-center text-center">이메일</li>
@@ -54,15 +54,57 @@
                                 </div>
                             </div>
                         </li>
-
                         <li class="flex-1 flex items-center justify-center text-center">저장</li>
                     </ul>
                 </div>
-
                 
                 <!-- 목록 -->
                 <div class="mb_mb_list mt-4">
-                    <ul id="memberList">
+                    <!-- 모바일 환경에서는 카드형 레이아웃 -->
+                    <ul id="memberList" class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:hidden">
+                        <li th:each="member : ${memberList}" class="mb_list_each flex flex-col bg-white rounded-lg shadow p-4">
+                            <div class="flex justify-around">
+                                <div class="mb_list_pi flex justify-center mb-1 mt-1">
+                                    <div class="w-24 h-24 rounded-full overflow-hidden">
+                                        <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                                             class="w-full h-full object-cover aspect-w-1 aspect-h-1"/>
+                                        <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
+                                             class="w-full h-full object-cover aspect-w-1 aspect-h-1"/>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col m-auto">
+                                    <div class="mb_list_un text-center text-lg font-semibold truncate" th:text="${member.username}"></div>
+                                    <div class="mb_list_nm text-center text-gray-500 truncate" th:text="${member.nickname}"></div>
+                                    <div class="mb_list_e text-center text-gray-500 truncate" th:text="${member.email}"></div></div>
+                            </div>
+                            <div class="mb_list_cd text-center text-gray-500 truncate mt-2" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_md text-center text-gray-500 truncate mt-1" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="mb_list_pnb text-center text-gray-500 truncate mt-2" th:text="${member.phoneNumber}"></div>
+                            <div class="mb_list_ad text-center text-gray-500 break-words whitespace-normal mt-1" style="word-wrap: break-word; white-space: normal;" th:text="${member.address}"></div>
+                            <div class="mb_list_ptc text-center text-gray-500 truncate mt-2" th:text="${member.providerTypeCode}"></div>
+                            <div class="flex justify-around">
+                                <div class="mb_list_ia text-center mt-4" th:data-is-active="${member.isActive}">
+                                    <select class="isActive border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500 text-sm">
+                                        <option value="true" th:selected="${member.isActive}">활성</option>
+                                        <option value="false" th:selected="!${member.isActive}">비활성</option>
+                                    </select>
+                                </div>
+                                <div class="mb_list_rl text-center mt-4" th:data-role="${member.role.name()}">
+                                    <select class="role border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-blue-500 text-sm">
+                                        <option value="MEMBER" th:selected="${member.role.name() == 'MEMBER'}">일반</option>
+                                        <option value="ARTIST" th:selected="${member.role.name() == 'ARTIST'}">작가</option>
+                                        <option value="ADMIN" th:selected="${member.role.name() == 'ADMIN'}">관리자</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb_action text-center mt-4">
+                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150 bg-blue-500 text-white text-sm" th:data-memberid="${member.id}" disabled>저장</button>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <!-- PC 환경에서는 리스트 레이아웃 -->
+                    <ul id="memberList" class="hidden md:flex flex-col">
                         <li th:each="member : ${memberList}" class="mb_list_each flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
                             <div class="mb_list_un flex-1 text-center truncate" th:text="${member.username}"></div>
                             <div class="mb_list_nm flex-1 text-center truncate" th:text="${member.nickname}"></div>

@@ -43,7 +43,7 @@
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" href="#">신청된 경매 작품 확인</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/auction/create}">경매 추가</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/admin/member/list}">회원 권한 설정</a> <!-- 재원 추가 -->
-                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/artist/pending-approval}">작가 신청자 확인</a> <!-- 재원 추가 -->
+                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/artist/pending-approval}">작가 신청 내역</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/admin/question/manage}">문의 관리</a> <!-- 재원 추가 -->
                         
                         <a sec:authorize="hasAuthority('ARTIST')" class="header_productAdd" th:href="@{/product/create}">작품 추가</a>
