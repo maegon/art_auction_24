@@ -35,7 +35,8 @@
 
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
-                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product, iterStat : ${productList}"
+                             th:if="${iterStat.index < 16}">
                             <a th:href="@{|/product/detail/${product.id}|}"
                                 class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
@@ -64,7 +65,8 @@
                 </div>
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
-                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${activeAuctionProducts}">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product, iterStat : ${activeAuctionProducts}"
+                             th:if="${iterStat.index < 16}">
                             <a th:href="@{|/product/detail/${product.id}|}"
                                class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"

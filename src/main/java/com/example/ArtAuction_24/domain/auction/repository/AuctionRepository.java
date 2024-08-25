@@ -34,6 +34,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     List<Auction> findByNameContainingIgnoreCase(String keyword, Sort sort);
 
-    // 특정 상품 ID에 대해 종료일이 가장 최신인 경매를 찾는 메서드
+    boolean existsByName(String name);
 
 }

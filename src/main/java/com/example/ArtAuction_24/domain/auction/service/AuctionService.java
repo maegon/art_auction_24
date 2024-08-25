@@ -41,10 +41,16 @@ public class AuctionService {
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
     public Auction create(String name, LocalDateTime startDate, LocalDateTime endDate, List<Long> productIds) {
+        // 중복 경매 이름 체크
+        if (auctionRepository.existsByName(name)) {
+            throw new IllegalArgumentException("이미 존재하는 경매 이름입니다.");
+        }
+
         List<Product> products = productRepository.findAllById(productIds);
         Set<Product> productSet = new HashSet<>(products);
 
         AuctionStatus auctionStatus = startDate.isAfter(LocalDateTime.now()) ? AuctionStatus.SCHEDULED : AuctionStatus.ACTIVE;
+
 
         Auction auction = Auction.builder()
                 .name(name)

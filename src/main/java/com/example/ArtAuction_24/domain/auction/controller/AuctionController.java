@@ -107,15 +107,21 @@ public class AuctionController {
         // 찾지 못한 제품이 있으면 에러 처리
         if (products.size() != auctionForm.getProducts().size()) {
             bindingResult.rejectValue("products", "error.products", "One or more products are not available.");
-
-            // 모든 제품을 다시 모델에 추가
             List<Product> availableProducts = auctionService.getAvailableProducts();
             model.addAttribute("allProducts", availableProducts);
 
             return "auction/form";
         }
 
-        auctionService.create(auctionForm.getName(), auctionForm.getStartDate(), auctionForm.getEndDate(), auctionForm.getProducts());
+        try {
+            auctionService.create(auctionForm.getName(), auctionForm.getStartDate(), auctionForm.getEndDate(), auctionForm.getProducts());
+        } catch (IllegalArgumentException e) {
+            bindingResult.rejectValue("name", "error.name", e.getMessage());
+            List<Product> availableProducts = auctionService.getAvailableProducts();
+            model.addAttribute("allProducts", availableProducts);
+            return "auction/form";
+        }
+
         return "redirect:/auction/list";
     }
 
