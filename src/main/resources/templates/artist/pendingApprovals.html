@@ -17,33 +17,52 @@
                         <li class="flex-1 flex items-center justify-center text-center">선택</li>
                     </ul>
                 </div>
+                <div class=" mt-4">
+                    <ul>
+                        <li th:each="member : ${pendingMembers}" class="flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
+                            <div class=" flex-1 text-center truncate" th:text="${member.username}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.nickname}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.email}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.proofFilePath}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></div>
+                            <div class=" flex-1 text-center truncate">
+                                <form th:action="@{/artist/approve/{id}(id=${member.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-approve">승인</button>
+                                </form>
+                                <form th:action="@{/artist/reject/{id}(id=${member.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-reject">거절</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mg_menu_section flex justify-between items-center mt-4">
+                    <span class="text-3xl font-semibold text-gray-800 mt-4">승인 완료 목록</span>
+                </div>
+                <div class="flex mt-4">
+                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
+                        <li class="flex-1 flex items-center justify-center text-center">회원 아이디</li>
+                        <li class="flex-1 flex items-center justify-center text-center">닉네임</li>
+                        <li class="flex-1 flex items-center justify-center text-center">이메일</li>
+                        <li class="flex-1 flex items-center justify-center text-center">첨부파일</li>
+                        <li class="flex-1 flex items-center justify-center text-center">승인상태</li>
+                    </ul>
+                </div>
+                
+                <div class=" mt-4">
+                    <ul>
+                        <li th:each="member : ${approvedMembers}">}" class="flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
+                            <div class=" flex-1 text-center truncate" th:text="${member.username}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.nickname}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.email}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.proofFilePath}"></div>
+                            <div class=" flex-1 text-center truncate" th:text="${member.artistApplicationStatus}"></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        
-       
-
-        <h1 class="pa-title">승인 완료 목록</h1>
-
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>파일</th>
-                <th>승인 상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="member : ${approvedMembers}">
-                <td th:text="${member.username}">user1</td>
-                <td th:text="${member.nickname}">홍길동</td>
-                <td th:text="${member.email}">hong@example.com</td>
-                <td th:text="${member.proofFilePath}">파일 경로</td>
-                <td th:text="${member.artistApplicationStatus}">승인 완료</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 </html>
