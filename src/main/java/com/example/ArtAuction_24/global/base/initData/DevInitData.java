@@ -54,19 +54,19 @@ public class DevInitData implements BeforeInitData {
             Member M1 = memberService.join("", "admin", password, "admin@test.com", "admin",
                     "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-            memberService.join("", "user1", password, "minseopkim99@gmail.com", "user1",
+            memberService.join("", "user1", password, "user1@test.com", "user1",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-            memberService.join("", "dlagorhs99", password, "dlagorhs99@naver.com", "나다",
+            memberService.join("", "user2", password, "user2@test.com", "나다",
                     "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-            memberService.join("", "user3", password, "alstjq9912@naver.com", "user3",
+            memberService.join("", "user3", password, "user3@test.com", "user3",
                     "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "user4", password, "user4@test.com", "user4",
                     "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
-            memberService.join("", "artist", password, "bok06023@naver.com", "artist1",
+            memberService.join("", "artist", password, "artist@test.com", "artist1",
                     "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
 
             memberService.join("", "artist2", password, "artist2@test.com", "artist2",
