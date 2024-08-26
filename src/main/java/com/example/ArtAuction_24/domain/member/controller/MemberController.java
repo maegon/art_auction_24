@@ -208,17 +208,21 @@ public class MemberController {
 
 
         List<LikeProduct> likeProductList = productService.getLikeProduct(member);
+        Collections.reverse(likeProductList);
         model.addAttribute("likeProductList", likeProductList);
 
         List<Question> questionList = questionService.findAll();
+        Collections.reverse(questionList);
         model.addAttribute("questionList", questionList);
 
         // 주문 목록 추가
         List<Order> orderList = orderService.getOrdersByMemberId(member.getId());
+        Collections.reverse(orderList);
         model.addAttribute("orderList", orderList);
 
         // 입찰 목록 추가 멤버값이랑 일치한 bid 를 리스트로가져옴
         List<Bid> bidListByMember = bidService.getBidsByMemberId(member.getId());
+        Collections.reverse(bidListByMember);
         model.addAttribute("bidListByMember", bidListByMember);
 
         // 각 상품의 최고 입찰가를 가져오기

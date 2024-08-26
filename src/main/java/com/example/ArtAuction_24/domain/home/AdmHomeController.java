@@ -115,13 +115,25 @@ public class AdmHomeController {
 
     @GetMapping("/question/manage")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String showQuestionManage(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                                     @RequestParam(value = "size", defaultValue = "15") int size) {
+    public String showQuestionManage(Model model,
+                                     @RequestParam(value = "page", defaultValue = "0") int page,
+                                     @RequestParam(value = "size", defaultValue = "15") int size,
+                                     @RequestParam(value = "filter", defaultValue = "") String filter) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("answered"), Sort.Order.desc("id")));
-        Page<Question> questionPage = questionService.findAll(pageable);
+        Page<Question> questionPage;
+
+        if ("처리완료".equals(filter)) {
+            questionPage = questionService.findByAnsweredTrue(pageable);
+        } else if ("처리대기".equals(filter)) {
+            questionPage = questionService.findByAnsweredFalse(pageable);
+        } else {
+            questionPage = questionService.findAll(pageable);
+        }
+
         model.addAttribute("questionPage", questionPage);
         return "admin/question/manage";
     }
+
 
 
 

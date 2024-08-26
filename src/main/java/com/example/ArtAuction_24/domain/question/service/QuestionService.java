@@ -105,6 +105,14 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public Page<Question> findByAnsweredTrue(Pageable pageable){
+        return questionRepository.findByAnsweredTrue(pageable);
+    }
+    public Page<Question> findByAnsweredFalse(Pageable pageable){
+        return questionRepository.findByAnsweredFalse(pageable);
+    }
+
+
 
 
 }

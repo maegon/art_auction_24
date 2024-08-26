@@ -53,56 +53,114 @@
 /* 모바일 환경에서 적용할 스타일 */
 @media screen and (max-width: 768px) {
     /* 공통 스타일: 목록을 그리드로 배치 */
-    #wish-list ul, #order-list ul {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
+        #wish-list ul{
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
 
-    /* 공통 스타일: 목록 아이템의 레이아웃 설정 */
-    #wish-list li, #order-list li {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px solid #d1d5db;
-        padding: 1rem;
-        border-radius: 0.5rem;
-    }
+        /* 공통 스타일: 목록 아이템의 레이아웃 설정 */
+        #wish-list li {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #d1d5db;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        #order-list li {
+                    border: 1px solid #d1d5db;
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+        }
+        #order-list .div2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+        #bid-list li {
+                            border: 1px solid #d1d5db;
+                            padding: 1rem;
+                            border-radius: 0.5rem;
+                }
+                #bid-list .div2 {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 1rem;
+                }
 
-    /* 공통 스타일: 링크의 넓이 설정 */
-    #wish-list a, #order-list a {
-        width: 100%;
-    }
+  /* div1 스타일 조정 */
+     #bid-list .div1, #order-list .div1 {
+         display: flex;
+         flex-direction: column; /* 세로 방향으로 배치 */
+         align-items: center; /* 가운데 정렬 */
+         text-align: center; /* 텍스트 가운데 정렬 */
+         padding: 1rem;
+         background-color: #4a5568; /* 배경색 조정 */
+         border-radius: 0.5rem; /* 모서리 둥글게 */
+         position: relative;
+         margin-bottom: 1rem; /* 아래 여백 추가 */
+         width: 100%; /* 너비 100%로 설정 */
+         box-sizing: border-box; /* 패딩과 보더를 포함한 박스 사이즈 설정 */
+     }
 
-    /* 공통 스타일: 각 섹션의 마진 설정 */
-    #wish-list div, #order-list div {
-        margin-top: 1rem;
-    }
+     /* 낙찰 완료 텍스트 스타일 */
+     #bid-list .div1 > .absolute, #order-list .div1 > .absolute {
+         display: block;
+         font-size: 1rem; /* 큰 폰트 사이즈 */
+         font-weight: bold;
 
-    /* 공통 스타일: 이미지 크기 설정 */
-    #wish-list img, #order-list img {
-        width: 8rem;
-        height: 8rem;
-    }
+          margin-top: 0.5rem;
+         position: relative;
+         transform: none;
+         left: initial;
+     }
 
-    /* 공통 스타일: 상품 정보의 정렬 및 여백 설정 */
-    #wish-list .product-info, #order-list .product-info {
-        margin-top: 1rem;
-        text-align: center;
-    }
+     /* 낙찰 일 텍스트 스타일 */
+     #bid-list .div1 > .ml-auto, #order-list .div1 > .ml-auto {
+         font-size: 0.75rem; /* 작은 폰트 사이즈 */
+         color: #d1d5db; /* 텍스트 색상 조정 */
+         margin-top: 0.5rem; /* 위 여백 추가 */
+         text-align: center; /* 텍스트 가운데 정렬 */
+     }
 
-    /* 공통 스타일: 액션 버튼의 정렬 및 여백 설정 */
-    #wish-list .action-buttons, #order-list .action-buttons {
-        margin-top: 1rem;
-        text-align: center;
-        justify-content: center;
-    }
+        /* 공통 스타일: 링크의 넓이 설정 */
+        #wish-list a{
+            width: 100%;
+        }
 
-    /* 공통 스타일: 입찰 정보의 정렬 및 여백 설정 */
-    #wish-list .bid-info, #order-list .bid-info {
-        margin-top: 1rem;
-        text-align: center;
-    }
+        /* 공통 스타일: 각 섹션의 마진 설정 */
+        #wish-list div{
+            margin-top: 1rem;
+        }
+
+        /* 공통 스타일: 이미지 크기 설정 */
+        #wish-list img{
+            width: 8rem;
+            height: 8rem;
+        }
+
+        /* 공통 스타일: 상품 정보의 정렬 및 여백 설정 */
+        #wish-list .product-info{
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* 공통 스타일: 액션 버튼의 정렬 및 여백 설정 */
+        #wish-list .action-buttons{
+            margin-top: 1rem;
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* 공통 스타일: 입찰 정보의 정렬 및 여백 설정 */
+        #wish-list .bid-info{
+            margin-top: 1rem;
+            text-align: center;
+        }
+
 
 
 
