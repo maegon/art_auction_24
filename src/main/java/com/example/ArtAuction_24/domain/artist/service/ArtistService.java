@@ -46,7 +46,7 @@ public class ArtistService {
     private String fileDirPath;
 
     public void uploadProofFile(Member member, MultipartFile proofFile) {
-        String proofRelPath = "pdf/proofs/" + proofFile.getOriginalFilename();
+        String proofRelPath = "pdf/proofs/" + member.getId() + "_" + proofFile.getOriginalFilename();
         File proofFilePath = new File(fileDirPath + "/" + proofRelPath);
 
         File dir = new File(fileDirPath + "/pdf/proofs");

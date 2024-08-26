@@ -28,7 +28,10 @@
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.nickname}"></div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.email}"></div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium">
-                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                                <!-- 다운로드 링크 추가 -->
+                                <a th:href="@{${member.proofFilePath}}" download="${member.username}_proof.pdf" class="text-blue-600 underline">
+                                    <i class="fa fa-download"></i> 다운로드
+                                </a>
                             </div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></div>
                             <div class="flex-1 text-center md:mb-0 mb-2">
@@ -73,7 +76,10 @@
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg" th:text="${member.email}"></div>
                             <!-- 첨부파일 -->
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg">
-                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                                <!-- 다운로드 링크 추가 -->
+                                <a th:href="@{${member.proofFilePath}}" download="${member.username}_proof.pdf" class="text-blue-600 underline">
+                                    <i class="fa fa-download"></i> 다운로드
+                                </a>
                             </div>
                         </li>
                     </ul>
