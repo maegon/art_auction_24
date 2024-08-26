@@ -22,13 +22,13 @@
                 
                 <!-- 대기 중인 회원 목록 -->
                 <div class="mt-4">
-                    <ul>
+                    <ul th:if="${pendingMembers.size() > 0}">
                         <li th:each="member : ${pendingMembers}" class="md:flex md:flex-wrap md:justify-between md:items-center md:border-b md:border-gray-200 md:py-4 bg-white shadow-lg rounded-lg p-4 mb-4">
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.username}"></div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.nickname}"></div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${member.email}"></div>
-                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium">
-                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                            <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg">
+                                <a th:text="${member.proofFilePath}"></a>
                             </div>
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium" th:text="${#strings.isEmpty(member.artistApplicationStatus) ? '대기 중' : member.artistApplicationStatus}"></div>
                             <div class="flex-1 text-center md:mb-0 mb-2">
@@ -41,6 +41,9 @@
                             </div>
                         </li>
                     </ul>
+                    <div th:unless="${pendingMembers.size() > 0}" class="text-center text-gray-600 font-medium mt-6">
+                        신청자가 없습니다.
+                    </div>
                 </div>
                 
                 <!-- 승인 완료된 회원 제목 -->
@@ -60,7 +63,7 @@
                 
                 <!-- 승인 완료된 회원 목록 -->
                 <div class="mt-4">
-                    <ul>
+                    <ul th:if="${approvedMembers.size() > 0}">
                         <li th:each="member : ${approvedMembers}" class="md:flex md:flex-wrap md:justify-between md:items-center md:border-b md:border-gray-200 md:py-4 bg-white shadow-lg rounded-lg p-4 mb-4">
                             <!-- 회원 아이디 -->
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-bold text-xl" th:text="${member.username}"></div>
@@ -70,14 +73,16 @@
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg" th:text="${member.email}"></div>
                             <!-- 첨부파일 -->
                             <div class="flex-1 text-center truncate md:mb-0 mb-2 text-gray-800 font-medium text-lg">
-                                <a th:href="@{${member.proofFilePath}}" download th:text="${member.proofFilePath}"></a>
+                                <a th:text="${member.proofFilePath}"></a>
                             </div>
                         </li>
                     </ul>
+                    <div th:unless="${approvedMembers.size() > 0}" class="text-center text-gray-600 font-medium mt-6">
+                        승인된 작가가 없습니다.
+                    </div>
                 </div>
             </div>
         </div>
-        
         <!-- 알림 메시지를 표시할 요소 -->
         <div id="copyAlert" class="alert fixed bottom-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg hidden">텍스트가 복사되었습니다!</div>
     </div>
