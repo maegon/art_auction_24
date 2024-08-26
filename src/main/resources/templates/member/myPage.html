@@ -130,7 +130,8 @@
                                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                                             <label for="profileImage"
                                                    class="font-semibold text-gray-700 w-full sm:w-32">프로필 이미지:</label>
-                                            <input type="file" id="profileImage" th:field="*{multipartFile}" accept="image/png, image/gif, image/jpeg"
+                                            <input type="file" id="profileImage" th:field="*{multipartFile}"
+                                                   accept="image/png, image/gif, image/jpeg"
                                                    class="block w-full text-sm text-gray-500  hover:bg-gray-100 border border-gray-300 rounded-lg font-semibold py-2 px-4">
                                         </div>
 
@@ -261,7 +262,8 @@
                                                         <div class="text-left mr-2 md:mr-4">최소 입찰가</div>
                                                         <div class="flex items-center">
                                                             <span class="mr-1 text-red-500 text-sm">KRW</span>
-                                                            <span class="text-red-500 text-sm" th:text="${likeProduct.product.formattedCurrentBid}">
+                                                            <span class="text-red-500 text-sm"
+                                                                  th:text="${likeProduct.product.formattedCurrentBid}">
 
                                                             </span>
                                                         </div>
@@ -281,7 +283,7 @@
                             </div>
 
                             <!-- 문의 내역 -->
-                            <div id="question-list" class="myPage-hidden bg-white p-4 mt-2 rounded-lg shadow-md">
+                            <div id="question-list" class="myPage-hidden bg-white  mt-2 rounded-lg shadow-md">
                                 <h1 class="text-3xl py-4 font-semiBold text-gray-800">문의내역</h1>
                                 <span class="block text-gray-500 text-sm mb-4">
         ※ 문의 내용 중 개인정보가 포함되었거나 중복된 문의인 경우 삭제될 수 있습니다.
@@ -356,7 +358,7 @@
                                 </div>
                             </div>
                             <!-- 입찰 내역 -->
-                            <div id="bid-list" class="myPage-hidden bg-white p-4 mt-2 rounded-lg shadow-md">
+                            <div id="bid-list" class="myPage-hidden bg-white mt-2 ">
                                 <h1 class="text-3xl py-4 font-semiBold text-gray-800">입찰 내역</h1>
                                 <div>
                                     <span>※ 경매가 끝나면 경매중에서 경매종료와 함께 낙찰여부를 확인할수있습니다. </span>
@@ -373,10 +375,10 @@
                                             <!-- 입찰 상품 목록을 반복 -->
 
                                             <!--                                            경매중일때-->
-                                            <li class="p-4 flex flex-col rounded-lg"
+                                            <li class=" "
                                                 th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'ACTIVE'}">
                                                 <!-- 경매중 바 -->
-                                                <div class="relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
+                                                <div class="div1 relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         경매중
                                                     </div>
@@ -386,25 +388,31 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="flex rounded-b-lg">
+                                                <div class="div2 flex rounded-b-lg">
                                                     <div class="p-2 mb-auto mt-auto">NO.
-                                                        <span th:text="${bidByMember.id}" class="text-gray-700 font-bold"></span>
+                                                        <span th:text="${bidByMember.id}"
+                                                              class="text-gray-700 font-bold"></span>
                                                     </div>
 
-                                                    <a th:href="@{|/product/detail/${bidByMember.product.id}|}" class="block h-full flex items-center justify-center">
+                                                    <a th:href="@{|/product/detail/${bidByMember.product.id}|}"
+                                                       class="block h-full flex items-center justify-center">
                                                         <div class="flex bg-gray-100 w-40 h-40 items-center justify-center">
                                                             <!-- 이미지 -->
-                                                            <img th:src="@{|/${bidByMember.product.thumbnailImg}|}" alt="Product Image" class="w-32 h-32 object-cover rounded-lg">
+                                                            <img th:src="@{|/${bidByMember.product.thumbnailImg}|}"
+                                                                 alt="Product Image"
+                                                                 class="w-32 h-32 object-cover rounded-lg">
                                                         </div>
                                                     </a>
 
                                                     <!-- 경매 정보 -->
                                                     <div class="flex flex-col items-start p-4">
                                                         <div>
-                                                            <span th:text="${bidByMember.product.artist.korName}" class="text-slate-300 text-sl font-bold mt-2"></span>
+                                                            <span th:text="${bidByMember.product.artist.korName}"
+                                                                  class="text-slate-300 text-sl font-bold mt-2"></span>
                                                         </div>
                                                         <div>
-                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}" th:text="${bidByMember.product.title}"
+                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}"
+                                                               th:text="${bidByMember.product.title}"
                                                                class="text-gray-800 text-[#333333] text-xl mt-2"></a>
                                                         </div>
                                                     </div>
@@ -414,57 +422,68 @@
                                                         <div>
                                                             <div class="flex flex-col p-2">
                                                                 <span class="">현재 최고입찰가</span>
-                                                                <span class="text-red-500 text-sm" th:text="${highestBidsByProduct[bidByMember.product].amount}"></span>
+                                                                <span class="text-red-500 text-sm"
+                                                                      th:text="${highestBidsByProduct[bidByMember.product].amount}"></span>
                                                             </div>
                                                             <div class="flex flex-col p-2">
                                                                 <span class="">나의 입찰가</span>
-                                                                <span class="text-red-500 text-sm" th:text="${bidByMember.amount}"></span>
+                                                                <span class="text-red-500 text-sm"
+                                                                      th:text="${bidByMember.amount}"></span>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="flex p-4 items-center">
                                                         <div>
-                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}" class="inline-block px-4 py-2 text-gray-800 bg-gray-300 rounded hover:bg-gray-400 transition duration-300">입찰하기</a>
+                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}"
+                                                               class="inline-block px-4 py-2 text-gray-800 bg-gray-300 rounded hover:bg-gray-400 transition duration-300">입찰하기</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
                                             <!--                                            경매가끝났을때-->
-                                            <li class="p-4 flex flex-col rounded-lg"
+                                            <li class=""
                                                 th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'CLOSED'}">
                                                 <!-- 경매중 바 -->
-                                                <div class="relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
+                                                <div class="div1 relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         경매종료
                                                     </div>
-                                                    <div th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'ACTIVE'}"> aaa</div>
+                                                    <div th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'ACTIVE'}">
+                                                        aaa
+                                                    </div>
                                                     <div class="ml-auto pr-4 text-sm">
                                                         <span>경매 종료일 :</span>
                                                         <span th:text="${#temporals.format(bidByMember.product.getAuctionEndDate(), 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
                                                 </div>
 
-                                                <div class="flex rounded-b-lg">
+                                                <div class="div2 flex rounded-b-lg">
                                                     <div class="p-2 mb-auto mt-auto">NO.
-                                                        <span th:text="${bidByMember.id}" class="text-gray-700 font-bold"></span>
+                                                        <span th:text="${bidByMember.id}"
+                                                              class="text-gray-700 font-bold"></span>
                                                     </div>
 
-                                                    <a th:href="@{|/product/detail/${bidByMember.product.id}|}" class="block h-full flex items-center justify-center">
+                                                    <a th:href="@{|/product/detail/${bidByMember.product.id}|}"
+                                                       class="block h-full flex items-center justify-center">
                                                         <div class="flex bg-gray-100 w-40 h-40 items-center justify-center">
                                                             <!-- 이미지 -->
-                                                            <img th:src="@{|/${bidByMember.product.thumbnailImg}|}" alt="Product Image" class="w-32 h-32 object-cover rounded-lg">
+                                                            <img th:src="@{|/${bidByMember.product.thumbnailImg}|}"
+                                                                 alt="Product Image"
+                                                                 class="w-32 h-32 object-cover rounded-lg">
                                                         </div>
                                                     </a>
 
                                                     <!-- 경매 정보 -->
                                                     <div class="flex flex-col items-start p-4">
                                                         <div>
-                                                            <span th:text="${bidByMember.product.artist.korName}" class="text-slate-300 text-sl font-bold mt-2"></span>
+                                                            <span th:text="${bidByMember.product.artist.korName}"
+                                                                  class="text-slate-300 text-sl font-bold mt-2"></span>
                                                         </div>
                                                         <div>
-                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}" th:text="${bidByMember.product.title}"
+                                                            <a th:href="@{|/product/detail/${bidByMember.product.id}|}"
+                                                               th:text="${bidByMember.product.title}"
                                                                class="text-gray-800 text-[#333333] text-xl mt-2"></a>
                                                         </div>
                                                     </div>
@@ -474,21 +493,23 @@
                                                         <div>
                                                             <div class="flex flex-col p-2">
                                                                 <span class="">낙찰가</span>
-                                                                <span class="text-red-500 text-sm" th:text="${highestBidsByProduct[bidByMember.product].amount}"></span>
+                                                                <span class="text-red-500 text-sm"
+                                                                      th:text="${highestBidsByProduct[bidByMember.product].amount}"></span>
                                                             </div>
                                                             <div class="flex flex-col p-2">
                                                                 <span class="">나의 입찰가</span>
-                                                                <span class="text-red-500 text-sm" th:text="${bidByMember.amount}"></span>
+                                                                <span class="text-red-500 text-sm"
+                                                                      th:text="${bidByMember.amount}"></span>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="flex p-4 items-center">
                                                         <div th:if="${bidByMember.amount == highestBidsByProduct[bidByMember.product].amount}">
-                                                            <span  class="inline-block px-4 py-2 text-green-500 bg-white">낙찰</span>
+                                                            <span class="inline-block px-4 py-2 text-green-500 bg-white">낙찰</span>
                                                         </div>
                                                         <div th:if="${bidByMember.amount != highestBidsByProduct[bidByMember.product].amount}">
-                                                            <span  class="inline-block px-4 py-2 text-red-500 bg-white">낙찰 실패</span>
+                                                            <span class="inline-block px-4 py-2 text-red-500 bg-white">낙찰 실패</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -499,7 +520,7 @@
                                 </div>
                             </div>
                             <!-- 낙찰 내역 -->
-                            <div id="order-list" class="myPage-hidden bg-white p-4 mt-2 rounded-lg shadow-md">
+                            <div id="order-list" class="myPage-hidden bg-white  mt-2">
                                 <h1 class="text-3xl py-4 font-semiBold text-gray-800">낙찰 내역</h1>
                                 <div>
                                     <span>※ 경매가 끝난시점에 낙찰받지못하면 내역에나오지않습니다. </span>
@@ -515,17 +536,17 @@
                                         <ul class="flex-wrap gap-4 mb-4 border-y border-gray-300 rounded-lg"
                                             th:each="order : ${orderList}">
                                             <!-- 낙찰 상품 목록을 반복 -->
-                                            <li class="p-4 flex flex-col rounded-lg">
-                                                <div class="relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
+                                            <li class="">
+                                                <div class="div1 relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center flex-col">
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         낙찰 완료
                                                     </div>
-                                                    <div class="ml-auto pr-4 text-sm">
+                                                    <div class="ml-auto pr-4 text-sm mt-2">
                                                         <span>낙찰 일 :</span>
                                                         <span th:text="${#temporals.format(order.createDate, 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
                                                 </div>
-                                                <div class="flex rounded-b-lg">
+                                                <div class="div2 flex rounded-b-lg">
                                                     <div class="p-2 mb-auto mt-auto">NO.
                                                         <span th:text="${order.id}"
                                                               class="text-gray-700 font-bold"></span>
@@ -559,7 +580,8 @@
                                                         <div>
                                                             <div class="flex flex-col p-2">
                                                                 <span class="">낙찰가</span>
-                                                                <span class="text-red-500 text-sm" th:text="${order.productPrice}"></span>
+                                                                <span class="text-red-500 text-sm"
+                                                                      th:text="${order.productPrice}"></span>
                                                             </div>
                                                         </div>
 
@@ -573,7 +595,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
 
                                             </li>
                                         </ul>
