@@ -93,3 +93,4 @@ animateIn: 'slide-down',
 
 
 /*up animation js end*/
+

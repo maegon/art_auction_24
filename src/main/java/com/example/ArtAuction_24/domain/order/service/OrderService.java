@@ -2,6 +2,8 @@ package com.example.ArtAuction_24.domain.order.service;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
+import com.example.ArtAuction_24.domain.deliver.entity.Delivery;
+import com.example.ArtAuction_24.domain.deliver.service.DeliveryService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.notification.service.NotificationService;
@@ -29,6 +31,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+    private final DeliveryService deliveryService;
     private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
     @Transactional
     public void createOrderForAuction(Auction auction) {
@@ -58,12 +61,16 @@ public class OrderService {
                         .product(product)
                         .winningBidder(winningBidder)
                         .artist(artist)
-                        .status(OrderStatus.PENDING)  // 초기 상태 설정
+                        .status(OrderStatus.CONFIRMED)  // 초기 상태 설정
                         .build();
 
                 try {
                     orderRepository.save(order);
                     logger.info("Order created successfully for product ID {}", product.getId());
+
+                    // 배송 정보 생성
+                    Delivery delivery = deliveryService.createDelivery(order, generateTrackingNumber());
+                    logger.info("Delivery created successfully for order ID {}", order.getId());
                 } catch (Exception e) {
                     logger.error("Failed to save order for product ID {}: ", product.getId(), e);
                 }

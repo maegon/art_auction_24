@@ -26,9 +26,11 @@ public class ProductForm {
     @Size(max = 100)
     private String medium;
 
-    @NotBlank(message = "크기는 필수입니다.")
-    @Size(max = 100)
-    private String dimensions;
+    @NotNull(message = "가로 크기는 필수입니다.")
+    private Long width;
+
+    @NotNull(message = "세로 크기는 필수입니다.")
+    private Long height;
 
     @NotNull(message = "시작가는 필수 입력 사항입니다.")
     @DecimalMin(value = "0.0", inclusive = false, message = "시작가는 0보다 커야 합니다.")
@@ -39,10 +41,5 @@ public class ProductForm {
     private String category;
 
     private MultipartFile thumbnail;
-
-
-
-
-
 
 }

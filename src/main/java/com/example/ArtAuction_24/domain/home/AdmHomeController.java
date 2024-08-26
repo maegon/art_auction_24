@@ -32,6 +32,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -73,11 +74,31 @@ public class AdmHomeController {
 
     @GetMapping("/auction/list")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String showAuction(Model model) {
-        List<Auction> auctionList = auctionService.getAuctionLit();
+    public String showAuction(
+            @RequestParam(value = "kw", required = false, defaultValue = "") String keyword,
+            Model model) {
+        List<Auction> auctionList;
+        if (keyword.isEmpty()) {
+            auctionList = auctionService.getAuctionListSorted(); // 기본 최신순 정렬
+        } else {
+            auctionList = auctionService.searchAuctionsByKeywordSorted(keyword); // 기본 최신순 정렬
+        }
         model.addAttribute("auctionList", auctionList);
+        model.addAttribute("kw", keyword);
         return "admin/auction/list";
     }
+
+
+
+    @PostMapping("/auction/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String deleteAuction(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        auctionService.deleteAuctionById(id); // 경매 삭제 서비스 호출
+        redirectAttributes.addFlashAttribute("successMessage", "경매가 성공적으로 삭제되었습니다.");
+        return "redirect:/admin/auction/list"; // 삭제 후 경매 목록 페이지로 리다이렉트
+    }
+
+
 
     // 회원 권한 설정 저장
     @PutMapping("/member/{memberId}")

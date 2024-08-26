@@ -41,10 +41,16 @@ public class AuctionService {
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
     public Auction create(String name, LocalDateTime startDate, LocalDateTime endDate, List<Long> productIds) {
+        // 중복 경매 이름 체크
+        if (auctionRepository.existsByName(name)) {
+            throw new IllegalArgumentException("이미 존재하는 경매 이름입니다.");
+        }
+
         List<Product> products = productRepository.findAllById(productIds);
         Set<Product> productSet = new HashSet<>(products);
 
         AuctionStatus auctionStatus = startDate.isAfter(LocalDateTime.now()) ? AuctionStatus.SCHEDULED : AuctionStatus.ACTIVE;
+
 
         Auction auction = Auction.builder()
                 .name(name)
@@ -141,6 +147,21 @@ public class AuctionService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         return auctionRepository.findAll();
+    }
+
+    public void deleteAuctionById(Long id) {
+        auctionRepository.deleteById(id);
+    }
+
+
+    public List<Auction> getAuctionListSorted() {
+        // 최신순으로 정렬된 경매 목록을 반환
+        return auctionRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate"));
+    }
+
+    public List<Auction> searchAuctionsByKeywordSorted(String keyword) {
+        // 검색어가 포함된 경매 목록을 최신순으로 정렬하여 반환
+        return auctionRepository.findByNameContainingIgnoreCase(keyword, Sort.by(Sort.Direction.ASC, "startDate"));
     }
 }
 

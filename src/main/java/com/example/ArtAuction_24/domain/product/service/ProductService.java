@@ -70,7 +70,7 @@ public class ProductService {
         }
     }
 
-    public void create(String title, String description, String medium, String dimensions,
+    public void create(String title, String description, String medium, long width,long height,
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
                           MultipartFile thumbnailImg, String category, Artist artist) {
 
@@ -99,7 +99,8 @@ public class ProductService {
                 .title(title)
                 .description(description)
                 .medium(medium)
-                .dimensions(dimensions)
+                .width(width)
+                .height(height)
                 .startingPrice(startingPrice)
                 .currentBid(startingPrice)  // startingPrice와 동일하게 설정
                 .auctionStartDate(auctionStartDate)  // 매개변수로 받은 auctionStartDate 사용
@@ -113,7 +114,7 @@ public class ProductService {
 
     }
 
-    public Product create(String title, String description, String medium, String dimensions,
+    public Product create(String title, String description, String medium, long width, long height,
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
                           String thumbnailImg, String category, Artist artist){
 
@@ -121,7 +122,8 @@ public class ProductService {
                 .title(title)
                 .description(description)
                 .medium(medium)
-                .dimensions(dimensions)
+                .width(width)
+                .height(height)
                 .startingPrice(startingPrice)
                 .currentBid(startingPrice)  // startingPrice와 동일하게 설정
                 .auctionStartDate(auctionStartDate)  // 매개변수로 받은 auctionStartDate 사용

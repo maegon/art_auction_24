@@ -20,6 +20,14 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        // 입력값에서 'e'와 'E'를 제거하는 함수
+        function filterExponent(event) {
+            const input = event.target;
+            // 'e'와 'E'를 제거
+            input.value = input.value.replace(/[eE]/g, '');
+        }
+
     </script>
 </head>
 <body>
@@ -31,10 +39,11 @@
 
             <div class="flex flex-col items-center mb-4">
                 <img id="thumbnailPreview" src="#" alt="미리보기" class="w-48 h-48 object-cover rounded-lg cursor-pointer hidden" onclick="triggerFileInput()">
-                <input type="file" id="thumbnail" th:field="*{thumbnail}" class="hidden" onchange="previewThumbnail(this)">
+                <input type="file" id="thumbnail" name="thumbnail" th:field="*{thumbnail}" class="hidden" onchange="previewThumbnail(this)">
                 <button type="button" id="uploadButton" onclick="triggerFileInput()" class="mt-4 p-3 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300 focus:outline-none">
                     <i class="fa-solid fa-user-plus text-xl"></i>
                 </button>
+                <p th:if="${#fields.hasErrors('thumbnail')}" th:errors="*{thumbnail}" class="text-red-500 text-xs italic"></p>
             </div>
 
             <div class="mb-4">
@@ -55,20 +64,36 @@
                 <p th:if="${#fields.hasErrors('medium')}" th:errors="*{medium}" class="text-red-500 text-xs italic"></p>
             </div>
 
-            <div class="mb-4">
-                <label for="dimensions" class="block text-gray-700 text-sm font-bold mb-2">가로 길이 X 세로 길이 cm</label>
-                <input type="text" id="dimensions"
-                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       th:field="*{dimensions}"
-                       placeholder="가로와 세로 길이를 입력하세요 (cm)">
-                <p th:if="${#fields.hasErrors('dimensions')}" th:errors="*{dimensions}" class="text-red-500 text-xs italic"></p>
+            <div class="flex space-x-4 mb-4">
+                <!-- 가로 크기 입력 -->
+                <div class="w-1/2">
+                    <label for="width" class="block text-gray-700 text-sm font-bold mb-2">가로 크기 (cm)</label>
+                    <input type="number" id="width"
+                           class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           th:field="*{width}"
+                           oninput="filterExponent(event)"
+                           placeholder="가로 크기 입력">
+                    <p th:if="${#fields.hasErrors('width')}" th:errors="*{width}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <!-- 세로 크기 입력 -->
+                <div class="w-1/2">
+                    <label for="height" class="block text-gray-700 text-sm font-bold mb-2">세로 크기 (cm)</label>
+                    <input type="number" id="height"
+                           class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           th:field="*{height}"
+                           oninput="filterExponent(event)"
+                           placeholder="세로 크기 입력">
+                    <p th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-red-500 text-xs italic"></p>
+                </div>
             </div>
 
             <div class="mb-4">
                 <label for="startingPrice" class="block text-gray-700 text-sm font-bold mb-2">시작가</label>
-                <input type="text" id="startingPrice"
+                <input type="number" id="startingPrice"
                        class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                        th:field="*{startingPrice}"
+                       oninput="filterExponent(event)"
                        placeholder="시작가를 입력하세요 (예: 100000)">
                 <p th:if="${#fields.hasErrors('startingPrice')}" th:errors="*{startingPrice}" class="text-red-500 text-xs italic"></p>
             </div>

@@ -51,6 +51,11 @@ public class RechargeViewController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+
+        if (amount <= 0 || amount > 2000000) {
+            return "recharge/fail";
+        }
+
         // 충전 금액을 사용자 잔액에 추가
         memberService.updateBalance(username, amount);
 

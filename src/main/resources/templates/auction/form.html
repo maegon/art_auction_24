@@ -75,6 +75,13 @@
         });
     });
     </script>
+    <style>
+        /* 스크롤 가능한 영역 스타일 */
+        .scrollable-container {
+            max-height: 400px; /* 최대 높이 설정 */
+            overflow-y: auto; /* 세로 스크롤 활성화 */
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -107,7 +114,7 @@
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Select Products</label>
-                    <div id="productList" class="flex flex-col space-y-2">
+                    <div id="productList" class="flex flex-col space-y-2 scrollable-container">
                         <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2 product-item">
                             <label class="flex items-center space-x-3 cursor-pointer w-full">
                                 <input type="checkbox" name="products" th:value="${product.id}" class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-400"/>
@@ -121,7 +128,7 @@
 
                 <div class="mb-4">
                     <label for="selectedProducts" class="block text-gray-700 text-sm font-bold mb-2">Selected Products</label>
-                    <div id="selectedProducts" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100"></div>
+                    <div id="selectedProducts" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100 scrollable-container"></div>
                 </div>
 
                 <div class="flex items-center justify-between mt-4">

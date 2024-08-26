@@ -1,47 +1,75 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-    <div class="admContainer responsive-wrapper py-6 min-h-[600px]">
+    <div class="admContainer responsive-wrapper mx-auto px-6 lg:px-[300px] min-h-[600px]">
         <div class="mg_container mb-6">
             <div class="mg_menu_ac_container flex flex-col">
-                <div class="mg_menu_section flex justify-around items-center mb-4">
-                    <span class="text-3xl font-semibold text-gray-800">경매 내역 관리</span>
-                    
+                <div class="mg_menu_section flex flex-col sm:flex-row justify-between items-center my-4 space-y-4 sm:space-y-0">
+                    <span class="text-2xl sm:text-3xl font-semibold text-gray-800">경매 내역 관리</span>
                     <!-- 검색란 -->
-                    <div class="search-container w-full max-w-xs">
-                        <input type="text" name="kw" id="auctionSearch" placeholder="경매 검색" class="search-input w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 transition duration-150">
-                    </div>
+                    <form method="GET" class="search-container flex border border-gray-300 rounded-lg overflow-hidden w-full max-w-xs" th:action="@{/admin/auction/list}">
+                        <input type="text" name="kw" id="search_input" placeholder="경매 제목을 입력해주세요" class="px-4 py-2 w-full sm:w-64" th:value="${kw}"/>
+                        <button type="submit" id="search_button" class="bg-white text-gray-600 px-4 flex items-center justify-center ml-auto sm:mt-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
                 </div>
-                
+
                 <!-- 메뉴 -->
-                <div class="mg_ac_menu flex mt-4">
-                    <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700">
-                        <li class="flex-1 flex items-center justify-center text-center">경매 제목</li>
-                        <li class="flex-1 flex items-center justify-center text-center">시작 날짜</li>
-                        <li class="flex-1 flex items-center justify-center text-center">마감 날짜</li>
-                        <li class="flex-1 flex items-center justify-center text-center">경매 상태</li>
-                        <li class="flex-1 flex items-center justify-center text-center">작업</li>
+                <div class="hidden md:flex flex-col mt-4">
+                    <ul class="flex flex-col md:flex-row w-full text-lg font-semibold text-gray-700">
+                        <li class="flex-1 flex items-center justify-center text-center py-2 md:py-0">경매 제목</li>
+                        <li class="flex-1 flex items-center justify-center text-center py-2 md:py-0">시작 날짜</li>
+                        <li class="flex-1 flex items-center justify-center text-center py-2 md:py-0">마감 날짜</li>
+                        <li class="flex-1 flex items-center justify-center text-center py-2 md:py-0">경매 상태</li>
+                        <li class="flex-1 flex items-center justify-center text-center py-2 md:py-0">작업</li>
                     </ul>
                 </div>
-                
-                
-                <!-- 목록 -->
-                <div class="mb_ac_list mt-4">
-                    <ul id="auctionList">
-                        <li th:each="auction : ${auctionList}" class="ac_list_each flex flex-wrap justify-between items-center border-b border-gray-200 py-4">
-                            <div class="ac_list_at flex-1 text-center truncate" th:text="${auction.name}"></div>
-                            <div class="ac_list_sd flex-1 text-center truncate" th:text="${#temporals.format(auction.startDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
-                            <div class="ac_list_ed flex-1 text-center truncate" th:text="${#temporals.format(auction.endDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
-                            <div class="ac_list_st flex-1 text-center truncate" th:text="${auction.status}"></div>
-                            <div class="ac_action flex-1 text-center">
-                                <button type="button" class="btn btn_save rounded-lg px-4 py-2 transition duration-150" data-memberid="${member.id}" disabled>저장</button>
+
+                <!-- 목록 (모바일에서만 카드 형식으로 보이게) -->
+                <div class="md:hidden mb_ac_list mt-4">
+                    <ul>
+                        <li th:each="auction : ${auctionList}" class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+                            <div class="font-semibold text-lg mb-2" th:text="${auction.name}"></div>
+                            <div class="text-gray-600 mb-2">
+                                <div>시작 날짜: <span th:text="${#temporals.format(auction.startDate, 'yyyy년 MM월 dd일 HH:mm')}"></span></div>
+                                <div>마감 날짜: <span th:text="${#temporals.format(auction.endDate, 'yyyy년 MM월 dd일 HH:mm')}"></span></div>
+                                <div>경매 상태: <span th:text="${auction.status}"></span></div>
+                            </div>
+                            <div>
+                                <form th:action="@{/admin/auction/delete/{id}(id=${auction.id})}" method="POST" onsubmit="return confirmDelete()">
+                                    <button type="submit" class="bg-red-600 text-white py-1 px-2 rounded hover:bg-red-700">삭제</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
                 </div>
+
+                <!-- 목록 (데스크탑에서만 테이블 형식으로 보이게) -->
+                <div class="hidden md:block mb_ac_list mt-4">
+                    <ul id="auctionList">
+                        <li th:each="auction : ${auctionList}" class="ac_list_each flex flex-col md:flex-row items-center border-b border-gray-200 py-4">
+                            <div class="ac_list_at flex-1 text-center truncate py-2 md:py-0" th:text="${auction.name}"></div>
+                            <div class="ac_list_sd flex-1 text-center truncate py-2 md:py-0" th:text="${#temporals.format(auction.startDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="ac_list_ed flex-1 text-center truncate py-2 md:py-0" th:text="${#temporals.format(auction.endDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                            <div class="ac_list_st flex-1 text-center truncate py-2 md:py-0" th:text="${auction.status}"></div>
+                            <div class="ac_action flex-1 text-center py-2 md:py-0">
+                                <form th:action="@{/admin/auction/delete/{id}(id=${auction.id})}" method="POST" onsubmit="return confirmDelete()">
+                                    <button type="submit" class="btn btn-danger bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">삭제</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </div>
-        <!-- 알림 메시지를 표시할 요소 -->
+                <!-- 알림 메시지를 표시할 요소 -->
         <div id="copyAlert" class="alert fixed bottom-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg hidden">텍스트가 복사되었습니다!</div>
     </div>
+    <script>
+        function confirmDelete() {
+            return confirm("정말로 이 경매를 삭제하시겠습니까?");
+        }
+    </script>
 </div>
 </html>

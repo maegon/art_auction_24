@@ -12,6 +12,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -30,7 +31,7 @@ public class SecurityConfig {
                         .loginPage("/member/login")
                         .defaultSuccessUrl("/"))
                 .oauth2Login(oauth2Login -> oauth2Login
-                                .loginPage("/member/login"))
+                        .loginPage("/member/login"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")

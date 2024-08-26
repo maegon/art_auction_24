@@ -35,7 +35,8 @@
 
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
-                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${productList}">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product, iterStat : ${productList}"
+                             th:if="${iterStat.index < 16}">
                             <a th:href="@{|/product/detail/${product.id}|}"
                                 class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
@@ -64,7 +65,8 @@
                 </div>
                 <div class="swiper ongoingAuc">
                     <div class="swiper-wrapper mt-4">
-                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product : ${activeAuctionProducts}">
+                        <div class="swiper-slide ongoing-slide bg-white overflow-hidden" th:each="product, iterStat : ${activeAuctionProducts}"
+                             th:if="${iterStat.index < 16}">
                             <a th:href="@{|/product/detail/${product.id}|}"
                                class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
@@ -176,16 +178,21 @@
             <div class="bestArtist-title-text" style="margin-bottom: 5px; font-size: 24px;">추천 작가</div>
         </div>
         <div class="best-artist-section text-left bg-gradient-to-t from-teal-500 to-orange-500 p-5 mt-4" th:each="topProduct : ${topProduct}">
-            <div class="artist-container flex flex-col md:flex-row items-center justify-between mb-5">
+            <div class="artist-container flex flex-col md:flex-row justify-between mb-5">
                 <div class="artist-info flex-1 text-white p-1 max-w-full md:max-w-xl">
-                    <div class="text-3xl md:text-4xl text-white font-bold mb-2">
+                    <div class="text-3xl md:text-4xl text-center text-white font-bold mb-2">
                         <div class="bestArtist-info-artistName" th:text="${topProduct.artist.korName}">
                             작가 이름
                         </div>
                         <div class="bestArtist-info-title text-2xl ml-1 mb-2" th:text="${topProduct.title}">작품 이름</div>
                     </div>
                     <div class="bestArtist-info-medium md:text-xl text-white " th:text="${topProduct.medium}">사용 재료</div>
-                    <div class="bestArtist-info-dimensions md:text-xl text-white " th:text="${topProduct.dimensions}">크기</div>
+                    <div class="bestArtist-info-dimensions md:text-sm text-white flex">
+                    <div th:text="${topProduct.width}"></div>
+                    <div>x</div>
+                    <div th:text="${topProduct.height}"></div>
+                    <div>cm</div>
+                    </div>
                     <div class="bestArtist-info-endTime text-xs md:text-sm text-white mb-2" th:text="${#temporals.format(topProduct.auctionStartDate, 'yyyy-MM-dd HH:mm')}">예정 07-24 3:00 PM</div>
                     <hr>
                     <div class="bestArtist-info-description md:text-xl text-white mt-2 hidden sm:block" th:text="${topProduct.description}">설명</div>
@@ -227,11 +234,9 @@
             </div>
         </div>
     </div>
-
-
-
-
-
+    </div>
+    <div class="btn-scroll_paint fixed bottom-20 right-4 md:bottom-24 md:right-8 w-12 h-12 rounded-full bg-black border border-white flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors duration-300 z-50">
+        <a th:href="@{/home/paint}" class="text-white text-xl font-bold"><i class="fa-solid fa-paintbrush"></i></a>
     </div>
 
 </div>

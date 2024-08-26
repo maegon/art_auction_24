@@ -76,15 +76,19 @@
                 </div>
             </div>
 
-
-
             <!-- 주문 상태 섹션 -->
             <div class="p-4 my-4">
                 <h2 class="text-xl font-semibold mb-4 border-b border-black">주문 상태</h2>
                 <p class="text-black" th:text="${orderStatusDescription}"></p>
             </div>
+
+            <!-- 배송 상세 페이지 링크 -->
+            <div class="p-4 mb-4">
+                <a th:href="@{|/member/deliverDetail/${order.id}|}" class="inline-block px-4 py-2 btn">
+                    배송 내역 확인
+                </a>
+            </div>
         </div>
     </div>
-
 </div>
 </html>

@@ -92,4 +92,9 @@ public class HomeController {
     public String howToSell(){
         return "home/howToSell";
     }
+
+    @GetMapping("/home/paint")
+    public String paintPage(){
+        return "home/paint";
+    }
 }

@@ -84,6 +84,15 @@ public class AuctionController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public String auctionCreate(@Valid AuctionForm auctionForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal, Model model) {
+        if (!auctionForm.isStartDateValid()) {
+            bindingResult.rejectValue("startDate", "error.startDate", "시작 시간은 현재 시간과 같거나 이후여야 합니다.");
+        }
+
+        if (!auctionForm.isEndDateValid()) {
+            bindingResult.rejectValue("endDate", "error.endDate", "마감 시간은 시작 시간보다 이후여야 합니다.");
+        }
+
+
         if (bindingResult.hasErrors()) {
             // 모든 제품을 다시 모델에 추가 (이 부분이 중요)
             List<Product> availableProducts = auctionService.getAvailableProducts();
@@ -98,15 +107,21 @@ public class AuctionController {
         // 찾지 못한 제품이 있으면 에러 처리
         if (products.size() != auctionForm.getProducts().size()) {
             bindingResult.rejectValue("products", "error.products", "One or more products are not available.");
-
-            // 모든 제품을 다시 모델에 추가
             List<Product> availableProducts = auctionService.getAvailableProducts();
             model.addAttribute("allProducts", availableProducts);
 
             return "auction/form";
         }
 
-        auctionService.create(auctionForm.getName(), auctionForm.getStartDate(), auctionForm.getEndDate(), auctionForm.getProducts());
+        try {
+            auctionService.create(auctionForm.getName(), auctionForm.getStartDate(), auctionForm.getEndDate(), auctionForm.getProducts());
+        } catch (IllegalArgumentException e) {
+            bindingResult.rejectValue("name", "error.name", e.getMessage());
+            List<Product> availableProducts = auctionService.getAvailableProducts();
+            model.addAttribute("allProducts", availableProducts);
+            return "auction/form";
+        }
+
         return "redirect:/auction/list";
     }
 

@@ -15,12 +15,6 @@
                 <li><a th:href="@{/calendar/view}" class="nav_Calender"><span>캘린더</span></a></li>
             </ul>
             
-            <!-- 재원 추가 -->
-            <!-- 현재 로그인된 사용자의 권한을 표시 -->
-            <div>
-                <p>현재 사용자 권한: <span th:text="${userAuthority}"></span></p>
-            </div>
-            
             <div class="nav__login">
                 <div id="search_container" class="md:mr-5 mr-0">
                     <form class="nav__search-form" th:action="@{/home/search}" method="get">
