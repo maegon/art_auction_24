@@ -56,21 +56,25 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('joinForm').style.display = 'none';
         });
 
-    // 전화번호 형식 자동 포맷
-    phoneNumberInput.addEventListener("input", function(event) {
-        let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
-        let formattedInput = '';
+   // 전화번호 입력 시 실시간 유효성 검사
+   phoneNumberInput.addEventListener("input", function(event) {
+       let input = event.target.value.replace(/\D/g, ''); // 숫자 이외의 문자 제거
+       let formattedInput = '';
 
-        if (input.length > 3 && input.length <= 7) {
-            formattedInput = `${input.slice(0, 3)}-${input.slice(3)}`;
-        } else if (input.length > 7) {
-            formattedInput = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
-        } else {
-            formattedInput = input;
-        }
+       if (input.length > 3 && input.length <= 7) {
+           formattedInput = `${input.slice(0, 3)}-${input.slice(3)}`;
+       } else if (input.length > 7) {
+           formattedInput = `${input.slice(0, 3)}-${input.slice(3, 7)}-${input.slice(7, 11)}`;
+       } else {
+           formattedInput = input;
+       }
 
-        event.target.value = formattedInput;
-    });
+       event.target.value = formattedInput;
+
+       updateJoinButtonState();
+   });
+
+
 
     let lastSelectedDomain = "";
 
@@ -89,32 +93,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // 회원가입 버튼 상태 업데이트
     function updateJoinButtonState() {
         let allFilled = true;
+
+        // 모든 입력 필드가 채워져 있는지 확인
         for (let input of inputs) {
-            if (input.type === "file") {
-                if (input.files.length === 0) {
-                    allFilled = false;
-                    break;
-                }
-            } else {
-                if (input.value.trim() === "") {
-                    allFilled = false;
-                    break;
-                }
+            if (input.value.trim() === "") {
+                allFilled = false;
+                break;
             }
         }
+
+        // 전화번호 형식 및 길이 유효성 검사
+        const phonePattern = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+        if (!phonePattern.test(phoneNumberInput.value)) {
+            allFilled = false;
+        }
+
         if (allFilled) {
             joinButton.removeAttribute("disabled");
         } else {
             joinButton.setAttribute("disabled", "true");
-        }
-    }
-
-
-
-        // 전화번호 형식이 맞는지 추가 확인
-        const phoneNumber = phoneNumberInput.value.trim();
-        if (!/^(\d{3}-\d{3,4}-\d{4})$/.test(phoneNumber)) {
-            allFilled = false;
         }
 
         // 아이디 유효성 검사
@@ -132,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (password.length < 6 || password.length > 24 || !validPasswordRegex.test(username)) {
             allFilled = false;
         }
+    }
 
 
     // 입력 필드 이벤트 리스너 추가

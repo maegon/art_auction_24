@@ -200,11 +200,11 @@
                                                         </div>
                                                         <div id="usernameMatchError" th:text="${usernameMatchError}" class="error"></div>
                                                         <div class="form-group w-full mb-4">
-                                                            <input type="password" name="password" class="form-style w-full" maxlength="24" placeholder="비밀번호 입력" id="password" autocomplete="off">
+                                                            <input type="password" name="password" class="form-style w-full" minlength="6" maxlength="24" placeholder="비밀번호 입력" id="password" autocomplete="off">
                                                             <i class="input-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         <div class="form-group mt-1 w-full mb-4">
-                                                            <input type="password" name="password_confirm" class="form-style w-full" maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm" autocomplete="off">
+                                                            <input type="password" name="password_confirm" class="form-style w-full" minlength="6" maxlength="24" placeholder="비밀번호 재입력" id="passwordConfirm" autocomplete="off">
                                                             <i class="input-icon uil uil-lock-alt"></i>
                                                         </div>
                                                         <div id="passwordMatchError" class="error"></div>
@@ -234,13 +234,13 @@
                                                     
                                                     <div class="right_box w-full md:w-1/2 md:pl-2 md:mt-0">
                                                         <div class="form-group inputNicknameDiv w-full mb-4">
-                                                            <input type="text" name="nickname" class="form-style w-full" placeholder="닉네임 입력" id="nickname" autocomplete="off">
+                                                            <input type="text" name="nickname" class="form-style w-full" minlength="2" maxlength="10" placeholder="닉네임 입력" id="nickname" autocomplete="off">
                                                             <i class="input-icon uil uil-user"></i>
                                                             <button type="button" onclick="validateNickname()" class="confirmAndCheckBtn btn ml-4 p-1" id="nicknameCheckButton" disabled>중복확인</button>
                                                         </div>
                                                         <div id="nicknameError" class="error"></div>
                                                         <div class="form-group w-full mb-4">
-                                                            <input type="tel" name="phoneNumber" class="form-style w-full" placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
+                                                            <input type="tel" name="phoneNumber" class="form-style w-full" minlength="11" placeholder="전화번호 입력" id="phoneNumber" autocomplete="off">
                                                             <i class="input-icon uil uil-phone"></i>
                                                         </div>
                                                         <div id="phoneNumberError" class="error"></div>
