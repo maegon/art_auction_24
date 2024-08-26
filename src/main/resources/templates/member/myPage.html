@@ -103,7 +103,8 @@
                                         <!-- 비밀번호 -->
                                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                                             <label for="password" class="font-semibold text-gray-700 w-full sm:w-32">비밀번호:</label>
-                                            <input type="password" id="password" th:field="*{password}" maxlength="24"
+                                            <input type="password" id="password" th:field="*{password}" name="password"
+                                                   maxlength="24"
                                                    placeholder="비밀번호를 입력해주세요" autocomplete="off"
                                                    class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
                                         </div>
@@ -113,9 +114,11 @@
                                             <label for="passwordConfirm"
                                                    class="font-semibold text-gray-700 w-full sm:w-32">비밀번호확인:</label>
                                             <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"
+                                                   name="password_confirm"
                                                    maxlength="24" placeholder="비밀번호를 재입력해주세요" autocomplete="off"
                                                    class="block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-amber-200 focus:border-amber-400">
                                         </div>
+
 
                                         <!-- 이메일 -->
                                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
@@ -382,7 +385,7 @@
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         경매중
                                                     </div>
-                                                    <div class="ml-auto pr-4 text-sm">
+                                                    <div class="ml-auto p-2 text-sm">
                                                         <span>경매 종료일 :</span>
                                                         <span th:text="${#temporals.format(bidByMember.product.getAuctionEndDate(), 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
@@ -453,7 +456,7 @@
                                                     <div th:if="${bidByMember.product.getLatestAuctionProduct().auction.status.name() == 'ACTIVE'}">
                                                         aaa
                                                     </div>
-                                                    <div class="ml-auto pr-4 text-sm">
+                                                    <div class="ml-auto p-2 text-sm">
                                                         <span>경매 종료일 :</span>
                                                         <span th:text="${#temporals.format(bidByMember.product.getAuctionEndDate(), 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
@@ -541,7 +544,7 @@
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         낙찰 완료
                                                     </div>
-                                                    <div class="ml-auto pr-4 text-sm mt-2">
+                                                    <div class="ml-auto p-2 text-sm mt-2">
                                                         <span>낙찰 일 :</span>
                                                         <span th:text="${#temporals.format(order.createDate, 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
@@ -698,12 +701,24 @@
     });
 
     document.getElementById('updateButton').addEventListener('click', function(event) {
-        var password = document.getElementById('password').value;
-        var passwordConfirm = document.getElementById('passwordConfirm').value;
+        const passwordInput = document.getElementById('password');
+        const passwordConfirmInput = document.getElementById('passwordConfirm');
+
+        const password = passwordInput.value.trim();
+        const passwordConfirm = passwordConfirmInput.value.trim();
+
+        // 비밀번호 유효성 검사
+        const validPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{6,24}$/;
+
+        if (password.length < 6 || password.length > 24 || !validPasswordRegex.test(password)) {
+            alert('비밀번호는 6자에서 24자 사이여야 하며, 영문자, 숫자, 그리고 특수문자(!, @, #)를 포함해야 합니다.');
+            event.preventDefault(); // 폼 제출을 막습니다.
+            return;
+        }
 
         if (password !== passwordConfirm) {
             alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-            event.preventDefault();
+            event.preventDefault(); // 폼 제출을 막습니다.
         }
     });
 
@@ -738,8 +753,6 @@
 </script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script th:src="@{/js/common/login.js}"></script>
-<script th:src="@{/js/common/join.js}"></script>
 <script>
     // 우편번호 찾기(join.js에 넣으면 작동안됨..) 다음 카카오 API 사용
     function sample6_execDaumPostcode() {
