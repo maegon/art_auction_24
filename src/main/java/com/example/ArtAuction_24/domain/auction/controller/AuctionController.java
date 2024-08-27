@@ -1,6 +1,5 @@
 package com.example.ArtAuction_24.domain.auction.controller;
 
-
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
@@ -35,6 +34,8 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final ProductService productService;
     private final ProductRepository productRepository;
+    private final MemberService memberService;
+    private final ArtistService artistService;
 
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
@@ -136,5 +137,62 @@ public class AuctionController {
         return auctionService.getAllScheduledAuctions();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/productCreate/{productId}")
+    public String productCreateForm(@PathVariable("productId") Long productId, AuctionForm auctionForm, Model model, Principal principal) {
+        // 작품 정보 가져오기
+        Product product = productService.findById(productId);
+
+        // 현재 로그인한 사용자가 이 제품의 작가인지 확인
+        Member member = this.memberService.getCurrentMember();
+        Artist artist = this.artistService.findByMember(member);
+        if (!product.getArtist().getAuthor().getUsername().equals(member.getUsername())) {
+            return "redirect:/product/list"; // 작가가 아니라면 제품 목록 페이지로 리다이렉트
+        }
+
+        auctionForm.setName(product.getId() + " 경매");
+        model.addAttribute("product", product);
+        return "auction/productAuctionForm";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/productCreate/{productId}")
+    public String productCreate(@PathVariable("productId") Long productId, @Valid AuctionForm auctionForm, BindingResult bindingResult, Principal principal, Model model) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("Validation errors found:");
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println(error.getObjectName() + ": " + error.getDefaultMessage());
+            });
+            Product product = productService.findById(productId);
+            model.addAttribute("product", product);
+
+            System.out.println("getName:" + auctionForm.getName());
+            System.out.println("getStartDate:" + auctionForm.getStartDate());
+            System.out.println("getEndDate:" + auctionForm.getEndDate());
+            System.out.println("getStartingPrice:" + auctionForm.getStartingPrice());
+
+            return "auction/productAuctionForm";
+        }
+
+
+        Member member = memberService.getCurrentMember();
+        Artist artist = artistService.findByMember(member);
+
+        // 경매 생성 로직 호출
+        auctionService.productCreate(
+                auctionForm.getName(),
+                auctionForm.getStartDate(),
+                auctionForm.getEndDate(),
+                auctionForm.getStartingPrice(),
+                artist,
+                productId
+        );
+        System.out.println("getName:" + auctionForm.getName());
+        System.out.println("getStartDate:" + auctionForm.getStartDate());
+        System.out.println("getEndDate:" + auctionForm.getEndDate());
+        System.out.println("getStartingPrice:" + auctionForm.getStartingPrice());
+
+        return "redirect:/auction/list";
+    }
 
 }

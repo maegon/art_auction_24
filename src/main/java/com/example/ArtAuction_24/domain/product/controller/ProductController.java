@@ -4,7 +4,6 @@ package com.example.ArtAuction_24.domain.product.controller;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 
-import com.example.ArtAuction_24.domain.auction.form.AuctionForm;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;

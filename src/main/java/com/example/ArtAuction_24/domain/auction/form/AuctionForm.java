@@ -24,8 +24,6 @@ public class AuctionForm {
     @NotEmpty(message = "경매 품목은 필수 항목입니다.")
     private List<Long> products; // 제품 ID 리스트로 변경
 
-
-
     // 시작 시간이 현재 시간 이후인지 확인
     public boolean isStartDateValid() {
         if (startDate == null) {
