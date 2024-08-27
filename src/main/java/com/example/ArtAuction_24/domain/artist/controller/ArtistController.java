@@ -14,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -93,9 +90,10 @@ public class ArtistController {
             @RequestParam(name = "agree_personal_info", required = false, defaultValue = "false") boolean agreePersonalInfo,
             @RequestParam(name = "agree_service", required = false, defaultValue = "false") boolean agreeService,
             @RequestParam(name = "agree_age", required = false, defaultValue = "false") boolean agreeAge,
-            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation,
+            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
+        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
             model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
             return "artist/termsForm";
@@ -200,7 +198,6 @@ public class ArtistController {
         return "redirect:/artist/pending-approval";
 
     }
-
 
     @GetMapping("/list")
     public String showArtistList(Model model, Principal principal) {
@@ -367,6 +364,7 @@ public class ArtistController {
 
         return "redirect:/";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/favorite/{id}")
