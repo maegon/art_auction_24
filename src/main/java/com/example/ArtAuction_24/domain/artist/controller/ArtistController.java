@@ -10,9 +10,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +76,6 @@ public class ArtistController {
             @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
-        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
             model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
             return "artist/termsForm";
@@ -178,8 +181,6 @@ public class ArtistController {
 
     }
 
-
-
     @GetMapping("/list")
     public String showArtistList(Model model, Principal principal) {
         List<Artist> artists = artistService.getAllArtists();
@@ -226,6 +227,9 @@ public class ArtistController {
         }
 
         Member member = this.memberService.getCurrentMember();
+
+        // 관리자 승인 여부를 확인하여 플래그 설정
+        boolean isApproved = member.getArtistApplicationStatus().equals("APPROVED");
 
         // Artist를 생성하고, artistAdds를 함께 처리
         Artist artist = this.artistService.create(
@@ -345,7 +349,6 @@ public class ArtistController {
 
         return "redirect:/";
     }
-
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/favorite/{id}")
