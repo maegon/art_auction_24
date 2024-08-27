@@ -135,5 +135,4 @@ public class AuctionController {
     public List<Auction> getScheduledAuctions() {
         return auctionService.getAllScheduledAuctions();
     }
-
 }

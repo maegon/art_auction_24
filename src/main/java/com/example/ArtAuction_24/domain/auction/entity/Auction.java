@@ -30,6 +30,7 @@ public class Auction extends BaseEntity { // 여러 제품을 경매에 올려 �
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private Double StartingPrice;
 
     @Enumerated(EnumType.STRING)
     private AuctionStatus status; // 경매 상태 (활성화, 종료, 취소)
@@ -45,5 +46,4 @@ public class Auction extends BaseEntity { // 여러 제품을 경매에 올려 �
     public boolean isClosed() {
         return this.status == AuctionStatus.CLOSED;
     }
-
 }
