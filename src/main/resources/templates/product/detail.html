@@ -16,9 +16,6 @@
                         <div class="py-2">
                             NO.<span th:text="${product.id}"></span>
                         </div>
-                        <div th:if="${#authentication.getPrincipal().getUsername() == product.artist.author.username}">
-                            <a th:href="@{|/auction/productCreate/${product.id}|}" class="btn btn-primary" style="height: 25px; margin-bottom: 10px;">경매에 올리기</a>
-                        </div>
                         <div class="flex justify-between">
                         <span class="text-xl lg:text-3xl font-bold">
                             <span th:text="${product.artist.korName}"></span>
