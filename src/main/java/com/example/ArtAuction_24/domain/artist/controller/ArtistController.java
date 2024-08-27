@@ -181,6 +181,7 @@ public class ArtistController {
 
     }
 
+
     @GetMapping("/list")
     public String showArtistList(Model model, Principal principal) {
         List<Artist> artists = artistService.getAllArtists();
@@ -189,6 +190,7 @@ public class ArtistController {
         model.addAttribute("member", currentMember);
         return "artist/artistList";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")

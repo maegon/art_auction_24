@@ -3,7 +3,6 @@ package com.example.ArtAuction_24.domain.auction.service;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
-
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.bid.service.BidService;
