@@ -78,35 +78,6 @@
                     </div>
                 </li>
             </ul>
-
-            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10 py-2">
-                <li th:each="product : ${paging.content}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item">
-                    <a th:href="@{|/product/detail/${auction.product.id}|}"
-                       class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
-                        <img class="object-contain object-center w-full h-full transition-transform duration-500"
-                             th:src="@{|/${auction.product.thumbnailImg}|}"
-                             alt="이미지가 존재하지 않습니다.">
-                    </a>
-                    <div class="p-3 flex flex-col flex-grow">
-                        <span th:text="${auction.product.artist.korName}" class="text-left font-bold text-lg"></span>
-                        <span th:text="${auction.name}" class="text-left text-md mt-1"></span>
-                        <span class="flex text-xs mt-3">
-                <span th:text="${auction.product.dimensions}" class="text-gray-500"></span>
-                <span class="text-gray-500 mx-1">|</span>
-                <span th:text="${auction.product.medium}" class="text-gray-500"></span>
-            </span>
-                        <hr class="my-2">
-                        <span class="flex flex-col items-start text-left text-xs">
-                <span class="text-gray-500">현재가</span>
-                <span th:text="|KRW ${auction.startingPrice}|" class="text-black"></span>
-            </span>
-                        <a th:href="@{|/product/detail/${auction.product.id}|}"
-                           class="bg-white text-black border border-black text-lg mt-3 px-4 py-2 transition-colors duration-150 ease-in-out flex items-center justify-center hover:text-red-500">
-                            상세 보기
-                        </a>
-                    </div>
-                </li>
-            </ul>
         </div>
 
 

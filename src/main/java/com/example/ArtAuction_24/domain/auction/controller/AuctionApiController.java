@@ -54,6 +54,7 @@ public class AuctionApiController {
 
     @PostMapping("/{auctionId}/set-notification")
     public ResponseEntity<Void> setAuctionNotification(@PathVariable("auctionId") Long auctionId, Principal principal) {
+
         String username = principal.getName();  // 현재 로그인한 유저의 이름
         notificationService.scheduleAuctionNotification(auctionId, username);
         return ResponseEntity.ok().build();

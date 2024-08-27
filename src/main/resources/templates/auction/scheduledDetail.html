@@ -26,7 +26,7 @@
                         <span></span>
                         <div class="scheduled-content">
                             <!-- 알림 설정 버튼 -->
-                            <button id="scheduledNotify-btn" class=" ml-52 text-white">
+                            <button sec:authorize="isAuthenticated()" id="scheduledNotify-btn" class=" ml-52 text-white">
                                 <i class="fa-solid fa-bell"></i>
                             </button>
                             <h2 class="mt-4 font-bold" style="font-size: 25px;" th:text="${auction.name}"> </h2>

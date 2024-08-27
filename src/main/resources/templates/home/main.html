@@ -197,7 +197,7 @@
                     <hr>
                     <div class="bestArtist-info-description md:text-xl text-white mt-2 hidden sm:block" th:text="${topProduct.description}">설명</div>
                 </div>
-                <a th:href="@{|/product/detail/${topProduct.id}|}" class="artist-image w-full max-w-xs md:max-w-xs rounded-lg">
+                <a th:href="@{|/product/detail/${topProduct.id}|}" class="artist-image w-full max-w-xs md:max-w-xs rounded-lg flex items-center justify-center">
                     <img th:src="@{${topProduct.thumbnailImg}}" alt="이미지 1" class="w-full rounded-lg">
                 </a>
             </div>
