@@ -249,9 +249,6 @@ public class ArtistController {
 
         Member member = this.memberService.getCurrentMember();
 
-        // 관리자 승인 여부를 확인하여 플래그 설정
-        boolean isApproved = member.getArtistApplicationStatus().equals("APPROVED");
-
         // Artist를 생성하고, artistAdds를 함께 처리
         Artist artist = this.artistService.create(
                 thumbnail,
