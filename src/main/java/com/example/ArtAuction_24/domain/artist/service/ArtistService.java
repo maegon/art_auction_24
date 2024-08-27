@@ -96,8 +96,8 @@ public class ArtistService {
         member.setProofSubmitted(false);
         memberRepository.save(member);
     }
-
     public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds) {
+
         String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
@@ -461,14 +461,39 @@ public class ArtistService {
         artistRepository.save(artist);
     }
 
+    public List<Artist> getAllArtists() {
+        return artistRepository.findAll();
+    }
 
+    public void favoriteArtist(Member member, Integer artistId) {
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid artist Id:" + artistId));
+        member.getFavoriteArtists().add(artist);
+        memberRepository.save(member);
+    }
 
+    public boolean toggleFavoriteArtist(Member member, Integer artistId) {
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new RuntimeException("Artist not found"));
+
+        if (member.getFavoriteArtists().contains(artist)) {
+            member.getFavoriteArtists().remove(artist); // 제거
+            memberRepository.save(member);
+            return false; // 제거됨
+        } else {
+            member.getFavoriteArtists().add(artist); // 추가
+            memberRepository.save(member);
+            return true; // 추가됨
+        }
+    }
+
+    public Artist getArtistById(Long artistId) {
+        return artistRepository.findById(Math.toIntExact(artistId))
+                .orElseThrow(() -> new RuntimeException("Artist not found with ID: " + artistId));
+    }
 
     public Optional<Artist> getArtistByMember(Member member) {
         return artistRepository.findByAuthor(member);
     }
 
-
-
 }
-

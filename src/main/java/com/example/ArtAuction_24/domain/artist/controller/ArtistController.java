@@ -9,11 +9,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +62,6 @@ public class ArtistController {
         if (member.isProofSubmitted()) {
             return "redirect:/artist/uploaded";
         }
-
         return "artist/termsForm";
     }
 
@@ -70,7 +74,6 @@ public class ArtistController {
             @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
-        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
             model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
             return "artist/termsForm";
@@ -173,8 +176,17 @@ public class ArtistController {
     public String rejectProof(@PathVariable("id") Long memberId) {
         artistService.rejectMember(memberId);
         return "redirect:/artist/pending-approval";
+
     }
 
+    @GetMapping("/list")
+    public String showArtistList(Model model, Principal principal) {
+        List<Artist> artists = artistService.getAllArtists();
+        Member currentMember = memberService.getCurrentMember();
+        model.addAttribute("artists", artists);
+        model.addAttribute("member", currentMember);
+        return "artist/artistList";
+    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -184,7 +196,6 @@ public class ArtistController {
         if (!member.isApprovedArtist()) {
             return "redirect:/artist/uploaded";
         }
-
         // 현재 로그인된 사용자가 이미 작가인지 확인
         Optional<Artist> existingArtist = artistService.getArtistByMember(member);
 
@@ -193,7 +204,6 @@ public class ArtistController {
             model.addAttribute("errorMessage", "이미 작가로 등록되어 있습니다.");
             return "artist/error"; // 또는 다른 적절한 페이지로 리디렉션
         }
-
         model.addAttribute("artistForm", new ArtistForm());
         return "artist/artistForm";
     }
@@ -215,6 +225,9 @@ public class ArtistController {
         }
 
         Member member = this.memberService.getCurrentMember();
+
+        // 관리자 승인 여부를 확인하여 플래그 설정
+        boolean isApproved = member.getArtistApplicationStatus().equals("APPROVED");
 
         // Artist를 생성하고, artistAdds를 함께 처리
         Artist artist = this.artistService.create(
@@ -333,5 +346,28 @@ public class ArtistController {
         this.artistService.delete(artist);
 
         return "redirect:/";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/favorite/{id}")
+    public ResponseEntity<String> favoriteArtist(@PathVariable("id") Integer artistId) {
+        Member member = memberService.getCurrentMember();
+
+        // 즐겨찾기 추가 또는 제거
+        boolean isFavorited = artistService.toggleFavoriteArtist(member, artistId);
+
+        // 결과에 따라 상태 메시지 반환
+        return ResponseEntity.ok(isFavorited ? "Added" : "Removed");
+    }
+
+
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/favorites")
+    public String showFavoriteArtists(Model model) {
+        Member member = memberService.getCurrentMember();
+        Set<Artist> favoriteArtists = member.getFavoriteArtists();
+        model.addAttribute("favoriteArtists", favoriteArtists);
+        return "artist/favoriteArtists";
     }
 }

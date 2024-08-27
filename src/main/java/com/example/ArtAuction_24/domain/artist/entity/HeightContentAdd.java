@@ -32,3 +32,4 @@ public class HeightContentAdd extends ContentAddBase {
         return content;
     }
 }
+

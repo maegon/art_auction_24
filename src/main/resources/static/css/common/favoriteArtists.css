@@ -1,0 +1,146 @@
+.favoriteArtistContainer {
+    margin-left: 300px;
+    margin-right: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.favoriteArtistForm {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #9E9E9E;
+    margin-bottom: 20px; /* 아래 요소와 간격 추가 */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.favoriteArtist-A {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.favoriteForm {
+    font-size: 25px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.artistList-bnt {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.artistListImg {
+    margin-top: 10px;
+    width: 180px;
+    height: 180px;
+}
+
+.artist-list-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;  /* 원형으로 설정 */
+}
+
+.korName-artistList {
+    font-size: 25px;
+}
+
+.btn-favoriteList {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: gray; /* 기본 색상 */
+}
+
+.btn-favoriteList-active {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: gold; /* 즐겨찾기된 상태의 색상 */
+}
+
+/* 반응형 미디어 쿼리 추가 */
+@media screen and (max-width: 1024px) {
+    .favoriteArtistContainer {
+        margin-left: 100px;
+        margin-right: 100px;
+        justify-content: center;
+    }
+
+    .favoriteArtistForm {
+        width: 250px;
+        height: 250px;
+    }
+
+    .favoriteForm {
+        font-size: 22px;
+    }
+
+    .korName-artistList {
+        font-size: 22px;
+    }
+
+    .artist-list-img, .artistListImg {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .favoriteArtistContainer {
+        margin-left: 50px;
+        margin-right: 50px;
+        justify-content: center;
+    }
+
+    .favoriteArtistForm {
+        width: 200px;
+        height: 200px;
+    }
+
+    .favoriteForm {
+        font-size: 20px;
+    }
+
+    .korName-artistList {
+        font-size: 20px;
+    }
+
+    .artist-list-img, .artistListImg {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .favoriteArtistContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+        justify-content: center;
+    }
+
+    .favoriteArtistForm {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .favoriteForm {
+        font-size: 18px;
+        margin-left: 0;
+    }
+
+    .korName-artistList {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .artist-list-img, .artistListImg {
+        width: 100px;
+        height: 100px;
+    }
+}

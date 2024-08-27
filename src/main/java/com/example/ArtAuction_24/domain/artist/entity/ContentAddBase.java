@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+
 @Setter
 @SuperBuilder
 @Getter
@@ -17,5 +18,9 @@ public abstract class ContentAddBase {
     private String content;
 
     public abstract String getContent();
+
+    public void setContent(String newContent) {
+        this.content = newContent;
+    }
 
 }
