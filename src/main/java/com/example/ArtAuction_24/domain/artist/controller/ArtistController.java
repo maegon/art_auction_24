@@ -192,7 +192,7 @@ public class ArtistController {
     }
 
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/create")
     public String showCreateForm(Model model, Principal principal) {
         Member member = memberService.getCurrentMember();
@@ -212,7 +212,7 @@ public class ArtistController {
         return "artist/artistForm";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/create")
     public String create(
             @ModelAttribute @Valid ArtistForm artistForm,
@@ -244,7 +244,7 @@ public class ArtistController {
     }
 
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/modify/{id}")
     public String artistModify(Model model, @PathVariable("id") Integer id, Principal principal) {
         Artist artist = artistService.getArtist(id);
@@ -296,7 +296,7 @@ public class ArtistController {
         return "artist/profileForm";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/modify/{id}")
     public String artistModify(
             @ModelAttribute @Valid ArtistForm artistForm,
@@ -335,7 +335,7 @@ public class ArtistController {
         return "redirect:/artist/profile/" + id;
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/delete/{id}")
     public String artistDelete(Principal principal, @PathVariable("id") Integer id) {
         Artist artist = this.artistService.getArtist(id);

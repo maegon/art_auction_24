@@ -34,7 +34,7 @@
                     <!-- 드롭다운 메뉴 -->
                     <div id="profileDropdown" class="dropdown-content" style="display: none;">
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/admin/auction/list}">경매 내역 관리</a> <!-- 재원 추가 -->
-                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" href="#">신청된 경매 작품 확인</a> <!-- 재원 추가 -->
+                        <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/product/auctionList}">신청된 경매 작품 확인</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/auction/create}">경매 추가</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/admin/member/list}">회원 권한 설정</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAuthority('ADMIN')" class="header_adminPage" th:href="@{/artist/pending-approval}">작가 신청 내역</a> <!-- 재원 추가 -->
@@ -51,8 +51,7 @@
                         <a sec:authorize="hasAuthority('MEMBER')" class="header_artistApplicant" th:href="@{/artist/terms}">작가 신청</a> <!-- 재원 추가 -->
                         <a sec:authorize="hasAnyAuthority('MEMBER', 'ARTIST')" class="header_artistApplicant" th:href="@{/artist/list}">작가 목록</a>
                         <a sec:authorize="hasAuthority('MEMBER')" class="header_artistApplicant" th:href="@{/artist/favorites}">내 작가 목록</a>
-                        <a sec:authorize="!hasAuthority('ADMIN')" class="header_qna" th:href="@{/question/list}">문의하기
-                            <span sec:authorize="hasAuthority('ARTIST')" class="header_applicantAuction"> 및 경매 신청</span></a>
+                        <a sec:authorize="!hasAuthority('ADMIN')" class="header_qna" th:href="@{/question/list}">문의하기</a>
                         <hr>
                         <a class="header_logout" th:href="@{/member/logout}">로그아웃</a>
                     </div>

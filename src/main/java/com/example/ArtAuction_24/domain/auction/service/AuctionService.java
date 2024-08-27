@@ -41,6 +41,7 @@ public class AuctionService {
     private final NotificationService notificationService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
+
     public Auction create(String name, LocalDateTime startDate, LocalDateTime endDate, List<Long> productIds) {
         // 중복 경매 이름 체크
         if (auctionRepository.existsByName(name)) {
