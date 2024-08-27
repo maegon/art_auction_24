@@ -78,7 +78,7 @@ public class QuestionController {
         }
 
 
-        return "redirect:/question/list";
+        return "redirect:/member/myPage?section=question-list";
     }
 
 
