@@ -618,84 +618,32 @@
 
 
 <script>
-    // Define global JavaScript variables with Thymeleaf expressions
-    var memberNickname = '[[${member.nickname}]]';
-    var memberId = '[[${member.id}]]';
-    var memberMobileNumber = /*[[${member.phoneNumber}]]*/ 'default_mobile_number';
-    var memberLandlineNumber = 'default_landline_number'; // Update as needed
-
-    // Function to initialize ChannelIO
-    (function() {
-        var w = window;
-        if (w.ChannelIO) {
-            return w.console.error("ChannelIO script included twice.");
-        }
-        var ch = function() {
-            ch.c(arguments);
-        };
-        ch.q = [];
-        ch.c = function(args) {
-            ch.q.push(args);
-        };
-        w.ChannelIO = ch;
-        function l() {
-            if (w.ChannelIOInitialized) {
-                return;
-            }
-            w.ChannelIOInitialized = true;
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
-            var x = document.getElementsByTagName("script")[0];
-            if (x.parentNode) {
-                x.parentNode.insertBefore(s, x);
-            }
-        }
-        if (document.readyState === "complete") {
-            l();
-        } else {
-            w.addEventListener("DOMContentLoaded", l);
-            w.addEventListener("load", l);
-        }
-    })();
-
-    // Initialize ChannelIO with dynamic data
-    ChannelIO('boot', {
-        "pluginKey": "72ea21d5-9db0-4a66-ac19-1aa0eb72e588",
-        "memberId": memberId, // fill user's member id
-        "profile": { // fill user's profile
-            "name": memberNickname, // fill user's name
-            "mobileNumber": memberMobileNumber, // fill user's mobile number
-            "landlineNumber": memberLandlineNumber, // fill user's landline number
-            "CUSTOM_VALUE_1": "VALUE_1", // custom property
-            "CUSTOM_VALUE_2": "VALUE_2" // custom property
-        }
-    });
-</script>
-
-<script>
     document.getElementById('info-update').addEventListener('click', function() {
+    event.preventDefault(); // 기본 동작 방지
         toggleVisibility('info-form');
         setActiveState('info-update');
     });
 
     document.getElementById('question-list-toggle').addEventListener('click', function() {
+    event.preventDefault(); // 기본 동작 방지
         toggleVisibility('question-list');
         setActiveState('question-list-toggle');
     });
 
     document.getElementById('wish-list-toggle').addEventListener('click', function() {
+    event.preventDefault(); // 기본 동작 방지
         toggleVisibility('wish-list');
         setActiveState('wish-list-toggle');
     });
 
     document.getElementById('bid-list-toggle').addEventListener('click', function() {
+    event.preventDefault(); // 기본 동작 방지
         toggleVisibility('bid-list');
         setActiveState('bid-list-toggle');
     });
 
     document.getElementById('order-list-toggle').addEventListener('click', function() { // 새로 추가된 부분
+    event.preventDefault(); // 기본 동작 방지
         toggleVisibility('order-list');
         setActiveState('order-list-toggle');
     });
@@ -747,10 +695,20 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        toggleVisibility('info-form');
-        setActiveState('info-update');
+        const urlParams = new URLSearchParams(window.location.search);
+        const section = urlParams.get('section');
+
+        if (section && document.getElementById(section)) {
+            toggleVisibility(section);
+            setActiveState(section + '-toggle');
+        } else {
+            // 기본적으로 정보수정 폼을 표시
+            toggleVisibility('info-form');
+            setActiveState('info-update');
+        }
     });
 </script>
+
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

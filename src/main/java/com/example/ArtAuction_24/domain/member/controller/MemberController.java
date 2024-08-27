@@ -211,7 +211,7 @@ public class MemberController {
         Collections.reverse(likeProductList);
         model.addAttribute("likeProductList", likeProductList);
 
-        List<Question> questionList = questionService.findAll();
+        List<Question> questionList = questionService.findByMember(member);
         Collections.reverse(questionList);
         model.addAttribute("questionList", questionList);
 

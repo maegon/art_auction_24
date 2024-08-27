@@ -1,19 +1,19 @@
 /* 공통 스타일 */
-.question-manage-sidebar {
+.admin-manage-sidebar {
     background-color: #ffffff;
     padding: 16px;
     z-index: 10;
 }
 
-.question-manage-sidebar ul {
+.admin-manage-sidebar ul {
     padding: 0;
 }
 
-.question-manage-sidebar li {
+.admin-manage-sidebar li {
     margin-bottom: 24px;
 }
 
-.question-manage-sidebar .menu-header {
+.admin-manage-sidebar .menu-header {
     font-size: 2rem;
     margin-bottom: 16px;
     text-align: center;
@@ -21,7 +21,7 @@
     color: #4a4a4a;
 }
 
-.question-manage-sidebar .mg_menu_btn {
+.admin-manage-sidebar .mg_menu_btn {
     font-size: 1.125rem;
     text-align: right;
     color: #2563eb;
@@ -29,7 +29,7 @@
     transition: color 0.15s ease-in-out;
 }
 
-.question-manage-sidebar .mg_menu_btn:hover {
+.admin-manage-sidebar .mg_menu_btn:hover {
     color: #1e40af;
 }
 
@@ -81,7 +81,7 @@
 }
 /* 모바일 스타일 */
 @media (max-width: 1024px) {
-    .question-manage-sidebar {
+    .admin-manage-sidebar {
         position: fixed;
         top: 0;
         left: 0;
@@ -94,21 +94,21 @@
         transition: transform 0.3s ease;
         background-color: black;
     }
-    .question-manage-sidebar .mg_menu_btn {
+    .admin-manage-sidebar .mg_menu_btn {
 
         color: white;
     }
 
-    .question-manage-sidebar.active {
+    .admin-manage-sidebar.active {
         transform: translateY(0);
     }
 
-    .question-manage-sidebar li {
+    .admin-manage-sidebar li {
         margin-bottom: 0;
         margin-right: 16px;
     }
 
-    .question-manage-sidebar .menu-header {
+    .admin-manage-sidebar .menu-header {
         display: none;
     }
 
@@ -124,7 +124,7 @@
         margin-bottom: 4px;
     }
 
-    .question-manage-menu-toggle-btn {
+    .admin-manage-menu-toggle-btn {
         position: fixed;
         top: 22px;
         left: 22px;
@@ -189,7 +189,7 @@
     .question-manage-mobile-cards {
         display: none;
     }
-    .question-manage-menu-toggle-btn {
+    .admin-manage-menu-toggle-btn {
         display: none;
     }
 }

@@ -2,6 +2,7 @@ package com.example.ArtAuction_24.domain.question.service;
 
 
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.product.entity.LikeProduct;
 import com.example.ArtAuction_24.domain.question.entity.Question;
 import com.example.ArtAuction_24.domain.question.entity.QuestionType;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -96,6 +98,7 @@ public class QuestionService {
         return questionRepository.findAll(sortedPageable);
     }
 
+
     @Transactional
     public void markQuestionAsAnswered(Long questionId) {
         Question question = questionRepository.findById(questionId)
@@ -113,6 +116,7 @@ public class QuestionService {
     }
 
 
-
-
+    public List<Question> findByMember(Member member) {
+        return questionRepository.findByMember(member);
+    }
 }
