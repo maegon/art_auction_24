@@ -4,6 +4,7 @@ import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,7 @@ public class ArtistController {
 
         return "artist/profile";
     }
+
 
 
     @GetMapping("/terms")
@@ -179,6 +181,7 @@ public class ArtistController {
 
     }
 
+
     @GetMapping("/list")
     public String showArtistList(Model model, Principal principal) {
         List<Artist> artists = artistService.getAllArtists();
@@ -187,6 +190,7 @@ public class ArtistController {
         model.addAttribute("member", currentMember);
         return "artist/artistList";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")

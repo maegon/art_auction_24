@@ -1,7 +1,9 @@
-<html layout:decorate="~{layout/layout}">
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{layout/layout}">
 <head>
     <title th:text="${artist.korName} + '의 작품들'">작가 작품들</title>
 </head>
+<body>
 <div layout:fragment="content">
     <div class="productList-container mx-auto px-6 lg:px-[300px] min-h-[600px]">
         <div class="bg-white" style="background-image: url('/image/작품페이지배너.png');">
@@ -21,11 +23,11 @@
                     <div class="flex items-center justify-between">
                         <span th:text="${product.title}" class="text-left font-bold text-lg"></span>
                     </div>
-                    <span class="flex text-xs mt-3">
-                        <span th:text="${product.dimensions}" class="text-gray-500"></span>
-                        <span class="text-gray-500 mx-1">|</span>
-                        <span th:text="${product.medium}" class="text-gray-500"></span>
-                    </span>
+<!--                    <span class="flex text-xs mt-3">-->
+<!--                            <span th:text="${product.dimensions}" class="text-gray-500"></span>-->
+<!--                            <span class="text-gray-500 mx-1">|</span>-->
+<!--                            <span th:text="${product.medium}" class="text-gray-500"></span>-->
+<!--                        </span>-->
                     <hr class="my-2">
                     <span class="text-gray-500 text-sm">현재가</span>
                     <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-black text-sm"></span>
@@ -39,4 +41,5 @@
         </div>
     </div>
 </div>
+</body>
 </html>

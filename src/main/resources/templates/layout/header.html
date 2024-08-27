@@ -49,6 +49,8 @@
 
                         <a sec:authorize="hasAuthority('MEMBER')" class="header_recharge" th:href="@{/recharge/recharge}">충전 하기</a> <!-- 재원 수정 -->
                         <a sec:authorize="hasAuthority('MEMBER')" class="header_artistApplicant" th:href="@{/artist/terms}">작가 신청</a> <!-- 재원 추가 -->
+                        <a sec:authorize="hasAnyAuthority('MEMBER', 'ARTIST')" class="header_artistApplicant" th:href="@{/artist/list}">작가 목록</a>
+                        <a sec:authorize="hasAuthority('MEMBER')" class="header_artistApplicant" th:href="@{/artist/favorites}">내 작가 목록</a>
                         <a sec:authorize="!hasAuthority('ADMIN')" class="header_qna" th:href="@{/question/list}">문의하기
                             <span sec:authorize="hasAuthority('ARTIST')" class="header_applicantAuction"> 및 경매 신청</span></a>
                         <hr>

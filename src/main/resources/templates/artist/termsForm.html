@@ -1,64 +1,63 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout}">
-
+<html lang="en" layout:decorate="~{layout/layout}">
 <head>
     <title>약관 동의</title>
     <script>
         function toggleAllCheckboxes(source) {
-            checkboxes = document.querySelectorAll('.agree-section input[type="checkbox"]');
-            for (var i = 0; i < checkboxes.length; i++) {
+            const checkboxes = document.querySelectorAll('.agree-section input[type="checkbox"]');
+            for (let i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = source.checked;
             }
         }
     </script>
 </head>
-
 <body>
-<div layout:fragment="content">
-    <div class="termsContainer_1">
-        <div class="termsContainer_2">
+<div layout:fragment="content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="termsContainer_1 lg:mx-72">
+        <div class="termsContainer_2 mt-16">
             <form th:action="@{/artist/terms}" method="post" enctype="multipart/form-data">
-                <div class="terms-content">
-                    <h1>약관 동의</h1>
-<!--                    <hr>-->
-                    <div class="agree-section" id="agree_all_section">
-                        <input type="checkbox" id="agree_all" name="agree_all" onclick="toggleAllCheckboxes(this)">
-                        <label for="agree_all">전체동의</label>
+                <div class="terms-content mb-5">
+                    <h1 class="text-3xl font-bold text-center mb-4">약관 동의</h1>
+                    <div class="agree-section flex items-center justify-between text-xl mb-2" id="agree_all_section">
+                        <input type="checkbox" id="agree_all" name="agree_all" onclick="toggleAllCheckboxes(this)" class="mr-2 transform scale-150">
+                        <label for="agree_all" class="flex-grow text-2xl">전체동의</label>
                     </div>
-                    <div class="termsText_1">
+                    <div class="termsText_1 text-gray-500 mb-4 text-sm pl-4">
                         <span class="termsText_2">전체 동의는 필수 및 선택정보에 동의도 포함되어 있으며, 개별적으로 동의를 선택하실 수 있습니다. 선택 항목에 대한 동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.</span>
                     </div>
-                    <hr class="termsLine">
-                    <div class="agree-section-container">
-                        <div class="agree-section">
-                            <input type="checkbox" id="agree_personal_info" name="agree_personal_info" required>
-                            <label for="agree_personal_info">[필수] 개인정보 수집이용 동의</label>
-                            <a class="target" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
+                    <hr class="termsLine border-t border-gray-300 mb-6">
+                    <div class="agree-section-container border border-gray-400 p-5">
+                        <div class="agree-section flex items-center justify-between mb-4">
+                            <input type="checkbox" id="agree_personal_info" name="agree_personal_info" required class="mr-2 transform scale-150">
+                            <label for="agree_personal_info" class="flex-grow text-lg">[필수] 개인정보 수집이용 동의</label>
+                            <a class="text-gray-500 font-bold" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
                         </div>
 
-                        <div class="agree-section">
-                            <input type="checkbox" id="agree_service" name="agree_service" required>
-                            <label for="agree_service">[필수] 서비스 이용약관 동의</label>
-                            <a class="target" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
+                        <div class="agree-section flex items-center justify-between mb-4">
+                            <input type="checkbox" id="agree_service" name="agree_service" required class="mr-2 transform scale-150">
+                            <label for="agree_service" class="flex-grow text-lg">[필수] 서비스 이용약관 동의</label>
+                            <a class="text-gray-500 font-bold" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
                         </div>
-                        <div class="agree-section">
-                            <input type="checkbox" id="agree_age" name="agree_age" required>
-                            <label for="agree_age">[필수] 만 14세 이상입니다.</label>
-                            <a class="target" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
+
+                        <div class="agree-section flex items-center justify-between mb-4">
+                            <input type="checkbox" id="agree_age" name="agree_age" required class="mr-2 transform scale-150">
+                            <label for="agree_age" class="flex-grow text-lg">[필수] 만 14세 이상입니다.</label>
+                            <a class="text-gray-500 font-bold" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
                         </div>
-                        <div class="agree-section">
-                            <input type="checkbox" id="agree_location" name="agree_location">
-                            <label for="agree_location">[선택] 마케팅 정보 수신동의</label>
-                            <a class="target" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
+
+                        <div class="agree-section flex items-center justify-between">
+                            <input type="checkbox" id="agree_location" name="agree_location" class="mr-2 transform scale-150">
+                            <label for="agree_location" class="flex-grow text-lg">[선택] 마케팅 정보 수신동의</label>
+                            <a class="text-gray-500 font-bold" href="/pdf/ArtAuction이용약관.pdf" target="_blank">></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="terms-form-group">
-                    <button type="submit" class="btn btn-primary">동의하고 계속 진행</button>
+                <div class="terms-form-group flex justify-center text-center mt-12 mb-12">
+                    <button type="submit" class="btn-primary bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800">동의하고 계속 진행</button>
                 </div>
 
-                <div th:if="${errorMessage}" class="error-message">
+                <div th:if="${errorMessage}" class="error-message text-red-500 text-center mt-4">
                     <p th:text="${errorMessage}"></p>
                 </div>
             </form>

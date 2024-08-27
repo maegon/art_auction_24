@@ -8,6 +8,7 @@ import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.Product;
+import com.example.ArtAuction_24.domain.product.form.ProductForm;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -49,7 +51,6 @@ public class AuctionController {
         model.addAttribute("kw", keyword);
         model.addAttribute("sort", sort);
         model.addAttribute("auctionName", auctionName);
-
         return "auction/list";
     }
 

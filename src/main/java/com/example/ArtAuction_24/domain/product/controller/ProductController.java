@@ -3,6 +3,8 @@ package com.example.ArtAuction_24.domain.product.controller;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
+
+import com.example.ArtAuction_24.domain.auction.form.AuctionForm;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
@@ -148,7 +150,6 @@ public class ProductController {
         Artist artist = product.getArtist(); // product에서 artist 정보 가져오기
         model.addAttribute("artist", artist);
 
-
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
 
         // 특정 제품의 가장 최신 경매 상품 조회
@@ -203,9 +204,6 @@ public class ProductController {
         return "product/detail";
     }
 
-
-
-
     @PostMapping("/like")
     public String likeProduct(@RequestParam("productId") Long productId,
                               @RequestParam("memberId") Long memberId,
@@ -234,7 +232,4 @@ public class ProductController {
         }
         return "redirect:/product/detail/" + bidId; // 적절히 리다이렉트 URL을 수정
     }
-
-
-
 }

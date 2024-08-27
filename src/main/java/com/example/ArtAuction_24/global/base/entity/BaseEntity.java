@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.global.base.entity;
 
+import com.nimbusds.oauth2.sdk.ResourceOwnerPasswordCredentialsGrant;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -32,4 +33,6 @@ public class BaseEntity {
     private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime modifyDate;
+
+
 }
