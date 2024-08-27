@@ -225,7 +225,7 @@ public class ArtistController {
 
         if (existingArtist.isPresent()) {
             // 이미 작가로 등록되어 있는 경우
-            model.addAttribute("errorMessage", "이미 작가로 등록되어 있습니다.");
+            model.addAttribute("errorMessage", "이미 작가프로필이 등록되어 있습니다.");
             return "artist/error"; // 또는 다른 적절한 페이지로 리디렉션
         }
         model.addAttribute("artistForm", new ArtistForm());

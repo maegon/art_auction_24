@@ -15,16 +15,3 @@
 
 
 /*위로가기 버튼 end*/
-/*paint scroll start*/
-.btn-scroll_paint {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-
-.btn-scroll_paint.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*paint scroll end*/

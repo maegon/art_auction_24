@@ -78,33 +78,6 @@
                     </div>
                 </li>
             </ul>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-4">
-                <li th:each="product : ${products}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item">
-                    <a th:href="@{|/product/detail/${product.id}|}"
-                       class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
-                        <img class="object-contain object-center w/full h/full transition-transform duration-500"
-                             th:src="@{|/${product.thumbnailImg}|}"
-                             alt="이미지가 존재하지 않습니다.">
-                    </a>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <div class="flex items-center justify-between">
-                            <span th:text="${product.title}" class="text-left font-bold text-lg"></span>
-                        </div>
-                        <div class="text-gray-500 text-sm mt-2">
-                            <span th:text="${product.artist.korName}">작가 이름</span>
-                        </div>
-                        <div class="text-gray-500 text-sm mt-2">
-                            시작일:<span th:text="${product.auctionStartDate}">시작일</span>
-                        </div>
-                        <div class="text-gray-500 text-sm mt-2">
-                            마감일:<span th:text="${product.auctionEndDate}">마감일</span>
-                        </div>
-                        <hr class="my-2">
-                        <span class="text-gray-500 text-sm">현재가</span>
-                        <span th:text="|KRW ${product.startingPrice}|" class="text-black text-sm"></span>
-                    </div>
-                </li>
-            </ul>
         </div>
 
 
