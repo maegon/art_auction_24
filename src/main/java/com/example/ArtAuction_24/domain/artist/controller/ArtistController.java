@@ -8,7 +8,11 @@ import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -63,9 +67,10 @@ public class ArtistController {
             @RequestParam(name = "agree_personal_info", required = false, defaultValue = "false") boolean agreePersonalInfo,
             @RequestParam(name = "agree_service", required = false, defaultValue = "false") boolean agreeService,
             @RequestParam(name = "agree_age", required = false, defaultValue = "false") boolean agreeAge,
-            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation,
+            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
             Model model) {
 
+        // 필수 항목이 동의되지 않은 경우
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
             model.addAttribute("errorMessage", "모든 필수 약관에 동의해야 합니다.");
             return "artist/termsForm";
@@ -169,6 +174,7 @@ public class ArtistController {
         artistService.rejectMember(memberId);
         return "redirect:/artist/pending-approval";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
