@@ -28,9 +28,14 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="artistListContainer">
-        <div class="artistListContainer_1" th:each="artist : ${artists}">
-            <div class="artistListForm">
+    <div class="artistList-Container mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <div class="bg-white" style="background-image: url('/image/작가목록페이지배너.png');">
+            <h1 class="text-2xl font-black text-center py-5 text-black">작가 목록</h1>
+        </div>
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-4" >
+            <div class="border border-black" th:each="artist : ${artists}">
                 <form th:action="@{/artist/favorite/{id}(id=${artist.id})}" method="post" class="favoriteForm">
                     <button class="artistList-bnt" type="submit"
                             th:class="${#lists.contains(member.favoriteArtists, artist)} ? 'btn-favorite-active' : 'btn-favorite'">
@@ -41,7 +46,7 @@
                     <div class="artistListImg">
                         <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-list-img" alt="Thumbnail">
                     </div>
-                    <div class="korName-artistList">
+                    <div class="korName-artistList border-t border-black">
                         <span th:text="${artist.korName}"></span> 작가
                     </div>
                 </a>

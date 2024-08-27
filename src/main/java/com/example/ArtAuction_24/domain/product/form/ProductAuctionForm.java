@@ -25,4 +25,24 @@ public class ProductAuctionForm {
     @NotNull(message = "마감 시간은 필수 항목입니다.")
     private LocalDateTime auctionEndDate;
 
+    public boolean isProductStartDateValid() {
+        if (auctionStartDate == null) {
+            return false;
+        }
+
+        // 현재 시간을 가져오고, 초와 나노초를 0으로 설정하여 분 단위까지만 비교
+        LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
+
+        // startDate가 현재 시각과 같거나 이후인지 확인
+        return !auctionStartDate.isBefore(now);
+    }
+
+    // 마감 시간이 시작 시간 이후인지 확인하는 유효성 검사
+    public boolean isProductEndDateValid() {
+        if (auctionStartDate == null || auctionEndDate == null) {
+            return false; //
+        }
+        return auctionEndDate.isAfter(auctionStartDate);
+    }
+
 }

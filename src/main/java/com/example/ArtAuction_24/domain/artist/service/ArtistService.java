@@ -413,7 +413,7 @@ public class ArtistService {
 
     public Artist findByMember(Member member) {
         return artistRepository.findByAuthor(member)
-                .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new RuntimeException("해당 회원의 아티스트 정보를 찾을 수 없습니다. 뒤로가기를 눌러 작가 프로필을 만드세요"));
     }
 
     public List<Artist> findByKeyword(String keyword) {

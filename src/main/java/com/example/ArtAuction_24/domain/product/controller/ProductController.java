@@ -260,6 +260,14 @@ public class ProductController {
             BindingResult bindingResult,
             Model model) {
 
+        if (!productAuctionForm.isProductStartDateValid()) {
+            bindingResult.rejectValue("auctionStartDate", "error.auctionStartDate", "시작 시간은 현재 시간과 같거나 이후여야 합니다.");
+        }
+
+        if (!productAuctionForm.isProductEndDateValid()) {
+            bindingResult.rejectValue("auctionEndDate", "error.auctionEndDate", "마감 시간은 시작 시간보다 이후여야 합니다.");
+        }
+
         if (bindingResult.hasErrors()) {
             Product product = productService.findById(productId);
             model.addAttribute("product", product);
