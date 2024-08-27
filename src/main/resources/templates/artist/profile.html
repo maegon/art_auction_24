@@ -103,7 +103,7 @@
                 </div>
                 <div class="textTileForm_test">
                     <span class="title_1">MAJOR WORK</span>
-                    <a th:href="@{|/product/list/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-majorWorkForm">
+                    <a th:href="@{|/product/my-products/${artist.id}|}" class="button-majorWorkForm">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                     <div class="contentAddContainer">
@@ -142,7 +142,7 @@
                 <a th:href="@{|/artist/modify/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}" class="button-modify">
                     수정
                 </a>
-                <span>/</span>
+                <span sec:authorize="isAuthenticated()" th:if="${artist.author != null and #authentication.getPrincipal().getUsername() == artist.author.username}">/</span>
                 <a onclick="return confirm('정말로 작가 폼을 삭제하시겠습니까?');" th:href="@{|/artist/delete/${artist.id}|}" sec:authorize="isAuthenticated()" th:if="${artist.author != null and (#authentication.getPrincipal().getUsername() == artist.author.username or #authentication.getPrincipal().getAuthorities().contains(new org.springframework.security.core.authority.SimpleGrantedAuthority('ROLE_ADMIN')))}" class="button-delete">
                     삭제
                 </a>

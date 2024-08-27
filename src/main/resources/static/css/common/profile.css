@@ -3,82 +3,89 @@
     height: 740px;
     width: 100%;
 }
+
 .basicArtistProfile_1 {
     display: flex;
     flex-direction: column;
     height: 700px;
     width: 50%;
     margin-left: 20px;
-    /*border: 1px solid #9E9E9E;*/
-    /*justify-content: center;*/
     align-items: center;
 }
+
 .artist-img {
-    width: 265px;  /* 동일한 크기 설정 */
-    height: 265px; /* 동일한 크기 설정 */
+    width: 265px;
+    height: 265px;
     display: flex;
     border-radius: 50%;
     margin-top: 80px;
 }
+
 .engName {
     display: inline;
     font-size: 20px;
 }
+
 .korName {
     font-size: 25px;
 }
+
 .line {
     border-left: 2px solid #333;
     height: auto;
 }
+
 .lineInformation {
     margin-left: 8px;
     margin-top: 8px;
 }
+
 .name-group {
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 .birthDateNum {
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 .add {
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 .telNum {
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 .mail-group {
     font-size: 18px;
     margin-bottom: 5px;
 }
-.textArtistProfile{
+
+.textArtistProfile {
     display: flex;
     flex-direction: column;
     height: 700px;
     width: 40%;
     margin-left: 70px;
-    /*border: 1px solid #9E9E9E;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
 }
+
 .textAdd_2 {
     margin-top: 110px;
     height: 560px;
     width: 80%;
-    /*border: 1px solid #9E9E9E;*/
-
 }
+
 .textTileForm_test {
     height: auto;
     width: 100%;
     margin-bottom: 50px;
-    /*border: 1px solid #9E9E9E;*/
     fixed: right;
 }
+
 .title_1 {
     font-size: 30px;
 }
@@ -90,27 +97,33 @@
     flex-direction: row;
     margin-bottom: 20px;
 }
+
 .button-majorWorkForm {
     margin-left: 6px;
     font-size: 25px;
 }
-.button-majorWorkForm: hover {
+
+.button-majorWorkForm:hover {
     color: gray;
 }
+
 .input-group-MW {
     display: flex;
     flex-direction: row;
     font-size: 18px;
     margin-left: 15px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
+
 .input-group-MW > div {
     margin: 0px;
 }
+
 .textTileForm_test .contentAdd {
     font-size: 18px;
 }
 
+/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .artistProfileContainer {
         display: flex;
@@ -165,6 +178,9 @@
     .textTileForm_test {
         margin-bottom: 20px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         text-align: center;
     }
 
@@ -173,14 +189,17 @@
     }
 
     .input-group-MW {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
         align-items: center;
         width: 100%;
+        margin: 0px;
     }
+
 
     .input-group-MW > div,
     .input-group-MW > span {
-        margin: 2px 0;
+        margin: 1px 0;
         text-align: center;
         width: 100%;
     }

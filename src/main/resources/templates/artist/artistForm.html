@@ -59,6 +59,25 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        function formatBirthDate(input) {
+            // 숫자만 입력 받기
+            const value = input.value.replace(/[^0-9]/g, '');
+            let formattedValue = '';
+
+            if (value.length >= 4) {
+                // YYYY-MM-DD 형식으로 포맷팅
+                formattedValue = value.slice(0, 4) + '-' + value.slice(4, 6);
+                if (value.length > 6) {
+                    formattedValue += '-' + value.slice(6, 8);
+                }
+            } else {
+                formattedValue = value;
+            }
+
+            // 입력값을 업데이트
+            input.value = formattedValue;
+        }
     </script>
 </head>
 <body>
@@ -79,17 +98,21 @@
                 </div>
                 <div class="form-groupArt">
                     <label for="engName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;영문 이름</label>
-                    <input type="text" id="engName" class="form-control" th:field="*{engName}">
+                    <input type="text" id="engName" class="form-control" th:field="*{engName}"
+                           pattern="[A-Za-z ]+" title="영문자만 입력 가능합니다.">
                     <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
                 </div>
                 <div class="form-groupArt">
                     <label for="korName" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;한글 이름</label>
-                    <input type="text" id="korName" class="form-control" th:field="*{korName}">
+                    <input type="text" id="korName" class="form-control" th:field="*{korName}"
+                           pattern="[가-힣 ]+" title="한글만 입력 가능합니다.">
                     <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
                 </div>
                 <div class="form-groupArt">
                     <label for="birthDate" class="form-label"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;생년월일</label>
-                    <input type="text" id="birthDate" class="form-control" placeholder="생년월일 8자리를 입력하세요" th:field="*{birthDate}">
+                    <input type="text" id="birthDate" class="form-control" placeholder="생년월일 8자리를 입력하세요"
+                           th:field="*{birthDate}"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                     <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
                 </div>
                 <label for="artistAddsContainer" class="add-form-label">추가 입력</label>

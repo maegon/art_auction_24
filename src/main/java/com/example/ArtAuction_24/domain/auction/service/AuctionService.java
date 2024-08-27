@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.auction.service;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
@@ -162,6 +163,20 @@ public class AuctionService {
     public List<Auction> searchAuctionsByKeywordSorted(String keyword) {
         // 검색어가 포함된 경매 목록을 최신순으로 정렬하여 반환
         return auctionRepository.findByNameContainingIgnoreCase(keyword, Sort.by(Sort.Direction.ASC, "startDate"));
+    }
+
+    public void productCreate(String name, LocalDateTime startDate, LocalDateTime endDate, Double startingPrice, Artist artist, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        Auction auction = new Auction();
+        auction.setName(name);
+        auction.setStartDate(startDate);
+        auction.setEndDate(endDate);
+        auction.setStartingPrice(startingPrice);
+        auction.setProduct(product); // 제품과 경매 연결
+
+        auctionRepository.save(auction);
     }
 }
 

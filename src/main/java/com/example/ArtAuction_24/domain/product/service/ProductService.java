@@ -267,5 +267,8 @@ public class ProductService {
         return auctionProductRepository.findTopByProductIdOrderByAuctionCreateDateDesc(productId);
     }
 
+    public List<Product> findProductsByArtist(Artist artist) {
+        return productRepository.findByArtist(artist);
+    }
 
 }

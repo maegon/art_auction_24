@@ -1,5 +1,6 @@
 package com.example.ArtAuction_24.domain.product.repository;
 
+import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
@@ -83,5 +84,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
           (a IS NULL OR a.status NOT IN ('ACTIVE', 'SCHEDULED'))
     """)
     List<Product> findAvailableProducts();
+
+    List<Product> findByArtist(Artist artist);
     // 관리자가 경매 제품을 선택할때 낙찰자가 존재하는 제품과 이미 경매에 올라가 있는 제품 제외
 }

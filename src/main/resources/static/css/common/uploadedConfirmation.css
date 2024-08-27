@@ -7,6 +7,7 @@
     align-items: center;   /* 수직 가운데 정렬 */
     flex-direction: column;
 }
+
 .approvalRequest-form {
     margin-top: 40px;
     /*border: 1px solid #9E9E9E;*/
@@ -15,23 +16,28 @@
     align-items: center;
     flex-direction: column;
 }
+
 .approvalRequest-text {
     font-size: 25px;
 }
+
 .circle-center {
     display: flex;
     align-items: center;   /* 수직 가운데 정렬 */
     flex-direction: row;
     margin-top: 28px;
 }
+
 .canNotCreateProfile .circle-center_1:first-child .circle {
     border-color: #0099FF; /* 활성화된 동그라미의 테두리 색상 */
     box-shadow: 0px 0px 5px 10px #0099FF;
 }
+
 #circle3 {
     border-color: #0099FF; /* 활성화된 동그라미의 테두리 색상 */
     box-shadow: 0px 0px 5px 10px #0099FF;
 }
+
 .circle-center_1 {
     display: flex;
     align-items: center;
@@ -44,9 +50,11 @@
     margin-right: 20px;
     border:
 }
+
 .circle-center_1 > .circle:nth-child(2) {
     margin-right: 20px;
 }
+
 .circle {
     height: 110px;
     width: 110px;
@@ -58,34 +66,140 @@
     border-color: #CCCCCC; /* 활성화된 동그라미의 테두리 색상 */
     box-shadow: 0px 0px 5px 10px #CCCCCC;
 }
+
 .circle_1 {
     font-size: 25px;
     circle: #000000;
 }
+
 .dot {
     font-size: 13px;
     circle: #666666;
     margin-bottom: 18px;
 }
+
 .circle_2 {
     margin-left: 7px;
 }
+
 .circle_3 {
     margin-left: 7px;
     margin-right: 7px;
 }
+
 .circle-text {
     margin-top: 10px;
     margin-right: 15px;
 }
+
 .approvalRequest-text_1 {
     font-size: 18px;
     margin-top: 50px;
 }
+
 .approvalRequest-text_2 {
     font-size: 18px;
     margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* 반응형을 위한 미디어 쿼리 추가 */
+@media screen and (max-width: 1024px) {
+    .uploadedConfirmation-content {
+        margin-left: 100px;
+        margin-right: 100px;
+        height: auto; /* 높이를 자동으로 조정 */
+    }
+
+    .circle-center {
+        flex-direction: column; /* 동그라미들을 세로로 정렬 */
+    }
+
+    .circle-center_1 {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .dot {
+        margin-top: 10px;
+        font-size: 10px;
+    }
+
+    .circle {
+        height: 90px;
+        width: 90px;
+    }
+
+    .circle_1 {
+        font-size: 20px;
+    }
+
+    .circle-text {
+        font-size: 16px;
+        margin-right: 0;
+    }
+
+    .approvalRequest-text {
+        font-size: 22px;
+    }
+
+    .approvalRequest-text_1,
+    .approvalRequest-text_2 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .uploadedConfirmation-content {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .circle {
+        height: 80px;
+        width: 80px;
+        font-size: 18px;
+    }
+
+    .circle-text {
+        font-size: 14px;
+    }
+
+    .approvalRequest-text {
+        font-size: 20px;
+    }
+
+    .approvalRequest-text_1,
+    .approvalRequest-text_2 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .uploadedConfirmation-content {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .circle {
+        height: 70px;
+        width: 70px;
+        font-size: 16px;
+    }
+
+    .circle-text {
+        font-size: 12px;
+    }
+
+    .approvalRequest-text {
+        font-size: 18px;
+    }
+
+    .approvalRequest-text_1,
+    .approvalRequest-text_2 {
+        font-size: 12px;
+        text-align: center;
+    }
 }

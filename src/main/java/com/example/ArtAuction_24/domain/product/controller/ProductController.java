@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.domain.product.controller;
 
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
+import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -51,6 +53,7 @@ public class ProductController {
     private final MemberService memberService;
     private final BidService bidService;
     private final ArtistService artistService;
+    private final AuctionService auctionService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -93,6 +96,20 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
+    @GetMapping("/my-products/{artistId}")
+    public String viewArtistProducts(@PathVariable("artistId") Long artistId, Model model, Principal principal) {
+        // 해당 작가의 정보를 가져옵니다.
+        Artist artist = artistService.getArtistById(artistId);
+
+        // 작가의 모든 작품을 가져옵니다.
+        List<Product> artistProducts = productService.findProductsByArtist(artist);
+
+        // 모델에 작품 리스트를 추가합니다.
+        model.addAttribute("artistProducts", artistProducts);
+        model.addAttribute("artist", artist);
+        return "product/myProducts";
+    }
+
     @GetMapping("/list")
     public String list(Pageable pageable, Model model,
                        @RequestParam(value = "kw", required = false) String keyword,
@@ -126,6 +143,11 @@ public class ProductController {
         productService.incrementViews(id);
         Product product = productService.getProduct(id);
         model.addAttribute("product", product);
+
+        // 작가 정보 추가
+        Artist artist = product.getArtist(); // product에서 artist 정보 가져오기
+        model.addAttribute("artist", artist);
+
 
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
 
@@ -162,6 +184,7 @@ public class ProductController {
                 Optional<Member> optionalMember = memberService.findByUsername(username);
                 if (optionalMember.isPresent()) {
                     Member member = optionalMember.get();
+                    model.addAttribute("currentMember", member);
                     Optional<Bid> currentBid = bidService.findCurrentBidByProductAndMember(id, member.getId());
                     model.addAttribute("currentBid", currentBid.orElse(null));
                 }
