@@ -202,6 +202,7 @@ public class ArtistController {
 
     }
 
+
     @GetMapping("/list")
     public String showArtistList(Model model, Principal principal) {
         List<Artist> artists = artistService.getAllArtists();
