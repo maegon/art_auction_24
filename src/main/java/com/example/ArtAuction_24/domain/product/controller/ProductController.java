@@ -4,7 +4,6 @@ package com.example.ArtAuction_24.domain.product.controller;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 
-import com.example.ArtAuction_24.domain.auction.form.AuctionForm;
 import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
@@ -15,6 +14,7 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
 import com.example.ArtAuction_24.domain.product.entity.Product;
+import com.example.ArtAuction_24.domain.product.form.ProductAuctionForm;
 import com.example.ArtAuction_24.domain.product.form.ProductForm;
 import com.example.ArtAuction_24.domain.product.service.AuctionProductService;
 import com.example.ArtAuction_24.domain.product.service.ProductService;
@@ -231,5 +231,85 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("errorMessage", "입찰 취소에 실패했습니다.");
         }
         return "redirect:/product/detail/" + bidId; // 적절히 리다이렉트 URL을 수정
+    }
+
+    @PreAuthorize("hasAuthority('ARTIST')")
+    @GetMapping("/productCreate/{productId}")
+    public String productCreateForm(@PathVariable("productId") Long productId, ProductAuctionForm productAuctionForm, Model model) {
+        Product product = productService.findById(productId);
+
+        Member member = this.memberService.getCurrentMember();
+        Artist artist = this.artistService.findByMember(member);
+        if (!product.getArtist().getAuthor().getUsername().equals(member.getUsername())) {
+            return "redirect:/product/list";
+        }
+
+        productAuctionForm.setTitle(product.getTitle());
+        productAuctionForm.setAuctionStartDate(product.getAuctionStartDate());
+        productAuctionForm.setAuctionEndDate(product.getAuctionEndDate());
+
+        model.addAttribute("product", product);
+        return "product/productAuctionForm";
+    }
+
+    @PreAuthorize("hasAuthority('ARTIST')")
+    @PostMapping("/productCreate/{productId}")
+    public String productCreate(
+            @PathVariable("productId") Long productId,
+            @Valid ProductAuctionForm productAuctionForm,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            Product product = productService.findById(productId);
+            model.addAttribute("product", product);
+            return "product/productAuctionForm";
+        }
+
+        Member member = memberService.getCurrentMember();
+        Artist artist = artistService.findByMember(member);
+
+        // 제품 생성 또는 업데이트 로직 호출
+        productService.productCreateOrUpdate(
+                productAuctionForm.getTitle(),
+                productAuctionForm.getAuctionStartDate(),
+                productAuctionForm.getAuctionEndDate(),
+                artist,
+                productId
+        );
+
+        return "redirect:/product/auctionList";
+    }
+
+    // 경매 신청 목록을 보여주는 페이지
+    @GetMapping("/auctionList")
+    public String auctionList(Model model) {
+        List<Product> products = productService.getAuctionedProductsPendingApproval();
+        model.addAttribute("products", products);
+        return "product/auctionList";
+    }
+
+    // 관리자 승인 메서드
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/approve/{productId}")
+    public String approveProduct(@PathVariable("productId") Long productId) {
+        productService.approveProduct(productId);
+        return "redirect:/product/auctionList";
+    }
+
+    // 관리자 거절 메서드
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/reject/{productId}")
+    public String rejectProduct(@PathVariable("productId") Long productId) {
+        productService.rejectProduct(productId);
+        return "redirect:/product/auctionList";
+    }
+
+    // 승인된 제품들을 보여주는 페이지
+    @GetMapping("/productAuctionList")
+    public String productAuctionList(Model model) {
+        List<Product> approvedProducts = productService.getApprovedProducts();
+        model.addAttribute("products", approvedProducts);
+        return "auction/list";
     }
 }

@@ -3,6 +3,7 @@ package com.example.ArtAuction_24.domain.product.service;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
+import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.product.entity.AuctionProduct;
@@ -11,6 +12,7 @@ import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.domain.product.repository.AuctionProductRepository;
 import com.example.ArtAuction_24.domain.product.repository.LikeProductRepository;
 import com.example.ArtAuction_24.domain.product.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final AuctionProductRepository auctionProductRepository;
+    private final AuctionRepository auctionRepository;
     private final MemberRepository memberRepository;
     private final LikeProductRepository likeProductRepository;
 
@@ -269,6 +272,49 @@ public class ProductService {
 
     public List<Product> findProductsByArtist(Artist artist) {
         return productRepository.findByArtist(artist);
+    }
+
+    // 승인 대기 중인 경매 신청된 제품을 가져오는 메서드
+    public List<Product> getAuctionedProductsPendingApproval() {
+        return productRepository.findByAuctionedTrueAndApprovedFalse();
+    }
+
+    // 승인된 경매 제품을 가져오는 메서드
+    public List<Product> getApprovedProducts() {
+        return productRepository.findByAuctionedTrueAndApprovedTrue();
+    }
+
+    public void productCreateOrUpdate(String title, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate, Artist artist, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+
+        product.setTitle(title);
+        product.setAuctionStartDate(auctionStartDate);
+        product.setAuctionEndDate(auctionEndDate);
+        product.setArtist(artist);
+        product.setAuctioned(true); // 경매 신청 상태로 변경
+
+        // 만약 승인 여부를 관리하려면 아래 코드 추가
+        product.setApproved(false); // 기본값으로 비승인 상태로 설정
+
+        productRepository.save(product);
+    }
+
+    // 승인,거절
+    @Transactional
+    public void approveProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+        product.setApproved(true);
+        productRepository.save(product);
+    }
+
+    @Transactional
+    public void rejectProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+        product.setApproved(false);
+        productRepository.save(product);
     }
 
 }

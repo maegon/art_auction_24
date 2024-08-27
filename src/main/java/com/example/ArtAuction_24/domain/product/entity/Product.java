@@ -38,6 +38,7 @@ public class Product extends BaseEntity {
     private BigDecimal startingPrice; //시작 가격
     private BigDecimal currentBid; // 현재 입찰가
     private LocalDateTime auctionStartDate; // 시작 일
+    private LocalDateTime auctionEndDate;
     private String thumbnailImg; // 그림 이미지
     private String category; // 카테고리
     private int view;
@@ -70,7 +71,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "previous_bid")
     private BigDecimal previousBid; //원래 입찰가 백업
-
+    // auctioned 상태를 설정하는 메소드
 
     @PostLoad
     private void postLoad() { // 단위 표시
@@ -106,8 +107,12 @@ public class Product extends BaseEntity {
                 .orElse(null);
     }
 
-
-
+    @Setter
+    @Getter
+    private boolean auctioned;
+    @Setter
+    @Getter
+    private boolean approved;
 
 
     // 현재 입찰가를 반환하는 메소드
@@ -120,4 +125,5 @@ public class Product extends BaseEntity {
     public boolean isAuctionClosed() {
         return auctions.stream().anyMatch(Auction::isClosed);
     }
+
 }

@@ -3,7 +3,6 @@ package com.example.ArtAuction_24.domain.auction.service;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
 import com.example.ArtAuction_24.domain.auction.entity.Auction;
 import com.example.ArtAuction_24.domain.auction.entity.AuctionStatus;
-
 import com.example.ArtAuction_24.domain.auction.repository.AuctionRepository;
 import com.example.ArtAuction_24.domain.bid.entity.Bid;
 import com.example.ArtAuction_24.domain.bid.service.BidService;
@@ -41,6 +40,7 @@ public class AuctionService {
     private final MemberService memberService;
     private final NotificationService notificationService;
     private static final Logger logger = LoggerFactory.getLogger(AuctionService.class);
+
 
     public Auction create(String name, LocalDateTime startDate, LocalDateTime endDate, List<Long> productIds) {
         // 중복 경매 이름 체크

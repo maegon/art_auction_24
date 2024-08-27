@@ -31,7 +31,11 @@
                     <hr class="my-2">
                     <span class="text-gray-500 text-sm">현재가</span>
                     <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-black text-sm"></span>
+                    <div th:if="${#authentication.getPrincipal().getUsername() == product.artist.author.username}">
+                        <a th:href="@{|/product/productCreate/${product.id}|}" class="btn btn-primary" style="height: 25px; margin-top: 10px;">경매에 올리기</a>
+                    </div>
                 </div>
+
             </li>
         </ul>
 
