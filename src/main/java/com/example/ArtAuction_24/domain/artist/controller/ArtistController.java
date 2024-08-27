@@ -7,6 +7,7 @@ import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,7 +63,7 @@ public class ArtistController {
             @RequestParam(name = "agree_personal_info", required = false, defaultValue = "false") boolean agreePersonalInfo,
             @RequestParam(name = "agree_service", required = false, defaultValue = "false") boolean agreeService,
             @RequestParam(name = "agree_age", required = false, defaultValue = "false") boolean agreeAge,
-            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation, // 선택적 항목
+            @RequestParam(name = "agree_location", required = false) Boolean agreeLocation,
             Model model) {
 
         if (!agreePersonalInfo || !agreeService || !agreeAge) {
@@ -124,7 +125,6 @@ public class ArtistController {
 
         return "redirect:/artist/uploaded";
     }
-
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/uploaded")
