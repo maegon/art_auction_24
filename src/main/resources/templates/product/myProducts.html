@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{layout/layout}">
+<head>
+    <title th:text="${artist.korName} + '의 작품들'">작가 작품들</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="productList-container mx-auto px-6 lg:px-[300px] min-h-[600px]">
+        <div class="bg-white" style="background-image: url('/image/작품페이지배너.png');">
+            <h1 class="text-2xl font-black text-center py-5 text-black" th:text="${artist.korName} + '의 작품들'"></h1>
+        </div>
+
+        <!-- 작품 리스트 -->
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-4">
+            <li th:each="product : ${artistProducts}" class="flex flex-col group bg-white border border-gray-300 overflow-hidden product-item">
+                <a th:href="@{|/product/detail/${product.id}|}"
+                   class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
+                    <img class="object-contain object-center w-full h-full transition-transform duration-500"
+                         th:src="@{|/${product.thumbnailImg}|}"
+                         alt="이미지가 존재하지 않습니다.">
+                </a>
+                <div class="p-4 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between">
+                        <span th:text="${product.title}" class="text-left font-bold text-lg"></span>
+                    </div>
+<!--                    <span class="flex text-xs mt-3">-->
+<!--                            <span th:text="${product.dimensions}" class="text-gray-500"></span>-->
+<!--                            <span class="text-gray-500 mx-1">|</span>-->
+<!--                            <span th:text="${product.medium}" class="text-gray-500"></span>-->
+<!--                        </span>-->
+                    <hr class="my-2">
+                    <span class="text-gray-500 text-sm">현재가</span>
+                    <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-black text-sm"></span>
+                </div>
+            </li>
+        </ul>
+
+        <!-- 작품이 없을 경우 -->
+        <div th:if="${#lists.isEmpty(artistProducts)}" class="flex justify-center items-center h-80">
+            <p class="text-center text-gray-500 text-lg">등록된 작품이 없습니다.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

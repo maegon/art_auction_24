@@ -3,12 +3,18 @@ package com.example.ArtAuction_24.domain.artist.entity;
 
 import com.example.ArtAuction_24.domain.product.entity.Product;
 import com.example.ArtAuction_24.global.base.entity.BaseEntity;
+import com.nimbusds.oauth2.sdk.ResourceOwnerPasswordCredentialsGrant;
 import jakarta.persistence.*;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -87,6 +93,9 @@ public class Artist extends BaseEntity {
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.REMOVE)
     private List<Product> product;
+
+    @ManyToMany(mappedBy = "favoriteArtists")
+    private Set<Member> favoritedBy = new HashSet<>();
 
     public void setThumbnail(String thumbnailRelPath) {
         this.thumbnailImg = thumbnailRelPath;

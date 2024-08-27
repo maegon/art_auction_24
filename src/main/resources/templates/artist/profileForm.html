@@ -188,14 +188,14 @@
             inputGroup.appendChild(titleInput);
 
             const yearInput = document.createElement('input');
-            yearInput.type = 'text';
+            yearInput.type = 'number';
             yearInput.name = 'yearContentAdds[]';
             yearInput.className = 'MWContentAdds';
             yearInput.placeholder = '제작년도';
             inputGroup.appendChild(yearInput);
 
             const widthInput = document.createElement('input');
-            widthInput.type = 'text';
+            widthInput.type = 'number';
             widthInput.name = 'widthContentAdds[]';
             widthInput.className = 'MWContentAdds';
             widthInput.placeholder = '가로 길이';
@@ -207,7 +207,7 @@
             inputGroup.appendChild(spanX);
 
             const heightInput = document.createElement('input');
-            heightInput.type = 'text';
+            heightInput.type = 'number';
             heightInput.name = 'heightContentAdds[]';
             heightInput.className = 'MWContentAdds';
             heightInput.placeholder = '세로 길이';
@@ -436,12 +436,12 @@
                     <input type="file" id="thumbnail" th:field="*{thumbnail}" class="artist-img-Modify" onchange="previewThumbnail(this)" style="display: none;">
                 </div>
                 <div class="engName">
-                    <input type="text" id="engName" class="form-control_text" th:field="*{engName}">
+                    <input type="text" id="engName" class="form-control_text" th:field="*{engName}" pattern="[A-Za-z ]+" title="영문자만 입력 가능합니다.">
                     <div th:if="${#fields.hasErrors('engName')}" th:errors="*{engName}">Incorrect name</div>
                 </div>
                 <div class="information">
                     <div class="korName">
-                        <input type="text" id="korName" class="form-control_text" th:field="*{korName}">
+                        <input type="text" id="korName" class="form-control_text" th:field="*{korName}" pattern="[가-힣 ]+" title="한글만 입력 가능합니다.">
                         <div th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}">Incorrect name</div>
                     </div>
                     <div class="line">
@@ -451,7 +451,7 @@
                                 (<span id="engNameDisplay" th:text="${artist.engName}"></span>)
                             </div>
                             <div class="birthDateNumModify">
-                                <input type="text" id="birthDate" class="form-control_text" th:field="*{birthDate}">
+                                <input type="text" id="birthDate" class="form-control_text" th:field="*{birthDate}" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
                             </div>
                             <div id="artistAddsContainer">

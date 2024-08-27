@@ -7,6 +7,7 @@
     padding-right: 300px;
     padding-left: 300px;
 }
+
 .artist-cc {
     width: 90%;
     height: 99%;
@@ -15,6 +16,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .artistContainer {
     background-color: white;
     height: auto;
@@ -23,27 +25,34 @@
     /*border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
 }
+
 .line {
     width: auto;
     color: #333333;
 }
+
 .artistContainer > h1 {
     font-size: 20px;
 }
+
 .form-groupArt {
     display: flex;
     flex-direction: column;
     margin: 10px;
 }
+
 .form-label {
     width: auto;
 }
+
 .form-control {
     flex: 1; /* 나머지 공간을 차지하도록 설정 */
 }
+
 .mailIcon {
     margin: 10px;
 }
+
 .thumbnail {
     display: flex;
     position: relative;
@@ -76,7 +85,6 @@
     border-radius: 50%;
     width: 150px;  /* 동일한 크기 설정 */
     height: 150px; /* 동일한 크기 설정 */
-
 }
 
 .thumbnail button.iconBT {
@@ -88,6 +96,7 @@
     outline: none; /* 버튼 아웃라인 제거 */
     background: #e9ecef; /* 버튼 배경색 */
 }
+
 .btn-primary-art {
     background-color: #5C5C5C;
     color: white;
@@ -103,6 +112,7 @@
     background-color: #5C5C5C;
     color: white;
 }
+
 .artistAdds button {
     background: none;
     border: none;
@@ -129,19 +139,23 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
 .checkText {
     font-size: 13px;
     margin-top: 5px;
     color: #4682B4;
 }
+
 .fa-check {
     color: #4682B4;
 }
+
 .add-form-label {
     margin-top: 8px;
     margin-bottom: 8px;
     margin-left: 35px;
 }
+
 .input-group {
     display: flex;
     flex-direction: column;
@@ -161,6 +175,7 @@
 .add-btn:last-child {
     display: inline-block;
 }
+
 .add-form-control {
     height: 40px;
     width: 365px;
@@ -168,4 +183,90 @@
     border-radius: 5px;
     padding: 10px;
     margin-left: 10px;
+}
+
+/* 반응형 미디어 쿼리 추가 */
+@media screen and (max-width: 1024px) {
+    .artistCreateContainer {
+        padding-right: 100px;
+        padding-left: 100px;
+    }
+
+    .artistContainer {
+        width: 400px;
+        padding: 30px;
+    }
+
+    .thumbnail img, .thumbnail button.iconBT {
+        width: 130px;
+        height: 130px;
+    }
+
+    .btn-primary-art {
+        padding: 8px 30px;
+    }
+
+    .add-form-control {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .artistCreateContainer {
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+
+    .artistContainer {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .thumbnail img, .thumbnail button.iconBT {
+        width: 100px;
+        height: 100px;
+    }
+
+    .btn-primary-art {
+        padding: 8px 20px;
+    }
+
+    .add-form-control {
+        width: 250px;
+    }
+
+    .artistAdds input {
+        margin-left: 50px;
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .artistCreateContainer {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .artistContainer {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .thumbnail img, .thumbnail button.iconBT {
+        width: 80px;
+        height: 80px;
+    }
+
+    .btn-primary-art {
+        padding: 8px 15px;
+    }
+
+    .add-form-control {
+        width: 200px;
+    }
+
+    .artistAdds input {
+        margin-left: 20px;
+        width: 60%;
+    }
 }

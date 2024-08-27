@@ -7,7 +7,7 @@
                 <div class="mg_menu_section flex justify-between items-center mt-4">
                     <span class="text-3xl font-bold text-gray-900 mt-4 tracking-wide">작가 신청 내역</span>
                 </div>
-                
+
                 <!-- 헤더 행 -->
                 <div class="hidden md:flex mt-4">
                     <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700 border-b-2 border-gray-300 pb-2">
@@ -19,7 +19,7 @@
                         <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">선택</li>
                     </ul>
                 </div>
-                
+
                 <!-- 대기 중인 회원 목록 -->
                 <div class="mt-4">
                     <ul th:if="${pendingMembers.size() > 0}">
@@ -45,12 +45,12 @@
                         신청자가 없습니다.
                     </div>
                 </div>
-                
+
                 <!-- 승인 완료된 회원 제목 -->
                 <div class="mg_menu_section flex justify-between items-center mt-4">
                     <span class="text-3xl font-bold text-gray-900 mt-4 tracking-wide">승인 완료 목록</span>
                 </div>
-                
+
                 <!-- 승인 완료된 회원을 위한 헤더 행 -->
                 <div class="hidden md:flex mt-4">
                     <ul class="flex flex-wrap justify-between w-full text-lg font-semibold text-gray-700 border-b-2 border-gray-300 pb-2">
@@ -60,7 +60,7 @@
                         <li class="flex-1 flex items-center justify-center text-center uppercase text-gray-600 tracking-widest">첨부파일</li>
                     </ul>
                 </div>
-                
+
                 <!-- 승인 완료된 회원 목록 -->
                 <div class="mt-4">
                     <ul th:if="${approvedMembers.size() > 0}">

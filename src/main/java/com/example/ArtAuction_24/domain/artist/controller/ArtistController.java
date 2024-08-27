@@ -4,11 +4,22 @@ import com.example.ArtAuction_24.domain.artist.entity.*;
 import com.example.ArtAuction_24.domain.artist.form.ArtistForm;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
+import com.example.ArtAuction_24.domain.member.entity.MemberRole;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +55,7 @@ public class ArtistController {
     }
 
 
+
     @GetMapping("/terms")
     public String showTermsForm(Model model, Principal principal) {
         Member member = memberService.getCurrentMember();
@@ -52,7 +64,6 @@ public class ArtistController {
         if (member.isProofSubmitted()) {
             return "redirect:/artist/uploaded";
         }
-
         return "artist/termsForm";
     }
 
@@ -125,7 +136,6 @@ public class ArtistController {
         return "redirect:/artist/uploaded";
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/uploaded")
     public String showUploadConfirmation(Model model) {
@@ -168,7 +178,19 @@ public class ArtistController {
     public String rejectProof(@PathVariable("id") Long memberId) {
         artistService.rejectMember(memberId);
         return "redirect:/artist/pending-approval";
+
     }
+
+
+    @GetMapping("/list")
+    public String showArtistList(Model model, Principal principal) {
+        List<Artist> artists = artistService.getAllArtists();
+        Member currentMember = memberService.getCurrentMember();
+        model.addAttribute("artists", artists);
+        model.addAttribute("member", currentMember);
+        return "artist/artistList";
+    }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -178,7 +200,6 @@ public class ArtistController {
         if (!member.isApprovedArtist()) {
             return "redirect:/artist/uploaded";
         }
-
         // 현재 로그인된 사용자가 이미 작가인지 확인
         Optional<Artist> existingArtist = artistService.getArtistByMember(member);
 
@@ -187,7 +208,6 @@ public class ArtistController {
             model.addAttribute("errorMessage", "이미 작가로 등록되어 있습니다.");
             return "artist/error"; // 또는 다른 적절한 페이지로 리디렉션
         }
-
         model.addAttribute("artistForm", new ArtistForm());
         return "artist/artistForm";
     }
@@ -327,5 +347,28 @@ public class ArtistController {
         this.artistService.delete(artist);
 
         return "redirect:/";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/favorite/{id}")
+    public ResponseEntity<String> favoriteArtist(@PathVariable("id") Integer artistId) {
+        Member member = memberService.getCurrentMember();
+
+        // 즐겨찾기 추가 또는 제거
+        boolean isFavorited = artistService.toggleFavoriteArtist(member, artistId);
+
+        // 결과에 따라 상태 메시지 반환
+        return ResponseEntity.ok(isFavorited ? "Added" : "Removed");
+    }
+
+
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/favorites")
+    public String showFavoriteArtists(Model model) {
+        Member member = memberService.getCurrentMember();
+        Set<Artist> favoriteArtists = member.getFavoriteArtists();
+        model.addAttribute("favoriteArtists", favoriteArtists);
+        return "artist/favoriteArtists";
     }
 }

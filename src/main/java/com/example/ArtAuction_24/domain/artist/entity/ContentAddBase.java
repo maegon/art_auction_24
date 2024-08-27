@@ -18,4 +18,8 @@ public abstract class ContentAddBase {
 
     public abstract String getContent();
 
+    public void setContent(String newContent) {
+        this.content = newContent;
+    }
+
 }

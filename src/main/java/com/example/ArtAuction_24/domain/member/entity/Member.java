@@ -22,7 +22,9 @@ import javax.management.relation.Role;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -82,6 +84,14 @@ public class Member extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "author")
     private List<Artist> artist;
+
+    @ManyToMany
+    @JoinTable(
+            name = "member_favorite_artists",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id")
+    )
+    private Set<Artist> favoriteArtists = new HashSet<>();
 
     private transient String formattedbalance;
 
