@@ -54,6 +54,27 @@ public class ArtistController {
         return "artist/profile";
     }
 
+    @PreAuthorize("hasAuthority('ARTIST')")
+    @GetMapping("/myProfile")
+    public String getMyProfile(Model model) {
+        Member currentMember = memberService.getCurrentMember();
+        Artist artist = artistService.findByMember(currentMember);
+
+        if (artist == null) {
+            // 프로필이 없을 경우
+            model.addAttribute("message", "프로필이 없습니다.");
+            return "artist/noProfile"; // 'noProfile.html'이라는 뷰 페이지로 이동합니다.
+        }
+
+        // 현재 로그인한 사용자의 이메일과 전화번호를 모델에 추가합니다.
+        model.addAttribute("email", currentMember.getEmail());
+        model.addAttribute("phoneNumber", currentMember.getPhoneNumber());
+        model.addAttribute("artist", artist);
+
+        return "redirect:/artist/profile/" + artist.getId();
+    }
+
+
 
 
     @GetMapping("/terms")
@@ -190,7 +211,6 @@ public class ArtistController {
         model.addAttribute("member", currentMember);
         return "artist/artistList";
     }
-
 
     @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/create")

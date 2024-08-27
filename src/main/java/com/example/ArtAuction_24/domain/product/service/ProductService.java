@@ -317,4 +317,12 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
+    public void deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+        productRepository.delete(product);
+    }
+
+
 }
