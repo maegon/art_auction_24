@@ -301,9 +301,10 @@ public class ProductController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/reject/{productId}")
     public String rejectProduct(@PathVariable("productId") Long productId) {
-        productService.rejectProduct(productId);
+        productService.deleteProduct(productId);
         return "redirect:/product/auctionList";
     }
+
 
     // 승인된 제품들을 보여주는 페이지
     @GetMapping("/productAuctionList")

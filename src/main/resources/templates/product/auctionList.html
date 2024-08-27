@@ -27,10 +27,10 @@
                         <span th:text="${product.artist.korName}">작가 이름</span>
                     </div>
                     <div class="text-gray-500 text-sm mt-2">
-                        시작일:<span th:text="${product.auctionStartDate}">시작일</span>
+                        시작일:<span th:text="${#temporals.format(product.auctionStartDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
                     </div>
                     <div class="text-gray-500 text-sm mt-2">
-                        마감일:<span th:text="${product.auctionEndDate}">마감일</span>
+                        마감일:<span th:text="${#temporals.format(product.auctionEndDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
                     </div>
                     <hr class="my-2">
                     <span class="text-gray-500 text-sm">현재가</span>
