@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-@Profile({"dev", "prod"})
+@Profile("dev")
 @Configuration
 @RequiredArgsConstructor
 public class DevInitData implements BeforeInitData {
