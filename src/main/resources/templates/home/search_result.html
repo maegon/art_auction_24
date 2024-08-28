@@ -50,7 +50,7 @@
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-72 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
                         <a th:href="@{|/product/detail/${product.id}|}" class="no-underline">
                             <div>
-                                <img th:if="${product.thumbnailImg != null}" th:src="@{${product.thumbnailImg}}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
+                                <img th:if="${product.thumbnailImg != null}" th:src="@{|/file/${product.thumbnailImg}|}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
                                 <img th:unless="${product.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
                             </div>
                         </a>

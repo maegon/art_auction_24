@@ -65,9 +65,8 @@ public class ProductController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String create(@Valid ProductForm productForm, BindingResult bindingResult, Principal principal)
+    public String create(@Valid ProductForm productForm,@RequestParam("thumbnail") MultipartFile thumbnail, BindingResult bindingResult, Principal principal)
     {
-        MultipartFile thumbnail = productForm.getThumbnail();
 
         // 이미지 파일이 존재할 때만 검증
         if (thumbnail != null && !thumbnail.isEmpty()) {
@@ -84,6 +83,7 @@ public class ProductController {
         } else {
             // 이미지가 선택되지 않은 경우에 대한 검증
             bindingResult.rejectValue("thumbnail", "error.thumbnail.required", "이미지를 첨부해야 합니다.");
+            return "product/form";
         }
 
         if(bindingResult.hasErrors()){
@@ -94,7 +94,8 @@ public class ProductController {
         Member member = this.memberService.getCurrentMember();
         Artist artist = this.artistService.findByMember(member);
         this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getWidth(), productForm.getHeight(), productForm.getStartingPrice(),
-                  LocalDateTime.now(), productForm.getThumbnail(),productForm.getCategory(), artist);
+                  LocalDateTime.now(), thumbnail,productForm.getCategory(), artist);
+
         return "redirect:/product/list";
     }
 

@@ -24,21 +24,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class ArtistService {
-    @Autowired
+
     private final ArtistRepository artistRepository;
     private final MemberRepository memberRepository;
     private final ArtistAddRepository artistAddRepository;
     private final TitleAddRepository titleAddRepository;
     private final ContentAddRepository contentAddRepository;
-    @Autowired
+
     private final TitleContentAddRepository titleContentAddRepository;
-    @Autowired
+
     private final YearContentAddRepository yearContentAddRepository;
-    @Autowired
+
     private final WidthContentAddRepository widthContentAddRepository;
-    @Autowired
+
     private final HeightContentAddRepository heightContentAddRepository;
-    @Autowired
+
     private final UnitContentAddRepository unitContentAddRepository;
     @Autowired
     private final TechniqueContentAddRepository techniqueContentAddRepository;

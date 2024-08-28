@@ -40,7 +40,7 @@
                             <a th:href="@{|/product/detail/${product.id}|}"
                                 class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
-                                    th:src="@{${product.thumbnailImg}}"
+                                    th:src="@{|/file/${product.thumbnailImg}|}"
                                     alt="이미지가 존재하지 않습니다.">
                             </a>
                             <div class="ongoing-info">
@@ -70,7 +70,7 @@
                             <a th:href="@{|/product/detail/${product.id}|}"
                                class="block w-full h-64 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                                 <img class="bg-gray-100 object-contain object-center w-full h-full transition-transform duration-500"
-                                     th:src="@{${product.thumbnailImg}}"
+                                     th:src="@{|/file/${product.thumbnailImg}|}"
                                      alt="이미지가 존재하지 않습니다.">
                             </a>
                             <div class="ongoing-info">
@@ -130,20 +130,20 @@
         <div class="marquee">
             <div class="marquee__group">
                 <!-- 반복할 이미지들 -->
-                <img src="image/product/땅하늘우주.jpg" alt="Description 1">
-                <img src="image/product/나무들.jpg" alt="Description 2">
-                <img src="image/product/은하계.jpg" alt="Description 3">
-                <img src="image/product/산사진.jpg" alt="Description 4">
-                <img src="image/product/노란머리여자사진.jpg" alt="Description 5">
+                <img src="image/product/product_paint_1.jpg" alt="Description 1">
+                <img src="image/product/product_paint_2.jpg" alt="Description 2">
+                <img src="image/product/product_paint_3.jpg" alt="Description 3">
+                <img src="image/product/product_paint_4.jpg" alt="Description 4">
+                <img src="image/product/product_paint_5.jpg" alt="Description 5">
                 <!-- 추가 이미지들 -->
             </div>
             <div aria-hidden="true" class="marquee__group">
                 <!-- 반복할 이미지들 (동일한 이미지들) -->
-                <img src="image/product/땅하늘우주.jpg" alt="Description 1">
-                <img src="image/product/나무들.jpg" alt="Description 2">
-                <img src="image/product/은하계.jpg" alt="Description 3">
-                <img src="image/product/산사진.jpg" alt="Description 4">
-                <img src="image/product/노란머리여자사진.jpg" alt="Description 5">
+                <img src="image/product/product_paint_1.jpg" alt="Description 1">
+                <img src="image/product/product_paint_2.jpg" alt="Description 2">
+                <img src="image/product/product_paint_3.jpg" alt="Description 3">
+                <img src="image/product/product_paint_4.jpg" alt="Description 4">
+                <img src="image/product/product_paint_5.jpg" alt="Description 5">
                 <!-- 추가 이미지들 -->
             </div>
         </div>
@@ -151,20 +151,20 @@
         <div class="marquee marquee--reverse mt-5">
             <div class="marquee__group">
                 <!-- 반대 방향으로 스크롤할 이미지들 -->
-                <img src="image/product/천사와악마.jpg" alt="Description 5">
-                <img src="image/product/폭포.jpg" alt="Description 4">
-                <img src="image/product/토끼.jpg" alt="Description 3">
-                <img src="image/product/바다.jpg" alt="Description 2">
-                <img src="image/product/들판.jpg" alt="Description 1">
+                <img src="image/product/product_paint_6.jpg" alt="Description 5">
+                <img src="image/product/product_paint_7.jpg" alt="Description 4">
+                <img src="image/product/product_paint_8.jpg" alt="Description 3">
+                <img src="image/product/product_paint_9.jpg" alt="Description 2">
+                <img src="image/product/product_paint_10.jpg" alt="Description 1">
                 <!-- 추가 이미지들 -->
             </div>
             <div aria-hidden="true" class="marquee__group">
                 <!-- 반대 방향으로 반복할 이미지들 -->
-                <img src="image/product/천사와악마.jpg" alt="Description 5">
-                <img src="image/product/폭포.jpg" alt="Description 4">
-                <img src="image/product/토끼.jpg" alt="Description 3">
-                <img src="image/product/바다.jpg" alt="Description 2">
-                <img src="image/product/들판.jpg" alt="Description 1">
+                <img src="image/product/product_paint_6.jpg" alt="Description 5">
+                <img src="image/product/product_paint_7.jpg" alt="Description 4">
+                <img src="image/product/product_paint_8.jpg" alt="Description 3">
+                <img src="image/product/product_paint_9.jpg" alt="Description 2">
+                <img src="image/product/product_paint_10.jpg" alt="Description 1">
                 <!-- 추가 이미지들 -->
             </div>
         </div>
@@ -198,7 +198,7 @@
                     <div class="bestArtist-info-description md:text-xl text-white mt-2 hidden sm:block" th:text="${topProduct.description}">설명</div>
                 </div>
                 <a th:href="@{|/product/detail/${topProduct.id}|}" class="artist-image w-full max-w-xs md:max-w-xs rounded-lg flex items-center justify-center">
-                    <img th:src="@{${topProduct.thumbnailImg}}" alt="이미지 1" class="w-full rounded-lg">
+                    <img th:src="@{|/file/${topProduct.thumbnailImg}|}" alt="이미지 1" class="w-full rounded-lg">
                 </a>
             </div>
         </div>
