@@ -36,14 +36,13 @@
 </head>
 <body>
 <div layout:fragment="content">
-
-    <!-- 즐겨찾기한 작가가 없을 때 메시지 표시 -->
-    <div th:if="${#lists.isEmpty(favoriteArtists)}">
-        <p>아직 등록된 작가가 없습니다.</p>
+    <div class="bg-white">
+        <h1 class="text-2xl font-black text-center py-5 text-black">나의 작가 목록</h1>
     </div>
-
     <!-- 즐겨찾기한 작가 목록 -->
-    <div class="favoriteArtistContainer">
+    <div class="favoriteArtistContainer mx-auto px-6 lg:px-[300px] min-h-[600px]">
+
+
         <div class="favoriteArtistContainer_1" th:each="artist : ${favoriteArtists}">
             <div class="favoriteArtistForm">
                 <form th:action="@{/artist/favorite/{id}(id=${artist.id})}" method="post" class="favoriteForm">
@@ -55,12 +54,17 @@
                     <div class="artistListImg">
                         <img th:src="@{|/file/${artist.thumbnailImg != null ? artist.thumbnailImg : 'default-thumbnail.jpg'}|}" class="artist-list-img" alt="Thumbnail">
                     </div>
-                    <div class="korName-artistList">
+                    <div class="korName-artistList border-t border-black">
                         <span th:text="${artist.korName}"></span> 작가
                     </div>
                 </a>
             </div>
         </div>
+    </div>
+
+    <!-- 즐겨찾기한 작가가 없을 때 메시지 표시 -->
+    <div th:if="${#lists.isEmpty(favoriteArtists)}" class="flex justify-center items-center h-80">
+        <p class="text-center text-gray-500 text-lg">아직 등록된 작가가 없습니다.</p>
     </div>
 </div>
 </body>
