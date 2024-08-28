@@ -38,3 +38,14 @@ window.addEventListener('scroll', function() {
 });
 
 /*정보 부분 fixed 기능 끝*/
+
+/*삭제 확인 요청 메세지 호출 start*/
+const delete_elements = document.getElementsByClassName("productDetail-delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+/*삭제 확인 요청 메세지 호출 end*/

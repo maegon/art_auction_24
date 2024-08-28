@@ -315,5 +315,39 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    public void modify(Product product, String title, String description, String medium, long width,long height,
+                       BigDecimal startingPrice,
+                       MultipartFile thumbnailImg, String category){
+        product.setTitle(title);
+        product.setDescription(description);
+        product.setMedium(medium);
+        product.setWidth(width);
+        product.setHeight(height);
+        product.setStartingPrice(startingPrice);
+        product.setCurrentBid(startingPrice);
+        product.setCategory(category);
 
+        if (thumbnailImg != null && !thumbnailImg.isEmpty()) {
+            String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
+            File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+
+            File parentDir = thumbnailFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            try {
+                thumbnailImg.transferTo(thumbnailFile);
+                product.setThumbnailImg(thumbnailRelPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        productRepository.save(product);
+    }
+
+    public void delete(Product product){
+        this.productRepository.delete(product);
+    }
 }
