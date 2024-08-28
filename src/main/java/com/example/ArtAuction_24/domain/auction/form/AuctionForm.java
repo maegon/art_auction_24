@@ -39,7 +39,7 @@ public class AuctionForm {
     // 마감 시간이 시작 시간 이후인지 확인하는 유효성 검사
     public boolean isEndDateValid() {
         if (startDate == null || endDate == null) {
-            return false; //
+            return false;
         }
         return endDate.isAfter(startDate);
     }

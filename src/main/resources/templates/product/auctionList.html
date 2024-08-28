@@ -56,8 +56,8 @@
                     </div>
                     <hr class="my-2">
                     <span class="text-gray-500 text-sm">현재가</span>
-                    <span th:text="|KRW ${product.startingPrice}|" class="text-black text-sm"></span>
-                    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" class="flex justify-between mt-4">
+                    <span th:text="|KRW ${product.startingPrice}|" class="text-black text-sm "></span>
+                    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" class="flex justify-between mt-4 mb-4">
                         <form th:action="@{/product/approve/{productId}(productId=${product.id})}" method="post">
                             <button type="submit" class="bg-green-500 text-white py-1 px-2 rounded">승인</button>
                         </form>
