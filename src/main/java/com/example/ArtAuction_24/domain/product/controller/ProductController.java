@@ -21,6 +21,7 @@ import com.example.ArtAuction_24.domain.product.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -235,7 +236,7 @@ public class ProductController {
 
     @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/productCreate/{productId}")
-    public String productCreateForm(@PathVariable("productId") Long productId, ProductAuctionForm productAuctionForm, Model model) {
+    public String productCreateOrUpdate(@PathVariable("productId") Long productId, ProductAuctionForm productAuctionForm, Model model) {
         Product product = productService.findById(productId);
 
         Member member = this.memberService.getCurrentMember();
@@ -254,7 +255,7 @@ public class ProductController {
 
     @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/productCreate/{productId}")
-    public String productCreate(
+    public String productCreateOrUpdate(
             @PathVariable("productId") Long productId,
             @Valid ProductAuctionForm productAuctionForm,
             BindingResult bindingResult,
@@ -285,6 +286,8 @@ public class ProductController {
                 artist,
                 productId
         );
+
+        System.out.println("setAuctionEndDate:" + productAuctionForm.getAuctionEndDate());
 
         return "redirect:/product/auctionList";
     }
