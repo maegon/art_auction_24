@@ -3,7 +3,7 @@
 
 
 
-    <div class="container mx-auto px-4 min-h-[1500px]">
+    <div class="container mx-auto px-4 min-h-[1200px]">
 
 
         <div class="container py-4 ">
@@ -74,7 +74,8 @@
 
             </div>
 
-            <div class="container mx-auto h-[200px] px-[200px]">
+            <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.principal.username == 'admin'}"
+                    class="container mx-auto h-[200px] px-[200px]">
                 <form th:action="@{|/answer/create/${question.id}|}" method="post">
                     <textarea class="h-[100px] w-full border-2 border-slate-300" name="content" id="content" rows="10"></textarea>
                     <input class="bg-black text-[#D5A770] text-xl h-10 px-4 my-3 rounded-xl w-full block" type="submit" value="답변등록">
