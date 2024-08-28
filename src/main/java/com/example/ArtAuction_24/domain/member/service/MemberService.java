@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.hibernate.query.sqm.tree.SqmNode.log;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -51,7 +53,8 @@ public class MemberService {
 
         // 이메일 중복 확인
         if (email != null && memberRepository.findByEmail(email).isPresent()) {
-            throw new CustomDuplicateEmailException("Email already exists");
+            log.warn("중복된 이메일로 회원가입 시도: " + email);
+            email = generateUniqueEmail(email);
         }
 
         System.out.println(email);
@@ -78,6 +81,26 @@ public class MemberService {
         return memberRepository.save(member); // 데이터베이스에 저장
     }
 
+    private String generateUniqueEmail(String email) {
+        // 이메일에서 '@' 이전과 이후 부분을 분리
+        String[] emailParts = email.split("@");
+        String emailLocalPart = emailParts[0];
+        String emailDomainPart = emailParts[1];
+
+        // 고유한 숫자 또는 타임스탬프 추가 (예: 현재 시간)
+        String uniqueSuffix = String.valueOf(System.currentTimeMillis());
+
+        // 새로운 고유한 이메일 생성
+        String uniqueEmail = emailLocalPart + "+" + uniqueSuffix + "@" + emailDomainPart;
+
+        // 중복 체크를 통해서 다시 생성할지 여부 결정
+        while (memberRepository.findByEmail(uniqueEmail).isPresent()) {
+            uniqueSuffix = String.valueOf(System.currentTimeMillis());
+            uniqueEmail = emailLocalPart + "+" + uniqueSuffix + "@" + emailDomainPart;
+        }
+
+        return uniqueEmail;
+    }
 
     @Transactional
     public Member whenSocialLogin(String providerTypeCode, String username, String nickname, String email) {
