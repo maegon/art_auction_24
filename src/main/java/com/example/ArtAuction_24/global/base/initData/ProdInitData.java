@@ -134,7 +134,6 @@ public class ProdInitData implements BeforeInitData {
             Artist artist5 = artistService.getArtistByKorName("최작가");
             Artist artist6 = artistService.getArtistByKorName("정작가");
 
-
             productService.create("토끼", "이 그림은 부드러운 색조와 섬세한 디테일로 그려진 귀여운 토끼를 담고 있습니다. 토끼의 큰 눈과 푹신한 털은 따뜻하고 아늑한 느낌을 주며, 자연 속에서 조용히 쉬고 있는 모습을 표현했습니다. 그림 속 토끼는 순수하고 순진한 매력을 지니고 있어, 보는 이로 하여금 평화롭고 행복한 감정을 느끼게 합니다. 이 작품은 자연과 동물의 아름다움을 경이롭게 담아내려는 저의 노력의 결과입니다.", "색연필", 90, 128, new BigDecimal(10000), LocalDateTime.now(), "/app/resources/static/image/product/product_paint_2.jpg", "수채화", artist1);
             productService.create("은하계", "이 그림은 광활한 우주를 배경으로 한 은하계를 담아낸 작품입니다. 별들이 수놓은 밤하늘과 그 사이를 흐르는 은하의 신비로운 모습이 아름답게 표현되어 있습니다. 색다른 색조와 반짝이는 별빛, 그리고 깊은 우주의 신비로움이 조화를 이루며 관객을 우주의 끝없는 광활함 속으로 초대합니다. 이 작품은 우주의 웅장함과 아름다움을 탐구하고, 무한한 상상의 세계를 경험하게 해주는 저의 창의력의 표현입니다..", "종이에 물감", 600, 300, new BigDecimal(11000), LocalDateTime.now(), "/app/resources/static/image/product/product_paint_4.jpg", "수채화", artist2);
             productService.create("천사와 악마", "이 그림은 천사와 악마의 대비를 통해 인간 내면의 갈등과 도덕적 이중성을 탐구한 작품입니다. 천사는 순수함과 희망의 상징으로, 부드럽고 따뜻한 색조로 표현되어 있습니다. 반면, 악마는 어두운 색상과 날카로운 선들로 그려져 있으며, 위협적이고 강렬한 존재감을 드러냅니다. 두 캐릭터의 극명한 대조는 선과 악, 빛과 어둠 간의 끊임없는 싸움을 시각적으로 드라마틱하게 담아내며, 인간의 도덕적 선택과 그에 따른 내적 갈등을 관객에게 깊이 있게 전달합니다.", "종이에 물감", 30, 20, new BigDecimal(12000), LocalDateTime.now(), "/app/resources/static/image/product/product_paint_3.jpg", "수채화", artist3);
