@@ -97,72 +97,72 @@
         });
 
         function addInputField(containerId, inputName, initialButton = null) {
-          const container = document.getElementById(containerId);
-          if (!container) {
-            console.error('Specified container not found');
-            return;
-          }
-          // Remove the initial '+' button if it exists
-          if (initialButton) {
-            initialButton.remove();
-          }
-          // Remove '+' button from the last input group if it exists
-          const existingPlusButton = container.querySelector('.plusBnt:last-of-type');
-          if (existingPlusButton) {
-            existingPlusButton.remove();
-          }
-          const inputGroup = document.createElement('div');
-          inputGroup.className = 'input-group';
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.name = inputName; // Ensure this creates an array of inputs
-          input.className = 'form-control_text_adds';
-          input.placeholder = '추가 입력';
-          const removeButton = document.createElement('button');
-          removeButton.type = 'button';
-          removeButton.className = 'remove-button';
-          removeButton.textContent = '-';
-          removeButton.onclick = function() {
-            container.removeChild(inputGroup);
-            handleFieldRemoval(containerId, inputName);
-          };
-          inputGroup.appendChild(input);
-          inputGroup.appendChild(removeButton);
-          const plusButton = document.createElement('button');
-          plusButton.type = 'button';
-          plusButton.className = 'plusBnt';
-          plusButton.textContent = '+';
-          plusButton.onclick = function() {
-            addInputField(containerId, inputName);
-          };
-          inputGroup.appendChild(plusButton);
-          container.appendChild(inputGroup);
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error('Specified container not found');
+                return;
+            }
+            // Remove the initial '+' button if it exists
+            if (initialButton) {
+                initialButton.remove();
+            }
+            // Remove '+' button from the last input group if it exists
+            const existingPlusButton = container.querySelector('.plusBnt:last-of-type');
+            if (existingPlusButton) {
+                existingPlusButton.remove();
+            }
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = inputName; // Ensure this creates an array of inputs
+            input.className = 'form-control_text_adds';
+            input.placeholder = '추가 입력';
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'remove-button';
+            removeButton.textContent = '-';
+            removeButton.onclick = function() {
+                container.removeChild(inputGroup);
+                handleFieldRemoval(containerId, inputName);
+            };
+            inputGroup.appendChild(input);
+            inputGroup.appendChild(removeButton);
+            const plusButton = document.createElement('button');
+            plusButton.type = 'button';
+            plusButton.className = 'plusBnt';
+            plusButton.textContent = '+';
+            plusButton.onclick = function() {
+                addInputField(containerId, inputName);
+            };
+            inputGroup.appendChild(plusButton);
+            container.appendChild(inputGroup);
         }
 
         function handleFieldRemoval(containerId, inputName) {
-          const container = document.getElementById(containerId);
-          if (container.children.length === 0) {
-            const initialButton = document.createElement('button');
-            initialButton.type = 'button';
-            initialButton.className = 'plusBnt';
-            initialButton.textContent = '+';
-            initialButton.onclick = function() {
-              addInputField(containerId, inputName, initialButton);
-            };
-            container.parentElement.appendChild(initialButton);
-          } else {
-            const lastInputGroup = container.lastElementChild;
-            if (!lastInputGroup.querySelector('.plusBnt')) {
-              const plusButton = document.createElement('button');
-              plusButton.type = 'button';
-              plusButton.className = 'plusBnt';
-              plusButton.textContent = '+';
-              plusButton.onclick = function() {
-                addInputField(containerId, inputName);
-              };
-              lastInputGroup.appendChild(plusButton);
+            const container = document.getElementById(containerId);
+            if (container.children.length === 0) {
+                const initialButton = document.createElement('button');
+                initialButton.type = 'button';
+                initialButton.className = 'plusBnt';
+                initialButton.textContent = '+';
+                initialButton.onclick = function() {
+                    addInputField(containerId, inputName, initialButton);
+                };
+                container.parentElement.appendChild(initialButton);
+            } else {
+                const lastInputGroup = container.lastElementChild;
+                if (!lastInputGroup.querySelector('.plusBnt')) {
+                    const plusButton = document.createElement('button');
+                    plusButton.type = 'button';
+                    plusButton.className = 'plusBnt';
+                    plusButton.textContent = '+';
+                    plusButton.onclick = function() {
+                        addInputField(containerId, inputName);
+                    };
+                    lastInputGroup.appendChild(plusButton);
+                }
             }
-          }
         }
         document.addEventListener('DOMContentLoaded', function() {
             const initialButton = document.querySelector('#initialPlusButton');
@@ -185,6 +185,13 @@
             titleInput.name = 'titleContentAdds[]';
             titleInput.className = 'MWContentAdds';
             titleInput.placeholder = '제목';
+            titleInput.required = true; // 필수 입력 필드로 설정
+            titleInput.oninvalid = function(event) {
+                event.target.setCustomValidity('제목은 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            titleInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(titleInput);
 
             const yearInput = document.createElement('input');
@@ -192,6 +199,13 @@
             yearInput.name = 'yearContentAdds[]';
             yearInput.className = 'MWContentAdds';
             yearInput.placeholder = '제작년도';
+            yearInput.required = true; // 필수 입력 필드로 설정
+            yearInput.oninvalid = function(event) {
+                event.target.setCustomValidity('제작년도는 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            yearInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(yearInput);
 
             const widthInput = document.createElement('input');
@@ -199,6 +213,13 @@
             widthInput.name = 'widthContentAdds[]';
             widthInput.className = 'MWContentAdds';
             widthInput.placeholder = '가로 길이';
+            widthInput.required = true; // 필수 입력 필드로 설정
+            widthInput.oninvalid = function(event) {
+                event.target.setCustomValidity('가로 길이는 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            widthInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(widthInput);
 
             const spanX = document.createElement('span');
@@ -211,6 +232,13 @@
             heightInput.name = 'heightContentAdds[]';
             heightInput.className = 'MWContentAdds';
             heightInput.placeholder = '세로 길이';
+            heightInput.required = true; // 필수 입력 필드로 설정
+            heightInput.oninvalid = function(event) {
+                event.target.setCustomValidity('세로 길이는 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            heightInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(heightInput);
 
             const unitInput = document.createElement('input');
@@ -218,6 +246,13 @@
             unitInput.name = 'unitContentAdds[]';
             unitInput.className = 'MWContentAdds';
             unitInput.placeholder = '단위';
+            unitInput.required = true; // 필수 입력 필드로 설정
+            unitInput.oninvalid = function(event) {
+                event.target.setCustomValidity('단위는 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            unitInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(unitInput);
 
             const techniqueInput = document.createElement('input');
@@ -225,6 +260,13 @@
             techniqueInput.name = 'techniqueContentAdds[]';
             techniqueInput.className = 'MWContentAdds';
             techniqueInput.placeholder = '제작 기법';
+            techniqueInput.required = true; // 필수 입력 필드로 설정
+            techniqueInput.oninvalid = function(event) {
+                event.target.setCustomValidity('제작 기법은 필수입니다.'); // 사용자 정의 경고 메시지 설정
+            }
+            techniqueInput.oninput = function(event) {
+                event.target.setCustomValidity(''); // 입력 중에 경고 메시지를 리셋
+            }
             inputGroup.appendChild(techniqueInput);
 
             // 삭제 버튼 추가
@@ -291,7 +333,7 @@
         });
 
         function addFieldGroup() {
-            const container = document.getElementById('formContainer');
+            const container = document.getElementById('formContainer_1');
 
             // 제목 그룹 추가
             const titleGroup = document.createElement('div');
@@ -336,17 +378,8 @@
                 updateButtons(container, 'contentAdd');
             };
 
-            const plusButton = document.createElement('button');
-            plusButton.type = 'button';
-            plusButton.className = 'plusBnt';
-            plusButton.textContent = '+';
-            plusButton.onclick = function() {
-                addContentField(); // 내용 필드만 추가
-            };
-
             contentGroup.appendChild(contentInput);
             contentGroup.appendChild(removeContentButton);
-            contentGroup.appendChild(plusButton);
             container.appendChild(contentGroup);
 
             updateButtons(container, 'contentAdd');
@@ -417,11 +450,36 @@
             }
         }
 
-        function removeFieldGroup(button) {
-            const group = button.parentNode;
-            const container = document.getElementById('formContainer');
-            container.removeChild(group);
-            updateButtons(container, group.className.includes('titleAdd') ? 'titleAdd' : 'contentAdd');
+        function submitForm() {
+            const titleInputs = document.querySelectorAll('input[name="titleAdds[]"]');
+            const contentInputs = document.querySelectorAll('input[name="contentAdds[]"]');
+
+            let isValid = true;
+
+            titleInputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    isValid = false;
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+
+            contentInputs.forEach(input => {
+                if (input.value.trim() === '') {
+                    isValid = false;
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+
+            if (isValid) {
+                alert('폼이 성공적으로 제출되었습니다!');
+                // 실제로 서버로 데이터를 전송하는 로직이 필요합니다.
+            } else {
+                alert('모든 필드를 작성해주세요.');
+            }
         }
     </script>
 </head>
@@ -455,7 +513,7 @@
                                 <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">Incorrect birth date</div>
                             </div>
                             <div id="artistAddsContainer">
-                                <div th:each="add : ${artistForm.artistAdds}">
+                                <div th:each="add : ${artistForm.artistAdds != null ? artistForm.artistAdds : new java.util.ArrayList()}">
                                     <input type="text" name="artistAdds[]" th:value="${add}" class="form-control_text_adds">
                                 </div>
                                 <button type="button" class="plusBnt" onclick="addInputField('artistAddsContainer', 'artistAdds[]')">+</button>
@@ -469,7 +527,7 @@
                     <div class="textTileForm">
                         <span class="title">INTRODUCE</span>
                         <div class="contentAdd">
-                            <textarea id="introduce" class="form-control-intro" th:field="*{introduce}"></textarea>
+                            <textarea id="introduce" class="form-control-intro" required="자기소개는 필수항목입니다." th:field="*{introduce}"></textarea>
                             <div th:if="${#fields.hasErrors('introduce')}" th:errors="*{introduce}">Incorrect content</div>
                         </div>
                     </div>
@@ -520,7 +578,9 @@
                         </div>
                     </div>
                     <!-- 처음 추가 필드가 없을 경우 표시되는 + 버튼 -->
-                    <button type="button" class="plusBnt" id="addFieldGroupButton">+</button>
+                    <div id="formContainer_1">
+                        <button type="button" class="plusBnt" id="addFieldGroupButton">+</button>
+                    </div>
                     <div class="button_2">
                         <input type="submit" value="저장하기">
                     </div>

@@ -31,11 +31,10 @@
                     <hr class="my-2">
                     <span class="text-gray-500 text-sm">현재가</span>
                     <span th:text="|KRW ${product.formattedCurrentBid}|" class="text-black text-sm"></span>
-                    <div th:if="${#authentication.getPrincipal().getUsername() == product.artist.author.username}">
+                    <div th:if="${#authentication.getPrincipal().getUsername() == product.artist.author.username && !product.auctioned}">
                         <a th:href="@{|/product/productCreate/${product.id}|}" class="btn btn-primary" style="height: 25px; margin-top: 10px;">경매에 올리기</a>
                     </div>
                 </div>
-
             </li>
         </ul>
 
@@ -45,5 +44,30 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const auctionButtons = document.querySelectorAll('.btn-primary');
+
+        auctionButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();  // 기본 동작을 막고
+                const url = button.getAttribute('href');
+                fetch(url, { method: 'POST' })  // 경매 등록 요청을 보낸 다음
+                    .then(response => {
+                        if (response.ok) {
+                            button.style.display = 'none';  // 성공적으로 요청이 완료되면 버튼을 숨김
+                            location.reload(); // 페이지 새로고침
+                        } else {
+                            alert('경매 등록에 실패했습니다. 다시 시도해주세요.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('경매 등록 중 오류가 발생했습니다.');
+                    });
+            });
+        });
+    });
+</script>
 </body>
 </html>

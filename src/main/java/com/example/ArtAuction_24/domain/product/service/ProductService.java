@@ -315,6 +315,15 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+
+    @Transactional
+    public void markProductAsAuctioned(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+        product.setAuctioned(true);
+        productRepository.save(product);
+    }
+
     public void modify(Product product, String title, String description, String medium, long width,long height,
                        BigDecimal startingPrice,
                        MultipartFile thumbnailImg, String category){
@@ -326,6 +335,7 @@ public class ProductService {
         product.setStartingPrice(startingPrice);
         product.setCurrentBid(startingPrice);
         product.setCategory(category);
+
 
         if (thumbnailImg != null && !thumbnailImg.isEmpty()) {
             String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
