@@ -15,15 +15,15 @@ import java.math.BigDecimal;
 public class ProductForm {
 
     @NotBlank(message = "작품명은 필수입니다.")
-    @Size(max = 200)
+    @Size(max = 50)
     private String title;
 
     @NotBlank(message = "작품 설명은 필수입니다.")
-    @Size(max = 1000)
+    @Size(max = 500)
     private String description;
 
     @NotBlank(message = "사용된 재료는 필수입니다.")
-    @Size(max = 100)
+    @Size(max = 20)
     private String medium;
 
     @NotNull(message = "가로 크기는 필수입니다.")
@@ -37,7 +37,7 @@ public class ProductForm {
     private BigDecimal startingPrice;
 
     @NotBlank(message = "카테고리는 필수입니다.")
-    @Size(max = 100)
+    @Size(max = 50)
     private String category;
 
     private MultipartFile thumbnail;
