@@ -31,7 +31,10 @@ import java.util.Set;
 public class Product extends BaseEntity {
 
     private String title;
+
+    @Column(length = 500)
     private String description;
+
     private String medium; //사용된 재료
     private long width;
     private long height;
