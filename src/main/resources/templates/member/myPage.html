@@ -43,7 +43,7 @@
                             <h1 class="text-xl font-bold px-4 text-gray-800">MENU</h1>
                             <i class="fas fa-arrow-down text-gray-500"></i>
                         </div>
-                        <ul class="space-y-2">
+                        <ul class="">
                             <li id="info-update"
                                 class="text-center text-gray-600 font-semibold text-lg py-2 hover:bg-gray-100 rounded">
                                 <a href="#">정보수정</a>
@@ -458,7 +458,7 @@
                                                     </div>
                                                     <div class="ml-auto p-2 text-sm">
                                                         <span>경매 종료일 :</span>
-                                                        <span th:text="${#temporals.format(bidByMember.product.getAuctionEndDate(), 'yyyy-MM-dd hh:mm a')}"></span>
+                                                        <span th:text="${#temporals.format(bidByMember.product.myPageGetAuctionEndDate(), 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
                                                 </div>
 
@@ -540,11 +540,11 @@
                                             th:each="order : ${orderList}">
                                             <!-- 낙찰 상품 목록을 반복 -->
                                             <li class="">
-                                                <div class="div1 relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center flex-col">
+                                                <div class="div1 relative w-full bg-gray-500 text-white text-center my-2 py-2 rounded-t-lg flex items-center">
                                                     <div class="absolute left-1/2 transform -translate-x-1/2">
                                                         낙찰 완료
                                                     </div>
-                                                    <div class="ml-auto p-2 text-sm mt-2">
+                                                    <div class="ml-auto p-2 text-sm">
                                                         <span>낙찰 일 :</span>
                                                         <span th:text="${#temporals.format(order.createDate, 'yyyy-MM-dd hh:mm a')}"></span>
                                                     </div>
