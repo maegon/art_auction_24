@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/recharge/**")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/question/create/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .formLogin((formLogin) -> formLogin

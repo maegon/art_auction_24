@@ -14,6 +14,7 @@ import com.example.ArtAuction_24.domain.question.service.QuestionService;
 import com.example.ArtAuction_24.domain.question.form.QuestionForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,7 @@ public class QuestionController {
     }
 
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm,Model model) {
         List<Question> questionList= questionService.findAll();

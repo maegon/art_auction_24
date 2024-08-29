@@ -90,7 +90,7 @@ public class Product extends BaseEntity {
 
 
     //지우지마시오 myPage 에서 쓰는중임
-    public LocalDateTime getAuctionEndDate() {
+    public LocalDateTime myPageGetAuctionEndDate() {
         // Auction이 여러 개일 수 있으므로, 경매가 있는 경우 가장 최근의 경매를 반환
         return auctions.stream()
                 .filter(auction -> auction.getEndDate() != null)
