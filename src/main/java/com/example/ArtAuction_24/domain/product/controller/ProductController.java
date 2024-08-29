@@ -291,6 +291,8 @@ public class ProductController {
         productService.markProductAsAuctioned(productId);
 
         return "redirect:/product/my-products/" + artist.getId();
+
+
     }
 
     // 경매 신청 목록을 보여주는 페이지
