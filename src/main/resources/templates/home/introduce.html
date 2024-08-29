@@ -1,37 +1,128 @@
 <html layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
-<main class="introduce-container">
-    <section class="introduction introduce-sec">
-        <h2>Art Auction 소개</h2>
-        <p>
-            Art Auction은 예술의 진정한 가치를 발견하고자 하는 열정을 가진 경매 플랫폼입니다.
-            우리는 예술 작품의 아름다움과 그 속에 담긴 이야기를 세상과 공유합니다.
-        </p>
-    </section>
-    <section class="mission introduce-sec">
-        <h2>우리의 목표</h2>
-        <p>
-            우리의 목표는 예술가들이 자신의 작품을 통해 많은 사람들과 소통할 수 있도록 돕는 것입니다.
-            또한 컬렉터들에게는 특별한 예술 작품을 소장할 수 있는 기회를 제공합니다.
-        </p>
-    </section>
-    <section class="values introduce-sec">
-        <h2>핵심 가치</h2>
-        <ul>
-            <li><strong>혁신:</strong> 최신 경매 기술을 통해 효율적이고 투명한 거래를 보장합니다.</li>
-            <li><strong>신뢰:</strong> 모든 거래에서 신뢰를 최우선으로 하여 고객 만족을 추구합니다.</li>
-            <li><strong>열정:</strong> 예술에 대한 열정을 바탕으로 최고의 경험을 제공합니다.</li>
-        </ul>
-    </section>
-    <section class="history introduce-sec">
-        <h2>역사</h2>
-        <p>
-            Art Auction은 2024년에 설립된 신생 기업으로,
-            예술 작품의 가치를 인정받고자 하는 열정을 가진 홍길동에 의해 창립되었습니다.
-            현재 온라인 예술 경매 플랫폼을 개발하여, 한국 내 예술 작품을 중심으로 한 서비스를 제공하고있습니다.
-        </p>
-    </section>
 
-</main>
+    <!-- Navigation Bar -->
+    <div class="h-8 bg-black lg:h-24 flex items-center justify-end px-4 lg:px-8">
+        <div class="lg:pr-[200px]">
+            <a href="/" class="text-white text-[10px] lg:text-lg lg:mr-12">HOME</a>
+            <a href="/question/create" class="text-white text-[10px] lg:text-lg lg:mr-12">CONTACT US</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="relative flex items-center">
+        <img class="w-full h-[12rem] lg:h-[43rem] object-cover" th:src="@{/file/image/소개글테마.jpeg}" alt="이미지 2">
+        <div class="absolute inset-0 flex justify-center items-center">
+            <span class="fade-in px-4 py-8 lg:px-8 lg:py-24 font-bold text-5xl lg:text-7xl lg:text-9xl text-stone-100">ArtAuction</span>
+        </div>
+
+    </div>
+
+    <!-- Spacer -->
+    <div class="h-8 bg-black lg:h-24"></div>
+
+    <!-- Introduce Section -->
+    <div id="introduce" class="bg-gray-50 py-12">
+        <div class="introduce lg:h-[860px]">
+            <section class="flex-1 mb-12 text-center">
+                <h2 class="text-4xl font-extrabold text-gray-800 mb-4">Art Auction 이란?</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Art Auction은 예술의 진정한 가치를 발견하고자 하는 열정을 가진 경매 플랫폼입니다.
+                    우리는 예술 작품의 아름다움과 그 속에 담긴 이야기를 세상과 공유합니다.
+                </p>
+            </section>
+            <div class="flex flex-wrap">
+                <div class="flex-1 p-2 lg:p-12 lg:h-[600px]">
+                    <!-- Title Section -->
+                    <section class="mb-8">
+                        <h2 class="text-4xl font-extrabold text-gray-800 mb-4 text-center">예술</h2>
+                    </section>
+                    <!-- Background Image Section -->
+                    <section class="relative bg-cover bg-center h-[300px] lg:h-full" style="background-image: url('/file/image/예술배경.jpg');">
+                        <!-- Overlay to ensure text visibility -->
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="p-6 rounded-lg bg-white bg-opacity-80 w-full">
+                                <p class="text-sm lg:text-lg text-gray-700 max-w-3xl mx-auto text-center">
+                                    예술이란 아름다움을 표현하는 작품 또는 활동을 의미합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-1 p-2 lg:p-12 lg:h-[600px]">
+                    <!-- Title Section -->
+                    <section class="mb-8">
+                        <h2 class="text-4xl font-extrabold text-gray-800 mb-4 text-center">경매</h2>
+                    </section>
+                    <!-- Background Image Section -->
+                    <section class="relative bg-cover bg-center h-[300px] lg:h-full" style="background-image: url('/file/image/경매배경.jpg');">
+                        <!-- Overlay to ensure text visibility -->
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="p-6 rounded-lg bg-white bg-opacity-80 w-full">
+                                <p class="text-sm lg:text-lg text-gray-700 max-w-3xl mx-auto text-center">
+                                    물품을 판매하는 방법 중 하나로, 상품의 가격을 판매자가 미리 정하지 않고, 구매 희망자(입찰자)들이 희망하는 가격을 적어내면 그 중 최고가를 적은 입찰자에게 판매(낙찰)하는 방식.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduce Section -->
+    <div id="목표와 약속" class="bg-gray-100 py-12">
+        <div class="container mx-auto px-4 lg:px-8">
+            <section class="text-center mb-16">
+                <h2 class="text-5xl font-extrabold text-gray-900 mb-6">목표</h2>
+                <p class="text-lg text-gray-700 max-w-4xl mx-auto">
+                    우리의 목표는 예술가들이 자신의 작품을 통해 많은 사람들과 소통할 수 있도록 돕는 것입니다.
+                    또한 컬렉터들에게는 특별한 예술 작품을 소장할 수 있는 기회를 제공합니다.
+                </p>
+            </section>
+            <section>
+                <h2 class="text-5xl font-extrabold text-gray-900 mb-12 text-center">PROMISE</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-center mb-6">
+                            <svg class="w-12 h-12 text-indigo-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18" />
+                            </svg>
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">혁신</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            ArtAuction은 최신 경매 기술을 통해 효율적이고 투명한 거래를 보장합니다.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-center mb-6">
+                            <svg class="w-12 h-12 text-green-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">신뢰</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            ArtAuction은 모든 거래에서 신뢰를 최우선으로 하여 고객 만족을 추구할 것입니다.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-center mb-6">
+                            <svg class="w-12 h-12 text-yellow-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7 7 7-7" />
+                            </svg>
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2">열정</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            ArtAuction은 예술에 대한 열정을 바탕으로 최고의 경험을 제공합니다.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
 </div>
 </html>
