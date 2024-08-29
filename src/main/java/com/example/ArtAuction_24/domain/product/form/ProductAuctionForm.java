@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ProductAuctionForm {
 
     @NotBlank(message = "작품명은 필수입니다.")
-    @Size(max = 200)
+    @Size(max = 50)
     private String title;
 
     @NotNull(message = "시작 시간은 필수 항목입니다.")
