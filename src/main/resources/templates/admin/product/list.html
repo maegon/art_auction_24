@@ -26,7 +26,7 @@
                             <div class="pr_list_cd flex-1" th:text="${#temporals.format(product.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="pr_list_md flex-1" th:text="${#temporals.format(product.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="pr_list_pi flex-1">
-                                <img th:src="@{${product.thumbnailImg}}" alt="작품 이미지"/>
+                                <img th:src="@{|/file/${product.thumbnailImg}|}" alt="작품 이미지"/>
                             </div>
                             <div class="pr_list_pn flex-1 overflow-hidden" th:text="${product.title}"></div>
                             <div class="pr_list_at flex-1 overflow-hidden" th:text="${product.artist.name}"></div>

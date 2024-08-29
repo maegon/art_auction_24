@@ -21,9 +21,9 @@
             <div class="card-list flex overflow-x-auto space-x-4 p-4 items-center">
                 <div th:each="artist : ${artistList}">
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-64 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
-                    <a th:href="@{/home/introduce}" class="no-underline">
+                    <a th:href="@{|/artist/profile/${artist.id}|}" class="no-underline">
                         <div>
-                            <img th:if="${artist.thumbnailImg != null}" th:src="@{${artist.thumbnailImg}}" class="w-full h-full object-cover rounded-lg" alt="작가프로필 이미지">
+                            <img th:if="${artist.thumbnailImg != null}"  th:src="@{|/file/${artist.thumbnailImg}|}" class="w-full h-full object-cover rounded-lg" alt="작가프로필 이미지">
                             <img th:unless="${artist.thumbnailImg != null}" th:src="@{/image/작가프로필.png}" class="w-full h-full object-cover rounded-lg" alt="기본 이미지">
                         </div>
                     </a>
@@ -31,10 +31,6 @@
                     <div class="pb-4">
                         <h5 class="text-lg font-bold mb-2 context" th:text="${artist.korName}"></h5>
                         <h5 class="text-lg font-bold mb-2 context" th:text="${artist.engName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4"
-                           th:text="${artist.introduce.length() > 18} ? ${#strings.substring(artist.introduce, 0, 18)} + '...' : ${artist.introduce}">
-                        </p>
-
                     </div>
                 </div>
             </div>
@@ -50,15 +46,18 @@
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-72 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
                         <a th:href="@{|/product/detail/${product.id}|}" class="no-underline">
                             <div>
-                                <img th:if="${product.thumbnailImg != null}" th:src="@{${product.thumbnailImg}}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
+                                <img th:if="${product.thumbnailImg != null}" th:src="@{|/file/${product.thumbnailImg}|}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
                                 <img th:unless="${product.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
                             </div>
                         </a>
                     </div>
-                    <div class="pb-4">
-                        <h5 class="text-lg font-bold mb-2 context" th:text="${product.title}"></h5>
-                        <h5 class="text-lg font-bold mb-2 context" th:text="${product.artist.korName}"></h5>
-                        <p class="text-sm leading-relaxed mb-4 text-red-500" th:text="${product.formattedCurrentBid}"></p>
+                    <div class="ongoing-info">
+                        <div class="ongoing-info-title" th:text="${product.title}">작품 제목</div>
+                        <div class="ongoing-info-artistName" th:text="${product.artist.korName}">작가 이름</div>
+                        <hr>
+                        <div style="font-size: 14px; color: gray; margin-top : 10px; margin-bottom : 10px;">현재가</div>
+                        <div style="font-size: 14px; position: relative; top: -8px;" class="ongoing-info-currentBid-kor"> KRW <span style="font-size: 14px;" class="ongoing-info-currentBid"  th:text="${product.formattedCurrentBid}">현재 경매가</span></div>
+
                     </div>
                 </div>
             </div>

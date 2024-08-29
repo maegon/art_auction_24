@@ -1,0 +1,131 @@
+<html layout:decorate="~{layout/layout}">
+<head>
+    <script>
+        function triggerFileInput() {
+            document.getElementById('thumbnail').click();
+        }
+
+        function previewThumbnail(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const preview = document.getElementById('thumbnailPreview');
+                    const uploadButton = document.getElementById('uploadButton');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadButton.style.display = 'none';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // 입력값에서 'e'와 'E'를 제거하는 함수
+        function filterExponent(event) {
+            const input = event.target;
+            // 'e'와 'E'를 제거
+            input.value = input.value.replace(/[eE]/g, '');
+        }
+
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="productForm-container mx-auto px-6 lg:px-[300px]">
+
+        <h1 class="text-2xl font-bold text-center py-5">작품 수정</h1>
+        <h1 class="text-xl font-bold text-center py-1">**반드시 모든 항목을 채워주세요**</h1>
+
+        <form id="productForm" th:action="@{/product/modify/{id}(id=${product.id})}" method="post" th:object="${productForm}" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+            <div class="flex flex-col items-center mb-4">
+                <img id="thumbnailPreview" src="#" alt="미리보기" class="w-48 h-48 object-cover rounded-lg cursor-pointer hidden" onclick="triggerFileInput()">
+                <input type="file" id="thumbnail" name="thumbnail" th:field="*{thumbnail}" class="hidden" onchange="previewThumbnail(this)">
+                <button type="button" id="uploadButton" onclick="triggerFileInput()" class="mt-4 p-3 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300 focus:outline-none">
+                    <i class="fa-solid fa-user-plus text-xl"></i>
+                </button>
+                <p th:if="${#fields.hasErrors('thumbnail')}" th:errors="*{thumbnail}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">작품 제목</label>
+                <input type="text" name="title" id="title"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{title}"
+                       th:placeholder="${product.title}">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="medium" class="block text-gray-700 text-sm font-bold mb-2">사용된 재료</label>
+                <input type="text" id="medium"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{medium}"
+                       th:placeholder="${product.medium}">
+                <p th:if="${#fields.hasErrors('medium')}" th:errors="*{medium}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="flex space-x-4 mb-4">
+                <!-- 가로 크기 입력 -->
+                <div class="w-1/2">
+                    <label for="width" class="block text-gray-700 text-sm font-bold mb-2">가로 크기 (cm)</label>
+                    <input type="number" id="width"
+                           class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           th:field="*{width}"
+                           oninput="filterExponent(event)"
+                           th:placeholder="${product.width}">
+                    <p th:if="${#fields.hasErrors('width')}" th:errors="*{width}" class="text-red-500 text-xs italic"></p>
+                </div>
+
+                <!-- 세로 크기 입력 -->
+                <div class="w-1/2">
+                    <label for="height" class="block text-gray-700 text-sm font-bold mb-2">세로 크기 (cm)</label>
+                    <input type="number" id="height"
+                           class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           th:field="*{height}"
+                           oninput="filterExponent(event)"
+                           th:placeholder="${product.height}">
+                    <p th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-red-500 text-xs italic"></p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="startingPrice" class="block text-gray-700 text-sm font-bold mb-2">시작가</label>
+                <input type="number" id="startingPrice"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{startingPrice}"
+                       oninput="filterExponent(event)"
+                       th:placeholder="${product.startingPrice}">
+                <p th:if="${#fields.hasErrors('startingPrice')}" th:errors="*{startingPrice}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
+                <input type="text" id="category"
+                       class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       th:field="*{category}"
+                       th:placeholder="${product.category}">
+                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">작품 설명</label>
+                <textarea id="description" rows="4"
+                          class="appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          th:field="*{description}"
+                          th:placeholder="${product.description}"></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-red-500 text-xs italic"></p>
+            </div>
+
+
+            <div class="flex items-center justify-between mt-4">
+                <button type="submit" class="w-full sm:w-auto btn font-bold py-2 px-4 focus:outline-none focus:shadow-outline">
+                    MODIFY PAINT
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

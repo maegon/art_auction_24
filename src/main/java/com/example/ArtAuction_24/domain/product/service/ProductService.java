@@ -43,9 +43,6 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final LikeProductRepository likeProductRepository;
 
-    @Value("${custom.genFileDirPath}")
-    private String fileDirPath;
-
 
 
     public Page<Product> getProductsWithSorting(String keyword, Pageable pageable, String sortOption, Boolean auction) {
@@ -73,28 +70,22 @@ public class ProductService {
         }
     }
 
+
+    @Value("${custom.genFileDirPath}")
+    private String genFileDirPath;
     public void create(String title, String description, String medium, long width,long height,
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
                           MultipartFile thumbnailImg, String category, Artist artist) {
 
-        // 경로를 수정하여 ProductImages 디렉토리에 저장하도록 합니다.
         String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
-        File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
+        File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
-        File dir = new File(fileDirPath + "/image/product");
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
-            }
-        }
+        thumbnailFile.mkdir();
 
         try {
             thumbnailImg.transferTo(thumbnailFile);
-            if (!thumbnailFile.exists()) {
-                throw new RuntimeException("파일 저장 실패: " + thumbnailFile.getAbsolutePath());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("파일 저장 실패: " + e.getMessage(), e);
+        } catch( IOException e) {
+            throw new RuntimeException(e);
         }
 
         // Product 객체를 생성합니다.
@@ -118,8 +109,8 @@ public class ProductService {
     }
 
     public Product create(String title, String description, String medium, long width, long height,
-                          BigDecimal startingPrice, LocalDateTime auctionStartDate,
-                          String thumbnailImg, String category, Artist artist){
+                          BigDecimal startingPrice, LocalDateTime auctionStartDate, String thumbnailImg,
+                           String category, Artist artist){
 
         Product p = Product.builder()
                 .title(title)
@@ -324,5 +315,39 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    public void modify(Product product, String title, String description, String medium, long width,long height,
+                       BigDecimal startingPrice,
+                       MultipartFile thumbnailImg, String category){
+        product.setTitle(title);
+        product.setDescription(description);
+        product.setMedium(medium);
+        product.setWidth(width);
+        product.setHeight(height);
+        product.setStartingPrice(startingPrice);
+        product.setCurrentBid(startingPrice);
+        product.setCategory(category);
 
+        if (thumbnailImg != null && !thumbnailImg.isEmpty()) {
+            String thumbnailRelPath = "image/product/" + UUID.randomUUID().toString() + ".jpg";
+            File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
+
+            File parentDir = thumbnailFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            try {
+                thumbnailImg.transferTo(thumbnailFile);
+                product.setThumbnailImg(thumbnailRelPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        productRepository.save(product);
+    }
+
+    public void delete(Product product){
+        this.productRepository.delete(product);
+    }
 }
