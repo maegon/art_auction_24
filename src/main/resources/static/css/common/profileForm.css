@@ -284,14 +284,28 @@
         width: 100%;
         min-width: unset;
     }
+    .input-group-mw {
+        display: flex;
+        flex-wrap: wrap; /* 필드가 여러 줄로 나뉘도록 설정 */
+        justify-content: space-between; /* 필드 사이에 간격을 줌 */
+        margin-bottom: 5px;
+    }
+
+    .input-group-mw > input {
+        flex: 1 1 30%;
+        margin-bottom: 5px;
+        box-sizing: border-box;
+    }
 
     .textAdd_1 {
         width: 100%;
     }
 
     .button_2 {
-        margin-left: 0;
+        display: flex;
         justify-content: center;
+        margin-bottom: 30px;
+        margin-left: 0px;
     }
 
     .textTileForm {

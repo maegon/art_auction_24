@@ -97,15 +97,17 @@
         </div>
         <div class="textArtistProfile">
             <div class="textAdd_2">
-                <div class="textTileForm_test">
+                <div class="textTileForm_test" id="textTileForm_test_ID">
                     <span class="title_1">INTRODUCE</span>
-                    <span class="contentAdd" id="introduce" th:text="${artist.introduce}"></span>
+                    <span class="contentAdd_1" id="introduce" th:text="${artist.introduce}"></span>
                 </div>
                 <div class="textTileForm_test">
-                    <span class="title_1">MAJOR WORK</span>
-                    <a th:href="@{|/product/my-products/${artist.id}|}" class="button-majorWorkForm">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                    <div id="textTileForm_test_ID_2">
+                        <span class="title_1">MAJOR WORK</span>
+                        <a th:href="@{|/product/my-products/${artist.id}|}" class="button-majorWorkForm">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <div class="contentAddContainer">
                         <div class="input-group-MW">
                             <div class="contentAdd title" th:each="add : ${artist.titleContentAdds}">
@@ -131,9 +133,9 @@
                 </div>
                 <div class="textTileForm_test">
                     <div class="title_1" th:each="add : ${artist.titleAdds}">
-                        <span th:text="${add.content}" style="margin-left: 8px;"></span>
+                        <span th:text="${add.content}"></span>
                     </div>
-                    <div class="contentAdd" th:each="add : ${artist.contentAdds}">
+                    <div class="contentAdd" id="contentAdds_text_id" th:each="add : ${artist.contentAdds}">
                         <span th:text="${add.content}"></span>
                     </div>
                 </div>

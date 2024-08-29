@@ -288,12 +288,13 @@ public class ProductController {
                 productId
         );
 
-        System.out.println("setAuctionEndDate:" + productAuctionForm.getAuctionEndDate());
+        productService.markProductAsAuctioned(productId);
 
-        return "redirect:/product/auctionList";
+        return "redirect:/product/my-products/" + artist.getId();
     }
 
     // 경매 신청 목록을 보여주는 페이지
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/auctionList")
     public String auctionList(Model model) {
         List<Product> products = productService.getAuctionedProductsPendingApproval();

@@ -30,17 +30,11 @@ public class ArtistService {
     private final ArtistAddRepository artistAddRepository;
     private final TitleAddRepository titleAddRepository;
     private final ContentAddRepository contentAddRepository;
-
     private final TitleContentAddRepository titleContentAddRepository;
-
     private final YearContentAddRepository yearContentAddRepository;
-
     private final WidthContentAddRepository widthContentAddRepository;
-
     private final HeightContentAddRepository heightContentAddRepository;
-
     private final UnitContentAddRepository unitContentAddRepository;
-    @Autowired
     private final TechniqueContentAddRepository techniqueContentAddRepository;
 
     @Value("${custom.genFileDirPath}")
@@ -193,6 +187,10 @@ public class ArtistService {
         artist.setEngName(engName);
         artist.setBirthDate(birthDate);
         artist.setIntroduce(introduce);
+
+        artistAdds = Optional.ofNullable(artistAdds).orElse(new ArrayList<>());
+        titleAdds = Optional.ofNullable(titleAdds).orElse(new ArrayList<>());
+        contentAdds = Optional.ofNullable(contentAdds).orElse(new ArrayList<>());
 
         // 각 리스트들을 처리하고 저장
         updateArtistAdds(artist, convertToArtistAddList(artistAdds, artist));
