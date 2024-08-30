@@ -335,8 +335,8 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("/sendmail/confirmCode", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                [csrfHeader]: csrfToken
+                "Content-Type": "application/json"
+//                [csrfHeader]: csrfToken
             },
             body: JSON.stringify({ email: email })
         })
