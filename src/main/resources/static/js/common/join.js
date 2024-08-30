@@ -326,11 +326,11 @@ document.addEventListener("DOMContentLoaded", function() {
             emailError.classList.add("success");
         }
 
-        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-        console.log('CSRF Token:', csrfToken);
-        console.log('CSRF Header:', csrfHeader);
+//        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+//        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+//
+//        console.log('CSRF Token:', csrfToken);
+//        console.log('CSRF Header:', csrfHeader);
 
         fetch("/sendmail/confirmCode", {
             method: "POST",
