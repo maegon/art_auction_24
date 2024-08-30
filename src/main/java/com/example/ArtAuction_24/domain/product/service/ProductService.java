@@ -357,7 +357,8 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void delete(Product product){
+    @Transactional
+    public void delete(Product product) {
         this.productRepository.delete(product);
     }
 

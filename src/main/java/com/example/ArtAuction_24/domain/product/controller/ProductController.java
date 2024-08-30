@@ -57,6 +57,7 @@ public class ProductController {
     private final BidService bidService;
     private final ArtistService artistService;
     private final AuctionService auctionService;
+    private final AuctionProductService auctionProductService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -377,9 +378,18 @@ public class ProductController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
-    public String productDelete(@PathVariable("id") long id){
+    public String productDelete(@PathVariable("id") long id) {
+        // 제품 정보 조회
         Product product = this.productService.getProduct(id);
+
+        // 경매 제품이 존재하는지 확인하고 삭제
+        if (this.auctionProductService.existsByProductId(id)) {
+            this.auctionProductService.deleteByProductId(id);
+        }
+
+        // 제품 삭제 (트랜잭션 내에서 처리됨)
         this.productService.delete(product);
+
         return "redirect:/";
     }
 }

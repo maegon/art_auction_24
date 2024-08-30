@@ -36,4 +36,14 @@ public class AuctionProductService {
         return auctionProductRepository.findByProductId(productId);
     }
 
+    // 해당 product_id가 auction_product에 존재하는지 확인
+    public boolean existsByProductId(long productId) {
+        return auctionProductRepository.existsByProductId(productId);
+    }
+
+    // 해당 product_id와 관련된 auction_product 레코드 삭제
+    @Transactional
+    public void deleteByProductId(long productId) {
+        auctionProductRepository.deleteByProductId(productId);
+    }
 }
