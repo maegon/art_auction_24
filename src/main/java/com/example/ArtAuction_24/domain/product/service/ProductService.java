@@ -360,4 +360,9 @@ public class ProductService {
     public void delete(Product product){
         this.productRepository.delete(product);
     }
+
+
+    public boolean existsByTitleAndArtist(String title, Artist artist) {
+        return productRepository.existsByTitleAndArtist(title, artist);
+    }
 }

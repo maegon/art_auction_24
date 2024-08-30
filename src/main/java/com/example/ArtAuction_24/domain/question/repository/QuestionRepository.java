@@ -15,5 +15,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findByAnsweredFalse(Pageable pageable);
 
     List<Question> findByMember(Member member);
+
+    boolean existsByMember(Member m1);
 }
 

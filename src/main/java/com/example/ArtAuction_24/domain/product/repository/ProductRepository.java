@@ -90,4 +90,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByAuctionedTrueAndApprovedFalse(); // 승인 대기 중인 제품
     List<Product> findByAuctionedTrueAndApprovedTrue();  // 승인된 제품
     // 관리자가 경매 제품을 선택할때 낙찰자가 존재하는 제품과 이미 경매에 올라가 있는 제품 제외
+
+    boolean existsByTitleAndArtist(String title, Artist artist);
 }

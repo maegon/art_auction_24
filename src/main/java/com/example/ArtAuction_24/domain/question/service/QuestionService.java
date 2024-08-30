@@ -119,4 +119,8 @@ public class QuestionService {
     public List<Question> findByMember(Member member) {
         return questionRepository.findByMember(member);
     }
+
+    public boolean existsByMember(Member m1) {
+        return questionRepository.existsByMember(m1);
+    }
 }
