@@ -24,7 +24,6 @@
         </ul>
     </div>
 
-
     <div class="admContainer mx-auto px-6 lg:px-[300px] question-manage-content-container">
         <div class="text-center mb-4">
             <h1 class="text-2xl font-black text-center py-3 text-black">문의 관리페이지</h1>
@@ -56,7 +55,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="question : ${questionPage.content}">
+                <tr th:each="question : ${questionPage}">
                     <td class="border px-4 py-2">
                         <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.id}"></a>
                     </td>
@@ -105,10 +104,24 @@
                 </div>
             </div>
         </div>
-
+        <!-- 페이징 처리 부분  -->
+        <div class="question-manage-pagination-container">
+            <ul class="inline-flex items-center">
+                <li th:if="${questionPage.hasPrevious()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number - 1}&size=${questionPage.size}&filter=${currentFilter}|}">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, questionPage.totalPages)}">
+                    <a th:href="@{|/admin/question/manage?page=${i - 1}&size=${questionPage.size}&filter=${currentFilter}|}"
+                       th:text="${i}"
+                       th:classappend="${i == questionPage.number + 1} ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'"></a>
+                </li>
+                <li th:if="${questionPage.hasNext()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number + 1}&size=${questionPage.size}&filter=${currentFilter}|}">다음</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
-
 </html>
 
 <script>
