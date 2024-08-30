@@ -122,7 +122,6 @@ public class NotificationService {
         }
 
         // 낙찰되지 않은 입찰자들에게 알림 전송
-        // 낙찰되지 않은 입찰자들에게 알림 전송
         allBidders.stream()
                 .filter(bidder -> !winningBidders.contains(bidder))
                 .forEach(bidder -> sendNotification(

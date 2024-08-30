@@ -37,8 +37,6 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
-                .csrf((csrf) -> csrf //이상한 경로로 들어오는것을 막아줌
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/**")));
         ;
 
         return http.build();
