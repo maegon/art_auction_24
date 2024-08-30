@@ -56,10 +56,53 @@
                 </thead>
                 <tbody>
                 <tr th:each="question : ${questionPage.content}">
+                    <td class="border px-4 py-2">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.id}"></a>
+                    </td>
+                    <td class="border px-4 py-2" th:text="${question.questionType.name()}"></td>
+                    <td class="border px-4 py-2">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                    </td>
 
+                    <td class="border px-4 py-2" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
+                    <td class="border px-4 py-2"
+                        th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
+                        th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></td>
                 </tr>
                 </tbody>
             </table>
+
+            <!-- 모바일 화면에서는 카드 형태로 표시 -->
+            <div class="question-manage-mobile-cards">
+                <div th:each="question : ${questionPage.content}" class="question-manage-card">
+                    <div class="card-header">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-item">
+                            <span>번호:</span>
+                            <span th:text="${question.id}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>유형:</span>
+                            <span th:text="${question.questionType.name()}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>작성자:</span>
+
+                        </div>
+                        <div class="card-item">
+                            <span>날짜:</span>
+                            <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>상태:</span>
+                            <span th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
+                                  th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- 페이징 처리 부분  -->
         <div class="question-manage-pagination-container">
