@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Notification extends BaseEntity {
 
-    @Lob
+    @Column(length = 10000)
     private String message; // 알림 내용
 
     private String recipient; // 수신자 정보 (이메일, 전화번호 등)
