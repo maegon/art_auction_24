@@ -88,7 +88,7 @@
                             <div class="flex justify-around">
                                 <div class="mb_list_pi flex justify-center mb-1 mt-1">
                                     <div class="w-24 h-24 rounded-full overflow-hidden">
-                                        <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                                        <img th:if="${member.image != null}" th:src="@{|/${member.image}|}" alt="(프로필)"
                                              class="w-full h-full object-cover aspect-w-1 aspect-h-1"/>
                                         <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
                                              class="w-full h-full object-cover aspect-w-1 aspect-h-1"/>
@@ -134,7 +134,7 @@
                             <div class="mb_list_cd flex-1 text-center truncate" th:text="${#temporals.format(member.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_md flex-1 text-center truncate" th:text="${#temporals.format(member.modifyDate, 'yyyy년 MM월 dd일 HH:mm')}"></div>
                             <div class="mb_list_pi flex-1 text-center">
-                                <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                                <img th:if="${member.image != null}" th:src="@{|/${member.image}|}" alt="(프로필)"
                                      class="w-10 h-10 rounded-full object-cover mx-auto"/>
                                 <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
                                      class="w-10 h-10 rounded-full object-cover mx-auto"/>

@@ -141,7 +141,7 @@
                         <div th:each="product : ${allProducts}" class="flex items-center border-b border-gray-300 pb-2 product-item">
                             <label class="flex items-center space-x-3 cursor-pointer w-full">
                                 <input type="checkbox" name="products" th:value="${product.id}" class="form-checkbox h-5 w-5 text-blue-500 focus:ring-blue-400"/>
-                                <img th:src="@{|/file/${product.thumbnailImg}|}" alt="Product Image" class="w-16 h-16 object-cover"/>
+                                <img th:src="@{|/${product.thumbnailImg}|}" alt="Product Image" class="w-16 h-16 object-cover"/>
                                 <span th:text="|${product.title} (${product.artist.korName})|" class="ml-2 text-gray-700 text-sm product-title"></span>
                             </label>
                         </div>
