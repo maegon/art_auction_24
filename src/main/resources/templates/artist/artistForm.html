@@ -82,6 +82,9 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <div th:if="${infoMessage}" class="alert alert-info text-center">
+        <p th:text="${infoMessage}">프로필 없이 작품 추가할때 오류 메시지</p>
+    </div>
     <div class="artistCreateContainer">
         <div class="artist-cc">
             <form id="artistForm" th:action="@{/artist/create}" method="post" th:object="${artistForm}" enctype="multipart/form-data" class="artistContainer">
