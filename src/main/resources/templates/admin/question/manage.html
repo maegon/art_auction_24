@@ -3,9 +3,29 @@
         <!-- 모바일 메뉴 토글 버튼 -->
         <div class="admin-manage-menu-toggle-btn "><i class="fa-solid fa-user-tie"></i></div>
 
+        <div class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-4 pb-4 pl-0 lg:pr-4 z-10 admin-manage-sidebar h-auto lg:h-80 flex flex-col lg:flex-col">
+            <ul>
+                <li class="flex flex-col mb-6">
+                    <span class="menu-header">경매 관리</span>
+                    <a th:href="@{/admin/auction/list}" class="mg_menu_btn">경매 내역 관리</a>
+                    <a th:href="@{/auction/create}" class="mg_menu_btn">경매 추가</a>
+                </li>
+                <li class="flex flex-col">
+                    <span class="menu-header">회원 관리</span>
+                    <a th:href="@{/admin/member/list}" class="mg_menu_btn">회원 권한 설정</a>
+                    <a th:href="@{/artist/pending-approval}" class="mg_menu_btn">작가 신청 내역</a>
+                </li>
+                <li class="flex flex-col">
+                    <span class="menu-header">문의 관리</span>
+                    <a th:href="@{/admin/question/manage}" class="mg_menu_btn">문의 관리</a>
+                    <a th:href="@{/admin/question/faqManage}" class="mg_menu_btn">FAQ 관리</a>
+                    <a href="https://desk.channel.io/#/channels/176370/user_chats/66ccc17b21e520ce4081" class="mg_menu_btn">채팅 관리</a>
+                </li>
+            </ul>
+        </div>
+
 
     </div>
-
 </html>
 
 <script>
