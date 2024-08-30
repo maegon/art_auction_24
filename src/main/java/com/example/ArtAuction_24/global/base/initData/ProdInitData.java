@@ -1,12 +1,8 @@
 package com.example.ArtAuction_24.global.base.initData;
 
 
-
-import com.example.ArtAuction_24.domain.answer.service.AnswerService;
 import com.example.ArtAuction_24.domain.artist.entity.Artist;
-import com.example.ArtAuction_24.domain.artist.repository.ArtistRepository;
 import com.example.ArtAuction_24.domain.artist.service.ArtistService;
-import com.example.ArtAuction_24.domain.auction.service.AuctionService;
 import com.example.ArtAuction_24.domain.member.entity.Member;
 import com.example.ArtAuction_24.domain.member.repository.MemberRepository;
 import com.example.ArtAuction_24.domain.member.service.MemberService;
@@ -22,7 +18,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,15 +27,9 @@ import java.time.LocalDateTime;
 @Configuration
 @RequiredArgsConstructor
 public class ProdInitData implements BeforeInitData {
-    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
-    private final ProductService productService;
-    private final ArtistService artistService;
     private final QuestionService questionService;
-    private final AnswerService answerService;
     private final PostService postService;
-    private final ArtistRepository artistRepository;
-    private final AuctionService auctionService;
 
 
 
@@ -70,12 +59,12 @@ public class ProdInitData implements BeforeInitData {
             }
 
             if (!memberService.checkUsernameExists("user3")) {
-                memberService.join("", "user3", password, "user3@test.com", "user3",
+                memberService.join("", "user3", password, "minseopkim99@gmail.com", "user3",
                         "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
             if (!memberService.checkUsernameExists("user4")) {
-                memberService.join("", "user4", password, "user4@test.com", "user4",
+                memberService.join("", "user4", password, "bok06023@naver.com", "user4",
                         "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
@@ -95,7 +84,7 @@ public class ProdInitData implements BeforeInitData {
             }
 
             if (!memberService.checkUsernameExists("artist4")) {
-                memberService.join("", "artist4", password, "artist4@test.com", "artist4",
+                memberService.join("", "artist4", password, "alstjq9912@naver.com", "artist4",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
@@ -117,8 +106,12 @@ public class ProdInitData implements BeforeInitData {
             Member member5 = memberRepository.findByUsername("artist5").orElse(null);
             Member member6 = memberRepository.findByUsername("artist6").orElse(null);
 
+            System.out.println("member1 의 username : " + member1.getUsername());
+
             if (member1 == null) {
                 artistService.create("김작가", "kimArtist", "1950-06-28", "안녕! 나 김작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member1);
+            } else {
+                System.out.println("member test");
             }
             if (member2 == null) {
                 artistService.create("나작가", "naArtist", "1968-12-08", "안녕! 나 나작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member2);
