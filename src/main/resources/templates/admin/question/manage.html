@@ -74,7 +74,7 @@
 
             <!-- 모바일 화면에서는 카드 형태로 표시 -->
             <div class="question-manage-mobile-cards">
-                <div th:each="question : ${questionPage.content}" class="question-manage-card">
+                <div th:each="question : ${questionPage}" class="question-manage-card">
                     <div class="card-header">
                         <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
                     </div>
