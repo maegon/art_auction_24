@@ -55,20 +55,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="question : ${questionPage}">
-                    <td class="border px-4 py-2">
-                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.id}"></a>
-                    </td>
-                    <td class="border px-4 py-2" th:text="${question.questionType.name()}"></td>
-                    <td class="border px-4 py-2">
-                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
-                    </td>
-                    <td class="border px-4 py-2" th:text="${question.member.nickname}"></td>
-                    <td class="border px-4 py-2" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
-                    <td class="border px-4 py-2"
-                        th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
-                        th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></td>
-                </tr>
+
                 </tbody>
             </table>
 
