@@ -70,12 +70,12 @@ public class ProdInitData implements BeforeInitData {
             }
 
             if (!memberService.checkUsernameExists("user3")) {
-                memberService.join("", "user3", password, "user3@test.com", "user3",
+                memberService.join("", "user3", password, "minseopkim99@gmail.com", "user3",
                         "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
             if (!memberService.checkUsernameExists("user4")) {
-                memberService.join("", "user4", password, "user4@test.com", "user4",
+                memberService.join("", "user4", password, "bok06023@naver.com", "user4",
                         "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
@@ -95,7 +95,7 @@ public class ProdInitData implements BeforeInitData {
             }
 
             if (!memberService.checkUsernameExists("artist4")) {
-                memberService.join("", "artist4", password, "artist4@test.com", "artist4",
+                memberService.join("", "artist4", password, "alstjq9912@naver.com", "artist4",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
