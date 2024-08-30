@@ -52,7 +52,7 @@
                 </form>
                 <a class="favoriteArtist-A" th:href="@{/artist/profile/{id}(id=${artist.id})}">
                     <div class="artistListImg">
-                        <img th:src="@{|/file/${artist.thumbnailImg != null ? artist.thumbnailImg : 'default-thumbnail.jpg'}|}" class="artist-list-img" alt="Thumbnail">
+                        <img th:src="@{|/${artist.thumbnailImg != null ? artist.thumbnailImg : 'default-thumbnail.jpg'}|}" class="artist-list-img" alt="Thumbnail">
                     </div>
                     <div class="korName-artistList border-t border-black">
                         <span th:text="${artist.korName}"></span> 작가

@@ -16,7 +16,7 @@
                 <a th:href="@{|/product/detail/${product.id}|}"
                    class="block w-full h-64 bg-gray-100 overflow-hidden transition-transform duration-500 hover:translate-y-[-6px] hover:shadow-md">
                     <img class="object-contain object-center w-full h-full transition-transform duration-500"
-                         th:src="@{|/file/${product.thumbnailImg}|}"
+                         th:src="@{|/${product.thumbnailImg}|}"
                          alt="이미지가 존재하지 않습니다.">
                 </a>
                 <div class="p-4 flex flex-col flex-grow">
