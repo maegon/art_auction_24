@@ -174,37 +174,38 @@ public class ProdInitData implements BeforeInitData {
             //FAQ 테스트 데이터
 
             if (!postService.existsByMember(M1)) {
-                postService.create(new PostForm("작가의 주된 작품 스타일은 무엇인가요?", "작가는 주로 추상 미술과 표현주의 스타일을 사용하며, 감정과 내면의 상태를 형상화하는 데 집중합니다.", PostType.ARTIST), M1);
+                Member postWriter = memberService.getMemberByUsername("admin");
+                postService.create(new PostForm("작가의 주된 작품 스타일은 무엇인가요?", "작가는 주로 추상 미술과 표현주의 스타일을 사용하며, 감정과 내면의 상태를 형상화하는 데 집중합니다.", PostType.ARTIST), postWriter);
 
-                postService.create(new PostForm("미술품 경매를 할수있는 작가의 기준은무엇인가요?", "저희 사이트에서 작가 기준은 예술활동 증명서를 바탕으로 검토를하여 작가자격심사가 이루어집니다.", PostType.ARTIST), M1);
+                postService.create(new PostForm("미술품 경매를 할수있는 작가의 기준은무엇인가요?", "저희 사이트에서 작가 기준은 예술활동 증명서를 바탕으로 검토를하여 작가자격심사가 이루어집니다.", PostType.ARTIST), postWriter);
 
-                postService.create(new PostForm("한정판에디션은 무엇인가요?", "작가의 한정된 수로 제작하는 작품’을 뜻하며, 작가가 결정합니다. 수량이 적을수록 시간이 흐를수록 값어치는 점점 높아집니다.", PostType.ARTWORK), M1);
+                postService.create(new PostForm("한정판에디션은 무엇인가요?", "작가의 한정된 수로 제작하는 작품’을 뜻하며, 작가가 결정합니다. 수량이 적을수록 시간이 흐를수록 값어치는 점점 높아집니다.", PostType.ARTWORK), postWriter);
 
-                postService.create(new PostForm("미술품 판매기준이무엇인가요?", "미술품 판매기준은 따로 지정해놓지 않았지만 작가가 자신의 미술품을 올리는 것이며, 사람마다 기준이 달라 미술품 판매 기준은 작가에게 있습니다.", PostType.ARTWORK), M1);
+                postService.create(new PostForm("미술품 판매기준이무엇인가요?", "미술품 판매기준은 따로 지정해놓지 않았지만 작가가 자신의 미술품을 올리는 것이며, 사람마다 기준이 달라 미술품 판매 기준은 작가에게 있습니다.", PostType.ARTWORK), postWriter);
 
-                postService.create(new PostForm("구매는 어떻게하나요?", "작가가 미술품을 판매하면 경매 날짜가 정해집니다. 지정 날짜가 되면 경매가 시작되고, 입찰을 통해 경매 마감 시 제일 높은 입찰자에게 판매가 됩니다.", PostType.PURCHASE), M1);
+                postService.create(new PostForm("구매는 어떻게하나요?", "작가가 미술품을 판매하면 경매 날짜가 정해집니다. 지정 날짜가 되면 경매가 시작되고, 입찰을 통해 경매 마감 시 제일 높은 입찰자에게 판매가 됩니다.", PostType.PURCHASE), postWriter);
 
-                postService.create(new PostForm("입찰 방법을 알고싶습니다.", "충전을 하여 입찰 캐시를 얻게 됩니다. 경매 물품에 원하는 만큼 입찰을 하게 되면 소유한 캐시에서 차감이 되며, 더 높은 입찰자가 생겼을 때 입찰한 금액을 반환받게 됩니다.", PostType.PURCHASE), M1);
+                postService.create(new PostForm("입찰 방법을 알고싶습니다.", "충전을 하여 입찰 캐시를 얻게 됩니다. 경매 물품에 원하는 만큼 입찰을 하게 되면 소유한 캐시에서 차감이 되며, 더 높은 입찰자가 생겼을 때 입찰한 금액을 반환받게 됩니다.", PostType.PURCHASE), postWriter);
 
-                postService.create(new PostForm("입찰 취소 방법", "입찰하면 다른 누군가 더 높은 금액을 받기 전까지는 취소할 수 없습니다. 그 점은 주의 부탁드리겠습니다.", PostType.PURCHASE), M1);
+                postService.create(new PostForm("입찰 취소 방법", "입찰하면 다른 누군가 더 높은 금액을 받기 전까지는 취소할 수 없습니다. 그 점은 주의 부탁드리겠습니다.", PostType.PURCHASE), postWriter);
 
-                postService.create(new PostForm("사이트에서 제공하는 예술 작품에 대한 상담 서비스는 어떤 것이 있나요?", "저희 사이트는 전문가 상담 서비스를 제공하여, 작품에 대한 정보와 추천을 받을 수 있습니다. 상담을 통해 작품의 가치와 적합성에 대해 도움을 드립니다.", PostType.SERVICE), M1);
+                postService.create(new PostForm("사이트에서 제공하는 예술 작품에 대한 상담 서비스는 어떤 것이 있나요?", "저희 사이트는 전문가 상담 서비스를 제공하여, 작품에 대한 정보와 추천을 받을 수 있습니다. 상담을 통해 작품의 가치와 적합성에 대해 도움을 드립니다.", PostType.SERVICE), postWriter);
 
-                postService.create(new PostForm("미술품 보관 및 관리 서비스는 어떻게 제공받나요?", "저희는 전체적인 미술품 보관 및 관리 서비스를 제공하고 있지 않지만, 작가 혹은 고객 상담을 통해 보관 및 관리 서비스도 진행하고 있습니다. 최적의 환경에서 안전하게 보관합니다. 정기적인 관리와 점검이 포함되어 있습니다.", PostType.SERVICE), M1);
+                postService.create(new PostForm("미술품 보관 및 관리 서비스는 어떻게 제공받나요?", "저희는 전체적인 미술품 보관 및 관리 서비스를 제공하고 있지 않지만, 작가 혹은 고객 상담을 통해 보관 및 관리 서비스도 진행하고 있습니다. 최적의 환경에서 안전하게 보관합니다. 정기적인 관리와 점검이 포함되어 있습니다.", PostType.SERVICE), postWriter);
 
-                postService.create(new PostForm("간단하게 질문 답을 빨리 받고 싶습니다.", "간단한 질문 같은 경우는 오른쪽 하단 채팅 버튼으로 문의 주실 수 있습니다.", PostType.SERVICE), M1);
+                postService.create(new PostForm("간단하게 질문 답을 빨리 받고 싶습니다.", "간단한 질문 같은 경우는 오른쪽 하단 채팅 버튼으로 문의 주실 수 있습니다.", PostType.SERVICE), postWriter);
 
-                postService.create(new PostForm("배송시 액자는 어떻게 되는 거죠?", "경매, 입찰까지 끝나면 배송이 되는데, 배송 관련은 액자까지 해서 같이 배송됩니다. 구매자께서 액자 준비는 안 하셔도 됩니다.", PostType.DELIVERY), M1);
+                postService.create(new PostForm("배송시 액자는 어떻게 되는 거죠?", "경매, 입찰까지 끝나면 배송이 되는데, 배송 관련은 액자까지 해서 같이 배송됩니다. 구매자께서 액자 준비는 안 하셔도 됩니다.", PostType.DELIVERY), postWriter);
 
-                postService.create(new PostForm("배송비는 어떻게 책정되나요?", "배송비는 작품의 크기와 무게, 배송 지역에 따라 다르게 책정됩니다. 결제 단계에서 정확한 배송비를 확인하실 수 있습니다.", PostType.DELIVERY), M1);
+                postService.create(new PostForm("배송비는 어떻게 책정되나요?", "배송비는 작품의 크기와 무게, 배송 지역에 따라 다르게 책정됩니다. 결제 단계에서 정확한 배송비를 확인하실 수 있습니다.", PostType.DELIVERY), postWriter);
 
-                postService.create(new PostForm("배송 시 작품이 손상되지 않도록 어떻게 보호하나요?", "작품은 전문 포장 재료를 사용하여 포장되며, 충격 완화재와 보호재를 통해 안전하게 배송됩니다. 포장 과정에서 품질 검사를 실시하여 손상을 최소화합니다.", PostType.DELIVERY), M1);
+                postService.create(new PostForm("배송 시 작품이 손상되지 않도록 어떻게 보호하나요?", "작품은 전문 포장 재료를 사용하여 포장되며, 충격 완화재와 보호재를 통해 안전하게 배송됩니다. 포장 과정에서 품질 검사를 실시하여 손상을 최소화합니다.", PostType.DELIVERY), postWriter);
 
-                postService.create(new PostForm("작품 반품 절차는 어떻게 되나요?", "작품을 반품하려면, 수령 후 7일 이내에 반품 요청을 하셔야 합니다. 작품이 원 상태로 반송되어야 하며, 반품 비용은 고객님 부담입니다.", PostType.RETURN), M1);
+                postService.create(new PostForm("작품 반품 절차는 어떻게 되나요?", "작품을 반품하려면, 수령 후 7일 이내에 반품 요청을 하셔야 합니다. 작품이 원 상태로 반송되어야 하며, 반품 비용은 고객님 부담입니다.", PostType.RETURN), postWriter);
 
-                postService.create(new PostForm("반품 시 작품이 손상된 경우 어떻게 처리하나요?", "반품된 작품이 손상된 경우, 손상 정도에 따라 환불이 불가능할 수 있습니다. 손상된 부분에 대해 검토 후 안내 드리겠습니다.", PostType.RETURN), M1);
+                postService.create(new PostForm("반품 시 작품이 손상된 경우 어떻게 처리하나요?", "반품된 작품이 손상된 경우, 손상 정도에 따라 환불이 불가능할 수 있습니다. 손상된 부분에 대해 검토 후 안내 드리겠습니다.", PostType.RETURN), postWriter);
 
-                postService.create(new PostForm("배송받았는데 작품이 파손되어있습니다.", "배송 완료 후 작품이 파손된 경우, 바로 문의 주시면 환불을 도와드립니다.", PostType.RETURN), M1);
+                postService.create(new PostForm("배송받았는데 작품이 파손되어있습니다.", "배송 완료 후 작품이 파손된 경우, 바로 문의 주시면 환불을 도와드립니다.", PostType.RETURN), postWriter);
 
             }
 
@@ -213,30 +214,27 @@ public class ProdInitData implements BeforeInitData {
             //문의하기 테스트데이터
 
             if (!questionService.existsByMember(M1)) {
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
-                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), M1);
+                Member questionWriter = memberService.getMemberByUsername("user1");
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+                questionService.create(new QuestionForm("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ", "asdfsadf", QuestionType.ARTIST), questionWriter);
+
+
             }
 
 
