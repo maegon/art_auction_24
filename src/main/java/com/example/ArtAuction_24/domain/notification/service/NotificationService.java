@@ -45,6 +45,8 @@ public class NotificationService {
     private final AuctionRepository auctionRepository;
     private final MemberRepository memberRepository;
     private final TaskScheduler taskScheduler;
+
+    private static final int MAX_MESSAGE_LENGTH = 10000;
     private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
     // 경매 종료시 알림 발송
@@ -70,7 +72,7 @@ public class NotificationService {
                         null,
                         product,
                         "🎉 경매 낙찰 알림 🎉",
-                        String.format(
+                        truncateMessage(String.format(
                                 "<html><body>" +
                                         "<p>안녕하세요, <strong>%s님</strong>.</p>" +
                                         "<p>축하합니다! 🎉</p>" +
@@ -85,7 +87,7 @@ public class NotificationService {
                                 product.getWinningBidder().getUsername(),
                                 product.getTitle(),
                                 product.getArtist() != null ? product.getArtist().getKorName() : "알 수 없음"
-                        )
+                        ))
                 );
 
 
@@ -95,7 +97,7 @@ public class NotificationService {
                         null,
                         product,
                         "🎨 경매 종료 및 낙찰 알림 🎨",
-                        String.format(
+                        truncateMessage(String.format(
                                 "<html><body>" +
                                         "<p>안녕하세요, <strong>%s님</strong>.</p>" +
                                         "<p>축하드립니다! 🎉</p>" +
@@ -110,7 +112,7 @@ public class NotificationService {
                                 product.getArtist().getKorName(),
                                 product.getTitle(),
                                 product.getTitle()
-                        )
+                        ))
                 );
 
 
@@ -128,7 +130,7 @@ public class NotificationService {
                         null,
                         null,
                         "경매 결과 안내",
-                        String.format(
+                        truncateMessage(String.format(
                                 "<html><body>" +
                                         "<p>안녕하세요, <strong>%s님</strong>.</p>" +
                                         "<p>안타깝게도, 이번 경매에서는 낙찰되지 않았습니다.</p>" +
@@ -141,7 +143,7 @@ public class NotificationService {
                                         "</body></html>",
                                 bidder.getUsername(),
                                 auction.getName()
-                        )
+                        ))
                 ));
 
     }
@@ -227,7 +229,7 @@ public class NotificationService {
             productListBuilder.append("- ").append(product.getTitle()).append("\n");
         }
 
-        String message = String.format(
+        String message = truncateMessage(String.format(
                 "<html>" +
                         "<body style='font-family: Arial, sans-serif;'>" +
                         "<div style='background-color: #f4f4f4; padding: 20px; border-radius: 8px;'>" +
@@ -245,7 +247,8 @@ public class NotificationService {
                 member.getUsername(),
                 productListBuilder.toString(),
                 auction.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-        );
+        ));
+
 
 
         Notification notification = Notification.builder()
@@ -293,5 +296,13 @@ public class NotificationService {
         } catch (Exception e) {
             logger.error("Failed to send notification: {}", e.getMessage());
         }
+    }
+
+    // 메시지 길이를 자르는 메소드
+    private String truncateMessage(String message) {
+        if (message.length() > MAX_MESSAGE_LENGTH) {
+            return message.substring(0, MAX_MESSAGE_LENGTH);
+        }
+        return message;
     }
 }
