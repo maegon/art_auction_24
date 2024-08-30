@@ -47,4 +47,8 @@ public class PostService {
             throw new DataNotFoundException("question not found");
         }
     }
+
+    public boolean existsByMember(Member m1) {
+        return postRepository.existsByMember(m1);
+    }
 }
