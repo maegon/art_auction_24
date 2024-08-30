@@ -78,18 +78,22 @@
         }, 1000); // 1초마다 갱신
 
 
-         document.getElementById('scheduledNotify-btn').addEventListener('click', function() {
-                const auctionId = /*[[${auction.id}]]*/ '';
-                fetch(`/api/${auctionId}/set-notification`, {
-                    method: 'POST'
-                }).then(response => {
-                    if (response.ok) {
-                        alert('알림이 설정되었습니다!');
-                    } else {
-                        alert('알림 설정에 실패했습니다.');
-                    }
-                });
-            });
+          document.getElementById('scheduledNotify-btn').addEventListener('click', function() {
+        const auctionId = /*[[${auction.id}]]*/ '';  // 이 부분이 올바른 값을 가지고 있는지 확인하세요.
+        if (auctionId) {
+            fetch(`/api/${auctionId}/set-notification`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    alert('알림이 설정되었습니다!');
+                } else {
+                    response.text().then(text => alert(`알림 설정에 실패했습니다: ${text}`));
+                }
+            }).catch(error => alert(`알림 설정 중 오류 발생: ${error}`));
+        } else {
+            alert('경매 ID가 유효하지 않습니다.');
+        }
+    });
 
     </script>
 </div>

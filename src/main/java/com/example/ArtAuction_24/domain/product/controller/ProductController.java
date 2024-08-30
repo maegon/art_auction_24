@@ -59,13 +59,13 @@ public class ProductController {
     private final AuctionService auctionService;
     private final AuctionProductService auctionProductService;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/create")
     public String create(ProductForm productForm){
         return "product/form";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ARTIST')")
     @PostMapping("/create")
     public String create(@Valid ProductForm productForm,BindingResult bindingResult,@RequestParam("thumbnail") MultipartFile thumbnail, Principal principal)
     {
