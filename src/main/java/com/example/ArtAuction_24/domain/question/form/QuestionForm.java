@@ -19,7 +19,7 @@ public class QuestionForm {
     @Size(max=200, message = "제목은 200자를 넘을수없습니다.")
     private String subject;
 
-    @Size(max=20000, message = "내용은 20000자를 넘을수없습니다.")
+    @Size(max=500, message = "내용은 20000자를 넘을수없습니다.")
     @NotEmpty(message="내용은 필수항목입니다.")
     private String content;
 
