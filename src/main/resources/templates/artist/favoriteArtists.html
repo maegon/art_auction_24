@@ -60,12 +60,13 @@
                 </a>
             </div>
         </div>
+        <!-- 즐겨찾기한 작가가 없을 때 메시지 표시 -->
+        <div th:if="${#lists.isEmpty(favoriteArtists)}" class="flex justify-center items-center h-80">
+            <p class="text-center text-gray-500 text-lg">아직 등록된 작가가 없습니다.</p>
+        </div>
     </div>
 
-    <!-- 즐겨찾기한 작가가 없을 때 메시지 표시 -->
-    <div th:if="${#lists.isEmpty(favoriteArtists)}" class="flex justify-center items-center h-80">
-        <p class="text-center text-gray-500 text-lg">아직 등록된 작가가 없습니다.</p>
-    </div>
+
 </div>
 </body>
 </html>

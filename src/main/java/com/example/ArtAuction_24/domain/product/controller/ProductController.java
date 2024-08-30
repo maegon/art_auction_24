@@ -61,8 +61,20 @@ public class ProductController {
 
     @PreAuthorize("hasAuthority('ARTIST')")
     @GetMapping("/create")
-    public String create(ProductForm productForm){
-        return "product/form";
+    public String create(ProductForm productForm, RedirectAttributes redirectAttributes){
+
+        Member member = this.memberService.getCurrentMember();
+        Optional<Artist> existingArtist = artistService.getArtistByMember(member);
+
+        if (existingArtist.isPresent()) {
+            // 이미 작가 프로필이 등록되어 있는 경우
+            return "product/form";
+        } else {
+            // 작가 프로필이 없는 경우
+            redirectAttributes.addFlashAttribute("infoMessage", "작가 프로필을 먼저 만드세요.");
+            return "redirect:/artist/create"; // 작가 프로필 생성 페이지로 리디렉션
+        }
+
     }
 
     @PreAuthorize("hasAuthority('ARTIST')")
@@ -154,7 +166,7 @@ public class ProductController {
         model.addAttribute("artist", artist);
 
         String auctionStatus = "SCHEDULED"; // 기본값을 "SCHEDULED"로 설정
-
+        LocalDateTime auctionEndDate = null; // 경매 마감일을 저장할 변수
         // 특정 제품의 가장 최신 경매 상품 조회
         Optional<AuctionProduct> latestAuctionProduct = productService.getLatestAuctionProduct(id);
 
@@ -164,6 +176,7 @@ public class ProductController {
 
             if (auction != null) {
                 auctionStatus = auction.getStatus().name();
+                auctionEndDate = auction.getEndDate();
             }
 
             model.addAttribute("auctionProduct", auctionProduct);
@@ -172,6 +185,7 @@ public class ProductController {
         }
 
         model.addAttribute("auctionStatus", auctionStatus);
+        model.addAttribute("auctionEndDate", auctionEndDate);
 
         // 현재 사용자의 입찰 정보 조회
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
