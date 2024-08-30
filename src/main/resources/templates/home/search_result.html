@@ -23,7 +23,7 @@
                     <div class="bg-white border border-gray-300 rounded-lg shadow-sm flex-shrink-0 w-64 hover:shadow-lg transform hover:-translate-y-1 transition duration-300">
                     <a th:href="@{|/artist/profile/${artist.id}|}" class="no-underline">
                         <div>
-                            <img th:if="${artist.thumbnailImg != null}"  th:src="@{|/file/${artist.thumbnailImg}|}" class="w-full h-full object-cover rounded-lg" alt="작가프로필 이미지">
+                            <img th:if="${artist.thumbnailImg != null}"  th:src="@{|/${artist.thumbnailImg}|}" class="w-full h-full object-cover rounded-lg" alt="작가프로필 이미지">
                             <img th:unless="${artist.thumbnailImg != null}" th:src="@{/image/작가프로필.png}" class="w-full h-full object-cover rounded-lg" alt="기본 이미지">
                         </div>
                     </a>

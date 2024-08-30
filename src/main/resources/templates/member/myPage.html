@@ -18,7 +18,7 @@
             <div class="md:w-80 flex-shrink-0 mt-12 mobile-header ">
                 <div class="border-2 border-gray-300 rounded-lg overflow-hidden ">
                     <div class="profile-section flex items-center justify-center py-4 bg-gradient-to-b from-slate-50">
-                        <img th:if="${member.image != null}" th:src="@{|/file/${member.image}|}" alt="(프로필)"
+                        <img th:if="${member.image != null}" th:src="@{|/${member.image}|}" alt="(프로필)"
                              class="profile-img w-32 h-32 object-cover rounded-full border-2 border-gray-300"/>
                         <img th:if="${member.image == null}" th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진"
                              class="profile-img w-32 h-32 object-cover rounded-full border-2 border-gray-300"/>

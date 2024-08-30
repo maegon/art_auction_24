@@ -63,7 +63,7 @@
     <div class="artistProfileContainer">
         <div class="basicArtistProfile_1">
             <div class="artistImg">
-                <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
+                <img th:src="@{|/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
             </div>
             <div class="engName">
                 <span th:text="${artist.engName}"></span>
