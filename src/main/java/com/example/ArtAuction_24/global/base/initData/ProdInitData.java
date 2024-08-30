@@ -59,52 +59,52 @@ public class ProdInitData implements BeforeInitData {
                         "010-1234-1234", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("user1")) {
                 memberService.join("", "user1", password, "user1@test.com", "user1",
                         "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("user2")) {
                 memberService.join("", "user2", password, "user2@test.com", "나다",
                         "010-1314-5838", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("user3")) {
                 memberService.join("", "user3", password, "user3@test.com", "user3",
                         "010-1314-5587", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("user4")) {
                 memberService.join("", "user4", password, "user4@test.com", "user4",
                         "010-1234-5678", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist")) {
                 memberService.join("", "artist", password, "artist@test.com", "artist1",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist2")) {
                 memberService.join("", "artist2", password, "artist2@test.com", "artist2",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist3")) {
                 memberService.join("", "artist3", password, "artist3@test.com", "artist3",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist4")) {
                 memberService.join("", "artist4", password, "artist4@test.com", "artist4",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist5")) {
                 memberService.join("", "artist5", password, "artist5@test.com", "artist5",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
 
-            if (!memberService.checkUsernameExists("admin")) {
+            if (!memberService.checkUsernameExists("artist6")) {
                 memberService.join("", "artist6", password, "artist6@test.com", "artist6",
                         "010-1314-4654", "대전광역시 서구 대덕대로 179 굿모닝어학원빌딩 9층");
             }
