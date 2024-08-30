@@ -1,128 +1,191 @@
 <html layout:decorate="~{layout/layout}">
-<div layout:decorate="~{layout/layout}">
-    <div layout:fragment="content">
-        <!-- 모바일 메뉴 토글 버튼 -->
-        <div class="admin-manage-menu-toggle-btn"><i class="fa-solid fa-user-tie"></i></div>
 
-        <div class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-4 pb-4 pl-0 lg:pr-4 z-10 admin-manage-sidebar h-auto lg:h-80 flex flex-col lg:flex-col">
-            <ul>
-                <li class="flex flex-col mb-6">
-                    <span class="menu-header">경매 관리</span>
-                    <a th:href="@{/admin/auction/list}" class="mg_menu_btn">경매 내역 관리</a>
-                    <a th:href="@{/auction/create}" class="mg_menu_btn">경매 추가</a>
-                </li>
-                <li class="flex flex-col">
-                    <span class="menu-header">회원 관리</span>
-                    <a th:href="@{/admin/member/list}" class="mg_menu_btn">회원 권한 설정</a>
-                    <a th:href="@{/artist/pending-approval}" class="mg_menu_btn">작가 신청 내역</a>
-                </li>
-                <li class="flex flex-col">
-                    <span class="menu-header">문의 관리</span>
-                    <a th:href="@{/admin/question/manage}" class="mg_menu_btn">문의 관리</a>
-                    <a th:href="@{/admin/question/faqManage}" class="mg_menu_btn">FAQ 관리</a>
-                    <a href="https://desk.channel.io/#/channels/176370/user_chats/66ccc17b21e520ce4081" class="mg_menu_btn">채팅 관리</a>
-                </li>
-            </ul>
+<div layout:fragment="content">
+    <!-- 모바일 메뉴 토글 버튼 -->
+    <div class="admin-manage-menu-toggle-btn "><i class="fa-solid fa-user-tie"></i></div>
+
+    <div class="lg:fixed top-24 lg:left-10 w-full lg:w-64 pt-4 pb-4 pl-0 lg:pr-4 z-10 admin-manage-sidebar h-auto lg:h-80 flex flex-col lg:flex-col">
+        <ul>
+            <li class="flex flex-col mb-6">
+                <span class="menu-header">경매 관리</span>
+                <a th:href="@{/admin/auction/list}" class="mg_menu_btn">경매 내역 관리</a>
+                <a th:href="@{/auction/create}" class="mg_menu_btn">경매 추가</a>
+            </li>
+            <li class="flex flex-col">
+                <span class="menu-header">회원 관리</span>
+                <a th:href="@{/admin/member/list}" class="mg_menu_btn">회원 권한 설정</a>
+                <a th:href="@{/artist/pending-approval}" class="mg_menu_btn">작가 신청 내역</a>
+            </li>
+            <li class="flex flex-col">
+                <span class="menu-header">문의 관리</span>
+                <a th:href="@{/admin/question/manage}" class="mg_menu_btn">문의 관리</a>
+                <a th:href="@{/admin/question/faqManage}" class="mg_menu_btn">FAQ 관리</a>
+                <a href="https://desk.channel.io/#/channels/176370/user_chats/66ccc17b21e520ce4081" class="mg_menu_btn">채팅
+                    관리</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="admContainer mx-auto px-6 lg:px-[300px] question-manage-content-container">
+        <div class="text-center mb-4">
+            <h1 class="text-2xl font-black text-center py-3 text-black">문의 관리페이지</h1>
         </div>
 
-        <div class="admContainer mx-auto px-6 lg:px-[300px] question-manage-content-container">
-            <div class="text-center mb-4">
-                <h1 class="text-2xl font-black text-center py-3 text-black">문의 관리페이지</h1>
+        <div class="relative flex justify-end py-4">
+            <button id="questionManage-sortButton"
+                    class="border border-black text-gray-700 px-4 py-2 w-48 flex items-center justify-center">
+                <span id="product-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
+            </button>
+            <div id="questionManage-sortDropdown"
+                 class="absolute left-auto w-48 bg-white border border-gray-300 shadow-lg z-10 hidden">
+                <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">전체</a>
+                <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">처리완료</a>
+                <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">처리대기</a>
             </div>
 
-            <div class="relative flex justify-end py-4">
-                <button id="questionManage-sortButton" class="border border-black text-gray-700 px-4 py-2 w-48 flex items-center justify-center">
-                    <span id="product-sortText">정렬하기</span> <i class="fa-solid fa-caret-down ml-2"></i>
-                </button>
-                <div id="questionManage-sortDropdown" class="absolute left-auto w-48 bg-white border border-gray-300 shadow-lg z-10 hidden">
-                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">전체</a>
-                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">처리완료</a>
-                    <a href="#" class="product-a block px-4 py-2 text-gray-800 hover:bg-gray-100">처리대기</a>
-                </div>
-            </div>
+        </div>
 
-            <div class="question-manage-table-container">
-                <!-- PC 화면에서는 테이블 형태로 표시 -->
-                <table class="w-full text-center table-auto">
-                    <thead>
-                    <tr>
-                        <th class="px-4 py-2 w-1/12">번호</th>
-                        <th class="px-4 py-2 w-1/12">유형</th>
-                        <th class="px-4 py-2 w-4/12">질문</th>
-                        <th class="px-4 py-2 w-1/12">작성자</th>
-                        <th class="px-4 py-2 w-2/12">날짜</th>
-                        <th class="px-4 py-2 w-1/12">상태</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="question : ${questionPage.content}">
-                        <td class="border px-4 py-2">
-                            <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.id}"></a>
-                        </td>
-                        <td class="border px-4 py-2" th:text="${question.questionType.name()}"></td>
-                        <td class="border px-4 py-2">
-                            <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
-                        </td>
-                        <td class="border px-4 py-2" th:text="${question.member.nickname}"></td>
-                        <td class="border px-4 py-2" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
-                        <td class="border px-4 py-2"
-                            th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
-                            th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="question-manage-table-container">
+            <!-- PC 화면에서는 테이블 형태로 표시 -->
+            <table class="w-full text-center table-auto">
+                <thead>
+                <tr>
+                    <th class="px-4 py-2 w-1/12">번호</th>
+                    <th class="px-4 py-2 w-1/12">유형</th>
+                    <th class="px-4 py-2 w-4/12">질문</th>
+                    <th class="px-4 py-2 w-1/12">작성자</th>
+                    <th class="px-4 py-2 w-2/12">날짜</th>
+                    <th class="px-4 py-2 w-1/12">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="question : ${questionPage.content}">
+                    <td class="border px-4 py-2">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.id}"></a>
+                    </td>
+                    <td class="border px-4 py-2" th:text="${question.questionType.name()}"></td>
+                    <td class="border px-4 py-2">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                    </td>
+                    <td class="border px-4 py-2" th:text="${question.member.nickname}"></td>
+                    <td class="border px-4 py-2" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
+                    <td class="border px-4 py-2"
+                        th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
+                        th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></td>
+                </tr>
+                </tbody>
+            </table>
 
-                <!-- 모바일 화면에서는 카드 형태로 표시 -->
-                <div class="question-manage-mobile-cards">
-                    <div th:each="question : ${questionPage.content}" class="question-manage-card">
-                        <div class="card-header">
-                            <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+            <!-- 모바일 화면에서는 카드 형태로 표시 -->
+            <div class="question-manage-mobile-cards">
+                <div th:each="question : ${questionPage.content}" class="question-manage-card">
+                    <div class="card-header">
+                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-item">
+                            <span>번호:</span>
+                            <span th:text="${question.id}"></span>
                         </div>
-                        <div class="card-body">
-                            <div class="card-item">
-                                <span>번호:</span>
-                                <span th:text="${question.id}"></span>
-                            </div>
-                            <div class="card-item">
-                                <span>유형:</span>
-                                <span th:text="${question.questionType.name()}"></span>
-                            </div>
-                            <div class="card-item">
-                                <span>작성자:</span>
-                                <span th:text="${question.member.nickname}"></span>
-                            </div>
-                            <div class="card-item">
-                                <span>날짜:</span>
-                                <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
-                            </div>
-                            <div class="card-item">
-                                <span>상태:</span>
-                                <span th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
-                                      th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></span>
-                            </div>
+                        <div class="card-item">
+                            <span>유형:</span>
+                            <span th:text="${question.questionType.name()}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>작성자:</span>
+                            <span th:text="${question.member.nickname}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>날짜:</span>
+                            <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="card-item">
+                            <span>상태:</span>
+                            <span th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
+                                  th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></span>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 페이징 처리 부분  -->
-            <div class="question-manage-pagination-container">
-                <ul class="inline-flex items-center">
-                    <li th:if="${questionPage.hasPrevious()}">
-                        <a th:href="@{|/admin/question/manage?page=${questionPage.number - 1}&size=${questionPage.size}&filter=${currentFilter}|}">이전</a>
-                    </li>
-                    <li th:each="i : ${#numbers.sequence(1, questionPage.totalPages)}">
-                        <a th:href="@{|/admin/question/manage?page=${i - 1}&size=${questionPage.size}&filter=${currentFilter}|}"
-                           th:text="${i}"
-                           th:classappend="${i == questionPage.number + 1} ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'"></a>
-                    </li>
-                    <li th:if="${questionPage.hasNext()}">
-                        <a th:href="@{|/admin/question/manage?page=${questionPage.number + 1}&size=${questionPage.size}&filter=${currentFilter}|}">다음</a>
-                    </li>
-                </ul>
-            </div>
+        </div>
+        <!-- 페이징 처리 부분  -->
+        <div class="question-manage-pagination-container">
+            <ul class="inline-flex items-center">
+                <li th:if="${questionPage.hasPrevious()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number - 1}&size=${questionPage.size}&filter=${currentFilter}|}">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, questionPage.totalPages)}">
+                    <a th:href="@{|/admin/question/manage?page=${i - 1}&size=${questionPage.size}&filter=${currentFilter}|}"
+                       th:text="${i}"
+                       th:classappend="${i == questionPage.number + 1} ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'"></a>
+                </li>
+                <li th:if="${questionPage.hasNext()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number + 1}&size=${questionPage.size}&filter=${currentFilter}|}">다음</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
+
 </html>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggleBtn = document.querySelector(".question-manage-menu-toggle-btn");
+        const sidebar = document.querySelector(".question-manage-sidebar");
 
+        menuToggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggleBtn = document.querySelector(".admin-manage-menu-toggle-btn");
+        const sidebar = document.querySelector(".admin-manage-sidebar");
+        const sortButton = document.getElementById("questionManage-sortButton");
+        const sortDropdown = document.getElementById("questionManage-sortDropdown");
+
+        // Toggle sidebar visibility
+        menuToggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+
+        // Toggle dropdown visibility
+        sortButton.addEventListener("click", function () {
+            sortDropdown.classList.toggle("hidden");
+        });
+
+        // Add event listeners to dropdown items
+        sortDropdown.querySelectorAll('a').forEach(function (item) {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filterType = this.textContent.trim();
+                const currentPage = new URLSearchParams(window.location.search).get('page') || 0;
+                // Update filter and refresh the page
+                window.location.href = `/admin/question/manage?page=${currentPage}&size=15&filter=${encodeURIComponent(filterType)}`;
+            });
+        });
+
+        // Handle page number link click
+        document.querySelectorAll('.question-manage-pagination-container a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const filterType = new URLSearchParams(window.location.search).get('filter') || '';
+                const pageNumber = new URLSearchParams(this.href.split('?')[1]).get('page');
+                if (pageNumber) {
+                    e.preventDefault();
+                    window.location.href = `/admin/question/manage?page=${pageNumber}&size=15&filter=${encodeURIComponent(filterType)}`;
+                }
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!sortButton.contains(e.target) && !sortDropdown.contains(e.target)) {
+                sortDropdown.classList.add('hidden');
+            }
+        });
+    });
+
+</script>
