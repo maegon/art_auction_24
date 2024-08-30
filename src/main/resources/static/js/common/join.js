@@ -329,8 +329,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-        console.log('CSRF Token:', csrfToken);
-        console.log('CSRF Header:', csrfHeader);
+        console.log('CSRF Token11:', csrfToken);
+        console.log('CSRF Header11:', csrfHeader);
 
         fetch("/sendmail/confirmCode", {
             method: "POST",
