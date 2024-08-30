@@ -74,35 +74,26 @@
 
             <!-- 모바일 화면에서는 카드 형태로 표시 -->
             <div class="question-manage-mobile-cards">
-                <div th:each="question : ${questionPage}" class="question-manage-card">
-                    <div class="card-header">
-                        <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-item">
-                            <span>번호:</span>
-                            <span th:text="${question.id}"></span>
-                        </div>
-                        <div class="card-item">
-                            <span>유형:</span>
-                            <span th:text="${question.questionType.name()}"></span>
-                        </div>
-                        <div class="card-item">
-                            <span>작성자:</span>
-                            <span th:text="${question.member.nickname}"></span>
-                        </div>
-                        <div class="card-item">
-                            <span>날짜:</span>
-                            <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
-                        </div>
-                        <div class="card-item">
-                            <span>상태:</span>
-                            <span th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
-                                  th:classappend="${question.answerList.size() > 0} ? 'text-green-500' : 'text-red-500'"></span>
-                        </div>
-                    </div>
+                <div th:each="question : ${questionPage.content}" class="question-manage-card">
+
                 </div>
             </div>
+        </div>
+        <!-- 페이징 처리 부분  -->
+        <div class="question-manage-pagination-container">
+            <ul class="inline-flex items-center">
+                <li th:if="${questionPage.hasPrevious()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number - 1}&size=${questionPage.size}&filter=${currentFilter}|}">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, questionPage.totalPages)}">
+                    <a th:href="@{|/admin/question/manage?page=${i - 1}&size=${questionPage.size}&filter=${currentFilter}|}"
+                       th:text="${i}"
+                       th:classappend="${i == questionPage.number + 1} ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'"></a>
+                </li>
+                <li th:if="${questionPage.hasNext()}">
+                    <a th:href="@{|/admin/question/manage?page=${questionPage.number + 1}&size=${questionPage.size}&filter=${currentFilter}|}">다음</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
@@ -119,3 +110,52 @@
     });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggleBtn = document.querySelector(".admin-manage-menu-toggle-btn");
+        const sidebar = document.querySelector(".admin-manage-sidebar");
+        const sortButton = document.getElementById("questionManage-sortButton");
+        const sortDropdown = document.getElementById("questionManage-sortDropdown");
+
+        // Toggle sidebar visibility
+        menuToggleBtn.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+
+        // Toggle dropdown visibility
+        sortButton.addEventListener("click", function () {
+            sortDropdown.classList.toggle("hidden");
+        });
+
+        // Add event listeners to dropdown items
+        sortDropdown.querySelectorAll('a').forEach(function (item) {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filterType = this.textContent.trim();
+                const currentPage = new URLSearchParams(window.location.search).get('page') || 0;
+                // Update filter and refresh the page
+                window.location.href = `/admin/question/manage?page=${currentPage}&size=15&filter=${encodeURIComponent(filterType)}`;
+            });
+        });
+
+        // Handle page number link click
+        document.querySelectorAll('.question-manage-pagination-container a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const filterType = new URLSearchParams(window.location.search).get('filter') || '';
+                const pageNumber = new URLSearchParams(this.href.split('?')[1]).get('page');
+                if (pageNumber) {
+                    e.preventDefault();
+                    window.location.href = `/admin/question/manage?page=${pageNumber}&size=15&filter=${encodeURIComponent(filterType)}`;
+                }
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!sortButton.contains(e.target) && !sortDropdown.contains(e.target)) {
+                sortDropdown.classList.add('hidden');
+            }
+        });
+    });
+
+</script>
