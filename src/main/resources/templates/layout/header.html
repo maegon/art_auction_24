@@ -3,7 +3,7 @@
         <nav class="header_nav">
             <div class="nav__logo">
                 <a href="/" class="main_logo">
-                    <img th:src="@{/image/logo1.png}" alt="이미지">
+                    <img th:src="@{/images/logo1.png}" alt="이미지">
                 </a>
             </div>
             <a class="nav__bar" onclick="toggleMenu()" sec:authorize="isAuthenticated()">
@@ -28,7 +28,7 @@
                 <div id="profileSection" sec:authorize="isAuthenticated()" >
                     <a id="header_profile" >
                         <!-- 현재 로그인한 사용자의 프로필 사진과 이름 표시 -->
-                        <img th:src="@{/image/유저프로필.png}" alt="기본 프로필 사진" class="profile-image"/>
+                        <img th:src="@{/images/유저프로필.png}" alt="기본 프로필 사진" class="profile-image"/>
                     </a>
 
                     <!-- 드롭다운 메뉴 -->

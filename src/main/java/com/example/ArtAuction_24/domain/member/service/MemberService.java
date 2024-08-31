@@ -156,7 +156,7 @@ public class MemberService {
         }
 
         if (memberForm.getMultipartFile() != null && !memberForm.getMultipartFile().isEmpty()) {
-            String thumbnailRelPath = "image/member/" + UUID.randomUUID().toString() + ".jpg";
+            String thumbnailRelPath = "images/member/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
             thumbnailFile.mkdir();

@@ -82,11 +82,11 @@
 
 # ER 다이어그램
 
-![ER Diagram](src/main/resources/static/image/functionImage/ARTAUCTION-ER-DIAGRAM.png)
+![ER Diagram](src/main/resources/static/images/functionImage/ARTAUCTION-ER-DIAGRAM.png)
 
 # 사용자 요구사항 명세서
 
-![사용자 요구사항 명세서](src/main/resources/static/image/functionImage/ARTAUCTION-요구사항정의서.png)
+![사용자 요구사항 명세서](src/main/resources/static/images/functionImage/ARTAUCTION-요구사항정의서.png)
 
 # 주요 기능
 <details>
@@ -94,35 +94,35 @@
    <br/>
 
    ### 1. 작가가 자신의 작품을 경매에 내놓기 위해 관리자에게 경매 신청을 합니다.
-   ![경매 기능 스크린샷 1](src/main/resources/static/image/functionImage/artauction-artistProductSummit.png)
+   ![경매 기능 스크린샷 1](src/main/resources/static/images/functionImage/artauction-artistProductSummit.png)
    <br><br>
 
    ### 2. 관리자는 신청된 작품을 보고 검수합니다.
-   ![경매 기능 스크린샷 2](src/main/resources/static/image/functionImage/artauction-adminProductSummitManage.png)
+   ![경매 기능 스크린샷 2](src/main/resources/static/images/functionImage/artauction-adminProductSummitManage.png)
    <br><br>
 
    ### 3. 검토가 완료되면 관리자는 해당 제품을 경매에 내놓습니다.
-   ![경매 기능 스크린샷 3](src/main/resources/static/image/functionImage/artauction-adminAddAuction.png)
+   ![경매 기능 스크린샷 3](src/main/resources/static/images/functionImage/artauction-adminAddAuction.png)
    <br><br>
 
    ### 4. 사용자는 경매 페이지에서 진행 중인 경매 작품들을 확인할 수 있습니다.
-   ![경매 기능 스크린샷 4](src/main/resources/static/image/functionImage/artauction-auctionPage.png)
+   ![경매 기능 스크린샷 4](src/main/resources/static/images/functionImage/artauction-auctionPage.png)
    <br><br>
 
    ### 5. 경매 응찰을 하기 전 (다른 사용자가 이미 입찰 금액을 제시한 상황)
-   ![경매 기능 스크린샷 5](src/main/resources/static/image/functionImage/artauction-beforeBid.png)
+   ![경매 기능 스크린샷 5](src/main/resources/static/images/functionImage/artauction-beforeBid.png)
    <br><br>
 
    ### 6. 경매 응찰을 하고 난 후
-   ![경매 기능 스크린샷 6](src/main/resources/static/image/functionImage/artauction-afterBid.png)
+   ![경매 기능 스크린샷 6](src/main/resources/static/images/functionImage/artauction-afterBid.png)
    <br><br>
 
    ### 7. 사용자의 마이페이지에서 경매 입찰 목록을 확인할 수 있습니다.
-   ![경매 기능 스크린샷 7](src/main/resources/static/image/functionImage/artauction-myPagebeforeBidList.png)
+   ![경매 기능 스크린샷 7](src/main/resources/static/images/functionImage/artauction-myPagebeforeBidList.png)
    <br><br>
 
    ### 8. 경매가 종료되고 낙찰자로 선정이 되면 낙찰 목록에서 확인할 수 있습니다.
-   ![경매 기능 스크린샷 8](src/main/resources/static/image/functionImage/artauction-myPageBidList.png)
+   ![경매 기능 스크린샷 8](src/main/resources/static/images/functionImage/artauction-myPageBidList.png)
    <br><br>
 
 </details>
@@ -138,11 +138,11 @@
       <br/>
 
       ### 1. 사용자는 예정된 경매의 상세 페이지에서 알림 설정을 할 수 있습니다.
-      ![알림 기능 스크린샷 1](src/main/resources/static/image/functionImage/artauction-mailBefore1hour.png)
+      ![알림 기능 스크린샷 1](src/main/resources/static/images/functionImage/artauction-mailBefore1hour.png)
       <br><br>
 
       ### 2. 사용자의 개인 메일로 경매 시작 1시간 전 경매 시작 알림 메일이 발송됩니다.
-      ![알림 기능 스크린샷 2](src/main/resources/static/image/functionImage/artauction-1hourNotificationMail.png)
+      ![알림 기능 스크린샷 2](src/main/resources/static/images/functionImage/artauction-1hourNotificationMail.png)
       <br><br>
       
      </details>
@@ -152,15 +152,15 @@
       <br/>
 
       ### 1. 해당 작품의 작가에게 축하 메일이 발송됩니다.
-      ![알림 기능 스크린샷 3](src/main/resources/static/image/functionImage/artauction-auctionProductArtist.png)
+      ![알림 기능 스크린샷 3](src/main/resources/static/images/functionImage/artauction-auctionProductArtist.png)
       <br><br>
 
       ### 2. 해당 작품을 낙찰한 낙찰자에게 축하 메일이 발송됩니다.
-      ![알림 기능 스크린샷 4](src/main/resources/static/image/functionImage/artauction-auctionWinningMail.png)
+      ![알림 기능 스크린샷 4](src/main/resources/static/images/functionImage/artauction-auctionWinningMail.png)
       <br><br>
 
       ### 3. 낙찰하지 못했지만 해당 작품의 경매에 참여한 참여자들에게 결과 알림 메일이 발송됩니다.
-      ![알림 기능 스크린샷 5](src/main/resources/static/image/functionImage/artauction-auctionFailMail.png)
+      ![알림 기능 스크린샷 5](src/main/resources/static/images/functionImage/artauction-auctionFailMail.png)
       <br><br>
    </details>
 
@@ -171,31 +171,31 @@
    <br/>
     
    ### 1. 사용자는 작가의 권한을 받기 위해 작가 신청을 할 수 있습니다.(이용약관 동의 및 증빙 자료 제출은 필수!!)
-   ![경매 기능 스크린샷 1](src/main/resources/static/image/functionImage/artauction-artistRequestSummitPage.png)
+   ![경매 기능 스크린샷 1](src/main/resources/static/images/functionImage/artauction-artistRequestSummitPage.png)
    <br><br>
 
    ### 2. 신청을 완료하면 관리자의 승인을 기다립니다.
-   ![경매 기능 스크린샷 2](src/main/resources/static/image/functionImage/artauction-artistRequestPage.png)
+   ![경매 기능 스크린샷 2](src/main/resources/static/images/functionImage/artauction-artistRequestPage.png)
    <br><br>
 
    ### 3. 관리자는 작가 신청 내역에서 증빙 자료를 확인하고 작가 승인을 허가해 줄 수 있습니다.
-   ![경매 기능 스크린샷 3](src/main/resources/static/image/functionImage/artauction-adminArtistRequestList.png)
+   ![경매 기능 스크린샷 3](src/main/resources/static/images/functionImage/artauction-adminArtistRequestList.png)
    <br><br>
 
    ### 4. 이 후 관리자는 회원 권한 설정 페이지에서 해당 회원에 작가의 권한을 부여해줄 수 있습니다.
-   ![경매 기능 스크린샷 4](src/main/resources/static/image/functionImage/artauction-adminMemberAuthorityPage.png)
+   ![경매 기능 스크린샷 4](src/main/resources/static/images/functionImage/artauction-adminMemberAuthorityPage.png)
    <br><br>
 
    ### 5. 작가권한을 받은 사용자는 작가 프로필을 생성할 수 있습니다.
-   ![경매 기능 스크린샷 5](src/main/resources/static/image/functionImage/artauction-artistProfileCreate.png)
+   ![경매 기능 스크린샷 5](src/main/resources/static/images/functionImage/artauction-artistProfileCreate.png)
    <br><br>
 
    ### 6. 작가 프로필을 생성하고나면 작가 개인 페이지가 생성됩니다.
-   ![경매 기능 스크린샷 6](src/main/resources/static/image/functionImage/artauction-artistProfileForm.png)
+   ![경매 기능 스크린샷 6](src/main/resources/static/images/functionImage/artauction-artistProfileForm.png)
    <br><br>
 
    ### 7. 작가는 자신의 작품을 등록할 수 있습니다.(작가 프로필을 생성 후 작품 등록 가능!!)
-   ![경매 기능 스크린샷 7](src/main/resources/static/image/functionImage/artauction-productCreatePage.png)
+   ![경매 기능 스크린샷 7](src/main/resources/static/images/functionimages/artauction-productCreatePage.png)
    <br><br>
 
 </details>

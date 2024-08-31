@@ -91,11 +91,12 @@ public class ArtistService {
         member.setProofSubmitted(false);
         memberRepository.save(member);
     }
+    // 이미지 업로드 여기 문제일 수도.. 강사님께 여쭤보자
     public Artist create(MultipartFile thumbnail, String korName, String engName, String birthDate, Member member, List<String> artistAdds) {
-        String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "images/artist/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
-        File dir = new File(fileDirPath + "/image/artist");
+        File dir = new File(fileDirPath + "/images/artist");
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 throw new RuntimeException("디렉토리 생성 실패: " + dir.getAbsolutePath());
@@ -172,7 +173,7 @@ public class ArtistService {
                        List<String> unitContentAdds, List<String> techniqueContentAdds) {
 
         if (thumbnail != null && !thumbnail.isEmpty()) {
-            String thumbnailRelPath = "image/artist/" + UUID.randomUUID().toString() + ".jpg";
+            String thumbnailRelPath = "images/artist/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(fileDirPath + "/" + thumbnailRelPath);
 
             try {

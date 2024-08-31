@@ -24,7 +24,7 @@
                     <a th:href="@{|/artist/profile/${artist.id}|}" class="no-underline">
                         <div>
                             <img th:if="${artist.thumbnailImg != null}"  th:src="@{|/${artist.thumbnailImg}|}" class="w-full h-full object-cover rounded-lg" alt="작가프로필 이미지">
-                            <img th:unless="${artist.thumbnailImg != null}" th:src="@{/image/작가프로필.png}" class="w-full h-full object-cover rounded-lg" alt="기본 이미지">
+                            <img th:unless="${artist.thumbnailImg != null}" th:src="@{/images/작가프로필.png}" class="w-full h-full object-cover rounded-lg" alt="기본 이미지">
                         </div>
                     </a>
                     </div>
@@ -47,7 +47,7 @@
                         <a th:href="@{|/product/detail/${product.id}|}" class="no-underline">
                             <div>
                                 <img th:if="${product.thumbnailImg != null}" th:src="@{|/${product.thumbnailImg}|}" class="w-72 h-72 object-cover rounded-lg" alt="그림 이미지">
-                                <img th:unless="${product.thumbnailImg != null}" th:src="@{/image/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
+                                <img th:unless="${product.thumbnailImg != null}" th:src="@{/images/표시오류.png}" class="w-72 h-72 object-cover rounded-lg" alt="기본 이미지">
                             </div>
                         </a>
                     </div>
