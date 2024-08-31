@@ -65,7 +65,7 @@ public class QuestionService {
 
     public void create(QuestionForm questionForm,MultipartFile thumbnail, Member member ) {
 
-        String thumbnailRelPath = "image/question/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "images/question/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
         thumbnailFile.mkdir();
