@@ -63,7 +63,7 @@
                     <td class="border px-4 py-2">
                         <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
                     </td>
-                    <td class="border px-4 py-2" th:text="${question.member}"></td>
+                    <td class="border px-4 py-2" th:text="${question.member.nickname}"></td>
                     <td class="border px-4 py-2" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></td>
                     <td class="border px-4 py-2"
                         th:text="${question.answerList.size() > 0 ? '처리완료' : '처리대기'}"
@@ -89,7 +89,7 @@
                         </div>
                         <div class="card-item">
                             <span>작성자:</span>
-                            <span th:text="${question.member}"></span>
+                            <span th:text="${question.member.nickname}"></span>
                         </div>
                         <div class="card-item">
                             <span>날짜:</span>
