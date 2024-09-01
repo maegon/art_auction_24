@@ -6,4 +6,3 @@ EXPOSE 8080
 ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","/app.jar"]
 RUN mkdir -p /temp/images/
 
-
