@@ -108,16 +108,16 @@ public class ProdInitData implements BeforeInitData {
 
             System.out.println("member1 의 username : " + member1.getUsername());
 
-            if (member1 == null) {
+//            if (member1 == null) {
                 artistService.create("김작가", "kimArtist", "1950-06-28", "안녕! 나 김작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member1);
                 artistService.create("나작가", "naArtist", "1968-12-08", "안녕! 나 나작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member2);
                 artistService.create("박작가", "parkArtist", "1999-04-03", "안녕! 나 박작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member3);
                 artistService.create("이작가", "leeArtist", "1985-11-02", "안녕! 나 이작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member4);
                 artistService.create("최작가", "choiArtist", "1975-01-15", "안녕! 나 최작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member5);
                 artistService.create("정작가", "jungArtist", "1980-07-19", "안녕! 나 정작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member6);
-            } else {
-                System.out.println("member test");
-            }
+//            } else {
+//                System.out.println("member test");
+//            }
 
 
 
