@@ -333,44 +333,40 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('CSRF Token11:', csrfToken);
         console.log('CSRF Header11:', csrfHeader);
 
-        fetch("/sendmail/confirmCode", {
-            method: "POST",
+        $.ajax({
+            url: '/sendmail/confirmCode',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
             headers: {
-                "Content-Type": "application/json",
                 [csrfHeader]: csrfToken
             },
-            body: JSON.stringify({ email: email })
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('응답되지 않습니다.');
-            }
-        })
-         .then(data => {
-            console.log("")
-            if (data.exists) { // 이미 사용 중인 이메일 경우
-                emailError.innerText = "이미 인증된 이메일입니다. 다른 이메일을 입력해주세요.";
+            data: JSON.stringify({ email: email }),
+            success: function(data) {
+                if (data.exists) { // 이미 사용 중인 이메일 경우
+                    emailError.innerText = "이미 인증된 이메일입니다. 다른 이메일을 입력해주세요.";
+                    emailError.classList.remove("success");
+                    emailError.classList.add("error");
+                } else if (data.code) {
+                    generatedCode = data.code;
+                    emailError.innerText = "인증 코드가 발송되었습니다. 이메일을 확인해주세요.";
+                    emailError.classList.remove("error");
+                    emailError.classList.add("success");
+                } else {
+                    emailError.innerText = "이메일 발송에 실패했습니다.";
+                    emailError.classList.remove("success");
+                    emailError.classList.add("error");
+                }
+            },
+            error: function() {
+                console.error('Error: 이메일 발송 중 오류가 발생했습니다.');
+                emailError.innerText = "이메일 발송 중 오류가 발생했습니다.";
                 emailError.classList.remove("success");
                 emailError.classList.add("error");
+            },
+            complete: function() {
+                console.log("AJAX 호출 완료");
             }
-            else if (data.code) {
-                generatedCode = data.code;
-                emailError.innerText = "인증 코드가 발송되었습니다. 이메일을 확인해주세요.";
-                emailError.classList.remove("error");
-                emailError.classList.add("success");
-            } else {
-                emailError.innerText = "이메일 발송에 실패했습니다.";
-                emailError.classList.remove("success");
-                emailError.classList.add("error");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            emailError.innerText = "이메일 발송 중 오류가 발생했습니다.";
-            emailError.classList.remove("success");
-            emailError.classList.add("error");
         });
     });
 
