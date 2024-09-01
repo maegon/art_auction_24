@@ -108,7 +108,7 @@ public class ProductController {
         Member member = this.memberService.getCurrentMember();
         Artist artist = this.artistService.findByMember(member);
         this.productService.create(productForm.getTitle(), productForm.getDescription(), productForm.getMedium(), productForm.getWidth(), productForm.getHeight(), productForm.getStartingPrice(),
-                  LocalDateTime.now(), thumbnail,productForm.getCategory(), artist);
+                  LocalDateTime.now(), thumbnail, productForm.getCategory(), artist);
 
         return "redirect:/product/list";
     }
