@@ -310,7 +310,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // 이메일 인증
     let generatedCode = "";
 
-    document.getElementById("emailCheckButton").addEventListener("click", function() {
+    // 페이지 로드 시 바로 AJAX 호출
+    window.addEventListener('DOMContentLoaded', (event) => {
         const email = `${emailTextInput.value.trim()}@${domainInput.value.trim()}`;
 
         if (!emailTextInput.value.trim() || !domainInput.value.trim()) {
@@ -321,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (emailTextInput.value.trim()) {
-            emailError.innerText = "인증번호를 입력 해주세요.";
+            emailError.innerText = "메일 발송 중...";
             emailError.classList.remove("error");
             emailError.classList.add("success");
         }
@@ -356,7 +357,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             else if (data.code) {
                 generatedCode = data.code;
-                emailError.innerText = "인증 메일이 발송되었습니다. 이메일을 확인하세요.";
+                emailError.innerText = "인증 코드가 발송되었습니다. 이메일을 확인해주세요.";
                 emailError.classList.remove("error");
                 emailError.classList.add("success");
             } else {
