@@ -191,7 +191,7 @@ public class NotificationService {
                 javaMailSender.send(mimeMessage);
             } catch (Exception e) {
                 isSent = false;
-                logger.error("Failed to send notification to {}: {}", recipientEmail, e.getMessage());
+                logger.error("Failed to send notification1 to {}: {}", recipientEmail, e.getMessage());
             }
 
             // 알림을 DB에 저장 (이메일 발송 여부와 관계없이)
@@ -298,7 +298,7 @@ public class NotificationService {
             notification.setSentAt(LocalDateTime.now());
             notificationRepository.save(notification);
         } catch (Exception e) {
-            logger.error("Failed to send notification: {}", e.getMessage());
+            logger.error("Failed to send notification2: {}", e.getMessage());
         }
     }
 
