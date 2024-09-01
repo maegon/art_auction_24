@@ -296,6 +296,4 @@ public class NotificationService {
         }
     }
 
-    // 메시지 길이를 자르는 메소드
-
 }
