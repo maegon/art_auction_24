@@ -92,6 +92,12 @@ public class EmailController {
     @PostMapping("/confirmCode")
     public ResponseEntity<Map<String, String>> sendConfirmationCode(@RequestBody Map<String, String> request) {
         String email = request.get("email");
+
+        if (email == null || email.isEmpty()) {
+            // 이메일 값이 없거나 빈 값이면 400 에러를 반환합니다.
+            return ResponseEntity.badRequest().body(Map.of("error", "Email is required"));
+        }
+
         String code = emailService.createConfirmCode();
 
         // 이메일로 인증 코드 전송 (구현 필요)
