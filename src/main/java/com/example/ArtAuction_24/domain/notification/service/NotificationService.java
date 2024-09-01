@@ -51,6 +51,8 @@ public class NotificationService {
     // 경매 종료시 알림 발송
     @Transactional
     public void notifyAuctionResults(Auction auction) {
+        logger.debug("notifyAuctionResults called for auction ID: {}", auction.getId());
+
         Set<Member> allBidders = new HashSet<>();
         Set<Member> winningBidders = new HashSet<>();
         Set<Artist> artists = new HashSet<>();
@@ -213,6 +215,8 @@ public class NotificationService {
 
     @Transactional
     public void scheduleAuctionNotification(Long auctionId, String username) {
+        logger.debug("scheduleAuctionNotification called with auctionId: {} and username: {}", auctionId, username);
+
         Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid auction ID"));
         Member member = memberRepository.findByUsername(username)
