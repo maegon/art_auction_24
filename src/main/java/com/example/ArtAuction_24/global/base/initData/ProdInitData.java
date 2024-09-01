@@ -204,5 +204,42 @@ public class ProdInitData implements BeforeInitData {
 
         };
     }
+    public void create(String title, String description, String medium, long width, long height,
+                       BigDecimal startingPrice, LocalDateTime auctionStartDate, String thumbnailImg,
+                       String category, Artist artist) throws IOException {
+
+        MultipartFile thumbnail = getMultipartFile(thumbnailImg);
+
+        productService.create(
+                title,
+                description,
+                medium,
+                width,
+                height,
+                startingPrice,
+                auctionStartDate,
+                thumbnail,
+                category,
+                artist
+        );
+
+    }
+
+    private MultipartFile getMultipartFile(String filePath) throws IOException {
+        // 절대 경로를 직접 사용함으로 System.getProperty("user.dir") 제거
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("파일이 존재하지 않습니다: " + file.getAbsolutePath());
+            throw new IOException("파일이 존재하지 않습니다: " + file.getAbsolutePath());
+        }
+        FileInputStream input = new FileInputStream(file);
+        return new MockMultipartFile(
+                file.getName(),
+                file.getName(),
+                "image/jpeg",
+                input
+        );
+    }
+
 
 }
