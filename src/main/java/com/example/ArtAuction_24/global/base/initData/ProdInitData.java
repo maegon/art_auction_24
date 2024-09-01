@@ -165,6 +165,7 @@ public class ProdInitData implements BeforeInitData {
                 artistService.create("최작가", "choiArtist", "1975-01-15", "안녕! 나 최작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member5);
                 artistService.create("정작가", "jungArtist", "1980-07-19", "안녕! 나 정작가입니다. 제 작품은 일상의 아름다움을 포착하며, 각기 다른 색과 형태를 통해 감정을 전달하려고 합니다. 제 작업은 항상 새로운 시도를 통해 관객들에게 신선한 경험을 선사하는 데 중점을 두고 있습니다.", "SBS 아트협회 임원", member6);
 
+
            /* if (member1 == null) {
         } else {
                 System.out.println("member test");
