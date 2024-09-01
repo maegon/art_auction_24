@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -40,6 +41,10 @@ public class ProdInitData implements BeforeInitData {
         return args -> {
             beforeInit();
             String password = "test123!";
+
+            // 현재 작업 디렉토리 출력
+            String currentDir = System.getProperty("user.dir");
+            System.out.println("현재 작업 디렉토리: " + currentDir);
 
 
             Member M1 = null;
