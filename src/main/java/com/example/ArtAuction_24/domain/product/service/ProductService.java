@@ -77,7 +77,7 @@ public class ProductService {
                           BigDecimal startingPrice, LocalDateTime auctionStartDate,
                           MultipartFile thumbnailImg, String category, Artist artist) {
 
-        String thumbnailRelPath = "images/product/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "product/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
         thumbnailFile.mkdir();
@@ -338,7 +338,7 @@ public class ProductService {
 
 
         if (thumbnailImg != null && !thumbnailImg.isEmpty()) {
-            String thumbnailRelPath = "images/product/" + UUID.randomUUID().toString() + ".jpg";
+            String thumbnailRelPath = "product/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
             File parentDir = thumbnailFile.getParentFile();
