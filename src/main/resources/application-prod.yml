@@ -13,4 +13,4 @@ spring:
         format_sql: false
         use_sql_comments: false
 custom:
-  genFileDirPath: /temp/thumbnail
+  genFileDirPath: /temp/images
