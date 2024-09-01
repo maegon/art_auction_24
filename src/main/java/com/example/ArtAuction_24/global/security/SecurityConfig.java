@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                        .requestMatchers(new AntPathRequestMatcher("/sendmail/confirmCode")).permitAll() // 이 부분 추가
                         .requestMatchers(new AntPathRequestMatcher("/recharge/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/question/create/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
