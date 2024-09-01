@@ -195,7 +195,7 @@
    <br><br>
 
    ### 7. 작가는 자신의 작품을 등록할 수 있습니다.(작가 프로필을 생성 후 작품 등록 가능!!)
-   ![경매 기능 스크린샷 7](src/main/resources/static/images/functionimages/artauction-productCreatePage.png)
+   ![경매 기능 스크린샷 7](src/main/resources/static/images/functionImage/artauction-productCreatePage.png)
    <br><br>
 
 </details>
