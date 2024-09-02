@@ -80,8 +80,9 @@ public class ProductService {
         String thumbnailRelPath = "product/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
-        thumbnailFile.mkdir();
-
+        if (!thumbnailFile.getParentFile().exists()) {
+            thumbnailFile.getParentFile().mkdirs();
+        }
         try {
             thumbnailImg.transferTo(thumbnailFile);
         } catch( IOException e) {
