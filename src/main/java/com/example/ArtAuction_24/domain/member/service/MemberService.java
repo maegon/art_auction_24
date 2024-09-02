@@ -159,7 +159,10 @@ public class MemberService {
             String thumbnailRelPath = "member/" + UUID.randomUUID().toString() + ".jpg";
             File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
-            thumbnailFile.mkdir();
+            File parentDir = thumbnailFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
 
             try {
                 memberForm.getMultipartFile().transferTo(thumbnailFile);
