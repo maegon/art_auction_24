@@ -63,7 +63,8 @@
     <div class="artistProfileContainer">
         <div class="basicArtistProfile_1">
             <div class="artistImg">
-                <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
+                <img th:if="${artist.thumbnailImg != null}" th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img" alt="Thumbnail">
+                <img th:unless="${artist.thumbnailImg != null}" th:src="@{/images/작가프로필.png}" class="artist-img" alt="Thumbnail">
             </div>
             <div class="engName">
                 <span th:text="${artist.engName}"></span>
