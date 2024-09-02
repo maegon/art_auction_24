@@ -44,7 +44,8 @@
                 </form>
                 <a class="artistList-A" th:href="@{/artist/profile/{id}(id=${artist.id})}">
                     <div class="artistListImg">
-                        <img th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-list-img" alt="Thumbnail">
+                        <img th:if="${artist.thumbnailImg != null}" th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-list-img" alt="Thumbnail">
+                        <img th:unless="${artist.thumbnailImg != null}" th:src="@{/images/작가프로필.png}">
                     </div>
                     <div class="korName-artistList border-t border-black">
                         <span th:text="${artist.korName}"></span> 작가
