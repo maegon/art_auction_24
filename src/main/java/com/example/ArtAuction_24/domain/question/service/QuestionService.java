@@ -65,11 +65,12 @@ public class QuestionService {
 
     public void create(QuestionForm questionForm,MultipartFile thumbnail, Member member ) {
 
-        String thumbnailRelPath = "images/question/" + UUID.randomUUID().toString() + ".jpg";
+        String thumbnailRelPath = "question/" + UUID.randomUUID().toString() + ".jpg";
         File thumbnailFile = new File(genFileDirPath + "/" + thumbnailRelPath);
 
-        thumbnailFile.mkdir();
-
+        if (!thumbnailFile.getParentFile().exists()) {
+            thumbnailFile.getParentFile().mkdirs();
+        }
         try {
             thumbnail.transferTo(thumbnailFile);
         } catch( IOException e) {
