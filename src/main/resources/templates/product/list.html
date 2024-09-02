@@ -40,13 +40,13 @@
 
 
                     <img class="object-contain object-center w-full h-full transition-transform duration-500"
-                         th:src="@{|/${product.thumbnailImg}|}"
+                         th:src="@{|/file/${product.thumbnailImg}|}"
                          alt="이미지가 존재하지 않습니다.">
                 </a>
                 <div class="p-4 flex flex-col flex-grow">
-                    <div sec:authorize="isAuthenticated()" class="flex  items-center  justify-between">
+                    <div class="flex  items-center  justify-between">
                         <span th:text="${product.artist.korName}" class="text-left font-bold text-lg"></span>
-                        <form th:action="@{/product/like}" method="post">
+                        <form sec:authorize="isAuthenticated()" th:action="@{/product/like}" method="post">
                             <input type="hidden" name="productId" th:value="${product.id}" />
                             <input type="hidden" name="memberId" th:value="${member.id}" />
                             <button type="submit" style="background: none; border: none; cursor: pointer;">
