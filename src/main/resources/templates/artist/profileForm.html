@@ -490,7 +490,7 @@
         <div class="artistProfileContainer">
             <div class="basicArtistProfile">
                 <div class="artistImgModify">
-                    <img id="thumbnailPreview" th:src="@{|/${artist.thumbnailImg}|}" class="artist-img-Modify" alt="미리보기" onclick="triggerFileInput()">
+                    <img id="thumbnailPreview" th:src="@{|/file/${artist.thumbnailImg}|}" class="artist-img-Modify" alt="미리보기" onclick="triggerFileInput()">
                     <input type="file" id="thumbnail" th:field="*{thumbnail}" class="artist-img-Modify" onchange="previewThumbnail(this)" style="display: none;">
                 </div>
                 <div class="engName">
