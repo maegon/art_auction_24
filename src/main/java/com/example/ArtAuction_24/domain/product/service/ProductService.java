@@ -113,6 +113,7 @@ public class ProductService {
                           BigDecimal startingPrice, LocalDateTime auctionStartDate, String thumbnailImg,
                            String category, Artist artist){
 
+
         Product p = Product.builder()
                 .title(title)
                 .description(description)
