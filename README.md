@@ -992,7 +992,7 @@ memberForm 엔티티의 Email에 어노테이션으로 @NotBlank, @NotEmpty 둘�
 이미지 형태가 File형태로 들어가서 경로를 가져오지 못함,<br> <br>
 
 ## 🚥 해결
-ProjectService의 create함수에 제약 사항으로 thumbnailFile.getParentFIle()이 존재하면 디렉토리를 만드는 것으로 추가하여 해결
+ProductService의 create함수에 제약 사항으로 thumbnailFile.getParentFIle()이 존재하면 디렉토리를 만드는 것으로 추가하여 해결
 </br></br>
 
 </details>   
